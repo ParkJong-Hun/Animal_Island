@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/home"
+        android:enabled="true"
+        android:title="분양"
+        android:icon="@drawable/home"/>
+
+    <item
+        android:id="@+id/petfriend"
+        android:enabled="true"
+        android:title="펫프렌즈"
+        android:icon="@drawable/petfriend"/>
+
+    <item
+        android:id="@+id/chat"
+        android:enabled="true"
+        android:title="채팅"
+        android:icon="@drawable/chat"/>
+
+    <item
+        android:id="@+id/mypage"
+        android:enabled="true"
+        android:title="마이페이지"
+        android:icon="@drawable/mypage"/>
+</menu>
