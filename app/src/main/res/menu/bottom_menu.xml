@@ -2,25 +2,25 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/home"
+        android:id="@+id/bottom_home"
         android:enabled="true"
         android:title="분양"
         android:icon="@drawable/home"/>
 
     <item
-        android:id="@+id/petfriend"
+        android:id="@+id/bottom_petfriend"
         android:enabled="true"
         android:title="펫프렌즈"
         android:icon="@drawable/petfriend"/>
 
     <item
-        android:id="@+id/chat"
+        android:id="@+id/bottom_chat"
         android:enabled="true"
         android:title="채팅"
         android:icon="@drawable/chat"/>
 
     <item
-        android:id="@+id/mypage"
+        android:id="@+id/bottom_mypage"
         android:enabled="true"
         android:title="마이페이지"
         android:icon="@drawable/mypage"/>

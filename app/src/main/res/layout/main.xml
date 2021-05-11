@@ -6,21 +6,24 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <!--툴바-->
     <include
         layout="@layout/toolbar"
         android:id="@+id/toolbar"/>
 
+    <!--본 내용(다른 xml을 이용해 하단 탭을 눌렀을 때를 이용해 코딩해서 내용 렌더링 하기)-->
     <FrameLayout
         android:id="@+id/main_frame"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNavi"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_tab"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
+    <!--하단 탭 메뉴-->
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavi"
+        android:id="@+id/bottom_tab"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="#ffffff"
