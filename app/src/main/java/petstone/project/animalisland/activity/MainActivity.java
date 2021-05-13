@@ -1,10 +1,12 @@
-package petstone.project.animalisland;
+package petstone.project.animalisland.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import petstone.project.animalisland.R;
 
 //메인
 public class MainActivity extends AppCompatActivity {
