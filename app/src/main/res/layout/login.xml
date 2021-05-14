@@ -9,5 +9,10 @@
         android:layout_height="wrap_content"
         android:src="@drawable/logo2" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="아아아ㅏ아아아ㅏ" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
