@@ -6,7 +6,7 @@
 
     <ImageView
         android:id="@+id/logo_image"
-        android:layout_width="350dp"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:src="@drawable/logo2"
         app:layout_constraintTop_toTopOf="parent"
