@@ -4,13 +4,79 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <!--로고-->
     <ImageView
         android:id="@+id/logo_image"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
         android:src="@drawable/logo2"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!--아이디-->
+    <TextView
+        android:id="@+id/logo_id_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="아이디"
+        android:padding="5dp"
+        app:layout_constraintRight_toLeftOf="@+id/login_id_et"
+        app:layout_constraintTop_toBottomOf="@+id/logo_image" />
+    <EditText
+        android:id="@+id/login_id_et"
+        android:hint="아이디를 입력하세요"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logo_image" />
+    <!--비밀번호-->
+    <TextView
+        android:id="@+id/logo_pw_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="비밀번호"
+        android:padding="5dp"
+        app:layout_constraintRight_toLeftOf="@+id/login_pw_et"
+        app:layout_constraintTop_toBottomOf="@+id/login_id_et" />
+    <EditText
+        android:id="@+id/login_pw_et"
+        android:hint="비밀번호를 입력하세요"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/login_id_et" />
+    <!--로그인-->
+    <!--아직 구체적으로 디자인은 안했음. 딱 배치만-->
+    <Button
+        android:id="@+id/login_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="로그인"
+        android:padding="15dp"
+        app:layout_constraintTop_toBottomOf="@+id/login_pw_et"
+        app:layout_constraintRight_toRightOf="@+id/login_pw_et" />
+    <Button
+        android:id="@+id/google_login_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="구글 로그인"
+        android:textSize="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/login_button"
+        app:layout_constraintRight_toRightOf="@+id/login_pw_et" />
+    <!--회원가입-->
+    <Button
+        android:id="@+id/user_create_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="회원가입"
+        android:padding="15dp"
+        app:layout_constraintTop_toBottomOf="@+id/login_pw_et"
+        app:layout_constraintRight_toLeftOf="@+id/login_button" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
