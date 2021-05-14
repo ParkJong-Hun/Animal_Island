@@ -24,7 +24,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="아아아아업데이트" />
+            android:text="업데이트2" />
     </FrameLayout>
 
     <!--하단 탭 메뉴-->
