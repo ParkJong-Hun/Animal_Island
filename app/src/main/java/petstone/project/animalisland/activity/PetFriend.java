@@ -1,4 +1,4 @@
-package petstone.project.animalisland.component;
+package petstone.project.animalisland.activity;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,9 +9,9 @@ import androidx.fragment.app.Fragment;
 
 import petstone.project.animalisland.R;
 
-public class MypageComponent extends Fragment {
+public class PetFriend extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.mypage_component, container, false);
+        return inflater.inflate(R.layout.petfriend_component, container, false);
     }
 }
