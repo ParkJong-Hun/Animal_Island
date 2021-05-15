@@ -7,9 +7,9 @@
     <!--로고-->
     <ImageView
         android:id="@+id/logo_image"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_width="317dp"
+        android:layout_height="325dp"
+        android:layout_marginTop="80dp"
         android:src="@drawable/logo2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,12 +24,14 @@
         android:padding="5dp"
         app:layout_constraintRight_toLeftOf="@+id/login_id_et"
         app:layout_constraintTop_toBottomOf="@+id/logo_image" />
+
     <EditText
         android:id="@+id/login_id_et"
-        android:hint="아이디를 입력하세요"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
+        android:layout_marginStart="85dp"
+        android:hint="아이디를 입력하세요"
+        android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logo_image" />
     <!--비밀번호-->
@@ -41,30 +43,46 @@
         android:padding="5dp"
         app:layout_constraintRight_toLeftOf="@+id/login_pw_et"
         app:layout_constraintTop_toBottomOf="@+id/login_id_et" />
+
     <EditText
         android:id="@+id/login_pw_et"
-        android:hint="비밀번호를 입력하세요"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
+        android:layout_marginStart="85dp"
+        android:hint="비밀번호를 입력하세요"
+        android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/login_id_et" />
     <!--로그인-->
     <!--아직 구체적으로 디자인은 안했음. 딱 배치만-->
     <Button
         android:id="@+id/login_button"
-        android:layout_width="wrap_content"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:text="로그인"
+        android:layout_marginTop="10dp"
         android:padding="15dp"
-        app:layout_constraintTop_toBottomOf="@+id/login_pw_et"
-        app:layout_constraintRight_toRightOf="@+id/login_pw_et" />
+
+        android:text="로그인"
+        android:textSize="18dp"
+        android:textColor="#FFFFFF"
+
+        android:backgroundTint="@color/colorDaepyo"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_pw_et" />
     <Button
         android:id="@+id/google_login_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+
         android:text="구글 로그인"
-        android:textSize="8dp"
+        android:textSize="15dp"
+        android:textColor="@color/colorDaepyo"
+
+        android:background="@color/white"
+
         app:layout_constraintTop_toBottomOf="@+id/login_button"
         app:layout_constraintRight_toRightOf="@+id/login_pw_et" />
     <!--회원가입-->
@@ -72,10 +90,16 @@
         android:id="@+id/user_create_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="회원가입"
         android:padding="15dp"
-        app:layout_constraintTop_toBottomOf="@+id/login_pw_et"
-        app:layout_constraintRight_toLeftOf="@+id/login_button" />
+        android:layout_marginTop="10dp"
+
+        android:text="회원가입"
+        android:textColor="@color/colorDaepyo"
+
+        android:background="@color/white"
+
+        app:layout_constraintTop_toBottomOf="@+id/login_button"
+        app:layout_constraintRight_toLeftOf="@+id/google_login_button" />
 
 
 
