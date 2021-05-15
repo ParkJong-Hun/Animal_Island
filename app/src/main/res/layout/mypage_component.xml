@@ -1,17 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="마이 페이지"
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:text="내 정보"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/profile_edit"
+        android:layout_width="128dp"
+        android:layout_height="128dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+
+        android:background="@color/white"
+
+        android:scaleType="centerCrop"
+
+        android:src="@drawable/mypage_colored"
+
+        app:layout_constraintStart_toStartOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+
+    <Button
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        app:layout_constraintVertical_weight="1"
+
+        android:text="프로필 편집"
+        android:textSize="15dp"
+        android:textColor="@color/black"
+
+        app:layout_constraintBottom_toBottomOf="@+id/profile_edit"
+        app:layout_constraintEnd_toEndOf="@+id/profile_edit"
+        app:layout_constraintStart_toStartOf="@+id/profile_edit" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+
+        android:layout_marginTop="20dp"
+        android:text="아지냥이"
+        android:textColor="@color/colorDaepyo"
+        android:textSize="20dp"
+
+        app:layout_constraintStart_toEndOf="@+id/profile_edit"
+        app:layout_constraintTop_toTopOf="@+id/profile_edit" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="성명 : 김철수(男)\n나이 : 25살\n지역 : 서울시 용산구 한남동"
+
+        android:textSize="12dp"
+        app:layout_constraintStart_toStartOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <Button
+        style="@android:style/Widget.DeviceDefault.Light.Button.Toggle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="정보수정"
+        android:backgroundTint="@color/white"
+        android:backgroundTintMode="add"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
