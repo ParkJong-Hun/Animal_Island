@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
+    <!--시스템 기본 색-->
+    <color name="colorPrimary">#ff9696</color>
+    <color name="colorPrimaryDark">#ff9696</color>
+    <color name="colorAccent">#28df99</color>
+
+
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <!--우리 기본 색-->
+    <color name="colorDaepyo">#ff9696</color>
+    <color name="colorDaepyo_Light">#ffe1e1</color>
+    <color name="colorDaepyo_Dark">#7d5a5a</color>
+    <color name="colorDaepyo_Accent">#28dfdf</color>
 </resources>
