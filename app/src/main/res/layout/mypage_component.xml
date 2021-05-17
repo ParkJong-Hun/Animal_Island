@@ -192,81 +192,13 @@
         app:layout_constraintTop_toBottomOf="@+id/mypage_sell_tv" />
 
     <!--하단 버튼 리스트-->
-    <LinearLayout
+    <ListView
+        android:id="@+id/mypage_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mypage_bottom_line">
-
-        <Button
-            style="@style/Widget.AppCompat.Button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/border"
-
-            android:paddingLeft="18dp"
-
-            android:text="펫 프렌즈 신청"
-            android:textAlignment="textStart"
-            android:textColor="@color/black"
-
-            android:textSize="15dp" />
-
-        <Button
-            style="@style/Widget.AppCompat.Button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/border"
-
-            android:paddingLeft="18dp"
-            android:text="무료 분양 권한 신청"
-            android:textAlignment="textStart"
-            android:textColor="@color/black"
-
-            android:textSize="15dp" />
-
-        <Button
-            style="@style/Widget.AppCompat.Button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/border"
-
-            android:paddingLeft="18dp"
-            android:text="이벤트"
-            android:textAlignment="textStart"
-            android:textColor="@color/black"
-
-            android:textSize="15dp" />
-
-        <Button
-            style="@style/Widget.AppCompat.Button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/border"
-
-            android:paddingLeft="18dp"
-            android:text="공지사항"
-            android:textAlignment="textStart"
-            android:textColor="@color/black"
-
-            android:textSize="15dp" />
-
-        <Button
-            style="@style/Widget.AppCompat.Button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/border"
-
-            android:paddingLeft="18dp"
-            android:text="로그아웃"
-            android:textAlignment="textStart"
-            android:textColor="@color/black"
-
-            android:textSize="15dp" />
-
-    </LinearLayout>
+        app:layout_constraintTop_toTopOf="@+id/mypage_bottom_line" />
 
 
 
