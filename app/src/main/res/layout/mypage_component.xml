@@ -5,9 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/mypage_tv1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
@@ -15,25 +14,25 @@
         android:text="내 정보"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
+    <!--프로필 사진-->
     <ImageView
-        android:id="@+id/profile_edit"
+        android:id="@+id/mypage_profile_image"
         android:layout_width="128dp"
         android:layout_height="128dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
 
-        android:background="@color/white"
+        android:background="@drawable/border"
 
         android:scaleType="centerCrop"
 
         android:src="@drawable/mypage_colored"
 
-        app:layout_constraintStart_toStartOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-
+        app:layout_constraintStart_toStartOf="@+id/mypage_tv1"
+        app:layout_constraintTop_toBottomOf="@+id/mypage_tv1" />
+    <!--프로필 편집-->
     <Button
+        android:id="@+id/mypage_profile_edit"
         style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
@@ -43,12 +42,12 @@
         android:textSize="15dp"
         android:textColor="@color/black"
 
-        app:layout_constraintBottom_toBottomOf="@+id/profile_edit"
-        app:layout_constraintEnd_toEndOf="@+id/profile_edit"
-        app:layout_constraintStart_toStartOf="@+id/profile_edit" />
-
+        app:layout_constraintBottom_toBottomOf="@+id/mypage_profile_image"
+        app:layout_constraintEnd_toEndOf="@+id/mypage_profile_image"
+        app:layout_constraintStart_toStartOf="@+id/mypage_profile_image" />
+    <!--닉네임-->
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/mypage_nickname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -58,11 +57,11 @@
         android:textColor="@color/colorDaepyo"
         android:textSize="20dp"
 
-        app:layout_constraintStart_toEndOf="@+id/profile_edit"
-        app:layout_constraintTop_toTopOf="@+id/profile_edit" />
-
+        app:layout_constraintStart_toEndOf="@+id/mypage_profile_image"
+        app:layout_constraintTop_toTopOf="@+id/mypage_profile_image" />
+    <!--상세정보-->
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/mypage_descripiton"
         android:layout_width="wrap_content"
 
         android:layout_height="wrap_content"
@@ -70,18 +69,206 @@
         android:text="성명 : 김철수(男)\n나이 : 25살\n지역 : 서울시 용산구 한남동"
 
         android:textSize="12dp"
-        app:layout_constraintStart_toStartOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
+        app:layout_constraintStart_toStartOf="@+id/mypage_nickname"
+        app:layout_constraintTop_toBottomOf="@+id/mypage_nickname" />
+    <!--정보수정-->
     <Button
+        android:id="@+id/mypage_description_edit"
         style="@android:style/Widget.DeviceDefault.Light.Button.Toggle"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="35dp"
         android:text="정보수정"
         android:backgroundTint="@color/white"
         android:backgroundTintMode="add"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintTop_toBottomOf="@+id/mypage_descripiton" />
+
+    <View
+        android:id="@+id/mypage_top_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/light_gray"
+        app:layout_constraintBottom_toTopOf="@+id/mypage_trust_tv"
+        app:layout_constraintStart_toStartOf="parent" />
+    <!--신뢰도-->
+    <TextView
+        android:id="@+id/mypage_trust_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+
+        android:text="나의 신뢰도"
+        android:textSize="20dp"
+        android:textColor="@color/colorDaepyo"
+
+        app:layout_constraintEnd_toStartOf="@+id/mypage_sell_tv"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mypage_description_edit" />
+    <RatingBar
+        android:id="@+id/ratingBar"
+        style="@style/Widget.AppCompat.RatingBar.Small"
+        android:layout_width="wrap_content"
+
+        android:layout_height="0dp"
+
+        android:layout_marginTop="5dp"
+        android:indeterminate="false"
+        android:isIndicator="false"
+        android:numStars="5"
+        android:progressTint="@color/colorDaepyo"
+        android:rating="2.5"
+        android:scaleX="1.4"
+
+        android:scaleY="1.4"
+        android:secondaryProgressTint="@color/colorDaepyo_Light"
+
+        android:stepSize="0.1"
+        app:layout_constraintEnd_toEndOf="@+id/mypage_trust_tv"
+        app:layout_constraintStart_toStartOf="@+id/mypage_trust_tv"
+        app:layout_constraintTop_toBottomOf="@+id/mypage_trust_tv" />
+
+    <View
+        android:id="@+id/mypage_middle_line1"
+        android:layout_width="1dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+
+        android:background="@color/light_gray"
+
+        app:layout_constraintStart_toEndOf="@+id/mypage_trust_tv"
+        app:layout_constraintTop_toTopOf="@+id/mypage_top_line" />
+    <!--분양권한-->
+    <TextView
+        android:id="@+id/mypage_sell_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+
+        android:text="유료 분양\n가능"
+        android:textAlignment="center"
+        android:textSize="20dp"
+        android:textColor="@color/colorDaepyo"
+
+        app:layout_constraintEnd_toEndOf="@+id/mypage_middle_line2"
+        app:layout_constraintStart_toStartOf="@+id/mypage_middle_line1"
+        app:layout_constraintTop_toBottomOf="@+id/mypage_description_edit" />
+
+    <View
+        android:id="@+id/mypage_middle_line2"
+        android:layout_width="1dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+
+        android:background="@color/light_gray"
+
+        app:layout_constraintStart_toEndOf="@+id/mypage_sell_tv"
+        app:layout_constraintTop_toTopOf="@+id/mypage_top_line" />
+    <!--펫프렌즈권한-->
+    <TextView
+        android:id="@+id/mypage_petfriend_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+
+        android:text="펫 프렌즈\n회원님"
+        android:textAlignment="center"
+        android:textSize="20dp"
+        android:textColor="@color/colorDaepyo"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/mypage_sell_tv"
+        app:layout_constraintTop_toBottomOf="@+id/mypage_description_edit" />
+
+    <View
+        android:id="@+id/mypage_bottom_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/light_gray"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mypage_sell_tv" />
+
+    <!--하단 버튼 리스트-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mypage_bottom_line">
+
+        <Button
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border"
+
+            android:paddingLeft="18dp"
+
+            android:text="펫 프렌즈 신청"
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+
+            android:textSize="15dp" />
+
+        <Button
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border"
+
+            android:paddingLeft="18dp"
+            android:text="무료 분양 권한 신청"
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+
+            android:textSize="15dp" />
+
+        <Button
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border"
+
+            android:paddingLeft="18dp"
+            android:text="이벤트"
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+
+            android:textSize="15dp" />
+
+        <Button
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border"
+
+            android:paddingLeft="18dp"
+            android:text="공지사항"
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+
+            android:textSize="15dp" />
+
+        <Button
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border"
+
+            android:paddingLeft="18dp"
+            android:text="로그아웃"
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+
+            android:textSize="15dp" />
+
+    </LinearLayout>
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
