@@ -32,7 +32,7 @@ public class MypageCustomListAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -49,6 +49,7 @@ public class MypageCustomListAdapter extends BaseAdapter {
         icon.setImageResource(imageId[position]);
         icon.setColorFilter(Color.parseColor("#FF9696"));
         text.setText(strings[position]);
+
         return convertView;
     }
 }
