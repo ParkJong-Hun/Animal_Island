@@ -9,13 +9,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="petstone.project.animalisland.activity.MainActivity">
-            <intent-filter>
+        <activity android:name="petstone.project.animalisland.activity.LoginActivity">
+             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+             </intent-filter>
+         </activity>
+        <activity android:name="petstone.project.animalisland.activity.MainActivity"></activity>
+        <activity android:name="petstone.project.animalisland.activity.MypageInfoEditActivity"></activity>
+        <activity android:name="petstone.project.animalisland.activity.MypagePetfriendApplyActivity"></activity>
+        <activity android:name="petstone.project.animalisland.activity.MypageSellApplyActivity"></activity>
+
     </application>
 
 </manifest>
