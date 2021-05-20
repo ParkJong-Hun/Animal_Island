@@ -14,6 +14,7 @@
         android:text="내 정보"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <!--프로필 사진-->
     <ImageView
         android:id="@+id/mypage_profile_image"
@@ -30,6 +31,7 @@
 
         app:layout_constraintStart_toStartOf="@+id/mypage_tv1"
         app:layout_constraintTop_toBottomOf="@+id/mypage_tv1" />
+
     <!--프로필 편집-->
     <Button
         android:id="@+id/mypage_profile_edit"
@@ -45,6 +47,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/mypage_profile_image"
         app:layout_constraintEnd_toEndOf="@+id/mypage_profile_image"
         app:layout_constraintStart_toStartOf="@+id/mypage_profile_image" />
+
     <!--닉네임-->
     <TextView
         android:id="@+id/mypage_nickname"
@@ -59,6 +62,7 @@
 
         app:layout_constraintStart_toEndOf="@+id/mypage_profile_image"
         app:layout_constraintTop_toTopOf="@+id/mypage_profile_image" />
+
     <!--상세정보-->
     <TextView
         android:id="@+id/mypage_descripiton"
@@ -71,6 +75,7 @@
         android:textSize="12dp"
         app:layout_constraintStart_toStartOf="@+id/mypage_nickname"
         app:layout_constraintTop_toBottomOf="@+id/mypage_nickname" />
+
     <!--정보수정-->
     <Button
         android:id="@+id/mypage_description_edit"
@@ -82,7 +87,6 @@
         android:backgroundTintMode="add"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mypage_descripiton" />
-
     <View
         android:id="@+id/mypage_top_line"
         android:layout_width="match_parent"
@@ -91,6 +95,7 @@
         android:background="@color/light_gray"
         app:layout_constraintBottom_toTopOf="@+id/mypage_trust_tv"
         app:layout_constraintStart_toStartOf="parent" />
+
     <!--신뢰도-->
     <TextView
         android:id="@+id/mypage_trust_tv"
@@ -114,7 +119,7 @@
 
         android:layout_marginTop="5dp"
         android:indeterminate="false"
-        android:isIndicator="false"
+        android:isIndicator="true"
         android:numStars="5"
         android:progressTint="@color/colorDaepyo"
         android:rating="2.5"

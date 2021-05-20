@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/toolbar_mypage_edit_info"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffe1e1"
+    android:elevation="4dp"
+    android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+    app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="정보"
+        android:textSize="25sp"
+        android:textColor="#668c47"
+        android:textStyle="bold"
+        android:layout_marginStart="110dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="수정"
+        android:textSize="25sp"
+        android:textColor="#843c0c"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"/>
+
+</Toolbar>
