@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -10,10 +11,12 @@
         android:id="@+id/toolbar_mypage_edit_info"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_mypage_edit_info">
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_mypage_edit_info"
+        >
 
         <!--이름-->
         <TextView
@@ -31,10 +34,10 @@
             android:layout_width="350dp"
             android:layout_height="wrap_content"
 
-            android:text="김철수"
-            android:textColor="@color/colorDaepyo"
-
             android:focusableInTouchMode="false"
+            android:text="김철수"
+
+            android:textColor="@color/colorDaepyo"
             app:layout_constraintStart_toStartOf="@+id/mypage_info_edit_name"
             app:layout_constraintTop_toBottomOf="@+id/mypage_info_edit_name" />
         <!--아이디-->
@@ -53,10 +56,10 @@
             android:layout_width="350dp"
             android:layout_height="wrap_content"
 
-            android:text="fesu1235"
-            android:textColor="@color/colorDaepyo"
-
             android:focusableInTouchMode="false"
+            android:text="fesu1235"
+
+            android:textColor="@color/colorDaepyo"
             app:layout_constraintStart_toStartOf="@+id/mypage_info_edit_id"
             app:layout_constraintTop_toBottomOf="@+id/mypage_info_edit_id" />
         <!--비밀번호-->
@@ -75,6 +78,7 @@
             android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:hint="수정할 비밀번호를 입력하세요."
+            android:inputType="textPassword"
             app:layout_constraintStart_toStartOf="@+id/mypage_info_edit_password"
             app:layout_constraintTop_toBottomOf="@+id/mypage_info_edit_password" />
         <!--비밀번호 확인-->
@@ -88,11 +92,24 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/mypage_info_edit_password_form" />
 
+        <TextView
+            android:id="@+id/mypage_info_edit_password_checked"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="7.5dp"
+            android:text=""
+            android:textColor="#F44336"
+            android:textSize="10dp"
+            app:layout_constraintLeft_toRightOf="@+id/mypage_info_edit_password_check"
+            app:layout_constraintTop_toBottomOf="@+id/mypage_info_edit_password_form" />
+
         <EditText
             android:id="@+id/mypage_info_edit_password_check_form"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:hint="수정할 비밀번호를 입력하세요."
+            android:inputType="textPassword"
             app:layout_constraintStart_toStartOf="@+id/mypage_info_edit_password_check"
             app:layout_constraintTop_toBottomOf="@+id/mypage_info_edit_password_check" />
         <!--성별-->
@@ -111,11 +128,11 @@
             android:layout_width="100dp"
             android:layout_height="wrap_content"
 
+            android:focusableInTouchMode="false"
             android:text="男"
             android:textAlignment="center"
-            android:textColor="@color/colorDaepyo"
 
-            android:focusableInTouchMode="false"
+            android:textColor="@color/colorDaepyo"
             app:layout_constraintStart_toStartOf="@+id/mypage_info_edit_sex"
             app:layout_constraintTop_toBottomOf="@+id/mypage_info_edit_sex" />
         <!--나이-->
@@ -135,11 +152,11 @@
             android:layout_width="100dp"
             android:layout_height="wrap_content"
 
+            android:focusableInTouchMode="false"
             android:text="25살"
             android:textAlignment="center"
-            android:textColor="@color/colorDaepyo"
 
-            android:focusableInTouchMode="false"
+            android:textColor="@color/colorDaepyo"
             app:layout_constraintStart_toStartOf="@+id/mypage_info_edit_age"
             app:layout_constraintTop_toBottomOf="@+id/mypage_info_edit_age" />
         <!--닉네임-->
@@ -158,10 +175,10 @@
             android:layout_width="350dp"
             android:layout_height="wrap_content"
 
-            android:text="아지냥이"
-            android:textColor="@color/colorDaepyo"
-
             android:focusableInTouchMode="false"
+            android:text="아지냥이"
+
+            android:textColor="@color/colorDaepyo"
             app:layout_constraintStart_toStartOf="@+id/mypage_info_edit_nickname"
             app:layout_constraintTop_toBottomOf="@+id/mypage_info_edit_nickname" />
         <!--이메일-->
@@ -183,6 +200,7 @@
             app:layout_constraintStart_toStartOf="@+id/mypage_info_edit_email"
             app:layout_constraintTop_toBottomOf="@+id/mypage_info_edit_email" />
         <!--펫프렌즈 주소-->
+        <!--TODO: 스피너 구현-->
         <TextView
             android:id="@+id/mypage_info_edit_address"
             android:layout_width="wrap_content"
@@ -195,11 +213,11 @@
 
         <Spinner
             android:id="@+id/mypage_info_edit_address_city_form"
-            android:entries="@array/도광역시"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
+            android:entries="@array/도광역시"
             android:spinnerMode="dropdown"
             app:layout_constraintStart_toStartOf="@+id/mypage_info_edit_address"
             app:layout_constraintTop_toBottomOf="@+id/mypage_info_edit_address" />
@@ -226,4 +244,34 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_weight="1">
+
+        <Button
+            android:id="@+id/mypage_info_edit_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+
+            android:background="@drawable/border_colored"
+
+            android:text="취소"
+            android:textSize="20dp" />
+        <Button
+            android:id="@+id/mypage_info_edit_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="수정"
+            android:textSize="20dp"
+
+            android:background="@drawable/border_colored"
+
+            android:layout_weight="0.5" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
