@@ -2,13 +2,18 @@ package petstone.project.animalisland.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import petstone.project.animalisland.Free_Rehome;
 import petstone.project.animalisland.R;
+import petstone.project.animalisland.Sell_Rehome;
 import petstone.project.animalisland.component.MypageComponent;
 import petstone.project.animalisland.component.RehomeComponent;
 
@@ -21,6 +26,9 @@ public class MainActivity extends AppCompatActivity {
     PetFriend petFrag;
     ChatActivity chatFrag;
     MypageComponent myFrag;
+
+    Free_Rehome free = new Free_Rehome();
+    Sell_Rehome sell = new Sell_Rehome();
 
 
     //화면 초기화
@@ -58,5 +66,4 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
 }
