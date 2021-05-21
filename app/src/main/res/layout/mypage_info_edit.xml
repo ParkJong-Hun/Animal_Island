@@ -200,7 +200,7 @@
             app:layout_constraintStart_toStartOf="@+id/mypage_info_edit_email"
             app:layout_constraintTop_toBottomOf="@+id/mypage_info_edit_email" />
         <!--펫프렌즈 주소-->
-        <!--TODO: 스피너 구현-->
+        <!--스피너 구현-->
         <TextView
             android:id="@+id/mypage_info_edit_address"
             android:layout_width="wrap_content"
@@ -213,20 +213,18 @@
 
         <Spinner
             android:id="@+id/mypage_info_edit_address_city_form"
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
+            android:layout_width="130dp"
+            android:layout_height="40dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
-            android:entries="@array/도광역시"
             android:spinnerMode="dropdown"
             app:layout_constraintStart_toStartOf="@+id/mypage_info_edit_address"
             app:layout_constraintTop_toBottomOf="@+id/mypage_info_edit_address" />
 
         <Spinner
             android:id="@+id/mypage_info_edit_address_ku_form"
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_width="130dp"
+            android:layout_height="40dp"
             android:layout_marginTop="10dp"
             android:spinnerMode="dropdown"
             app:layout_constraintLeft_toRightOf="@+id/mypage_info_edit_address_city_form"
@@ -234,9 +232,8 @@
 
         <Spinner
             android:id="@+id/mypage_info_edit_address_dong_form"
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_width="130dp"
+            android:layout_height="40dp"
             android:layout_marginTop="10dp"
             android:spinnerMode="dropdown"
             app:layout_constraintLeft_toRightOf="@+id/mypage_info_edit_address_ku_form"
