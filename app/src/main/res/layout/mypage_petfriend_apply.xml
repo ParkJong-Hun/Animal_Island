@@ -6,17 +6,121 @@
     <include
         layout="@layout/toolbar"
         android:id="@+id/toolbar"/>
-
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+        <!--지역-->
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="펫프렌즈 권한 신청"
+            android:id="@+id/mypage_petfriend_apply_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+
+            android:text="지역"
+
+
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
-    </FrameLayout>
+            app:layout_constraintTop_toTopOf="parent" />
+        <Spinner
+            android:id="@+id/mypage_petfriend_apply_address_city_form"
+            android:layout_width="130dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:spinnerMode="dropdown"
+            app:layout_constraintStart_toStartOf="@+id/mypage_petfriend_apply_address"
+            app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_address" />
+
+        <Spinner
+            android:id="@+id/mypage_petfriend_apply_address_ku_form"
+            android:layout_width="130dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:spinnerMode="dropdown"
+            app:layout_constraintLeft_toRightOf="@+id/mypage_petfriend_apply_address_city_form"
+            app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_address" />
+
+        <Spinner
+            android:id="@+id/mypage_petfriend_apply_address_dong_form"
+            android:layout_width="130dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:spinnerMode="dropdown"
+            app:layout_constraintLeft_toRightOf="@+id/mypage_petfriend_apply_address_ku_form"
+            app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_address" />
+        <!--요일-->
+        <TextView
+            android:id="@+id/mypage_petfriend_apply_day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+
+            android:text="요일"
+
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_address_dong_form" />
+
+        <CheckBox
+            android:id="@+id/mypage_petfriend_apply_monday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            app:layout_constraintStart_toStartOf="@+id/mypage_petfriend_apply_day"
+            app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_day" />
+
+        <CheckBox
+            android:id="@+id/mypage_petfriend_apply_tuesday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            app:layout_constraintStart_toEndOf="@+id/mypage_petfriend_apply_monday"
+            app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_day" />
+
+        <CheckBox
+            android:id="@+id/mypage_petfriend_apply_wednesday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            app:layout_constraintStart_toEndOf="@+id/mypage_petfriend_apply_tuesday"
+            app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_day" />
+
+        <CheckBox
+            android:id="@+id/mypage_petfriend_apply_thursday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            app:layout_constraintStart_toEndOf="@+id/mypage_petfriend_apply_wednesday"
+            app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_day" />
+
+        <CheckBox
+            android:id="@+id/mypage_petfriend_apply_friday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            app:layout_constraintStart_toEndOf="@+id/mypage_petfriend_apply_thursday"
+            app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_day" />
+
+        <CheckBox
+            android:id="@+id/mypage_petfriend_apply_saturday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            app:layout_constraintStart_toEndOf="@+id/mypage_petfriend_apply_friday"
+            app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_day" />
+
+        <CheckBox
+            android:id="@+id/mypage_petfriend_apply_sunday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            app:layout_constraintStart_toEndOf="@+id/mypage_petfriend_apply_saturday"
+            app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_day" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
