@@ -2,9 +2,10 @@ package petstone.project.animalisland;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
-public class VPAdapter extends FragmentStatePagerAdapter {
+public class VPAdapter extends FragmentPagerAdapter {
 
     private int tabCount;
 
@@ -16,9 +17,11 @@ public class VPAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
 
+        Free_Rehome free = new Free_Rehome();
+
         switch (position) {
             case 0:
-                Free_Rehome free = new Free_Rehome();
+
                 return free;
             case 1:
                 Sell_Rehome sell = new Sell_Rehome();
@@ -33,3 +36,4 @@ public class VPAdapter extends FragmentStatePagerAdapter {
         return tabCount;
     }
 }
+
