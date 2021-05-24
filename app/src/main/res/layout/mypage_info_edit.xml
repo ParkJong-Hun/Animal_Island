@@ -215,7 +215,6 @@
             android:id="@+id/mypage_info_edit_address_city_form"
             android:layout_width="130dp"
             android:layout_height="40dp"
-            android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:spinnerMode="dropdown"
             app:layout_constraintStart_toStartOf="@+id/mypage_info_edit_address"
