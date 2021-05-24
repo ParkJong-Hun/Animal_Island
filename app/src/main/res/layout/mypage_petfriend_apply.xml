@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <include
-        layout="@layout/toolbar_petfriend_apply"
+        layout="@layout/toolbar_mypage_petfriend_apply"
         android:id="@+id/toolbar_petfriend_apply"/>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
