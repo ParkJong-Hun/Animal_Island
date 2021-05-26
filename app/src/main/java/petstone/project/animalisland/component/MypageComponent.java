@@ -9,7 +9,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import petstone.project.animalisland.R;
@@ -90,5 +92,33 @@ public class MypageComponent extends Fragment {
         });
 
         return rootView;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case 0: {//정보 수정 결과
+                if(resultCode == -1) {
+                    Toast.makeText(getContext(), "정보가 수정되었습니다.", Toast.LENGTH_SHORT).show();
+                } else if(resultCode == 0) {
+
+                }
+            }
+            case 1: {//펫프렌즈 신청 결과
+                if(resultCode == -1) {
+
+                } else if(resultCode == 0) {
+
+                }
+            }
+            case 2: {//유료분양 권한 신청 결과
+                if(resultCode == -1) {
+
+                } else if(resultCode == 0) {
+
+                }
+            }
+        }
     }
 }
