@@ -1,2 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string-array name="종로구">
+        <item>혜화동</item>
+        <item>평창동</item>
+    </string-array>
+    <string-array name="서대문구">
+        <item>남가좌동</item>
+        <item>북가좌동</item>
+    </string-array>
+</resources>

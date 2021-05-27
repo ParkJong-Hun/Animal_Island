@@ -1,2 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string-array name="서울시">
+        <item>서대문구</item>
+        <item>종로구</item>
+    </string-array>
+    <string-array name="고양시">
+        <item>가좌동</item>
+        <item>대화동</item>
+    </string-array>
+    <string-array name="수원시">
+        <item>고등동</item>
+        <item>남창동</item>
+    </string-array>
+</resources>

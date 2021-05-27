@@ -17,7 +17,7 @@
         android:id="@+id/bottom_chat"
         android:enabled="true"
         android:title="채팅"
-        android:icon="@drawable/chat"/>
+        android:icon="@drawable/chat2"/>
 
     <item
         android:id="@+id/bottom_mypage"
