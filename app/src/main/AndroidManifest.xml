@@ -21,6 +21,9 @@
         <activity android:name="petstone.project.animalisland.activity.MypagePetfriendApplyActivity"></activity>
         <activity android:name="petstone.project.animalisland.activity.MypageSellApplyActivity"></activity>
 
+        <activity android:name="petstone.project.animalisland.activity.RehomeFreeSubmitActivity"></activity>
+        <activity android:name="petstone.project.animalisland.activity.RehomeSellSubmitActivity"></activity>
+
     </application>
 
 </manifest>

@@ -27,9 +27,6 @@ public class MainActivity extends AppCompatActivity {
     ChatActivity chatFrag;
     MypageComponent myFrag;
 
-    Free_Rehome free = new Free_Rehome();
-    Sell_Rehome sell = new Sell_Rehome();
-
 
     //화면 초기화
     @Override

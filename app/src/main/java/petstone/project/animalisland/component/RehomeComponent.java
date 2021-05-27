@@ -28,9 +28,10 @@ public class RehomeComponent extends Fragment {
         tabLayout = view.findViewById(R.id.Rehome_tab);
         viewPager = view.findViewById(R.id.Rehome_main);
 
-        VPAdapter pagerAdapter = new VPAdapter(getActivity().getSupportFragmentManager(), tabLayout.getTabCount());
+        VPAdapter pagerAdapter = new VPAdapter(getChildFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(pagerAdapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        viewPager.setCurrentItem(0);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 
@@ -52,5 +53,6 @@ public class RehomeComponent extends Fragment {
 
         return view;
     }
+
 }
 
