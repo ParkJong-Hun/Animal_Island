@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/local"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="60dp"
+        android:text="지역"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:entries="@array/test"
+        android:textAlignment="textEnd"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/local"
+        />
+
+    <View
+        android:id="@+id/line1"
+        android:layout_width="100dp"
+        android:layout_height="2dp"
+        android:layout_marginStart="10dp"
+        android:background="#00ff00"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner" />
+
+
+    <TextView
+        android:id="@+id/local2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="지역2"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/spinner2"
+        app:layout_constraintTop_toTopOf="@+id/local" />
+
+
+    <Spinner
+        android:id="@+id/spinner2"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:entries="@array/test"
+        android:textAlignment="textEnd"
+        app:layout_constraintStart_toEndOf="@+id/spinner"
+        app:layout_constraintTop_toBottomOf="@+id/local2" />
+
+    <View
+        android:id="@+id/line2"
+        android:layout_width="100dp"
+        android:layout_height="2dp"
+        android:layout_marginStart="30dp"
+        android:background="#00ff00"
+        app:layout_constraintStart_toEndOf="@+id/line1"
+        app:layout_constraintTop_toBottomOf="@+id/spinner2" />
+
+    <TextView
+        android:id="@+id/local3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="지역3"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/spinner2"
+        app:layout_constraintTop_toTopOf="@+id/local2" />
+
+    <Spinner
+        android:id="@+id/spinner3"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:entries="@array/test"
+        android:textAlignment="textEnd"
+        app:layout_constraintStart_toEndOf="@+id/spinner2"
+        app:layout_constraintTop_toBottomOf="@+id/local3" />
+
+    <View
+        android:id="@+id/line3"
+        android:layout_width="100dp"
+        android:layout_height="2dp"
+        android:layout_marginStart="30dp"
+        android:background="#00ff00"
+        app:layout_constraintStart_toEndOf="@+id/line2"
+        app:layout_constraintTop_toBottomOf="@+id/spinner3" />
+
+    <TextView
+        android:id="@+id/day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:text="요일"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/line1" />
+
+    <Button
+        android:id="@+id/monday_btn"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        android:text="월"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/day" />
+
+    <Button
+        android:id="@+id/tuesday_btn"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="5dp"
+        android:text="화"
+        app:layout_constraintStart_toEndOf="@+id/monday_btn"
+        app:layout_constraintTop_toTopOf="@+id/monday_btn" />
+
+    <Button
+        android:id="@+id/wednesday_btn"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="5dp"
+        android:text="수"
+        app:layout_constraintStart_toEndOf="@+id/tuesday_btn"
+        app:layout_constraintTop_toTopOf="@+id/monday_btn" />
+
+    <Button
+        android:id="@+id/thursday_btn"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="5dp"
+        android:text="목"
+        app:layout_constraintStart_toEndOf="@+id/wednesday_btn"
+        app:layout_constraintTop_toTopOf="@+id/monday_btn" />
+
+    <Button
+        android:id="@+id/friday_btn"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="5dp"
+        android:text="금"
+        app:layout_constraintStart_toEndOf="@+id/thursday_btn"
+        app:layout_constraintTop_toTopOf="@+id/monday_btn" />
+
+    <Button
+        android:id="@+id/saturday_btn"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="5dp"
+        android:text="토"
+        app:layout_constraintStart_toEndOf="@+id/friday_btn"
+        app:layout_constraintTop_toTopOf="@+id/monday_btn" />
+
+    <Button
+        android:id="@+id/sunday_btn"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="15dp"
+        android:text="일"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/saturday_btn"
+        app:layout_constraintTop_toTopOf="@+id/monday_btn" />
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:text="시간"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/monday_btn" />
+
+    <Spinner
+        android:id="@+id/petfriend_time1"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:textAlignment="textEnd"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/time"
+        android:entries="@array/test"/>
+
+    <TextView
+        android:id="@+id/flow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="~"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/petfriend_time1"
+        app:layout_constraintTop_toTopOf="@+id/petfriend_time1" />
+
+    <Spinner
+        android:id="@+id/petfriend_time2"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:entries="@array/test"
+        app:layout_constraintStart_toEndOf="@+id/flow"
+        app:layout_constraintTop_toTopOf="@+id/petfriend_time1"
+        />
+
+    <View
+        android:id="@+id/view3"
+        android:layout_width="240dp"
+        android:layout_height="2dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"
+        android:background="#00ff00"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/flow" />
+
+    <TextView
+        android:id="@+id/cost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:text="비용"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/petfriend_time2"
+        app:layout_constraintTop_toTopOf="@+id/time" />
+
+    <EditText
+        android:id="@+id/petfriend_cost_edittext"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        app:layout_constraintStart_toEndOf="@+id/petfriend_time2"
+        app:layout_constraintTop_toBottomOf="@+id/cost" />
+
+    <TextView
+        android:id="@+id/career"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:text="자격증"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/petfriend_time1" />
+
+    <Switch
+        android:id="@+id/petfriend_user_career_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        app:layout_constraintStart_toEndOf="@+id/career"
+        app:layout_constraintTop_toTopOf="@+id/career" />
+
+    <ImageView
+        android:id="@+id/user_career_image_1"
+        android:layout_width="120dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/border"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/career" />
+
+    <ImageView
+        android:id="@+id/user_career_image_2"
+        android:layout_width="120dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="5dp"
+        android:background="@drawable/border"
+        app:layout_constraintStart_toEndOf="@+id/user_career_image_1"
+        app:layout_constraintTop_toTopOf="@+id/user_career_image_1" />
+
+    <ImageView
+        android:id="@+id/user_career_image_3"
+        android:layout_width="120dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="5dp"
+        android:background="@drawable/border"
+        app:layout_constraintStart_toEndOf="@+id/user_career_image_2"
+        app:layout_constraintTop_toTopOf="@+id/user_career_image_1" />
+
+    <TextView
+        android:id="@+id/sogae"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:text="자기소개"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/user_career_image_1" />
+
+    <EditText
+        android:layout_width="380dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/border"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sogae" />
+
+    <Button
+        android:id="@+id/ok_btn"
+        android:layout_width="190dp"
+        android:layout_height="wrap_content"
+        android:text="확인"
+        android:layout_marginStart="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/cancle_btn"
+        android:layout_width="190dp"
+        android:layout_height="wrap_content"
+        android:text="취소"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ok_btn" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

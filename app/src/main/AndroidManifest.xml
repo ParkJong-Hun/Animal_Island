@@ -20,6 +20,8 @@
         <activity android:name="petstone.project.animalisland.activity.MypageInfoEditActivity"></activity>
         <activity android:name="petstone.project.animalisland.activity.MypagePetfriendApplyActivity"></activity>
         <activity android:name="petstone.project.animalisland.activity.MypageSellApplyActivity"></activity>
+        <activity android:name="petstone.project.animalisland.activity.PetfriendUserSelect"></activity>
+        <activity android:name="petstone.project.animalisland.activity.PetfriendUserApplyActivity"></activity>
 
         <activity android:name="petstone.project.animalisland.activity.RehomeFreeSubmitActivity"></activity>
         <activity android:name="petstone.project.animalisland.activity.RehomeSellSubmitActivity"></activity>
