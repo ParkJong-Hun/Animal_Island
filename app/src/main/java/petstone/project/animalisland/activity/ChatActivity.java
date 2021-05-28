@@ -1,6 +1,7 @@
 package petstone.project.animalisland.activity;
 
-import android.app.Activity;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +13,7 @@ import androidx.fragment.app.Fragment;
 import petstone.project.animalisland.R;
 
 
-public class ChatActivity extends Activity {
+public class ChatActivity extends AppCompatActivity {
     ListView c_ListView;
     ChatComponent c_Adapter;
 
