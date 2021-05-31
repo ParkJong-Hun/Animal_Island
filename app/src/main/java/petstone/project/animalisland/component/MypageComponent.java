@@ -9,11 +9,14 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import petstone.project.animalisland.R;
 import petstone.project.animalisland.activity.LoginActivity;
+import petstone.project.animalisland.activity.MainActivity;
 import petstone.project.animalisland.activity.MypageInfoEditActivity;
 import petstone.project.animalisland.activity.MypagePetfriendApplyActivity;
 import petstone.project.animalisland.activity.MypageSellApplyActivity;
@@ -71,12 +74,16 @@ public class MypageComponent extends Fragment {
                     }
                     //이벤트
                     case 2: {
-                        //다이얼로그
+                        MypageEventDialog dlg = new MypageEventDialog(getContext());
+                        dlg.addArticle("아아아아 내용");
+                        dlg.show();
                         break;
                     }
                     //공지사항
                     case 3: {
-                        //다이얼로그
+                        MypageNewsDialog dlg = new MypageNewsDialog(getContext());
+                        dlg.addArticle("아아아아 내용");
+                        dlg.show();
                         break;
                     }
                     //로그아웃
@@ -90,5 +97,33 @@ public class MypageComponent extends Fragment {
         });
 
         return rootView;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case 0: {//정보 수정 결과
+                if(resultCode == -1) {
+                    Toast.makeText(getContext(), "정보가 수정되었습니다.", Toast.LENGTH_SHORT).show();
+                } else if(resultCode == 0) {
+
+                }
+            }
+            case 1: {//펫프렌즈 신청 결과
+                if(resultCode == -1) {
+
+                } else if(resultCode == 0) {
+
+                }
+            }
+            case 2: {//유료분양 권한 신청 결과
+                if(resultCode == -1) {
+
+                } else if(resultCode == 0) {
+
+                }
+            }
+        }
     }
 }
