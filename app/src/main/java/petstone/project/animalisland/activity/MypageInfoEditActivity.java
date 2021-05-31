@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,13 +31,14 @@ public class MypageInfoEditActivity extends AppCompatActivity {
     TextView password_checked;
     boolean password_checked_switch = false;//비밀번호 일치하는지 판별
     Spinner city, ku, dong;
+    ImageView back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mypage_info_edit);
-        //TODO: 뒤로가기 구현
 
+        back = findViewById(R.id.back_mypage_edit_info);
         cancel = findViewById(R.id.mypage_info_edit_cancel);
         edit = findViewById(R.id.mypage_info_edit_submit);
         password = findViewById(R.id.mypage_info_edit_password_form);
@@ -108,6 +110,13 @@ public class MypageInfoEditActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(getApplicationContext(), "입력 정보가 정확하지 않습니다.", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+        //뒤로가기
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         });
     }
