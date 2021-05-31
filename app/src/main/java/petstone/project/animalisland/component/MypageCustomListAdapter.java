@@ -36,7 +36,6 @@ public class MypageCustomListAdapter extends BaseAdapter {
     }
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        //LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         LayoutInflater inflater = LayoutInflater.from(context);
         convertView = inflater.inflate(R.layout.mypage_custom_list_component, parent, false);
 

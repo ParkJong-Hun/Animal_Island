@@ -10,7 +10,7 @@
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
     <ImageView
-        android:id="@+id/back"
+        android:id="@+id/back_mypage_edit_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_baseline_keyboard_backspace_24"
