@@ -9,9 +9,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#ffe1e1"
-        android:elevation="4dp"
-        app:layout_constraintTop_toTopOf="parent">
+        android:background="#ffe1e1">
 
         <ImageView
             android:id="@+id/back"
@@ -43,11 +41,12 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:orientation="vertical">
@@ -190,19 +189,21 @@
 
                     <Button
                         android:id="@+id/female"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:backgroundTint="#ff9696"
-                        android:text="여자" />
+                        android:layout_width="60dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginStart="5dp"
+                        android:background="#ffe1e1"
+                        android:text="암컷"/>
 
                     <Button
                         android:id="@+id/male"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:backgroundTint="#ff9696"
-                        android:text="남자" />
+                        android:layout_width="60dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginStart="5dp"
+                        android:background="#ffe1e1"
+                        android:text="수컷" />
 
                 </LinearLayout>
 
@@ -225,7 +226,8 @@
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    android:textAlignment="textEnd" />
+                    android:textAlignment="textEnd"
+                    android:spinnerMode="dialog"/>
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -273,34 +275,31 @@
                 android:layout_height="150dp"
                 android:background="@drawable/border" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="10dp"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/cancel"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:backgroundTint="#ffe1e1"
-                    android:text="취소" />
-
-                <Button
-                    android:id="@+id/submit"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:backgroundTint="#ffe1e1"
-                    android:text="등록" />
-
-            </LinearLayout>
-
         </LinearLayout>
 
     </ScrollView>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/cancel"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:backgroundTint="#ffe1e1"
+            android:text="취소" />
+
+        <Button
+            android:id="@+id/submit"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:backgroundTint="#ffe1e1"
+            android:text="등록" />
+
+    </LinearLayout>
 
 </LinearLayout>

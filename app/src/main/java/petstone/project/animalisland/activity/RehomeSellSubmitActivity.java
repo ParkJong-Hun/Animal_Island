@@ -21,7 +21,7 @@ public class RehomeSellSubmitActivity extends AppCompatActivity {
     String[] borough_name = {"시/구/군"};
     String[] town_name = {"동/읍/면"};
     String[] breed_name = {"동물종류"};
-    String[] age_name= {"1개월"};
+    String[] age_name= {"2개월" };
     String[] inoculation_name = {"차수 선택(최대 7차)"};
 
     @Override

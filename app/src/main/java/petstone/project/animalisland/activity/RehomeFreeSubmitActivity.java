@@ -1,6 +1,7 @@
 package petstone.project.animalisland.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -19,6 +20,8 @@ import petstone.project.animalisland.component.RehomeComponent;
 
 public class RehomeFreeSubmitActivity extends AppCompatActivity {
 
+    Button female, male;
+
     ImageView back;
     Button cancel, submit;
     Spinner city, borough, town, breed, age, inoculation;
@@ -26,15 +29,18 @@ public class RehomeFreeSubmitActivity extends AppCompatActivity {
     String[] city_name = {"시/도"};
     String[] borough_name = {"시/구/군"};
     String[] town_name = {"동/읍/면"};
-    String[] breed_name = {"동물종류"};
-    String[] age_name= {"1개월"};
-    String[] inoculation_name = {"차수 선택(최대 7차)"};
+    String[] breed_name = {"동물종류", "개", "고양이"};
+    String[] age_name= {"2개월", };
+    String[] inoculation_name = {"차수 선택(최대 7차)", "1차", "2차", "3차", "4차", "5차", "6차", "7차", "접종 안함"};
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.rehome_free_submit);
+
+        female = findViewById(R.id.female);
+        male = findViewById(R.id.male);
 
         cancel = findViewById(R.id.cancel);
         submit = findViewById(R.id.submit);
@@ -85,5 +91,6 @@ public class RehomeFreeSubmitActivity extends AppCompatActivity {
                 finish();
             }
         });
+
     }
 }
