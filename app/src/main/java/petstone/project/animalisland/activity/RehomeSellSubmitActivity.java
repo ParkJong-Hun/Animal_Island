@@ -38,6 +38,11 @@ public class RehomeSellSubmitActivity extends AppCompatActivity {
         cancel = findViewById(R.id.cancel);
         submit = findViewById(R.id.submit);
 
+        female = findViewById(R.id.female);
+        male = findViewById(R.id.male);
+        yes = findViewById(R.id.yes);
+        no = findViewById(R.id.no);
+
         back = findViewById(R.id.back);
 
         city = findViewById(R.id.local_city);

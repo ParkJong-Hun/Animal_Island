@@ -15,7 +15,7 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-<<<<<<< HEAD
+
              </intent-filter>
          </activity>
         <activity android:name="petstone.project.animalisland.activity.MainActivity"></activity>
@@ -24,7 +24,7 @@
         <activity android:name="petstone.project.animalisland.activity.MypageSellApplyActivity"></activity>
         <activity android:name="petstone.project.animalisland.activity.PetfriendUserSelect"></activity>
         <activity android:name="petstone.project.animalisland.activity.PetfriendUserApplyActivity"></activity>
-        <activity android:name=".RegisterActivity"></activity>
+
 
         <activity android:name="petstone.project.animalisland.activity.RehomeFreeSubmitActivity"></activity>
         <activity android:name="petstone.project.animalisland.activity.RehomeSellSubmitActivity"></activity>
@@ -32,18 +32,6 @@
         <activity android:name="petstone.project.animalisland.Select_Free_Rehome"></activity>
         <activity android:name="petstone.project.animalisland.Select_Sell_Rehome"></activity>
 
-=======
-            </intent-filter>
-        </activity>
-        <activity android:name=".activity.MainActivity" />
-        <activity android:name=".activity.MypageInfoEditActivity" />
-        <activity android:name=".activity.MypagePetfriendApplyActivity" />
-        <activity android:name=".activity.MypageSellApplyActivity" />
-        <activity android:name=".activity.PetfriendUserSelect" />
-        <activity android:name=".activity.PetfriendUserApplyActivity" />
-        <activity android:name=".activity.RehomeFreeSubmitActivity" />
-        <activity android:name=".activity.RehomeSellSubmitActivity" />
->>>>>>> 3b338d1
     </application>
 
 </manifest>
