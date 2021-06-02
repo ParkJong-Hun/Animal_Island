@@ -64,30 +64,53 @@
     <LinearLayout
         android:id="@+id/linear_layout1"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="40dp"
         android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textview1">
+        app:layout_constraintTop_toBottomOf="@+id/textview1"
+        android:orientation="horizontal">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/search_result"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            />
 
     </LinearLayout>
 
 
-    <TextView
+    <LinearLayout
         android:id="@+id/user_list_textview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/round_ffe1e1"
-        android:text="유저 리스트 (5명)"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linear_layout1" />
+        app:layout_constraintTop_toBottomOf="@+id/linear_layout1">
+
+<!--
+        <Spinner
+            android:layout_marginStart="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:entries="@array/test1"
+            android:background="@drawable/round_ffe1e1"/>
+-->
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:text="유저 n명"
+            android:background="@drawable/round_ffe1e1" />
+
+
+    </LinearLayout>
+
+
 
     <View
         android:id="@+id/petfriend_line1"
@@ -120,7 +143,7 @@
         android:id="@+id/petfriend_listview"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="210dp"
         android:layout_marginBottom="12dp"
         android:divider="#00000000"
         app:layout_constraintBottom_toBottomOf="parent"

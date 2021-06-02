@@ -20,9 +20,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 
 import petstone.project.animalisland.R;
-import petstone.project.animalisland.petfriend_recycelview_adapter.HorizontalData;
+import petstone.project.animalisland.petfriend_recycelview_adapter.PetfriendRecycleAdapter;
+import petstone.project.animalisland.petfriend_recycelview_adapter.PetfriendSearchData;
 import petstone.project.animalisland.component.PetfriendCustomAdapter;
-import petstone.project.animalisland.petfriend_recycelview_adapter.PetfriendSearchHorizontalAdapter;
+import petstone.project.animalisland.petfriend_recycelview_adapter.RecyclerDecoration;
 
 public class PetFriend extends Fragment {
     ListView listView;
@@ -31,7 +32,8 @@ public class PetFriend extends Fragment {
     SearchView petfriend_search_view;
     RecyclerView p_recyclerView;
     private LinearLayoutManager mLayoutManager;
-    PetfriendSearchHorizontalAdapter pfs_adapter;
+    PetfriendRecycleAdapter pfs_adapter;
+    ArrayList<PetfriendSearchData> search_list = null;
 
 
 
@@ -44,7 +46,17 @@ public class PetFriend extends Fragment {
 
         View view = inflater.inflate(R.layout.petfriend_component, container, false);
 
-        //데이터 바인딩
+
+        //리사이클 뷰에 들어갈 리스트뷰
+        search_list = new ArrayList<PetfriendSearchData>();
+
+        //리스트뷰에 예시 데이터넣기
+        search_list.add(new PetfriendSearchData(new String("서울")));
+        search_list.add(new PetfriendSearchData(new String("강북")));
+        search_list.add(new PetfriendSearchData(new String("강서")));
+
+
+       //데이터 바인딩
         petfriend_submit = view.findViewById(R.id.petfriend_submit);
         petfriend_search_view = view.findViewById(R.id.petfriend_search_view);
         // 리사이클뷰 바인딩
@@ -53,29 +65,23 @@ public class PetFriend extends Fragment {
         //init layoutmanager
         mLayoutManager = new LinearLayoutManager(getContext());
         mLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL); // 기본값이 VERTICAL
-
+        //리사이클뷰 간격 숫자가 커질수록 간격이 넓어짐
+        p_recyclerView.addItemDecoration(new RecyclerDecoration(10));
+        //리사이클 뷰의 레이아웃 크기가 변경되는걸 막음
+        p_recyclerView.setHasFixedSize(true);
         //setLayoutManager
         p_recyclerView.setLayoutManager(mLayoutManager);
-
         //init aapter
-        pfs_adapter = new PetfriendSearchHorizontalAdapter();
-
-        //init data
-        ArrayList<HorizontalData> data = new ArrayList<>();
-
-        /*
-                int i = 0;
-        while (i < MAX_ITEM_COUNT) {
-            data.add(new HorizontalData(R.mipmap.ic_launcher, i+"번째 데이터"));
-            i++;
-        }
-         */
-
+        pfs_adapter = new PetfriendRecycleAdapter(search_list);
         // set Data
-        pfs_adapter.setData(data);
-
+        pfs_adapter = new PetfriendRecycleAdapter(search_list);
         // set Adapter
         p_recyclerView.setAdapter(pfs_adapter);
+
+
+        p_recyclerView.addItemDecoration(new RecyclerDecoration(10));
+        pfs_adapter.notifyDataSetChanged();
+
 
 
 
@@ -115,6 +121,11 @@ public class PetFriend extends Fragment {
 
 
         return view;
+    }
+
+    public void addItem(String text){
+
+
     }
 
 
