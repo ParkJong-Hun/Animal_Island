@@ -1,4 +1,4 @@
-package petstone.project.animalisland.component;
+package petstone.project.animalisland.other;
 
 import android.content.Context;
 import android.view.LayoutInflater;

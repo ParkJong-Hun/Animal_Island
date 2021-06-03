@@ -1,4 +1,4 @@
-package petstone.project.animalisland.petfriend_recycelview_adapter;
+package petstone.project.animalisland.other.petfriend_recycelview_adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;

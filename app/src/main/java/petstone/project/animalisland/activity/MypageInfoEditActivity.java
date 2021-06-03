@@ -79,10 +79,18 @@ public class MypageInfoEditActivity extends AppCompatActivity {
                 }
             }
         });
-        //주소
+        //시/도
         ArrayAdapter cityAdapter = ArrayAdapter.createFromResource(this, R.array.도광역시, android.R.layout.simple_spinner_dropdown_item);
         cityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         city.setAdapter(cityAdapter);
+        //시/군/구
+        ArrayAdapter kuAdapter = ArrayAdapter.createFromResource(this, R.array.서울시, android.R.layout.simple_spinner_dropdown_item);
+        kuAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ku.setAdapter(kuAdapter);
+        //동/읍/면
+        ArrayAdapter dongAdapter = ArrayAdapter.createFromResource(this, R.array.종로구, android.R.layout.simple_spinner_dropdown_item);
+        dongAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        dong.setAdapter(dongAdapter);
         
         //취소버튼
         cancel.setOnClickListener(new View.OnClickListener() {

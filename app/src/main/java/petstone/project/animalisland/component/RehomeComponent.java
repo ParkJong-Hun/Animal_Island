@@ -10,11 +10,8 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 
-import petstone.project.animalisland.Free_Rehome;
 import petstone.project.animalisland.R;
-import petstone.project.animalisland.Sell_Rehome;
-import petstone.project.animalisland.VPAdapter;
-import petstone.project.animalisland.activity.MainActivity;
+import petstone.project.animalisland.other.VPAdapter;
 
 
 public class RehomeComponent extends Fragment {

@@ -1,5 +1,4 @@
-package petstone.project.animalisland.petfriend_recycelview_adapter;
-import android.graphics.drawable.Drawable;
+package petstone.project.animalisland.other.petfriend_recycelview_adapter;
 
 public class PetfriendSearchData {
 
