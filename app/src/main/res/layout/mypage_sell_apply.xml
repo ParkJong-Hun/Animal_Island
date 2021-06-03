@@ -4,18 +4,146 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <include
-        layout="@layout/toolbar"
-        android:id="@+id/toolbar"/>
-    <FrameLayout
+        layout="@layout/toolbar_mypage_sell_apply"
+        android:id="@+id/toolbar_mypage_sell_apply"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_mypage_sell_apply">
+        <!--지역-->
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="유료 분양 권한 신청"
-            app:layout_constraintEnd_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
-    </FrameLayout>
+            android:id="@+id/mypage_sell_apply_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+
+            android:text="지역"
+
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Spinner
+            android:id="@+id/mypage_sell_apply_address_city_form"
+            android:layout_width="130dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:spinnerMode="dropdown"
+            app:layout_constraintStart_toStartOf="@+id/mypage_sell_apply_address"
+            app:layout_constraintTop_toBottomOf="@+id/mypage_sell_apply_address" />
+
+        <Spinner
+            android:id="@+id/mypage_sell_apply_address_ku_form"
+            android:layout_width="130dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:spinnerMode="dropdown"
+            app:layout_constraintLeft_toRightOf="@+id/mypage_sell_apply_address_city_form"
+            app:layout_constraintTop_toBottomOf="@+id/mypage_sell_apply_address" />
+
+        <Spinner
+            android:id="@+id/mypage_sell_apply_address_dong_form"
+            android:layout_width="130dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:spinnerMode="dropdown"
+            app:layout_constraintLeft_toRightOf="@+id/mypage_sell_apply_address_ku_form"
+            app:layout_constraintTop_toBottomOf="@+id/mypage_sell_apply_address" />
+        <!--자격증-->
+        <TextView
+            android:id="@+id/mypage_sell_apply_license"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="자격증"
+            app:layout_constraintStart_toStartOf="@+id/mypage_sell_apply_address"
+            app:layout_constraintTop_toBottomOf="@+id/mypage_sell_apply_address_dong_form" />
+
+        <ImageView
+            android:id="@+id/mypage_sell_apply_license_image1"
+            android:layout_width="100dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/border"
+            android:src="@drawable/image"
+            app:layout_constraintEnd_toStartOf="@+id/mypage_sell_apply_license_image2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mypage_sell_apply_license" />
+
+        <ImageView
+            android:id="@+id/mypage_sell_apply_license_image2"
+            android:layout_width="100dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/border"
+            android:src="@drawable/image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mypage_sell_apply_license" />
+
+        <ImageView
+            android:id="@+id/mypage_sell_apply_license_image3"
+            android:layout_width="100dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/border"
+            android:src="@drawable/image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/mypage_sell_apply_license_image2"
+            app:layout_constraintTop_toBottomOf="@+id/mypage_sell_apply_license" />
+
+
+
+        <!--경력사항-->
+        <TextView
+            android:id="@+id/myapge_sell_apply_career"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="경력 사항"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mypage_sell_apply_license_image2"/>
+        <ListView
+            android:layout_width="350dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/border"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/myapge_sell_apply_career" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <!--취소 신청 버튼-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_weight="1">
+
+        <Button
+            android:id="@+id/mypage_sell_apply_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+
+            android:background="@drawable/border_colored"
+
+            android:text="취소"
+            android:textSize="20dp" />
+        <Button
+            android:id="@+id/mypage_sell_apply_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="신청"
+            android:textSize="20dp"
+
+            android:background="@drawable/border_colored"
+
+            android:layout_weight="0.5" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

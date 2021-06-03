@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp">
+
+    <ImageView
+        android:id="@+id/main_img"
+        android:layout_width="125dp"
+        android:layout_height="125dp"
+        android:src="@drawable/image"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/frist_line"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/main_img"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/free_gender"
+            android:layout_width="20dp"
+            android:layout_height="30dp"
+            android:src="@drawable/female"/>
+
+        <TextView
+            android:id="@+id/free_breed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="[동물종류] 품종"
+            android:textSize="20sp"
+            android:layout_marginStart="5dp"/>
+
+        <TextView
+            android:id="@+id/free_age"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="textEnd"
+            android:layout_weight="1"
+            android:text="나이"
+            android:textSize="15sp"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="10dp"
+        android:background="@color/light_gray"
+        app:layout_constraintTop_toBottomOf="@id/frist_line"
+        app:layout_constraintStart_toEndOf="@id/main_img"/>
+
+    <TextView
+        android:id="@+id/free_local"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:text="지역 : "
+        android:textSize="15sp"
+        app:layout_constraintLeft_toRightOf="@id/main_img"
+        app:layout_constraintTop_toBottomOf="@id/frist_line" />
+
+    <TextView
+        android:id="@+id/free_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:text="작성일 : "
+        android:textSize="15sp"
+        app:layout_constraintLeft_toRightOf="@id/main_img"
+        app:layout_constraintTop_toBottomOf="@id/free_local" />
+
+    <TextView
+        android:background="@drawable/button_shape"
+        android:id="@+id/free_nickname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:text="닉네임"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/free_date" />
+
+    <View
+        android:id="@+id/bottom_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/light_gray"
+        app:layout_constraintTop_toBottomOf="@id/free_nickname"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

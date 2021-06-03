@@ -1,10 +1,10 @@
 package petstone.project.animalisland.activity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.MenuItem;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -23,11 +23,14 @@ public class MainActivity extends AppCompatActivity {
     MypageComponent myFrag;
 
 
+
     //화면 초기화
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        
+
 
         bottomNavi = findViewById(R.id.bottom_tab);
         chatFrag = new ChatActivity();
@@ -58,5 +61,4 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
 }
