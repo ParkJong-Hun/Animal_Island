@@ -1,11 +1,5 @@
 package petstone.project.animalisland.activity;
 
-<<<<<<< HEAD
-=======
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
->>>>>>> 606206004206bda025175208b1ab87dd2811ed38
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -15,10 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import petstone.project.animalisland.R;
-<<<<<<< HEAD
-=======
 import petstone.project.animalisland.component.ChatComponent;
->>>>>>> 606206004206bda025175208b1ab87dd2811ed38
 import petstone.project.animalisland.component.MypageComponent;
 import petstone.project.animalisland.component.PetFriendComponent;
 import petstone.project.animalisland.component.RehomeComponent;

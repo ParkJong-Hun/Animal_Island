@@ -7,11 +7,7 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-<<<<<<< HEAD:app/src/main/java/petstone/project/animalisland/RegisterActivity.java
-import petstone.project.animalisland.activity.MainActivity;
-=======
 import petstone.project.animalisland.R;
->>>>>>> 606206004206bda025175208b1ab87dd2811ed38:app/src/main/java/petstone/project/animalisland/activity/RegisterActivity.java
 
 public class RegisterActivity extends AppCompatActivity {
     //선언부

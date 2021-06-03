@@ -1,8 +1,4 @@
-<<<<<<< HEAD:app/src/main/java/petstone/project/animalisland/activity/ChatActivity.java
-package petstone.project.animalisland.activity;
-=======
 package petstone.project.animalisland.component;
->>>>>>> 606206004206bda025175208b1ab87dd2811ed38:app/src/main/java/petstone/project/animalisland/component/ChatComponent.java
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,12 +11,7 @@ import androidx.fragment.app.Fragment;
 import petstone.project.animalisland.R;
 import petstone.project.animalisland.other.ChatAdapter;
 
-<<<<<<< HEAD:app/src/main/java/petstone/project/animalisland/activity/ChatActivity.java
-public class ChatActivity extends Fragment {
-=======
-
 public class ChatComponent extends Fragment {
->>>>>>> 606206004206bda025175208b1ab87dd2811ed38:app/src/main/java/petstone/project/animalisland/component/ChatComponent.java
     ListView c_ListView;
     ChatAdapter c_Adapter;
 
