@@ -21,7 +21,7 @@ public class FreeRecycleAdapter extends RecyclerView.Adapter<FreeRecycleAdapter.
     private Context context;
 
     // 생성자에서 데이터 리스트 객체를 전달받음.
-    FreeRecycleAdapter(ArrayList<FreeRehomeList> list) {
+    public FreeRecycleAdapter(ArrayList<FreeRehomeList> list) {
         mData = list ;
     }
 
