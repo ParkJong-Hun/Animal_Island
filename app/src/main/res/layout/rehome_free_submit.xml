@@ -174,12 +174,12 @@
                     android:layout_weight="1"
                     android:textAlignment="center" />
 
-                <Spinner
+                <EditText
                     android:id="@+id/age"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    android:textAlignment="center" />
+                    android:hint="나이(년,개월)"/>
 
                 <LinearLayout
                     android:layout_width="0dp"
