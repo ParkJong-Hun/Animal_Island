@@ -114,7 +114,7 @@ public class PetFriend extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent;
-                intent = new Intent(getContext(), PetfriendUserApplyActivity.class);
+                intent = new Intent(getContext(), MypagePetfriendApplyActivity.class);
                 startActivity(intent);
             }
         });
