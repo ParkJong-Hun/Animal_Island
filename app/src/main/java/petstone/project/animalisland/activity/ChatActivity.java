@@ -21,6 +21,13 @@ public class ChatActivity extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.chatlist_component, container, false);
+        return rootView;
+    }
+}
+    /*
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View chat_view = inflater.inflate(R.layout.chatlist_component, container, false);
 
         c_Adapter = new ChatComponent();
@@ -51,7 +58,6 @@ public class ChatActivity extends Fragment {
 
     }
 
-    /*
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.chatlist_component, container, false);
@@ -76,5 +82,3 @@ public class ChatActivity extends Fragment {
         c_Adapter.add("네 알겠습니다", 0);
         c_Adapter.add("감사합니다~", 1);
     } */
-
-}
