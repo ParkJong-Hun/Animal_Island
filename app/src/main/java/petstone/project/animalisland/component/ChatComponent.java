@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment;
 import petstone.project.animalisland.R;
 import petstone.project.animalisland.other.ChatAdapter;
 
-
 public class ChatComponent extends Fragment {
     ListView c_ListView;
     ChatAdapter c_Adapter;
