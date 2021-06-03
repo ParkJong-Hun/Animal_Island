@@ -18,7 +18,7 @@ public class RehomeSellSubmitActivity extends AppCompatActivity {
 
     ImageView back;
     Button cancel, submit;
-    Spinner city, borough, town, breed, age, inoculation;
+    Spinner city, borough, town, breed, inoculation;
 
     String s_gender = null;
     String s_neuter = null;
@@ -27,8 +27,7 @@ public class RehomeSellSubmitActivity extends AppCompatActivity {
     String[] borough_name = {"시/구/군"};
     String[] town_name = {"동/읍/면"};
     String[] breed_name = {"동물종류"};
-    String[] age_name= {"2개월" };
-    String[] inoculation_name = {"차수 선택(최대 7차)"};
+    String[] inoculation_name = {"차수 선택(최대 7차)", "1차", "2차", "3차", "4차", "5차", "6차", "7차", "접종 안함"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +48,6 @@ public class RehomeSellSubmitActivity extends AppCompatActivity {
         borough = findViewById(R.id.local_borough);
         town = findViewById(R.id.local_town);
         breed = findViewById(R.id.breed);
-        age = findViewById(R.id.age);
         inoculation = findViewById(R.id.inoculation);
 
         ArrayAdapter<String> city_adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, city_name);
@@ -68,9 +66,6 @@ public class RehomeSellSubmitActivity extends AppCompatActivity {
         breed_adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         breed.setAdapter(breed_adapter);
 
-        ArrayAdapter<String> age_adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, age_name);
-        age_adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-        age.setAdapter(age_adapter);
 
         ArrayAdapter<String> inoculation_adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, inoculation_name);
         inoculation_adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
