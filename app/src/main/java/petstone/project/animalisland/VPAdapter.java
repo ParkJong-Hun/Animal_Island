@@ -17,11 +17,9 @@ public class VPAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
 
-        Free_Rehome free = new Free_Rehome();
-
         switch (position) {
             case 0:
-
+                Free_Rehome free = new Free_Rehome();
                 return free;
             case 1:
                 Sell_Rehome sell = new Sell_Rehome();
