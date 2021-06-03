@@ -1,4 +1,4 @@
-package petstone.project.animalisland;
+package petstone.project.animalisland.component;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -15,10 +15,12 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
-import petstone.project.animalisland.activity.MypageInfoEditActivity;
+import petstone.project.animalisland.R;
 import petstone.project.animalisland.activity.RehomeFreeSubmitActivity;
+import petstone.project.animalisland.other.FreeRecycleAdapter;
+import petstone.project.animalisland.other.FreeRehomeList;
 
-public class Free_Rehome extends Fragment {
+public class FreeRehomeComponent extends Fragment {
     FloatingActionButton free_submit;
     RecyclerView recyclerView = null ;
     FreeRecycleAdapter frAdapter = null ;
