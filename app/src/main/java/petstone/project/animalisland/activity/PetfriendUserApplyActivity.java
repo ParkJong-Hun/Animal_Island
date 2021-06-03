@@ -11,7 +11,8 @@ import petstone.project.animalisland.R;
 
 public class PetfriendUserApplyActivity extends AppCompatActivity {
 
-    Button ok_btn,cancle_btn;
+    Button ok_btn,cancle_btn,back_btn;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -20,6 +21,8 @@ public class PetfriendUserApplyActivity extends AppCompatActivity {
 
         ok_btn = findViewById(R.id.ok_btn);
         cancle_btn = findViewById(R.id.cancle_btn);
+        back_btn = findViewById(R.id.petfriend_submit_back);
+
 
         ok_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -27,8 +30,13 @@ public class PetfriendUserApplyActivity extends AppCompatActivity {
                 finish();
             }
         });
-
         cancle_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -37,5 +45,9 @@ public class PetfriendUserApplyActivity extends AppCompatActivity {
 
 
 
+
+
     }
+
+
 }
