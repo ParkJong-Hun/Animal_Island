@@ -1,4 +1,4 @@
-package petstone.project.animalisland;
+package petstone.project.animalisland.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,6 +8,8 @@ import android.widget.Button;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import petstone.project.animalisland.R;
 
 public class RegisterActivity extends AppCompatActivity {
     @Override

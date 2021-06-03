@@ -1,7 +1,6 @@
 package petstone.project.animalisland.component;
 
 import android.content.Intent;
-import android.media.session.PlaybackState;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,10 +15,12 @@ import androidx.fragment.app.Fragment;
 
 import petstone.project.animalisland.R;
 import petstone.project.animalisland.activity.LoginActivity;
-import petstone.project.animalisland.activity.MainActivity;
 import petstone.project.animalisland.activity.MypageInfoEditActivity;
 import petstone.project.animalisland.activity.MypagePetfriendApplyActivity;
 import petstone.project.animalisland.activity.MypageSellApplyActivity;
+import petstone.project.animalisland.other.MypageCustomListAdapter;
+import petstone.project.animalisland.other.MypageEventDialog;
+import petstone.project.animalisland.other.MypageNewsDialog;
 
 public class MypageComponent extends Fragment {
 

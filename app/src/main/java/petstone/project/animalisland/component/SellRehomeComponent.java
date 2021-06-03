@@ -1,4 +1,4 @@
-package petstone.project.animalisland;
+package petstone.project.animalisland.component;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -15,10 +15,12 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
-import petstone.project.animalisland.activity.RehomeFreeSubmitActivity;
+import petstone.project.animalisland.R;
 import petstone.project.animalisland.activity.RehomeSellSubmitActivity;
+import petstone.project.animalisland.other.SellRecycleAdapter;
+import petstone.project.animalisland.other.SellRehomeList;
 
-public class Sell_Rehome extends Fragment {
+public class SellRehomeComponent extends Fragment {
 
     FloatingActionButton sell_submit;
     RecyclerView recyclerView = null ;

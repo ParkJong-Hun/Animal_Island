@@ -1,6 +1,4 @@
-package petstone.project.animalisland.activity;
-
-import androidx.appcompat.app.AppCompatActivity;
+package petstone.project.animalisland.component;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,11 +9,12 @@ import android.widget.ListView;
 import androidx.fragment.app.Fragment;
 
 import petstone.project.animalisland.R;
+import petstone.project.animalisland.other.ChatAdapter;
 
 
-public class ChatActivity extends AppCompatActivity {
+public class ChatComponent extends Fragment {
     ListView c_ListView;
-    ChatComponent c_Adapter;
+    ChatAdapter c_Adapter;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.chatlist_component, container, false);
