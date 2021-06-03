@@ -23,10 +23,10 @@
         <activity android:name="petstone.project.animalisland.activity.PetfriendUserSelect"></activity>
         <activity android:name="petstone.project.animalisland.activity.PetfriendUserApplyActivity"></activity>
         <activity android:name=".RegisterActivity"></activity>
-
         <activity android:name="petstone.project.animalisland.activity.RehomeFreeSubmitActivity"></activity>
         <activity android:name="petstone.project.animalisland.activity.RehomeSellSubmitActivity"></activity>
-
+        <activity android:name="petstone.project.animalisland.Select_Free_Rehome"></activity>
+        <activity android:name="petstone.project.animalisland.Select_Sell_Rehome"></activity>
     </application>
 
 </manifest>
