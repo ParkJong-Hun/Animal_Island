@@ -74,8 +74,8 @@ public class ChatComponent extends BaseAdapter {
 
             layout = (LinearLayout) convertView.findViewById(R.id.layout);
             text = (TextView) convertView.findViewById(R.id.text);
-            viewRight = (View) convertView.findViewById(R.id.imageViewright);
-            viewLeft = (View) convertView.findViewById(R.id.imageViewleft);
+            //viewRight = (View) convertView.findViewById(R.id.imageViewright);
+            //viewLeft = (View) convertView.findViewById(R.id.imageViewleft);
 
 
             // 홀더 생성 및 Tag로 등록
