@@ -9,13 +9,11 @@
         android:roundIcon="@mipmap/icon_animal_island_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.RegisterActivity"></activity>
-        <activity android:name=".activity.LoginActivity">
-            <intent-filter>
+        <activity android:name="petstone.project.animalisland.activity.LoginActivity">
+             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-
              </intent-filter>
          </activity>
         <activity android:name="petstone.project.animalisland.activity.MainActivity"></activity>
@@ -24,14 +22,11 @@
         <activity android:name="petstone.project.animalisland.activity.MypageSellApplyActivity"></activity>
         <activity android:name="petstone.project.animalisland.activity.PetfriendUserSelect"></activity>
         <activity android:name="petstone.project.animalisland.activity.PetfriendUserApplyActivity"></activity>
-
-
+        <activity android:name=".RegisterActivity"></activity>
         <activity android:name="petstone.project.animalisland.activity.RehomeFreeSubmitActivity"></activity>
         <activity android:name="petstone.project.animalisland.activity.RehomeSellSubmitActivity"></activity>
-
         <activity android:name="petstone.project.animalisland.Select_Free_Rehome"></activity>
         <activity android:name="petstone.project.animalisland.Select_Sell_Rehome"></activity>
-
     </application>
 
 </manifest>
