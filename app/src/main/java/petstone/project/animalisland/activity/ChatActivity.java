@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment;
 
 import petstone.project.animalisland.R;
 
-
 public class ChatActivity extends Fragment {
     ListView c_ListView;
     ChatComponent c_Adapter;
