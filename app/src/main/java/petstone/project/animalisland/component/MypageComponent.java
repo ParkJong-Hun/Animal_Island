@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 
 import petstone.project.animalisland.R;
 import petstone.project.animalisland.activity.LoginActivity;
+import petstone.project.animalisland.activity.MainActivity;
 import petstone.project.animalisland.activity.MypageInfoEditActivity;
 import petstone.project.animalisland.activity.MypagePetfriendApplyActivity;
 import petstone.project.animalisland.activity.MypageSellApplyActivity;
@@ -73,12 +74,16 @@ public class MypageComponent extends Fragment {
                     }
                     //이벤트
                     case 2: {
-                        //다이얼로그
+                        MypageEventDialog dlg = new MypageEventDialog(getContext());
+                        dlg.addArticle("아아아아 내용");
+                        dlg.show();
                         break;
                     }
                     //공지사항
                     case 3: {
-                        //다이얼로그
+                        MypageNewsDialog dlg = new MypageNewsDialog(getContext());
+                        dlg.addArticle("아아아아 내용");
+                        dlg.show();
                         break;
                     }
                     //로그아웃

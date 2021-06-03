@@ -1,25 +1,22 @@
 package petstone.project.animalisland.activity;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
 
-import java.util.ArrayList;
-
 import petstone.project.animalisland.R;
 
 
-public class ChatActivity extends Fragment {
+public class ChatActivity extends AppCompatActivity {
     ListView c_ListView;
-    ListAdapter c_Adapter = new ChatComponent();
-    ArrayList c_ArrayList;
+    ChatComponent c_Adapter;
 
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.chatlist_component, container, false);
         return rootView;
@@ -61,12 +58,18 @@ public class ChatActivity extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.chatlist_component, container, false);
+        return inflater.inflate(R.layout.chatlist_component, container, false);
+    }
+
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.chat);
 
         // 커스텀 어댑터 생성
         c_Adapter = new ChatComponent();
 
         // Xml에서 추가한 ListView 연결
-        c_ListView = (ListView) c_ListView.findViewById(R.id.chat_lv1);
+        c_ListView = (ListView) findViewById(R.id.chat_lv1);
 
         // ListView에 어댑터 연결
         c_ListView.setAdapter(c_Adapter);
