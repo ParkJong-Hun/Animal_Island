@@ -1,9 +1,11 @@
-package petstone.project.animalisland;
+package petstone.project.animalisland.other;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.fragment.app.FragmentStatePagerAdapter;
+
+import petstone.project.animalisland.component.FreeRehomeComponent;
+import petstone.project.animalisland.component.SellRehomeComponent;
 
 public class VPAdapter extends FragmentPagerAdapter {
 
@@ -19,10 +21,10 @@ public class VPAdapter extends FragmentPagerAdapter {
 
         switch (position) {
             case 0:
-                Free_Rehome free = new Free_Rehome();
+                FreeRehomeComponent free = new FreeRehomeComponent();
                 return free;
             case 1:
-                Sell_Rehome sell = new Sell_Rehome();
+                SellRehomeComponent sell = new SellRehomeComponent();
                 return sell;
             default:
                 return null;

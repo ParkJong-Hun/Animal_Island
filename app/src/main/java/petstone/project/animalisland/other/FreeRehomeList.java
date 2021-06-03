@@ -1,11 +1,11 @@
-package petstone.project.animalisland;
+package petstone.project.animalisland.other;
 
 import android.graphics.drawable.Drawable;
 
-public class SellRehomeList {
+public class FreeRehomeList {
 
     Drawable main_img, gender;
-    String breed, age, local, date, price, nickname;
+    String breed, age, local, date, nickname;
 
     public void setImg(Drawable main) {
         main_img = main;
@@ -29,10 +29,6 @@ public class SellRehomeList {
 
     public void setDate(String sdate) {
         date = sdate;
-    }
-
-    public void setPrice(String sprice) {
-        price = sprice;
     }
 
     public void setNickname(String snickname) {
@@ -61,10 +57,6 @@ public class SellRehomeList {
 
     public String getDate() {
         return this.date;
-    }
-
-    public String getPrice() {
-        return this.price;
     }
 
     public String getNickname() {

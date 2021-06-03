@@ -1,4 +1,4 @@
-package petstone.project.animalisland.activity;
+package petstone.project.animalisland.other;
 
 import android.content.Context;
 import android.view.Gravity;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 import petstone.project.animalisland.R;
 
-public class ChatComponent extends BaseAdapter {
+public class ChatAdapter extends BaseAdapter {
     public class ListContents {
         String msg;
         int type;
@@ -25,7 +25,7 @@ public class ChatComponent extends BaseAdapter {
 
     private ArrayList<ListContents> m_List;
 
-    public ChatComponent() {
+    public ChatAdapter() {
         m_List = new ArrayList<ListContents>();
     }
 

@@ -4,13 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
 import petstone.project.animalisland.R;
-import petstone.project.animalisland.RegisterActivity;
 
 //메인
 public class LoginActivity extends AppCompatActivity {
