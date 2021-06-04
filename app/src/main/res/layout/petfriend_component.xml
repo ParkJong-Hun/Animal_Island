@@ -160,7 +160,8 @@
         android:layout_margin="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:backgroundTint="#ff9696" />
+        android:backgroundTint="#ff9696"
+        app:backgroundTint="#ff9696"/>
 
 
 
