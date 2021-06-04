@@ -163,8 +163,4 @@
         android:backgroundTint="#ff9696"
         app:backgroundTint="#ff9696"/>
 
-
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
