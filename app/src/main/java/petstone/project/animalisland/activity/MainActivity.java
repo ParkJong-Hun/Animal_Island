@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import petstone.project.animalisland.R;
-import petstone.project.animalisland.component.ChatComponent;
+import petstone.project.animalisland.component.ChatListComponent;
 import petstone.project.animalisland.component.MypageComponent;
 import petstone.project.animalisland.component.PetFriendComponent;
 import petstone.project.animalisland.component.RehomeComponent;
@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     BottomNavigationView bottomNavi;
     RehomeComponent homeFrag;
     PetFriendComponent petFrag;
-    ChatComponent chatFrag;
+    ChatListComponent chatFrag;
     MypageComponent myFrag;
 
 
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         bottomNavi = findViewById(R.id.bottom_tab);
-        chatFrag = new ChatComponent();
+        chatFrag = new ChatListComponent();
         homeFrag = new RehomeComponent();
         petFrag = new PetFriendComponent();
         myFrag = new MypageComponent();

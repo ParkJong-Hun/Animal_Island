@@ -1,29 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
-        android:id="@+id/chat_layout"
-        android:layout_width="fill_parent"
+    <Toolbar
+        android:id="@+id/toolbar_chat"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:background="#ffe1e1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <FrameLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/back_chat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_keyboard_backspace_24"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="80dp"
+            android:text="ANIMAL"
+            android:textColor="#668c47"
+            android:textSize="25sp"
+            android:textStyle="bold|italic" />
 
-            <ListView
-                android:id="@+id/chat_lv1"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:cacheColorHint="#00000000"
-                android:divider="#000000"
-                android:listSelector="#00000000"
-                android:transcriptMode="alwaysScroll" />
-        </FrameLayout>
-    </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:paddingTop="8dp"
+            android:text="ISLAND"
+            android:textColor="#843c0c"
+            android:textSize="25sp"
+            android:textStyle="bold|italic" />
+
+
+    </Toolbar>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="280dp"
+        android:layout_height="70dp"
+        android:src="@drawable/chat1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_chat" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="280dp"
+        android:layout_height="70dp"
+        android:src="@drawable/chat2_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="280dp"
+        android:layout_height="70dp"
+        android:layout_marginEnd="128dp"
+        android:src="@drawable/chat3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+    <ImageView
+        android:layout_width="280dp"
+        android:layout_height="70dp"
+        android:src="@drawable/chat4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,7 +82,10 @@
         android:background="@color/colorDaepyo_Light"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="4dp">
+        android:padding="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <EditText
             android:id="@+id/chat_et"
@@ -53,4 +107,4 @@
             android:onClick="clickSend"
             android:text="send" />
     </LinearLayout>
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
