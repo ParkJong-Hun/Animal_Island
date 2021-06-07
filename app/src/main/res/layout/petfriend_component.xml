@@ -90,24 +90,39 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linear_layout1">
-
-<!--
-        <Spinner
-            android:layout_marginStart="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:entries="@array/test1"
-            android:background="@drawable/round_ffe1e1"/>
--->
+        app:layout_constraintTop_toBottomOf="@+id/linear_layout1"
+        app:layout_constraintHorizontal_weight="1">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_marginStart="10dp"
+            android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:text="유저 n명"
-            android:background="@drawable/round_ffe1e1" />
+            android:background="@drawable/round_ffe1e1"
+            android:layout_weight="2.5"/>
+        <Spinner
+            android:layout_marginStart="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:entries="@array/test1"
+            android:background="@drawable/round_ffe1e1"
+            android:layout_weight="2.5"/>
+        <Spinner
+            android:layout_marginStart="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:entries="@array/test2"
+            android:background="@drawable/round_ffe1e1"
+            android:layout_weight="2.5"/>
 
-
+        <Spinner
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:entries="@array/test3"
+            android:background="@drawable/round_ffe1e1"
+            android:layout_weight="2.5"/>
     </LinearLayout>
 
 

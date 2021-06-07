@@ -10,4 +10,16 @@
         <item>평점순</item>
         <item>거리순</item>
     </string-array>
+
+    <string-array name="test2">
+        <item>활동</item>
+        <item>산책</item>
+        <item>돌봄</item>
+    </string-array>
+
+    <string-array name="test3">
+        <item>비용</item>
+        <item>고가</item>
+        <item>저가</item>
+    </string-array>
 </resources>
