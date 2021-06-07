@@ -4,9 +4,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/icon_animal_island"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/icon_animal_island_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name="petstone.project.animalisland.activity.LoginActivity">
@@ -21,8 +21,12 @@
         <activity android:name="petstone.project.animalisland.activity.MypagePetfriendApplyActivity"></activity>
         <activity android:name="petstone.project.animalisland.activity.MypageSellApplyActivity"></activity>
         <activity android:name="petstone.project.animalisland.activity.PetfriendUserSelect"></activity>
-        <activity android:name="petstone.project.animalisland.activity.PetfriendUserApplyActivity"></activity>
-
+        <activity android:name=".activity.RegisterActivity"></activity>
+        <activity android:name="petstone.project.animalisland.activity.RehomeFreeSubmitActivity"></activity>
+        <activity android:name="petstone.project.animalisland.activity.RehomeSellSubmitActivity"></activity>
+        <activity android:name="petstone.project.animalisland.activity.SelectFreeRehomeActivity"></activity>
+        <activity android:name="petstone.project.animalisland.activity.SelectSellRehomeActivity"></activity>
+        <activity android:name="petstone.project.animalisland.activity.ChatActivity"></activity>
     </application>
 
 </manifest>

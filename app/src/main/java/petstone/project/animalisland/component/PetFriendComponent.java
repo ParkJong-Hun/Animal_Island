@@ -1,4 +1,4 @@
-package petstone.project.animalisland.activity;
+package petstone.project.animalisland.component;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,12 +20,14 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 
 import petstone.project.animalisland.R;
-import petstone.project.animalisland.petfriend_recycelview_adapter.PetfriendRecycleAdapter;
-import petstone.project.animalisland.petfriend_recycelview_adapter.PetfriendSearchData;
-import petstone.project.animalisland.component.PetfriendCustomAdapter;
-import petstone.project.animalisland.petfriend_recycelview_adapter.RecyclerDecoration;
+import petstone.project.animalisland.activity.MypagePetfriendApplyActivity;
+import petstone.project.animalisland.activity.PetfriendUserSelect;
+import petstone.project.animalisland.other.petfriend_recycelview_adapter.PetfriendRecycleAdapter;
+import petstone.project.animalisland.other.petfriend_recycelview_adapter.PetfriendSearchData;
+import petstone.project.animalisland.other.petfriend_recycelview_adapter.RecyclerDecoration;
+import petstone.project.animalisland.other.PetfriendCustomAdapter;
 
-public class PetFriend extends Fragment {
+public class PetFriendComponent extends Fragment {
     ListView listView;
     PetfriendCustomAdapter adapter;
     FloatingActionButton petfriend_submit;
@@ -114,7 +116,7 @@ public class PetFriend extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent;
-                intent = new Intent(getContext(), PetfriendUserApplyActivity.class);
+                intent = new Intent(getContext(), MypagePetfriendApplyActivity.class);
                 startActivity(intent);
             }
         });

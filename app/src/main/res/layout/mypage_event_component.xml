@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:maxHeight="400dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    android:padding="10dp">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="이벤트"
+        android:textAlignment="center"
+        android:textSize="20dp"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+        <TextView
+            android:id="@+id/mypage_event_article"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="이벤트 내용입니다."
+            android:layout_marginTop="5dp"/>
+        <Button
+            android:id="@+id/mypage_event_button"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="확인"
+            android:background="@color/colorDaepyo"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

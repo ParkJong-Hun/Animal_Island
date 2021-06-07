@@ -1,7 +1,6 @@
-package petstone.project.animalisland.component;
+package petstone.project.animalisland.other;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,7 +35,6 @@ public class MypageCustomListAdapter extends BaseAdapter {
     }
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        //LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         LayoutInflater inflater = LayoutInflater.from(context);
         convertView = inflater.inflate(R.layout.mypage_custom_list_component, parent, false);
 

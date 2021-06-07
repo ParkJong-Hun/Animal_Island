@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="도광역시">
+        <item>서울시</item>
+        <item>경기도</item>
+    </string-array>
+</resources>

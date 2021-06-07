@@ -1,16 +1,17 @@
 package petstone.project.animalisland.activity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.MenuItem;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import petstone.project.animalisland.R;
+import petstone.project.animalisland.component.ChatListComponent;
 import petstone.project.animalisland.component.MypageComponent;
+import petstone.project.animalisland.component.PetFriendComponent;
 import petstone.project.animalisland.component.RehomeComponent;
 
 //메인
@@ -19,8 +20,8 @@ public class MainActivity extends AppCompatActivity {
     //선언부
     BottomNavigationView bottomNavi;
     RehomeComponent homeFrag;
-    PetFriend petFrag;
-    ChatActivity chatFrag;
+    PetFriendComponent petFrag;
+    ChatListComponent chatFrag;
     MypageComponent myFrag;
 
 
@@ -34,9 +35,9 @@ public class MainActivity extends AppCompatActivity {
 
 
         bottomNavi = findViewById(R.id.bottom_tab);
-        chatFrag = new ChatActivity();
+        chatFrag = new ChatListComponent();
         homeFrag = new RehomeComponent();
-        petFrag = new PetFriend();
+        petFrag = new PetFriendComponent();
         myFrag = new MypageComponent();
 
         getSupportFragmentManager().beginTransaction().replace(R.id.main_frame,homeFrag).commitAllowingStateLoss();
@@ -62,5 +63,4 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
 }
