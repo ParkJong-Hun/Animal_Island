@@ -6,14 +6,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/user_image"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/border"
         android:src="@drawable/petfriend"
+        android:foreground="@drawable/circle_image_background"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -21,9 +21,10 @@
         android:id="@+id/user_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="50dp"
-        android:text="주소 \n시급"
-        android:textSize="20sp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:text="주소 : \n시급 :\n자격증 :\n경력 : "
+        android:textSize="15sp"
         app:layout_constraintStart_toEndOf="@+id/user_image"
         app:layout_constraintTop_toTopOf="@+id/user_image" />
 
@@ -33,6 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:text="닉네임"
+        android:textColor="#ff9696"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/user_image"
         app:layout_constraintStart_toStartOf="@+id/user_image"
@@ -41,7 +43,7 @@
     <View
         android:id="@+id/petfriend_user_info_line_1"
         android:layout_width="380dp"
-        android:layout_height="5dp"
+        android:layout_height="1dp"
         android:layout_marginStart="50dp"
         android:layout_marginTop="1dp"
         android:layout_marginEnd="50dp"
@@ -50,7 +52,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/round_ffe1e1"
+        android:text="평점"
+        app:layout_constraintEnd_toEndOf="@+id/petfriend_user_info_line_1"
+        app:layout_constraintTop_toTopOf="@+id/user_info" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
