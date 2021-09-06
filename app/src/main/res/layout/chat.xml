@@ -93,7 +93,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/white"
-            android:hint="메세지 입력"
+            android:hint="메세지 입11력"
             android:inputType="textMultiLine"
             android:maxLines="3"
             android:padding="10dp" />
