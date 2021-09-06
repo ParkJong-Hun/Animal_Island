@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "914597180354",
+    "project_id": "animal-island-512cc",
+    "storage_bucket": "animal-island-512cc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:914597180354:android:7eebdd6e5629c1f65a1c5b",
+        "android_client_info": {
+          "package_name": "petstone.project.animalisland"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "914597180354-0dkdnd8k66432mfutq90hc6sva6798pi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "petstone.project.animalisland",
+            "certificate_hash": "f242636d0bfa02031304fd3eb623295214cc72c4"
+          }
+        },
+        {
+          "client_id": "914597180354-mhul0lstkcl4383g0lf3fpnngped0efr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGtWRcemqHVSE6H-G0SPUmVFGd2kUlhIc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "914597180354-mhul0lstkcl4383g0lf3fpnngped0efr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
