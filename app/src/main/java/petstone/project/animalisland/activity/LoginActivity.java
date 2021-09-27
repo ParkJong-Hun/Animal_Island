@@ -2,18 +2,24 @@ package petstone.project.animalisland.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import petstone.project.animalisland.R;
 
-//메인
+//로그인
 public class LoginActivity extends AppCompatActivity {
 
     //선언부
@@ -22,6 +28,11 @@ public class LoginActivity extends AppCompatActivity {
 
     Button login_button;
     Button user_create_button;
+    EditText id_editText;
+    EditText password_editText;
+
+    String id = "";
+    String password = "";
 
     //화면 초기화
     @Override
@@ -35,18 +46,35 @@ public class LoginActivity extends AppCompatActivity {
         //바인딩
         login_button = findViewById(R.id.login_button);
         user_create_button = findViewById(R.id.user_create_button);
+        id_editText = findViewById(R.id.login_id_et);
+        password_editText = findViewById(R.id.login_pw_et);
+
 
         //로그인 버튼
         login_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (true) {
-                    //로그인 정보 일치
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent);
-                } else {
-                    //로그인 정보 불일치
-                    Toast.makeText(getApplicationContext(), "아이디 혹은 비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
+                id = id_editText.getText().toString();
+                password = password_editText.getText().toString();
+                try {
+                    auth.signInWithEmailAndPassword(id, password)
+                            .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()) {
+                                        //로그인 정보 일치
+                                        Log.d("Success", "이메일로 로그인:success");
+                                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                        startActivity(intent);
+                                    } else {
+                                        //로그인 정보 불일치
+                                        Log.w("Fail", "이메일로 로그인:failure", task.getException());
+                                        Toast.makeText(getApplicationContext(), "아이디 혹은 비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), "아이디와 비밀번호를 모두 작성해주십시오.", Toast.LENGTH_SHORT).show();
                 }
             }
         });

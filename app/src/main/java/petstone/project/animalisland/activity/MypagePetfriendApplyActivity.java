@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import petstone.project.animalisland.R;
 
+//마이페이지 펫프렌즈 권한 신청
 public class MypagePetfriendApplyActivity extends AppCompatActivity {
 
     Button cancel, submit;

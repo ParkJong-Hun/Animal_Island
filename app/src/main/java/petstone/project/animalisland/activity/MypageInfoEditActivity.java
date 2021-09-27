@@ -21,6 +21,7 @@ import java.util.regex.Pattern;
 
 import petstone.project.animalisland.R;
 
+//마이페이지 정보 수정
 public class MypageInfoEditActivity extends AppCompatActivity {
 
     Button cancel, edit;

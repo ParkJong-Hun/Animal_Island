@@ -13,6 +13,7 @@ import com.google.android.material.tabs.TabLayout;
 import petstone.project.animalisland.R;
 import petstone.project.animalisland.other.VPAdapter;
 
+//채팅
 public class ChatActivity extends AppCompatActivity {
     ImageView back;
     @Override
