@@ -22,6 +22,22 @@
           }
         },
         {
+          "client_id": "914597180354-5jf1kkcoj4ucce986s101c1lpsvct82j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "petstone.project.animalisland",
+            "certificate_hash": "7a4752d99a186a199f2504b62f64922602d03364"
+          }
+        },
+        {
+          "client_id": "914597180354-d6o27kn009skh73o9jjlqs4fhkv00heu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "petstone.project.animalisland",
+            "certificate_hash": "984a41a928bdca5cfacbe948078656606396381a"
+          }
+        },
+        {
           "client_id": "914597180354-mhul0lstkcl4383g0lf3fpnngped0efr.apps.googleusercontent.com",
           "client_type": 3
         }
