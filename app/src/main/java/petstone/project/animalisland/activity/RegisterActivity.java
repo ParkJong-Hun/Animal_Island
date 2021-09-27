@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import petstone.project.animalisland.R;
 
+//회원가입
 public class RegisterActivity extends AppCompatActivity {
     //선언부
     Button btn_register;
