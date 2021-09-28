@@ -96,13 +96,9 @@ public class LoginActivity extends AppCompatActivity {
         //현재 로그인되어 있는지(사용자 이름이 비어있는지) 체크
         FirebaseUser currentUser = auth.getCurrentUser();
         if(currentUser != null) {
-            //로그인 안되어있으면 reload
-            reload();
+            Log.d("Success", "자동 로그인됨: " + currentUser.getEmail());
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
         }
-    }
-
-    //새로고침
-    private void reload() {
-        //새로고침하는 무언가 작성
     }
 }
