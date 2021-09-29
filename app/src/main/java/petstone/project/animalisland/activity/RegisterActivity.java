@@ -111,13 +111,23 @@ public class RegisterActivity extends AppCompatActivity {
                 //파이어베이스에서 회원 컬렉션에서 입력한 id와 일치하는 필드를 갖는 문서가 있는지 질의
                 final CollectionReference usersRef = db.collection("users");
                 Query query = usersRef.whereEqualTo("id", id);
-                if (query == null) {
-                    //없으면 참으로 변경
-                    validate_id = true;
-                } else {
-                    //있으면 거짓으로 변경
-                    validate_id = false;
-                }
+                query.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        if (queryDocumentSnapshots.getDocuments().isEmpty()) {
+                            //없으면 참으로 변경
+                            validate_id = true;
+                            Toast.makeText(RegisterActivity.this, "사용 가능한 아이디입니다.",
+                                    Toast.LENGTH_SHORT).show();
+                        } else {
+                            //있으면 거짓으로 변경
+                            Log.d("fail", queryDocumentSnapshots.getDocuments().toString());
+                            validate_id = false;
+                            Toast.makeText(RegisterActivity.this, "이미 동일한 아이디가 존재합니다.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
             }
         });
 
@@ -128,16 +138,26 @@ public class RegisterActivity extends AppCompatActivity {
                 //입력한 데이터 가져오기
                 nickname = et_name.getText().toString();
 
-                //파이어베이스에서 회원 컬렉션에서 입력한 닉네임과 일치하는 필드를 갖는 문서가 있는지 질의
+                //파이어베이스에서 회원 컬렉션에서 입력한 id와 일치하는 필드를 갖는 문서가 있는지 질의
                 final CollectionReference usersRef = db.collection("users");
                 Query query = usersRef.whereEqualTo("nickname", nickname);
-                if (query == null) {
-                    //없으면 참으로 변경
-                    validate_nickname = true;
-                } else {
-                    //있으면 거짓으로 변경
-                    validate_nickname = false;
-                }
+                query.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        if (queryDocumentSnapshots.getDocuments().isEmpty()) {
+                            //없으면 참으로 변경
+                            validate_nickname = true;
+                            Toast.makeText(RegisterActivity.this, "사용 가능한 닉네임입니다.",
+                                    Toast.LENGTH_SHORT).show();
+                        } else {
+                            //있으면 거짓으로 변경
+                            Log.d("fail", queryDocumentSnapshots.getDocuments().toString());
+                            validate_nickname = false;
+                            Toast.makeText(RegisterActivity.this, "이미 동일한 닉네임이 존재합니다.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
             }
         });
 
@@ -178,6 +198,14 @@ public class RegisterActivity extends AppCompatActivity {
                                             user.put("sex", Sex.male);
                                             user.put("age", age);
                                             user.put("email", email);
+                                            user.put("uid", uid);
+                                            user.put("name", null);
+                                            user.put("address", null);
+                                            user.put("sell_permission", false);
+                                            user.put("is_petfriend", false);
+                                            user.put("image", null);
+
+                                            Map<String, Object> popularity = new HashMap<>();
 
                                             //데이터베이스에 추가
                                             db.collection("users").document(uid)

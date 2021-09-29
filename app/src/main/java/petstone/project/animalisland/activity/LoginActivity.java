@@ -12,10 +12,16 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.List;
 
 import petstone.project.animalisland.R;
 
@@ -25,6 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     //선언부
     //파이어베이스 인증 인스턴스
     private FirebaseAuth auth;
+    FirebaseFirestore db;
 
     Button login_button;
     Button user_create_button;
@@ -33,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
 
     String id = "";
     String password = "";
+    String email = "";
 
     //화면 초기화
     @Override
@@ -42,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
 
         //파이어베이스 인증 인스턴스 초기화
         auth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
 
         //바인딩
         login_button = findViewById(R.id.login_button);
@@ -54,10 +63,23 @@ public class LoginActivity extends AppCompatActivity {
         login_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 id = id_editText.getText().toString();
                 password = password_editText.getText().toString();
                 try {
-                    auth.signInWithEmailAndPassword(id, password)
+                    db.collection("users")
+                            .whereEqualTo("id", id)
+                            .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                        @Override
+                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                            for (DocumentSnapshot doc : queryDocumentSnapshots.getDocuments()) {
+                                Log.d("success", doc.getString("email"));
+                                email = doc.getString("email");
+                            }
+                        }
+                    });
+
+                    auth.signInWithEmailAndPassword(email, password)
                             .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -96,13 +118,9 @@ public class LoginActivity extends AppCompatActivity {
         //현재 로그인되어 있는지(사용자 이름이 비어있는지) 체크
         FirebaseUser currentUser = auth.getCurrentUser();
         if(currentUser != null) {
-            //로그인 안되어있으면 reload
-            reload();
+            Log.d("Success", "자동 로그인됨: " + currentUser.getEmail());
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
         }
-    }
-
-    //새로고침
-    private void reload() {
-        //새로고침하는 무언가 작성
     }
 }
