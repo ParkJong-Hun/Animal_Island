@@ -1,6 +1,7 @@
 package petstone.project.animalisland.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -114,15 +115,24 @@ public class RegisterActivity extends AppCompatActivity {
                 query.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        if (queryDocumentSnapshots.getDocuments().isEmpty()) {
+                        if (queryDocumentSnapshots.getDocuments().isEmpty() && !(id.isEmpty())) {
                             //없으면 참으로 변경
                             validate_id = true;
+                            et_id.setTextColor(Color.GREEN);
                             Toast.makeText(RegisterActivity.this, "사용 가능한 아이디입니다.",
+                                    Toast.LENGTH_SHORT).show();
+                        } else if (id.isEmpty()) {
+                            //비면 거짓으로 변경
+                            Log.d("fail", queryDocumentSnapshots.getDocuments().toString());
+                            validate_id = false;
+                            et_name.setTextColor(Color.RED);
+                            Toast.makeText(RegisterActivity.this, "아이디를 정확히 입력해주세요.",
                                     Toast.LENGTH_SHORT).show();
                         } else {
                             //있으면 거짓으로 변경
                             Log.d("fail", queryDocumentSnapshots.getDocuments().toString());
                             validate_id = false;
+                            et_id.setTextColor(Color.RED);
                             Toast.makeText(RegisterActivity.this, "이미 동일한 아이디가 존재합니다.",
                                     Toast.LENGTH_SHORT).show();
                         }
@@ -144,15 +154,24 @@ public class RegisterActivity extends AppCompatActivity {
                 query.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        if (queryDocumentSnapshots.getDocuments().isEmpty()) {
+                        if (queryDocumentSnapshots.getDocuments().isEmpty() && !(nickname.isEmpty())) {
                             //없으면 참으로 변경
                             validate_nickname = true;
+                            et_name.setTextColor(Color.GREEN);
                             Toast.makeText(RegisterActivity.this, "사용 가능한 닉네임입니다.",
+                                    Toast.LENGTH_SHORT).show();
+                        } else if (nickname.isEmpty()) {
+                            //비면 거짓으로 변경
+                            Log.d("fail", queryDocumentSnapshots.getDocuments().toString());
+                            validate_nickname = false;
+                            et_name.setTextColor(Color.RED);
+                            Toast.makeText(RegisterActivity.this, "닉네임을 정확히 입력해주세요.",
                                     Toast.LENGTH_SHORT).show();
                         } else {
                             //있으면 거짓으로 변경
                             Log.d("fail", queryDocumentSnapshots.getDocuments().toString());
                             validate_nickname = false;
+                            et_name.setTextColor(Color.RED);
                             Toast.makeText(RegisterActivity.this, "이미 동일한 닉네임이 존재합니다.",
                                     Toast.LENGTH_SHORT).show();
                         }
@@ -176,7 +195,7 @@ public class RegisterActivity extends AppCompatActivity {
                     age = Integer.parseInt(et_age.getText().toString());
                     email = et_mail.getText().toString();
                     //로그인 정보 일치
-                    if (password.equals(password_check) && email.contains("@") && validate_id && validate_nickname) {
+                    if (password.equals(password_check) && email.contains("@") && validate_id && validate_nickname && (password.length() >= 8) && (password.length() <= 20) && (id.length() >= 6)) {
                         //로그인 정보 일치 O
                         //회원 생성
                         auth.createUserWithEmailAndPassword(email, password)
