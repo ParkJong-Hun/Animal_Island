@@ -38,7 +38,7 @@ public class SellRehomeComponent extends Fragment {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
-        addItem(getResources().getDrawable(R.drawable.image,null), getResources().getDrawable(R.drawable.female,null), "[동물종류] 품종", "나이", "지역", "날짜", "분양가격" ,"닉네임") ;
+        addItem(getResources().getDrawable(R.drawable.image,null), getResources().getDrawable(R.drawable.female,null),"[동물종류]", "품종", "생년월일", "지역", "날짜", "분양비용") ;
 
 
         srAdapter.notifyDataSetChanged() ;
@@ -54,17 +54,17 @@ public class SellRehomeComponent extends Fragment {
         return view;
     }
 
-    public void addItem(Drawable main, Drawable gender, String breed, String age, String local, String date, String price, String nickname) {
+    public void addItem(Drawable main, Drawable gender, String type, String breed, String birth, String local, String date, String price) {
         SellRehomeList item = new SellRehomeList();
 
         item.setImg(main);
         item.setGenderImg(gender);
+        item.setType(type);
         item.setBreed(breed);
-        item.setAge(age);
+        item.setBirth(birth);
         item.setLocal(local);
         item.setDate(date);
         item.setPrice(price);
-        item.setNickname(nickname);
 
         mList.add(item);
     }

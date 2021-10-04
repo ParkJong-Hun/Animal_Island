@@ -5,7 +5,7 @@ import android.graphics.drawable.Drawable;
 public class FreeRehomeList {
 
     Drawable main_img, gender;
-    String breed, age, local, date, nickname;
+    String type, breed, birth, local, date;
 
     public void setImg(Drawable main) {
         main_img = main;
@@ -15,12 +15,14 @@ public class FreeRehomeList {
         gender = sgender;
     }
 
+    public void setType(String stype) { type = stype; };
+
     public void setBreed(String sbreed) {
         breed = sbreed;
     }
 
-    public void setAge(String sage) {
-        age = sage;
+    public void setBirth(String sbirth) {
+        birth = sbirth;
     }
 
     public void setLocal(String slocal) {
@@ -31,10 +33,6 @@ public class FreeRehomeList {
         date = sdate;
     }
 
-    public void setNickname(String snickname) {
-        nickname = snickname;
-    }
-
     public Drawable getImg() {
         return this.main_img;
     }
@@ -43,12 +41,14 @@ public class FreeRehomeList {
         return this.gender;
     }
 
+    public String getType() { return this.type; }
+
     public String getBreed() {
         return this.breed;
     }
 
-    public String getAge() {
-        return this.age;
+    public String getBirth() {
+        return this.birth;
     }
 
     public String getLocal() {
@@ -57,10 +57,6 @@ public class FreeRehomeList {
 
     public String getDate() {
         return this.date;
-    }
-
-    public String getNickname() {
-        return this.nickname;
     }
 
 }

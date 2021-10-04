@@ -17,6 +17,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar_mypage_edit_info">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
@@ -31,15 +32,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="15dp"
                 android:text="이름"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <!--아이디-->
             <EditText
                 android:id="@+id/mypage_info_edit_name_form"
-                android:layout_width="350dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
 
                 android:focusableInTouchMode="false"
                 android:text="김철수"
@@ -47,21 +51,23 @@
                 android:textColor="@color/colorDaepyo"
                 app:layout_constraintStart_toStartOf="@+id/mypage_info_edit_name"
                 app:layout_constraintTop_toBottomOf="@+id/mypage_info_edit_name" />
-            <!--아이디-->
+
             <TextView
                 android:id="@+id/mypage_info_edit_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:text="아이디"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/mypage_info_edit_name_form" />
 
             <EditText
                 android:id="@+id/mypage_info_edit_id_form"
-                android:layout_width="350dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
 
                 android:focusableInTouchMode="false"
                 android:text="fesu1235"
@@ -75,15 +81,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:text="비밀번호"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/mypage_info_edit_id_form" />
 
             <EditText
                 android:id="@+id/mypage_info_edit_password_form"
-                android:layout_width="350dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
                 android:hint="수정할 비밀번호를 입력하세요."
                 android:inputType="textPassword"
                 app:layout_constraintStart_toStartOf="@+id/mypage_info_edit_password"
@@ -94,7 +102,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:text="비밀번호 확인"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/mypage_info_edit_password_form" />
@@ -113,74 +121,82 @@
 
             <EditText
                 android:id="@+id/mypage_info_edit_password_check_form"
-                android:layout_width="350dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
                 android:hint="수정할 비밀번호를 입력하세요."
                 android:inputType="textPassword"
                 app:layout_constraintStart_toStartOf="@+id/mypage_info_edit_password_check"
                 app:layout_constraintTop_toBottomOf="@+id/mypage_info_edit_password_check" />
-            <!--성별-->
-            <TextView
-                android:id="@+id/mypage_info_edit_sex"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="5dp"
-                android:text="성별"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/mypage_info_edit_password_check_form" />
 
-            <EditText
-                android:id="@+id/mypage_info_edit_sex_form"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-
-                android:focusableInTouchMode="false"
-                android:text="男"
-                android:textAlignment="center"
-
-                android:textColor="@color/colorDaepyo"
-                app:layout_constraintStart_toStartOf="@+id/mypage_info_edit_sex"
-                app:layout_constraintTop_toBottomOf="@+id/mypage_info_edit_sex" />
             <!--나이-->
             <TextView
                 android:id="@+id/mypage_info_edit_age"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="150dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
                 android:text="나이"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/mypage_info_edit_password_check_form" />
 
             <EditText
                 android:id="@+id/mypage_info_edit_age_form"
-                android:layout_width="100dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
                 android:focusableInTouchMode="false"
-                android:text="25살"
+                android:text="2000년 01월 01일"
                 android:textAlignment="center"
 
                 android:textColor="@color/colorDaepyo"
                 app:layout_constraintStart_toStartOf="@+id/mypage_info_edit_age"
                 app:layout_constraintTop_toBottomOf="@+id/mypage_info_edit_age" />
+
+            <!--성별-->
+            <TextView
+                android:id="@+id/mypage_info_edit_sex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="170dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
+                android:text="성별"
+                app:layout_constraintLeft_toRightOf="@id/mypage_info_edit_age"
+                app:layout_constraintTop_toBottomOf="@+id/mypage_info_edit_password_check_form" />
+
+            <RadioButton
+                android:id="@+id/mypage_info_edit_sex_form"
+                android:layout_width="55dp"
+                android:layout_height="45dp"
+
+                android:text="남자"
+                android:textAlignment="center"
+                android:button="@null"
+                android:background="@drawable/button_round"
+
+                app:layout_constraintStart_toStartOf="@+id/mypage_info_edit_sex"
+                app:layout_constraintTop_toBottomOf="@+id/mypage_info_edit_sex" />
+
+
             <!--닉네임-->
             <TextView
                 android:id="@+id/mypage_info_edit_nickname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:text="닉네임"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/mypage_info_edit_age_form" />
 
             <EditText
                 android:id="@+id/mypage_info_edit_nickname_form"
-                android:layout_width="350dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
 
                 android:focusableInTouchMode="false"
                 android:text="아지냥이"
@@ -194,15 +210,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:text="이메일"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/mypage_info_edit_nickname_form" />
 
             <EditText
                 android:id="@+id/mypage_info_edit_email_form"
-                android:layout_width="350dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
                 android:text="fesu12355@naver.com"
                 app:layout_constraintStart_toStartOf="@+id/mypage_info_edit_email"
                 app:layout_constraintTop_toBottomOf="@+id/mypage_info_edit_email" />
@@ -213,34 +231,31 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:text="펫 프렌즈 주소"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/mypage_info_edit_email_form" />
 
             <Spinner
                 android:id="@+id/mypage_info_edit_address_city_form"
-                android:layout_width="130dp"
+                android:layout_width="125dp"
                 android:layout_height="40dp"
-                android:layout_marginTop="10dp"
                 android:spinnerMode="dropdown"
                 app:layout_constraintStart_toStartOf="@+id/mypage_info_edit_address"
                 app:layout_constraintTop_toBottomOf="@+id/mypage_info_edit_address" />
 
             <Spinner
                 android:id="@+id/mypage_info_edit_address_ku_form"
-                android:layout_width="130dp"
+                android:layout_width="125dp"
                 android:layout_height="40dp"
-                android:layout_marginTop="10dp"
                 android:spinnerMode="dropdown"
                 app:layout_constraintLeft_toRightOf="@+id/mypage_info_edit_address_city_form"
                 app:layout_constraintTop_toBottomOf="@+id/mypage_info_edit_address" />
 
             <Spinner
                 android:id="@+id/mypage_info_edit_address_dong_form"
-                android:layout_width="130dp"
+                android:layout_width="125dp"
                 android:layout_height="40dp"
-                android:layout_marginTop="10dp"
                 android:spinnerMode="dropdown"
                 app:layout_constraintLeft_toRightOf="@+id/mypage_info_edit_address_ku_form"
                 app:layout_constraintTop_toBottomOf="@+id/mypage_info_edit_address" />
@@ -262,14 +277,14 @@
             android:background="@drawable/border_colored"
 
             android:text="취소"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
         <Button
             android:id="@+id/mypage_info_edit_submit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
             android:text="수정"
-            android:textSize="20dp"
+            android:textSize="20sp"
 
             android:background="@drawable/border_colored"
 

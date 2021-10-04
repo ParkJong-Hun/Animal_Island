@@ -45,11 +45,11 @@ public class FreeRecycleAdapter extends RecyclerView.Adapter<FreeRecycleAdapter.
 
         holder.main_img.setImageDrawable(item.getImg()) ;
         holder.gender.setImageDrawable(item.getGender()) ;
+        holder.type.setText(item.getType());
         holder.breed.setText(item.getBreed()) ;
-        holder.age.setText(item.getAge()) ;
+        holder.birth.setText(item.getBirth()) ;
         holder.local.setText(item.getLocal()) ;
         holder.date.setText(item.getDate()) ;
-        holder.nickname.setText(item.getNickname()) ;
     }
 
     // getItemCount() - 전체 데이터 갯수 리턴.
@@ -61,18 +61,18 @@ public class FreeRecycleAdapter extends RecyclerView.Adapter<FreeRecycleAdapter.
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView main_img, gender ;
-        TextView breed, age, local, date, nickname ;
+        TextView type, breed, birth, local, date ;
 
         ViewHolder(View itemView) {
             super(itemView) ;
 
             main_img = itemView.findViewById(R.id.main_img) ;
             gender = itemView.findViewById(R.id.free_gender) ;
+            type = itemView.findViewById(R.id.free_animal_type);
             breed = itemView.findViewById(R.id.free_breed) ;
-            age = itemView.findViewById(R.id.free_age) ;
+            birth = itemView.findViewById(R.id.free_birth);
             local = itemView.findViewById(R.id.free_local) ;
             date = itemView.findViewById(R.id.free_date) ;
-            nickname = itemView.findViewById(R.id.free_nickname) ;
 
             itemView.setClickable(true);
 

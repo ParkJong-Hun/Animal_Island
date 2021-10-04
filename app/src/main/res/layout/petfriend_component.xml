@@ -16,7 +16,7 @@
         android:id="@+id/petfriend_search_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:layout_marginEnd="10dp"
 
         app:iconifiedByDefault="false"
@@ -24,7 +24,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:queryBackground="@drawable/round_ffe1e1"
-        app:queryHint="검색어를 입력하시오" />
+        app:queryHint="검색어를 입력하세요" />
 
     <!--
     <EditText
@@ -43,7 +43,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:text="최근검색어"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/petfriend_search_view" />
@@ -53,7 +53,7 @@
         android:id="@+id/day2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
         android:text="전체삭제"
         app:layout_constraintEnd_toEndOf="parent"
@@ -65,7 +65,6 @@
         android:id="@+id/linear_layout1"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textview1"
         android:orientation="horizontal">
@@ -74,10 +73,8 @@
             android:id="@+id/search_result"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            />
+            android:layout_marginEnd="20dp" />
 
     </LinearLayout>
 
@@ -86,7 +83,7 @@
         android:id="@+id/user_list_textview"
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="5dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -104,7 +101,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:text="유저 n명"
+            android:text="펫 프렌즈 n명"
             android:background="@drawable/round_ffe1e1" />
 
 
@@ -143,8 +140,8 @@
         android:id="@+id/petfriend_listview"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:layout_marginTop="210dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginTop="170dp"
+        android:layout_marginBottom="15dp"
         android:divider="#00000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -160,10 +157,8 @@
         android:layout_margin="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:backgroundTint="#ff9696" />
-
-
-
+        android:backgroundTint="#ff9696"
+        app:backgroundTint="#ff9696"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
