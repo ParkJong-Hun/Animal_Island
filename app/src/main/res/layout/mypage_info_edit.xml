@@ -143,7 +143,7 @@
 
             <EditText
                 android:id="@+id/mypage_info_edit_age_form"
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
 
                 android:focusableInTouchMode="false"
@@ -239,7 +239,7 @@
             <Spinner
                 android:id="@+id/mypage_info_edit_address_city_form"
                 android:layout_width="125dp"
-                android:layout_height="40dp"
+                android:layout_height="50dp"
                 android:spinnerMode="dropdown"
                 app:layout_constraintStart_toStartOf="@+id/mypage_info_edit_address"
                 app:layout_constraintTop_toBottomOf="@+id/mypage_info_edit_address" />
@@ -247,7 +247,7 @@
             <Spinner
                 android:id="@+id/mypage_info_edit_address_ku_form"
                 android:layout_width="125dp"
-                android:layout_height="40dp"
+                android:layout_height="50dp"
                 android:spinnerMode="dropdown"
                 app:layout_constraintLeft_toRightOf="@+id/mypage_info_edit_address_city_form"
                 app:layout_constraintTop_toBottomOf="@+id/mypage_info_edit_address" />
@@ -255,7 +255,7 @@
             <Spinner
                 android:id="@+id/mypage_info_edit_address_dong_form"
                 android:layout_width="125dp"
-                android:layout_height="40dp"
+                android:layout_height="50dp"
                 android:spinnerMode="dropdown"
                 app:layout_constraintLeft_toRightOf="@+id/mypage_info_edit_address_ku_form"
                 app:layout_constraintTop_toBottomOf="@+id/mypage_info_edit_address" />

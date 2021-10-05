@@ -125,22 +125,30 @@
         android:hint="비밀번호 확인"
         app:layout_constraintTop_toBottomOf="@id/tv_pw_check"/>
 
-
-
     <TextView
         android:id="@+id/tv_age"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="나이"
+        android:text="생년월일"
         app:layout_constraintLeft_toLeftOf="@id/et_pwck"
         app:layout_constraintTop_toBottomOf="@id/et_pwck"/>
+
+    <EditText
+        android:id="@+id/et_age"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:focusableInTouchMode="false"
+        android:textAlignment="center"
+        app:layout_constraintLeft_toLeftOf="@id/tv_age"
+        app:layout_constraintTop_toBottomOf="@id/tv_age"
+        android:hint="생년월일 입력"/>
 
     <TextView
         android:id="@+id/tv_sex"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="150dp"
+        android:layout_marginStart="160dp"
         android:text="성별"
         android:layout_marginTop="10dp"
         app:layout_constraintLeft_toRightOf="@id/tv_age"
@@ -182,7 +190,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/radio_sex"/>
+        app:layout_constraintTop_toBottomOf="@id/et_age"/>
 
     <EditText
         android:id="@+id/et_nickname"

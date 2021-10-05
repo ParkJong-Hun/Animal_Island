@@ -48,17 +48,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
 
-        login_button = findViewById(R.id.login_button);
 
-        login_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        /*
         //파이어베이스 인증 인스턴스 초기화
         auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
@@ -119,10 +109,9 @@ public class LoginActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
                 startActivity(intent);
             }
-        });*/
+        });
     }
 
-    /*
     //안드로이드 사이클 create -> start일 때
     @Override
     public void onStart() {
@@ -134,5 +123,5 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
         }
-    }*/
+    }
 }
