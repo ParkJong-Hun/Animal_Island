@@ -21,22 +21,22 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-        <TextView
-            android:id="@+id/mypage_event_article"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="이벤트 내용입니다."
-            android:layout_marginTop="5dp"/>
-        <Button
-            android:id="@+id/mypage_event_button"
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="확인"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@color/white"
-            android:background="@color/colorDaepyo"/>
+            <TextView
+                android:id="@+id/mypage_event_article"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="이벤트 내용입니다."
+                android:layout_marginTop="5dp"/>
+            <Button
+                android:id="@+id/mypage_event_button"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="확인"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:background="@color/colorDaepyo"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

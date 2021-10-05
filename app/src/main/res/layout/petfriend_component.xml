@@ -6,17 +6,17 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-<!--
-    <include
-        layout="@layout/toolbar"
-        android:id="@+id/petfriend_component_toolbar"/>
--->
+    <!--
+        <include
+            layout="@layout/toolbar"
+            android:id="@+id/petfriend_component_toolbar"/>
+    -->
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/petfriend_search_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
 
         app:iconifiedByDefault="false"
@@ -24,7 +24,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:queryBackground="@drawable/round_ffe1e1"
-        app:queryHint="검색어를 입력하세요" />
+        app:queryHint="검색어를 입력하시오" />
 
     <!--
     <EditText
@@ -43,7 +43,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:text="최근검색어"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/petfriend_search_view" />
@@ -53,7 +53,7 @@
         android:id="@+id/day2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="20dp"
         android:text="전체삭제"
         app:layout_constraintEnd_toEndOf="parent"
@@ -74,7 +74,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp" />
+            android:layout_marginEnd="20dp"
+            />
 
     </LinearLayout>
 
@@ -83,37 +84,56 @@
         android:id="@+id/user_list_textview"
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:layout_marginTop="5dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linear_layout1">
-
-<!--
-        <Spinner
-            android:layout_marginStart="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:entries="@array/test1"
-            android:background="@drawable/round_ffe1e1"/>
--->
+        app:layout_constraintTop_toBottomOf="@+id/linear_layout1"
+        app:layout_constraintHorizontal_weight="1">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_marginStart="10dp"
+            android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:text="펫 프렌즈 n명"
-            android:background="@drawable/round_ffe1e1" />
+            android:text="유저 5명"
+            android:textColor="@color/black"
+            android:textSize="15.5sp"
+            android:textAlignment="center"
+            android:background="@drawable/round_ffe1e1"
+            android:layout_weight="2.5"/>
+        <Spinner
+            android:layout_marginStart="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:entries="@array/test1"
+            android:background="@drawable/round_ffe1e1"
+            android:textAlignment="center"
+            android:layout_weight="2.5"/>
+        <Spinner
+            android:layout_marginStart="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:entries="@array/test2"
+            android:textAlignment="center"
+            android:background="@drawable/round_ffe1e1"
+            android:layout_weight="2.5"/>
 
-
+        <Spinner
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:entries="@array/test3"
+            android:textAlignment="center"
+            android:background="@drawable/round_ffe1e1"
+            android:layout_weight="2.5"/>
     </LinearLayout>
-
 
 
     <View
         android:id="@+id/petfriend_line1"
         android:layout_width="wrap_content"
         android:layout_height="1dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:background="@drawable/border"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -139,9 +159,7 @@
     <ListView
         android:id="@+id/petfriend_listview"
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:layout_marginTop="170dp"
-        android:layout_marginBottom="15dp"
+        android:layout_height="0dp"
         android:divider="#00000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -159,6 +177,5 @@
         app:layout_constraintRight_toRightOf="parent"
         android:backgroundTint="#ff9696"
         app:backgroundTint="#ff9696"/>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

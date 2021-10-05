@@ -1,8 +1,5 @@
 package petstone.project.animalisland.activity;
 
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -13,12 +10,7 @@ import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
-
 import petstone.project.animalisland.R;
-import petstone.project.animalisland.component.RehomeComponent;
 
 public class RehomeFreeSubmitActivity extends AppCompatActivity {
 

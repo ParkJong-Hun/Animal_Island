@@ -13,6 +13,9 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import petstone.project.animalisland.R;
 import petstone.project.animalisland.activity.LoginActivity;
 import petstone.project.animalisland.activity.MypageInfoEditActivity;
@@ -23,6 +26,7 @@ import petstone.project.animalisland.other.MypageEventDialog;
 import petstone.project.animalisland.other.MypageNewsDialog;
 
 public class MypageComponent extends Fragment {
+    FirebaseAuth auth;
 
     ListView list;
     MypageCustomListAdapter listAdapter;
@@ -38,6 +42,8 @@ public class MypageComponent extends Fragment {
         list = rootView.findViewById(R.id.mypage_list);
         listAdapter = new MypageCustomListAdapter(getContext());
         list.setAdapter(listAdapter);
+
+        auth = FirebaseAuth.getInstance();
 
         //프로필 편집 클릭 리스너
         mypage_profile_edit.setOnClickListener(new View.OnClickListener() {
@@ -89,6 +95,8 @@ public class MypageComponent extends Fragment {
                     }
                     //로그아웃
                     case 4: {
+                        auth.signOut();
+
                         intent = new Intent(getContext(), LoginActivity.class);
                         startActivity(intent);
                         break;

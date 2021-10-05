@@ -26,5 +26,5 @@
         android:text="hi"
         android:textSize="15dp"
         android:textColor="@color/black"
-         />
+        />
 </LinearLayout>

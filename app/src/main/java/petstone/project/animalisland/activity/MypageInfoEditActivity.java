@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -15,7 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
 import java.util.regex.Matcher;
@@ -23,6 +21,7 @@ import java.util.regex.Pattern;
 
 import petstone.project.animalisland.R;
 
+//마이페이지 정보 수정
 public class MypageInfoEditActivity extends AppCompatActivity {
 
     Button cancel, edit;

@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import petstone.project.animalisland.R;
 
+//마이페이지 유료 분양 권한 신청
 public class MypageSellApplyActivity extends AppCompatActivity {
 
     Button cancel, submit;

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="petstone.project.animalisland">
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/icon_animal_island"
@@ -12,7 +11,6 @@
         <activity android:name="petstone.project.animalisland.activity.LoginActivity">
              <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
              </intent-filter>
          </activity>
@@ -21,12 +19,11 @@
         <activity android:name="petstone.project.animalisland.activity.MypagePetfriendApplyActivity"></activity>
         <activity android:name="petstone.project.animalisland.activity.MypageSellApplyActivity"></activity>
         <activity android:name="petstone.project.animalisland.activity.PetfriendUserSelect"></activity>
-        <activity android:name="petstone.project.animalisland.activity.PetfriendUserApplyActivity"></activity>
         <activity android:name=".activity.RegisterActivity"></activity>
         <activity android:name="petstone.project.animalisland.activity.RehomeFreeSubmitActivity"></activity>
         <activity android:name="petstone.project.animalisland.activity.RehomeSellSubmitActivity"></activity>
         <activity android:name="petstone.project.animalisland.activity.SelectFreeRehomeActivity"></activity>
         <activity android:name="petstone.project.animalisland.activity.SelectSellRehomeActivity"></activity>
+        <activity android:name="petstone.project.animalisland.activity.ChatActivity"></activity>
     </application>
-
 </manifest>

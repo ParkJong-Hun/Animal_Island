@@ -20,7 +20,7 @@
         android:id="@+id/logo_id_tv"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="10dp"
         android:src="@drawable/mypage_colored"
         android:padding="5dp"
         app:layout_constraintRight_toLeftOf="@+id/login_id_et"
@@ -28,11 +28,11 @@
 
     <EditText
         android:id="@+id/login_id_et"
-        android:layout_width="280dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
+        android:layout_marginStart="85dp"
         android:hint="아이디를 입력하세요"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logo_image" />
     <!--비밀번호-->
@@ -40,7 +40,7 @@
         android:id="@+id/logo_pw_tv"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="10dp"
         android:src="@drawable/password_colored"
         android:padding="5dp"
         app:layout_constraintRight_toLeftOf="@+id/login_pw_et"
@@ -48,11 +48,12 @@
 
     <EditText
         android:id="@+id/login_pw_et"
-        android:layout_width="280dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
+        android:layout_marginStart="85dp"
+        android:layout_marginTop="10dp"
         android:hint="비밀번호를 입력하세요"
-        android:layout_marginTop="15dp"
+        android:inputType="textPassword"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/login_id_et" />
     <!--로그인-->
@@ -61,14 +62,14 @@
         android:id="@+id/login_button"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
+        android:padding="15dp"
 
         android:text="로그인"
-        android:textSize="20sp"
+        android:textSize="18dp"
         android:textColor="#FFFFFF"
-        android:textStyle="bold"
 
-        android:background="@drawable/button_round"
+        android:backgroundTint="@color/colorDaepyo"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
