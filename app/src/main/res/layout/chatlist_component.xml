@@ -8,19 +8,22 @@
     android:layout_gravity="center_horizontal"
     android:orientation="horizontal">
 
-
-
     <LinearLayout
         android:id="@+id/chat_layout"
         android:layout_width="fill_parent"
         android:layout_height="600dp"
         android:layout_weight="1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar_chat">
+        app:layout_constraintTop_toTopOf="parent">
 
         <FrameLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content">
+
+          <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/light_gray"/>
 
             <ListView
                 android:id="@+id/chat_lv1"

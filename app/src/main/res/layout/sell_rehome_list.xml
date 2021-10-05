@@ -3,13 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="5dp">
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/main_img"
-        android:layout_width="125dp"
-        android:layout_height="150dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginStart="20dp"
         android:src="@drawable/image"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -20,6 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/main_img"
@@ -32,26 +33,25 @@
             android:src="@drawable/female"/>
 
         <TextView
+            android:id="@+id/sell_animal_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="[동물종류]"
+            android:textSize="20sp"
+            android:layout_marginStart="5dp" />
+
+
+        <TextView
             android:id="@+id/sell_breed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="[동물종류] 품종"
-            android:textSize="20sp"
-            android:layout_marginStart="5dp"/>
-
-        <TextView
-            android:id="@+id/sell_age"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:textAlignment="textEnd"
-            android:layout_weight="1"
-            android:text="나이"
-            android:textSize="15sp"/>
+            android:text=" 품종"
+            android:textSize="20sp"/>
 
     </LinearLayout>
 
     <View
-        android:layout_width="wrap_content"
+        android:layout_width="240dp"
         android:layout_height="1dp"
         android:layout_marginTop="5dp"
         android:layout_marginStart="10dp"
@@ -75,45 +75,41 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:text="작성일 : "
         android:textSize="15sp"
         app:layout_constraintLeft_toRightOf="@id/main_img"
         app:layout_constraintTop_toBottomOf="@id/sell_local" />
 
     <TextView
-        android:id="@+id/sell_price"
+        android:id="@+id/sell_birth"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="8dp"
-        android:text="분양비용"
-        android:textColor="@color/red"
-        android:textSize="17sp"
+        android:layout_marginTop="5dp"
+        android:text="생년월일 : "
+        android:textSize="15sp"
         app:layout_constraintLeft_toRightOf="@id/main_img"
         app:layout_constraintTop_toBottomOf="@id/sell_date" />
 
     <TextView
-        android:background="@drawable/button_shape"
-        android:id="@+id/sell_nickname"
+        android:id="@+id/sell_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
-        android:text="닉네임"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/sell_date" />
+        android:text="분양비용"
+        android:textColor="@color/red"
+        android:textSize="17sp"
+        app:layout_constraintLeft_toLeftOf="@id/main_img"
+        app:layout_constraintRight_toRightOf="@id/main_img"
+        app:layout_constraintTop_toBottomOf="@id/main_img" />
 
     <View
         android:id="@+id/bottom_line"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:background="@color/light_gray"
-        app:layout_constraintTop_toBottomOf="@id/sell_nickname"/>
+        app:layout_constraintTop_toBottomOf="@id/sell_price"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

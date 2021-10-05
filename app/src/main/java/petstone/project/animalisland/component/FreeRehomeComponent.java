@@ -29,7 +29,7 @@ public class FreeRehomeComponent extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.free_rehome, container, false);
-        
+
         free_submit = view.findViewById(R.id.free_submit);
         recyclerView = view.findViewById(R.id.free_recycler);
         frAdapter = new FreeRecycleAdapter(mList);
@@ -37,7 +37,7 @@ public class FreeRehomeComponent extends Fragment {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
-        addItem(getResources().getDrawable(R.drawable.image,null), getResources().getDrawable(R.drawable.female,null), "[동물종류] 품종", "나이", "지역", "날짜", "닉네임") ;
+        addItem(getResources().getDrawable(R.drawable.image,null), getResources().getDrawable(R.drawable.female,null),"[동물종류]", "품종", "생년월일", "지역", "날짜") ;
 
         frAdapter.notifyDataSetChanged() ;
 
@@ -53,16 +53,16 @@ public class FreeRehomeComponent extends Fragment {
         return view;
     }
 
-    public void addItem(Drawable main, Drawable gender, String breed, String age, String local, String date, String nickname) {
+    public void addItem(Drawable main, Drawable gender, String type, String breed, String birth, String local, String date) {
         FreeRehomeList item = new FreeRehomeList();
 
         item.setImg(main);
         item.setGenderImg(gender);
+        item.setType(type);
         item.setBreed(breed);
-        item.setAge(age);
+        item.setBirth(birth);
         item.setLocal(local);
         item.setDate(date);
-        item.setNickname(nickname);
 
         mList.add(item);
     }

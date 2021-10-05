@@ -45,12 +45,12 @@ public class SellRecycleAdapter extends RecyclerView.Adapter<SellRecycleAdapter.
 
         holder.main_img.setImageDrawable(item.getImg()) ;
         holder.gender.setImageDrawable(item.getGender()) ;
+        holder.type.setText(item.getType());
         holder.breed.setText(item.getBreed()) ;
-        holder.age.setText(item.getAge()) ;
+        holder.birth.setText(item.getBirth()) ;
         holder.local.setText(item.getLocal()) ;
         holder.date.setText(item.getDate()) ;
         holder.price.setText(item.getPrice());
-        holder.nickname.setText(item.getNickname()) ;
     }
 
     // getItemCount() - 전체 데이터 갯수 리턴.
@@ -62,20 +62,19 @@ public class SellRecycleAdapter extends RecyclerView.Adapter<SellRecycleAdapter.
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView main_img, gender ;
-        TextView breed, age, local, date, price, nickname ;
+        TextView type, breed, birth, local, date, price ;
 
         ViewHolder(View itemView) {
             super(itemView) ;
 
             main_img = itemView.findViewById(R.id.main_img) ;
             gender = itemView.findViewById(R.id.sell_gender) ;
+            type = itemView.findViewById(R.id.sell_animal_type);
             breed = itemView.findViewById(R.id.sell_breed) ;
-            age = itemView.findViewById(R.id.sell_age) ;
+            birth = itemView.findViewById(R.id.sell_birth);
             local = itemView.findViewById(R.id.sell_local) ;
             date = itemView.findViewById(R.id.sell_date) ;
             price = itemView.findViewById(R.id.sell_price);
-
-            nickname = itemView.findViewById(R.id.sell_nickname) ;
 
             itemView.setClickable(true);
 

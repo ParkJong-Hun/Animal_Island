@@ -21,28 +21,27 @@
             android:id="@+id/petfriend_user_select_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_baseline_add_24"
+            android:src="@drawable/ic_baseline_keyboard_backspace_24"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:layout_width="107dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="70dp"
-            android:text=" 유저"
+            android:layout_marginStart="100dp"
+            android:text="펫 프렌즈"
             android:textAlignment="textEnd"
             android:textColor="#668c47"
             android:textSize="25sp"
-            android:textStyle="bold|italic" />
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="60dp"
             android:layout_height="wrap_content"
-            android:paddingTop="8dp"
-            android:text="정보"
+            android:text=" 정보"
             android:textColor="#843c0c"
             android:textSize="25sp"
-            android:textStyle="bold|italic" />
+            android:textStyle="bold" />
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -66,9 +65,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/round_ffe1e1"
-                android:text="팻 프렌즈 정보"
+                android:layout_marginTop="15dp"
+                android:text="펫 프렌즈 정보"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -76,8 +74,8 @@
                 android:id="@+id/user_image"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="5dp"
                 android:background="@drawable/border"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/petfriend_tv_1" />
@@ -86,9 +84,12 @@
                 android:id="@+id/user_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:text="유저 이름"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:text="닉네임"
                 android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorDaepyo"
                 app:layout_constraintStart_toEndOf="@+id/user_image"
                 app:layout_constraintTop_toTopOf="@+id/user_image" />
 
@@ -96,18 +97,18 @@
                 android:id="@+id/user_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
                 android:text="이름 : \n나이 : \n지역 : \n시간 :\n비용 :"
+                android:textSize="15sp"
                 app:layout_constraintStart_toEndOf="@+id/user_image"
                 app:layout_constraintTop_toBottomOf="@+id/user_name" />
 
             <View
                 android:id="@+id/petfriend_user_info_line"
-                android:layout_width="380dp"
-                android:layout_height="2dp"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="50dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
                 android:background="@color/light_gray"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -119,18 +120,20 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/round_ffe1e1"
                 android:text="경력 사항"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/petfriend_user_info_line" />
 
             <TextView
                 android:id="@+id/petfriend_career_text"
-                android:layout_width="380dp"
-                android:layout_height="170dp"
-                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
                 android:background="@drawable/border"
                 android:text="- 경력1\n- 경력2 "
+                android:textSize="15sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/petfriend_tv_2" />
@@ -141,8 +144,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
-                android:text="자격증 "
-                android:background="@drawable/round_ffe1e1"
+                android:text="자격증"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/petfriend_career_text" />
 
@@ -151,7 +153,7 @@
                 android:layout_width="110dp"
                 android:layout_height="100dp"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:background="@drawable/border"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/petfriend_tv_3" />
@@ -161,7 +163,7 @@
                 android:layout_width="110dp"
                 android:layout_height="100dp"
                 android:layout_marginStart="5dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginEnd="5dp"
                 android:background="@drawable/border"
                 app:layout_constraintEnd_toStartOf="@+id/user_info_image3"
@@ -170,9 +172,9 @@
 
             <ImageView
                 android:id="@+id/user_info_image3"
-                android:layout_width="104dp"
-                android:layout_height="105dp"
-                android:layout_marginTop="10dp"
+                android:layout_width="110dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/border"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -182,11 +184,13 @@
 
     <Button
         android:id="@+id/petfriend_start_chating_button"
-        android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="2dp"
-        android:background="@drawable/round_ffe1e1"
-        android:text="1:1 챗팅하기"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_round"
+        android:text="1:1 채팅하기"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -195,4 +199,4 @@
 
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,8 +10,8 @@
             android:id="@+id/mypage_tv1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="15dp"
             android:text="내 정보"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -21,8 +21,8 @@
             android:id="@+id/mypage_profile_image"
             android:layout_width="128dp"
             android:layout_height="128dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
 
             android:background="@drawable/border"
 
@@ -56,28 +56,30 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
 
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="5dp"
             android:text="아지냥이"
             android:textColor="@color/colorDaepyo"
-            android:textSize="20dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
 
             app:layout_constraintStart_toEndOf="@+id/mypage_profile_image"
             app:layout_constraintTop_toTopOf="@+id/mypage_profile_image" />
 
         <!--상세정보-->
+
+        <!--정보수정-->
         <TextView
             android:id="@+id/mypage_descripiton"
             android:layout_width="wrap_content"
 
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:text="성명 : 김철수(男)\n나이 : 25살\n지역 : 서울시 용산구 한남동"
 
-            android:textSize="12dp"
+            android:textSize="15sp"
             app:layout_constraintStart_toStartOf="@+id/mypage_nickname"
             app:layout_constraintTop_toBottomOf="@+id/mypage_nickname" />
 
-        <!--정보수정-->
         <Button
             android:id="@+id/mypage_description_edit"
             style="@android:style/Widget.DeviceDefault.Light.Button.Toggle"
@@ -107,7 +109,8 @@
 
             android:text="나의 신뢰도"
             android:textColor="@color/colorDaepyo"
-            android:textSize="20dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
 
             app:layout_constraintEnd_toStartOf="@+id/mypage_sell_tv"
             app:layout_constraintStart_toStartOf="parent"
@@ -157,7 +160,8 @@
             android:text="유료 분양\n가능"
             android:textAlignment="center"
             android:textColor="@color/colorDaepyo"
-            android:textSize="20dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
 
             app:layout_constraintEnd_toEndOf="@+id/mypage_middle_line2"
             app:layout_constraintStart_toStartOf="@+id/mypage_middle_line1"
@@ -184,7 +188,8 @@
             android:text="펫 프렌즈\n회원님"
             android:textAlignment="center"
             android:textColor="@color/colorDaepyo"
-            android:textSize="20dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
 
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/mypage_sell_tv"
@@ -204,7 +209,6 @@
             android:id="@+id/mypage_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/mypage_bottom_line" />
 

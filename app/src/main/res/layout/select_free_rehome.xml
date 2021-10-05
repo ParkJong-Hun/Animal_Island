@@ -43,21 +43,21 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:layout_below="@id/toolbar"
-        android:fillViewport="true"
-        >
+        android:fillViewport="true">
 
         <LinearLayout
             android:id="@+id/linear"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
             android:orientation="vertical">
 
             <LinearLayout
                 android:id="@+id/select_img"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
                 android:orientation="vertical">
 
                 <ImageView
@@ -65,52 +65,34 @@
                     android:layout_height="150dp"
                     android:src="@drawable/image" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:src="@drawable/image" />
-
-                    <ImageView
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:src="@drawable/image" />
-
-                    <ImageView
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:src="@drawable/image" />
-
-                </LinearLayout>
-
             </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="5dp"
-                android:background="@color/light_gray" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="[동물종류] 품종"
-                    android:textSize="15sp" />
+                    android:text="[동물종류]"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="품종"
+                    android:textSize="20sp" />
 
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_marginStart="20dp"
-                    android:src="@drawable/location" />
+                    android:layout_gravity="bottom"
+                    android:src="@drawable/location"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -121,19 +103,28 @@
 
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/light_gray" />
+
             <TextView
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="20dp"
                 android:text="제목"
-                android:textSize="25sp" />
+                android:textSize="25sp"
+                android:textStyle="bold"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"
                 android:background="#ffe1e1"
                 android:orientation="horizontal">
 
@@ -142,8 +133,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginStart="25dp"
-                    android:text="나이\n3개월"
+                    android:layout_marginStart="20dp"
+                    android:text="생년월일\n21.05.04"
                     android:textAlignment="center"
                     android:textSize="20sp" />
 
@@ -159,7 +150,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginStart="20dp"
+                    android:layout_marginStart="15dp"
                     android:text="성별\n여"
                     android:textAlignment="center"
                     android:textSize="20sp" />
@@ -176,7 +167,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginStart="20dp"
+                    android:layout_marginStart="15dp"
                     android:text="중성화\nX"
                     android:textAlignment="center"
                     android:textSize="20sp" />
@@ -193,8 +184,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginStart="20dp"
-                    android:text="접종 완료\n5차"
+                    android:layout_marginStart="15dp"
+                    android:text="접종\n5차"
                     android:textAlignment="center"
                     android:textSize="20sp" />
 
@@ -203,12 +194,12 @@
             <TextView
                 android:id="@+id/content"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="200dp"
                 android:layout_marginTop="5dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
                 android:text="내용"
                 android:textSize="15sp" />
-
-
 
         </LinearLayout>
 
@@ -216,14 +207,14 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="90dp"
         android:background="@drawable/border"
         android:padding="10dp">
 
         <ImageView
             android:id="@+id/profile"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:layout_marginStart="10dp"
             android:src="@drawable/mypage_colored"
             app:layout_constraintStart_toStartOf="parent"
@@ -234,6 +225,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
             android:text="닉네임"
             android:textSize="20sp"
             app:layout_constraintLeft_toRightOf="@id/profile"
@@ -244,7 +236,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:text="신뢰도"
             android:textSize="20sp"
             app:layout_constraintLeft_toRightOf="@id/profile"
@@ -256,8 +248,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="15dp"
-            android:isIndicator="false"
+            android:layout_marginTop="10dp"
+            android:isIndicator="true"
+            android:indeterminate="false"
             android:numStars="5"
             android:progressTint="@color/colorDaepyo"
             android:rating="4"
@@ -269,11 +262,10 @@
         <Button
             android:layout_width="80dp"
             android:layout_height="30dp"
-            android:layout_marginTop="15dp"
             android:background="@drawable/button_shape"
             android:text="1:1 채팅"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/name" />
+            app:layout_constraintTop_toTopOf="@id/name_rating"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

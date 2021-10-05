@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <include
         layout="@layout/toolbar_mypage_petfriend_apply"
         android:id="@+id/toolbar_petfriend_apply"/>
@@ -28,37 +29,33 @@
                 android:layout_height="wrap_content"
 
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="15dp"
 
                 android:text="지역"
-
 
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Spinner
                 android:id="@+id/mypage_petfriend_apply_address_city_form"
-                android:layout_width="130dp"
+                android:layout_width="125dp"
                 android:layout_height="40dp"
-                android:layout_marginTop="10dp"
                 android:spinnerMode="dropdown"
                 app:layout_constraintStart_toStartOf="@+id/mypage_petfriend_apply_address"
                 app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_address" />
 
             <Spinner
                 android:id="@+id/mypage_petfriend_apply_address_ku_form"
-                android:layout_width="130dp"
+                android:layout_width="125dp"
                 android:layout_height="40dp"
-                android:layout_marginTop="10dp"
                 android:spinnerMode="dropdown"
                 app:layout_constraintLeft_toRightOf="@+id/mypage_petfriend_apply_address_city_form"
                 app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_address" />
 
             <Spinner
                 android:id="@+id/mypage_petfriend_apply_address_dong_form"
-                android:layout_width="130dp"
+                android:layout_width="125dp"
                 android:layout_height="40dp"
-                android:layout_marginTop="10dp"
                 android:spinnerMode="dropdown"
                 app:layout_constraintLeft_toRightOf="@+id/mypage_petfriend_apply_address_ku_form"
                 app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_address" />
@@ -81,8 +78,8 @@
                 android:id="@+id/mypage_petfriend_apply_monday"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
                 android:text="월"
+                android:textSize="15sp"
                 app:layout_constraintStart_toStartOf="@+id/mypage_petfriend_apply_day"
                 app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_day" />
 
@@ -90,8 +87,9 @@
                 android:id="@+id/mypage_petfriend_apply_tuesday"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginStart="5dp"
                 android:text="화"
+                android:textSize="15sp"
                 app:layout_constraintStart_toEndOf="@+id/mypage_petfriend_apply_monday"
                 app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_day" />
 
@@ -99,8 +97,9 @@
                 android:id="@+id/mypage_petfriend_apply_wednesday"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginStart="5dp"
                 android:text="수"
+                android:textSize="15sp"
                 app:layout_constraintStart_toEndOf="@+id/mypage_petfriend_apply_tuesday"
                 app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_day" />
 
@@ -108,8 +107,9 @@
                 android:id="@+id/mypage_petfriend_apply_thursday"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginStart="5dp"
                 android:text="목"
+                android:textSize="15sp"
                 app:layout_constraintStart_toEndOf="@+id/mypage_petfriend_apply_wednesday"
                 app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_day" />
 
@@ -117,8 +117,9 @@
                 android:id="@+id/mypage_petfriend_apply_friday"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginStart="5dp"
                 android:text="금"
+                android:textSize="15sp"
                 app:layout_constraintStart_toEndOf="@+id/mypage_petfriend_apply_thursday"
                 app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_day" />
 
@@ -126,8 +127,9 @@
                 android:id="@+id/mypage_petfriend_apply_saturday"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginStart="5dp"
                 android:text="토"
+                android:textSize="15sp"
                 app:layout_constraintStart_toEndOf="@+id/mypage_petfriend_apply_friday"
                 app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_day" />
 
@@ -135,8 +137,9 @@
                 android:id="@+id/mypage_petfriend_apply_sunday"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginStart="5dp"
                 android:text="일"
+                android:textSize="15sp"
                 app:layout_constraintStart_toEndOf="@+id/mypage_petfriend_apply_saturday"
                 app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_day" />
             <!--시간/비용-->
@@ -155,7 +158,6 @@
                 android:id="@+id/mypage_petfriend_apply_time_start"
                 android:layout_width="100dp"
                 android:layout_height="30dp"
-                android:layout_marginTop="10dp"
                 app:layout_constraintStart_toStartOf="@+id/mypage_petfriend_apply_time_salary"
                 app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_time_salary" />
 
@@ -163,7 +165,7 @@
                 android:id="@+id/mypage_petfriend_apply_to"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="13dp"
+                android:layout_marginTop="3dp"
                 android:text="~"
                 app:layout_constraintStart_toEndOf="@+id/mypage_petfriend_apply_time_start"
                 app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_time_salary" />
@@ -172,7 +174,6 @@
                 android:id="@+id/mypage_petfriend_apply_time_end"
                 android:layout_width="100dp"
                 android:layout_height="30dp"
-                android:layout_marginTop="10dp"
                 app:layout_constraintStart_toEndOf="@+id/mypage_petfriend_apply_to"
                 app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_time_salary" />
 
@@ -181,7 +182,6 @@
                 android:layout_width="50dp"
                 android:layout_height="30dp"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
                 app:layout_constraintStart_toEndOf="@+id/mypage_petfriend_apply_time_end"
                 app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_time_salary" />
 
@@ -189,14 +189,13 @@
                 android:id="@+id/mypage_petfriend_apply_salary"
                 android:layout_width="70dp"
                 android:layout_height="30dp"
-                android:layout_marginTop="10dp"
                 app:layout_constraintStart_toEndOf="@+id/mypage_petfriend_apply_salary_choice"
                 app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_time_salary" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="5dp"
                 android:text="원"
                 app:layout_constraintStart_toEndOf="@+id/mypage_petfriend_apply_salary"
                 app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_time_salary" />
@@ -236,9 +235,9 @@
                 android:id="@+id/mypage_petfriend_apply_license_image1"
                 android:layout_width="100dp"
                 android:layout_height="80dp"
+                android:layout_marginTop="5dp"
                 android:background="@drawable/border"
                 android:src="@drawable/image"
-                android:layout_marginTop="10dp"
                 app:layout_constraintEnd_toStartOf="@+id/mypage_petfriend_apply_license_image2"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_toggleButton" />
@@ -247,9 +246,9 @@
                 android:id="@+id/mypage_petfriend_apply_license_image3"
                 android:layout_width="100dp"
                 android:layout_height="80dp"
+                android:layout_marginTop="5dp"
                 android:background="@drawable/border"
                 android:src="@drawable/image"
-                android:layout_marginTop="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/mypage_petfriend_apply_license_image2"
                 app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_toggleButton" />
@@ -258,9 +257,9 @@
                 android:id="@+id/mypage_petfriend_apply_license_image2"
                 android:layout_width="100dp"
                 android:layout_height="80dp"
+                android:layout_marginTop="5dp"
                 android:background="@drawable/border"
                 android:src="@drawable/image"
-                android:layout_marginTop="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_toggleButton" />
@@ -277,44 +276,44 @@
                 app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_license_image2" />
 
             <ListView
-                android:layout_width="350dp"
+                android:layout_width="360dp"
                 android:layout_height="200dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:background="@drawable/border"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/myapge_petfriend_apply_career" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
-        <!--취소 신청 버튼-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintVertical_weight="1">
+    <!--취소 신청 버튼-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_weight="1">
 
-            <Button
-                android:id="@+id/mypage_petfriend_apply_cancel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
+        <Button
+            android:id="@+id/mypage_petfriend_apply_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
 
-                android:background="@drawable/border_colored"
+            android:background="@drawable/border_colored"
 
-                android:text="취소"
-                android:textSize="20dp" />
+            android:text="취소"
+            android:textSize="20dp" />
 
-            <Button
-                android:id="@+id/mypage_petfriend_apply_submit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+        <Button
+            android:id="@+id/mypage_petfriend_apply_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
 
-                android:layout_weight="0.5"
-                android:background="@drawable/border_colored"
+            android:layout_weight="0.5"
+            android:background="@drawable/border_colored"
 
-                android:text="신청"
+            android:text="신청"
 
-                android:textSize="20dp" />
-        </LinearLayout>
+            android:textSize="20dp" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

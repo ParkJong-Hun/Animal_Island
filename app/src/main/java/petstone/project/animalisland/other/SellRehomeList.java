@@ -5,7 +5,7 @@ import android.graphics.drawable.Drawable;
 public class SellRehomeList {
 
     Drawable main_img, gender;
-    String breed, age, local, date, price, nickname;
+    String type, breed, birth, local, date, price;
 
     public void setImg(Drawable main) {
         main_img = main;
@@ -15,12 +15,14 @@ public class SellRehomeList {
         gender = sgender;
     }
 
+    public void setType(String stype) { type = stype; }
+
     public void setBreed(String sbreed) {
         breed = sbreed;
     }
 
-    public void setAge(String sage) {
-        age = sage;
+    public void setBirth(String sbirth) {
+        birth = sbirth;
     }
 
     public void setLocal(String slocal) {
@@ -35,10 +37,6 @@ public class SellRehomeList {
         price = sprice;
     }
 
-    public void setNickname(String snickname) {
-        nickname = snickname;
-    }
-
     public Drawable getImg() {
         return this.main_img;
     }
@@ -47,12 +45,14 @@ public class SellRehomeList {
         return this.gender;
     }
 
+    public String getType() { return this.type; }
+
     public String getBreed() {
         return this.breed;
     }
 
-    public String getAge() {
-        return this.age;
+    public String getBirth() {
+        return this.birth;
     }
 
     public String getLocal() {
@@ -65,10 +65,6 @@ public class SellRehomeList {
 
     public String getPrice() {
         return this.price;
-    }
-
-    public String getNickname() {
-        return this.nickname;
     }
 
 }

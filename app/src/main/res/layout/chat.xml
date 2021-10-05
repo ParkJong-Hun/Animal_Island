@@ -7,40 +7,38 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <Toolbar
-        android:id="@+id/toolbar_chat"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#ffe1e1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/back_chat"
+            android:id="@+id/back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_baseline_keyboard_backspace_24"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:src="@drawable/ic_baseline_keyboard_backspace_24" />
+
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="80dp"
             android:text="ANIMAL"
-            android:textColor="#668c47"
             android:textSize="25sp"
-            android:textStyle="bold|italic" />
+            android:textColor="#668c47"
+            android:textStyle="bold|italic"
+            android:layout_marginStart="100dp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:paddingTop="8dp"
             android:text="ISLAND"
-            android:textColor="#843c0c"
             android:textSize="25sp"
-            android:textStyle="bold|italic" />
-
+            android:textColor="#843c0c"
+            android:textStyle="bold|italic"
+            android:paddingTop="8dp"
+            android:layout_marginStart="5dp"/>
 
     </Toolbar>
 
@@ -50,7 +48,8 @@
         android:layout_height="70dp"
         android:src="@drawable/chat1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_chat" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
 
     <ImageView
         android:id="@+id/imageView2"

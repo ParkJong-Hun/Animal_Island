@@ -42,7 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="5dp"
         android:text="최근검색어"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/petfriend_search_view" />
@@ -52,7 +52,7 @@
         android:id="@+id/day2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="20dp"
         android:text="전체삭제"
         app:layout_constraintEnd_toEndOf="parent"
@@ -64,7 +64,6 @@
         android:id="@+id/linear_layout1"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_marginTop="5dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textview1"
         android:orientation="horizontal">
@@ -73,7 +72,6 @@
             android:id="@+id/search_result"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             />
@@ -85,7 +83,6 @@
         android:id="@+id/user_list_textview"
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:layout_marginTop="10dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -97,6 +94,9 @@
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:text="유저 5명"
+            android:textColor="@color/black"
+            android:textSize="15.5sp"
+            android:textAlignment="center"
             android:background="@drawable/round_ffe1e1"
             android:layout_weight="2.5"/>
         <Spinner
@@ -159,7 +159,6 @@
         android:id="@+id/petfriend_listview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="5dp"
         android:divider="#00000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
