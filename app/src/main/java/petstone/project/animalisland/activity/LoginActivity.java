@@ -48,7 +48,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
 
-
         //파이어베이스 인증 인스턴스 초기화
         auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();

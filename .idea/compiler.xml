@@ -2,5 +2,12 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="11" />
+
+    <bytecodeTargetLevel target="1.8" />
+
+    <bytecodeTargetLevel target="1.8" />
+
+    <bytecodeTargetLevel target="11" />
+
   </component>
 </project>
