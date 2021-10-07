@@ -87,6 +87,7 @@ public class LoginActivity extends AppCompatActivity {
                                         //로그인 정보 일치
                                         Log.d("Success", "이메일로 로그인:success");
                                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                        intent.putExtra("activity", "login");
                                         startActivity(intent);
                                     } else {
                                         //로그인 정보 불일치
@@ -120,6 +121,7 @@ public class LoginActivity extends AppCompatActivity {
         if(currentUser != null) {
             Log.d("Success", "자동 로그인됨: " + currentUser.getEmail());
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            intent.putExtra("activity", "login");
             startActivity(intent);
         }
     }

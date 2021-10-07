@@ -1,7 +1,10 @@
 package petstone.project.animalisland.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,16 +26,22 @@ public class MainActivity extends AppCompatActivity {
     PetFriendComponent petFrag;
     ChatListComponent chatFrag;
     MypageComponent myFrag;
-
-
+    String previousActivity = "";
 
     //화면 초기화
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        
 
+        Intent intent = getIntent();
+        try {
+            previousActivity = intent.getStringExtra("activity");
+            if (previousActivity.equals("login")) {
+                Toast.makeText(this, "로그인이 성공적으로 완료되었습니다.", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+        }
 
         bottomNavi = findViewById(R.id.bottom_tab);
         chatFrag = new ChatListComponent();
