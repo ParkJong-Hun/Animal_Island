@@ -212,7 +212,7 @@ public class RegisterActivity extends AppCompatActivity {
                     id = et_id.getText().toString();
                     password = et_pw.getText().toString();
                     password_check = et_pwck.getText().toString();
-                    nickname = et_name.getText().toString();
+                    nickname = et_nickname.getText().toString();
                     birth = c.getTime();
                     email = et_mail.getText().toString();
                     if (radio_sex.getCheckedRadioButtonId() == 1) {
