@@ -1,9 +1,16 @@
 package petstone.project.animalisland.component;
 
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.Image;
+import android.media.Session2Command;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,18 +22,29 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.annotation.GlideModule;
+import com.bumptech.glide.signature.ObjectKey;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.net.URI;
+import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
@@ -56,6 +74,10 @@ public class MypageComponent extends Fragment {
     RatingBar ratingBar;
     TextView sell, petFriend;
 
+    FirebaseStorage storage;
+    StorageReference profileImagesRef;
+    Uri file;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.mypage_component, container, false);
@@ -75,6 +97,9 @@ public class MypageComponent extends Fragment {
 
         auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
+        storage = FirebaseStorage.getInstance();
+
+        profileImagesRef = storage.getReference("profileImages");
 
         db.collection("users")
                 .whereEqualTo("uid", auth.getCurrentUser().getUid())
@@ -130,6 +155,15 @@ public class MypageComponent extends Fragment {
 
                             nickname.setText(document.get("nickname").toString());
 
+                            try {
+                                URL url = new URL((String) document.get("image"));
+                                Uri uri = Uri.parse(url.toURI().toString());
+                                Glide.with(getContext())
+                                        .load(uri)
+                                        .into(profile_image);
+                            } catch (Exception e) {
+                            }
+
                         }
                     }
                 });
@@ -139,6 +173,9 @@ public class MypageComponent extends Fragment {
             @Override
             public void onClick(View v) {
                 //파일 업로드
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+                startActivityForResult(intent, 200);
             }
         });
 
@@ -202,26 +239,75 @@ public class MypageComponent extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case 0: {//정보 수정 결과
-                if(resultCode == -1) {
+                if (resultCode == -1) {
                     Toast.makeText(getContext(), "정보가 수정되었습니다.", Toast.LENGTH_SHORT).show();
-                } else if(resultCode == 0) {
+                } else if (resultCode == 0) {
 
                 }
             }
             case 1: {//펫프렌즈 신청 결과
-                if(resultCode == -1) {
+                if (resultCode == -1) {
 
-                } else if(resultCode == 0) {
+                } else if (resultCode == 0) {
 
                 }
             }
             case 2: {//유료분양 권한 신청 결과
-                if(resultCode == -1) {
+                if (resultCode == -1) {
 
-                } else if(resultCode == 0) {
+                } else if (resultCode == 0) {
 
                 }
             }
+            case 200: {//업로드 버튼 클릭시
+                if (data != null && data.getData() != null) {
+                    file = data.getData();
+                    StorageReference thisFileRef = profileImagesRef.child("/" + auth.getCurrentUser().getUid() + ".jpg");
+                    if (!file.equals(null)) {
+                        UploadTask uploadTask = thisFileRef.putFile(file);
+                        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                updateFile();
+                                Toast.makeText(getContext(), "프로필 변경이 성공적으로 완료되었습니다.", Toast.LENGTH_LONG).show();
+                                thisFileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        db.collection("users")
+                                                .document(auth.getUid())
+                                                .update("image", uri.toString())
+                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        Log.d("success", "db 업데이트 성공");
+                                                    }
+                                                })
+                                                .addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        Log.d("fail", "db 업데이트 실패");
+                                                    }
+                                                });
+                                    }
+                                });
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(getContext(), "프로필 변경이 성공적으로 완료되지 못했습니다.", Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
+                } else {
+                    Toast.makeText(getContext(), "파일을 감지하지 못했습니다.", Toast.LENGTH_LONG).show();
+                }
+            }
         }
+    }
+    protected void updateFile() {
+        Glide.with(getContext())
+                .load(profileImagesRef.child("/"+auth.getCurrentUser().getUid()+".jpg"))
+                .signature(new ObjectKey(System.currentTimeMillis()))
+                .into(profile_image);
     }
 }
