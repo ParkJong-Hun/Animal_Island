@@ -260,7 +260,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_license_image2" />
 
-            <ListView
+            <EditText
+                android:id="@+id/mypage_petfriend_user_info_edt"
                 android:layout_width="360dp"
                 android:layout_height="200dp"
                 android:layout_marginTop="5dp"
