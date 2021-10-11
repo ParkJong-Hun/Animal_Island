@@ -36,43 +36,28 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <Spinner
-                android:id="@+id/mypage_petfriend_apply_address_city_form"
+            <TextView
+                android:id="@+id/mypage_petfriend_apply_address_city_tv"
                 android:layout_width="125dp"
                 android:layout_height="40dp"
-                android:spinnerMode="dropdown"
+                android:text="juso"
                 app:layout_constraintStart_toStartOf="@+id/mypage_petfriend_apply_address"
                 app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_address" />
 
-            <Spinner
-                android:id="@+id/mypage_petfriend_apply_address_ku_form"
-                android:layout_width="125dp"
-                android:layout_height="40dp"
-                android:spinnerMode="dropdown"
-                app:layout_constraintLeft_toRightOf="@+id/mypage_petfriend_apply_address_city_form"
-                app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_address" />
 
-            <Spinner
-                android:id="@+id/mypage_petfriend_apply_address_dong_form"
-                android:layout_width="125dp"
-                android:layout_height="40dp"
-                android:spinnerMode="dropdown"
-                app:layout_constraintLeft_toRightOf="@+id/mypage_petfriend_apply_address_ku_form"
-                app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_address" />
             <!--요일-->
             <TextView
                 android:id="@+id/mypage_petfriend_apply_day"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+
+
                 android:layout_marginTop="10dp"
-
                 android:text="요일"
-
-
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_address_dong_form" />
+                app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_address_city_tv" />
 
             <CheckBox
                 android:id="@+id/mypage_petfriend_apply_monday"
@@ -283,6 +268,16 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/myapge_petfriend_apply_career" />
+
+            <Button
+                android:id="@+id/search_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="검색"
+                app:layout_constraintStart_toEndOf="@+id/mypage_petfriend_apply_address_city_tv"
+                app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_address" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
     <!--취소 신청 버튼-->
