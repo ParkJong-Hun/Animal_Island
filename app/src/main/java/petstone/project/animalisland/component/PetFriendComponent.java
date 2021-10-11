@@ -28,16 +28,15 @@ import petstone.project.animalisland.other.petfriend_recycelview_adapter.Recycle
 import petstone.project.animalisland.other.PetfriendCustomAdapter;
 
 public class PetFriendComponent extends Fragment {
-    ListView listView;
-    PetfriendCustomAdapter adapter;
-    FloatingActionButton petfriend_submit;
-    SearchView petfriend_search_view;
-    RecyclerView p_recyclerView;
+    //private ListView listView;
+    private PetfriendCustomAdapter adapter;
+    private FloatingActionButton petfriend_submit;
+    private SearchView petfriend_search_view;
+    private RecyclerView search_recyclerView;
+    private RecyclerView list_recyclerView;
     private LinearLayoutManager mLayoutManager;
     PetfriendRecycleAdapter pfs_adapter;
     ArrayList<PetfriendSearchData> search_list = null;
-
-
 
 
 
@@ -62,43 +61,41 @@ public class PetFriendComponent extends Fragment {
         petfriend_submit = view.findViewById(R.id.petfriend_submit);
         petfriend_search_view = view.findViewById(R.id.petfriend_search_view);
         // 리사이클뷰 바인딩
-        p_recyclerView = view.findViewById(R.id.search_result);
+        search_recyclerView = view.findViewById(R.id.search_result);
 
         //init layoutmanager
         mLayoutManager = new LinearLayoutManager(getContext());
         mLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL); // 기본값이 VERTICAL
         //리사이클뷰 간격 숫자가 커질수록 간격이 넓어짐
-        p_recyclerView.addItemDecoration(new RecyclerDecoration(10));
+        search_recyclerView.addItemDecoration(new RecyclerDecoration(10));
         //리사이클 뷰의 레이아웃 크기가 변경되는걸 막음
-        p_recyclerView.setHasFixedSize(true);
+        search_recyclerView.setHasFixedSize(true);
         //setLayoutManager
-        p_recyclerView.setLayoutManager(mLayoutManager);
+        search_recyclerView.setLayoutManager(mLayoutManager);
         //init aapter
         pfs_adapter = new PetfriendRecycleAdapter(search_list);
         // set Data
         pfs_adapter = new PetfriendRecycleAdapter(search_list);
         // set Adapter
-        p_recyclerView.setAdapter(pfs_adapter);
+        search_recyclerView.setAdapter(pfs_adapter);
 
 
-        p_recyclerView.addItemDecoration(new RecyclerDecoration(10));
+        search_recyclerView.addItemDecoration(new RecyclerDecoration(10));
         pfs_adapter.notifyDataSetChanged();
 
 
 
 
+        //검색 기록 리사이클뷰 호라이즌
+        /*LinearLayoutManager horizontalLayoutManagaer = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        recyclerView.setLayoutManager(horizontalLayoutManagaer); */
 
 
-
+/*
         //유저리스트 리스트뷰
         listView = view.findViewById(R.id.petfriend_listview);
         adapter = new PetfriendCustomAdapter(getContext());
         listView.setAdapter(adapter);
-
-        
-        //검색 기록 리사이클뷰 호라이즌
-        /*LinearLayoutManager horizontalLayoutManagaer = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        recyclerView.setLayoutManager(horizontalLayoutManagaer);*/
 
         //유저 클릭시 유저 정보 뛰움
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -110,6 +107,8 @@ public class PetFriendComponent extends Fragment {
 
             }
         });
+
+        */
         
         // floating 버튼 클릭시, 조건문으로 펫프랜즈 권한확인후 버튼 활성화 or 권한없으면 비활성화 하거나 신청 화면으로 연결
         petfriend_submit.setOnClickListener(new View.OnClickListener() {

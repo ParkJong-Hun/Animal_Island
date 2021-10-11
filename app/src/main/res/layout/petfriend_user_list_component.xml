@@ -23,10 +23,20 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="15dp"
-        android:text="주소 : \n시급 :\n자격증 :\n경력 : "
+        android:text="주소 : "
         android:textSize="15sp"
         app:layout_constraintStart_toEndOf="@+id/user_image"
         app:layout_constraintTop_toTopOf="@+id/user_image" />
+
+    <TextView
+        android:id="@+id/petfriend_list_tv_pay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="일당 or 시급 :"
+        app:layout_constraintStart_toStartOf="@+id/user_info"
+        app:layout_constraintTop_toBottomOf="@+id/user_info" />
+
+
 
     <TextView
         android:id="@+id/user_name"
@@ -61,6 +71,29 @@
         app:layout_constraintEnd_toEndOf="@id/petfriend_user_info_line_1"
         app:layout_constraintTop_toTopOf="@id/user_info" />
 
+    <TextView
+        android:id="@+id/petfrient_list_carrer_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="자격증 : O/X or IMG"
+        app:layout_constraintStart_toStartOf="@+id/petfriend_list_tv_pay"
+        app:layout_constraintTop_toBottomOf="@+id/petfriend_list_tv_pay" />
+
+    <TextView
+        android:id="@+id/petfrient_list_info_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="경력 or 자기소개 :"
+        app:layout_constraintStart_toStartOf="@+id/petfrient_list_carrer_tv"
+        app:layout_constraintTop_toBottomOf="@+id/petfrient_list_carrer_tv" />
+
+    <TextView
+        android:id="@+id/petfriend_list_day_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="요일 :"
+        app:layout_constraintStart_toStartOf="@+id/petfrient_list_info_tv"
+        app:layout_constraintTop_toBottomOf="@+id/petfrient_list_info_tv" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
