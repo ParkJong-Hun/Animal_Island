@@ -12,7 +12,6 @@
         android:usesCleartextTraffic="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.WebviewActivity"></activity>
         <activity android:name=".activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,7 +23,7 @@
          </activity>
         <activity android:name="petstone.project.animalisland.activity.MainActivity" />
         <activity android:name="petstone.project.animalisland.activity.MypageInfoEditActivity" />
-        <activity android:name="petstone.project.animalisland.activity.MypagePetfriendApplyActivity" />
+        <activity android:name="petstone.project.animalisland.activity.MypagePetfriendApplyActivity" android:windowSoftInputMode="adjustPan" />
         <activity android:name="petstone.project.animalisland.activity.MypageSellApplyActivity" />
         <activity android:name="petstone.project.animalisland.activity.PetfriendUserSelect" />
         <activity android:name=".activity.RegisterActivity" />
@@ -33,6 +32,7 @@
         <activity android:name="petstone.project.animalisland.activity.SelectFreeRehomeActivity" />
         <activity android:name="petstone.project.animalisland.activity.SelectSellRehomeActivity" />
         <activity android:name="petstone.project.animalisland.activity.ChatActivity" />
+        <activity android:name=".activity.WebviewActivity"/>
 
     </application>
 

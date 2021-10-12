@@ -2,6 +2,7 @@ package petstone.project.animalisland.component;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,13 +16,26 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
 import petstone.project.animalisland.R;
 import petstone.project.animalisland.activity.MypagePetfriendApplyActivity;
 import petstone.project.animalisland.activity.PetfriendUserSelect;
+import petstone.project.animalisland.other.PetfriendUser;
+import petstone.project.animalisland.other.PetfriendUserList_CustomAdapter;
 import petstone.project.animalisland.other.petfriend_recycelview_adapter.PetfriendRecycleAdapter;
 import petstone.project.animalisland.other.petfriend_recycelview_adapter.PetfriendSearchData;
 import petstone.project.animalisland.other.petfriend_recycelview_adapter.RecyclerDecoration;
@@ -38,7 +52,14 @@ public class PetFriendComponent extends Fragment {
     PetfriendRecycleAdapter pfs_adapter;
     ArrayList<PetfriendSearchData> search_list = null;
 
+    //유저리스트 리사이클러뷰
+    private ArrayList<PetfriendUser> arrayList;
+    private RecyclerView user_rv;
+    private RecyclerView.Adapter user_adapter;
+    private RecyclerView.LayoutManager layoutManager;
 
+    //파이어 베이스
+    private FirebaseFirestore db;
 
 
     @Nullable
@@ -56,8 +77,26 @@ public class PetFriendComponent extends Fragment {
         search_list.add(new PetfriendSearchData(new String("강북")));
         search_list.add(new PetfriendSearchData(new String("강서")));
 
+        //유저 리스트 리사이클러뷰 바인딩
+        user_rv = view.findViewById(R.id.petfriend_rv);
 
-       //데이터 바인딩
+        //유저 리스트 리사이클러뷰 레이아웃 설정
+        user_rv.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(getContext());
+        user_rv.setLayoutManager(layoutManager);
+        // 유저 리스트 리사이클러 뷰 어댑터 설정
+        arrayList = new ArrayList<>(); // pertfrienduser 객체를 담을 어레이 리스트(어댑터쪽)
+
+        user_adapter = new PetfriendUserList_CustomAdapter(arrayList, getContext());
+        user_rv.setAdapter(user_adapter);
+
+        //파이어베이스 인스턴스 초기화
+        db = FirebaseFirestore.getInstance();
+
+
+
+
+        //데이터 바인딩
         petfriend_submit = view.findViewById(R.id.petfriend_submit);
         petfriend_search_view = view.findViewById(R.id.petfriend_search_view);
         // 리사이클뷰 바인딩
@@ -83,7 +122,7 @@ public class PetFriendComponent extends Fragment {
         search_recyclerView.addItemDecoration(new RecyclerDecoration(10));
         pfs_adapter.notifyDataSetChanged();
 
-
+        firebaseSearch();
 
 
         //검색 기록 리사이클뷰 호라이즌
@@ -109,7 +148,7 @@ public class PetFriendComponent extends Fragment {
         });
 
         */
-        
+
         // floating 버튼 클릭시, 조건문으로 펫프랜즈 권한확인후 버튼 활성화 or 권한없으면 비활성화 하거나 신청 화면으로 연결
         petfriend_submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,11 +163,35 @@ public class PetFriendComponent extends Fragment {
         return view;
     }
 
-    public void addItem(String text){
+    void firebaseSearch() {
+
+        db.collection("petfriend")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                        arrayList.clear(); // 기존 배열 초기화 예방차원
+
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d("firebaseSearch", document.getId() + " => " + document.getData() + "\n");
+                                arrayList.add(new PetfriendUser(
+                                        document.getData().get("uid").toString()
+                                ));
+
+                                user_adapter.notifyDataSetChanged();
+
+                            }
+                        } else {
+                            Log.d("firebaseSearch", "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+
+
 
 
     }
-
-
 }
 

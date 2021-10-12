@@ -155,8 +155,8 @@
     -->
 
 
-    <ListView
-        android:id="@+id/petfriend_listview"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/petfriend_rv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:divider="#00000000"

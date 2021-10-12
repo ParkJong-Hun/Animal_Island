@@ -23,6 +23,7 @@
             app:layout_constraintTop_toBottomOf="@+id/toolbar_petfriend_apply"
             tools:context=".activity.MypagePetfriendApplyActivity">
             <!--지역-->
+
             <TextView
                 android:id="@+id/mypage_petfriend_apply_address"
                 android:layout_width="wrap_content"
@@ -185,6 +186,7 @@
                 app:layout_constraintStart_toEndOf="@+id/mypage_petfriend_apply_salary"
                 app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_time_salary" />
             <!--자격증-->
+
             <TextView
                 android:id="@+id/mypage_petfriend_apply_license"
                 android:layout_width="wrap_content"
@@ -263,9 +265,14 @@
             <EditText
                 android:id="@+id/mypage_petfriend_user_info_edt"
                 android:layout_width="360dp"
-                android:layout_height="200dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/border"
+                android:hint="내용입력"
+                android:inputType="textMultiLine"
+                android:gravity="top"
+                android:lines="8"
+                android:ems="10"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/myapge_petfriend_apply_career" />
