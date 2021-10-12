@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -60,6 +61,8 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
 
 
 
+
+
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,7 +80,7 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
                 user = FirebaseAuth.getInstance().getCurrentUser();
                 String uid = user.getUid();
                 Log.d("uid",uid.toString());
-
+                
                 PetfriendUser petfriendUser = new PetfriendUser(uid);
                 
                 //업로드 메소드

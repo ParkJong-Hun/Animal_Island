@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
@@ -22,11 +22,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="5dp"
         android:text="주소 : "
         android:textSize="15sp"
         app:layout_constraintStart_toEndOf="@+id/user_image"
-        app:layout_constraintTop_toTopOf="@+id/user_image" />
+        app:layout_constraintTop_toBottomOf="@+id/petfriend_user_info_line_1" />
 
     <TextView
         android:id="@+id/petfriend_list_tv_pay"
@@ -75,7 +75,7 @@
         android:id="@+id/petfrient_list_carrer_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="자격증 : O/X or IMG"
+        android:text="자격증 : O/X or 상장 아이콘"
         app:layout_constraintStart_toStartOf="@+id/petfriend_list_tv_pay"
         app:layout_constraintTop_toBottomOf="@+id/petfriend_list_tv_pay" />
 
@@ -83,7 +83,7 @@
         android:id="@+id/petfrient_list_info_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="경력 or 자기소개 :"
+        android:text="경력 or 분야(산책 돌봄 미용)? : "
         app:layout_constraintStart_toStartOf="@+id/petfrient_list_carrer_tv"
         app:layout_constraintTop_toBottomOf="@+id/petfrient_list_carrer_tv" />
 
