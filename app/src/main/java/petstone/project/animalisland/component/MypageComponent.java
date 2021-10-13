@@ -149,8 +149,30 @@ public class MypageComponent extends Fragment {
                             } else {
                                 petFriend.setText("일반\n회원님");
                             }
-                            
-                            //TODO: 신뢰도
+
+                            db.collection("users").document(auth.getUid())
+                                    .collection("popularity")
+                                    .get()
+                                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                            for (DocumentSnapshot document :
+                                                    queryDocumentSnapshots) {
+                                                //한 사람 추천당 0.1 +
+                                                ratingBar.setRating(ratingBar.getRating() + 0.1f);
+                                                //권한 없으면 80이 최대
+                                                if (ratingBar.getRating() > 4.0 && !((boolean)document.get("sell_permission") || (boolean)document.get("is_petfriend"))) {
+                                                    ratingBar.setRating(4.0f);
+                                                }
+                                            }
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.d("fail", "현재 생성된 하위 컬렉션이 없는 에러이거나, 진짜로 아무도 안함.");
+                                        }
+                                    });
 
 
                             nickname.setText(document.get("nickname").toString());
@@ -163,7 +185,6 @@ public class MypageComponent extends Fragment {
                                         .into(profile_image);
                             } catch (Exception e) {
                             }
-
                         }
                     }
                 });
@@ -175,7 +196,7 @@ public class MypageComponent extends Fragment {
                 //파일 업로드
                 Intent intent = new Intent(Intent.ACTION_PICK);
                 intent.setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-                startActivityForResult(intent, 200);
+                startActivityForResult(intent, 200 );
             }
         });
 
@@ -244,6 +265,7 @@ public class MypageComponent extends Fragment {
                 } else if (resultCode == 0) {
 
                 }
+                break;
             }
             case 1: {//펫프렌즈 신청 결과
                 if (resultCode == -1) {
@@ -251,6 +273,7 @@ public class MypageComponent extends Fragment {
                 } else if (resultCode == 0) {
 
                 }
+                break;
             }
             case 2: {//유료분양 권한 신청 결과
                 if (resultCode == -1) {
@@ -258,6 +281,7 @@ public class MypageComponent extends Fragment {
                 } else if (resultCode == 0) {
 
                 }
+                break;
             }
             case 200: {//업로드 버튼 클릭시
                 if (data != null && data.getData() != null) {
@@ -301,6 +325,7 @@ public class MypageComponent extends Fragment {
                 } else {
                     Toast.makeText(getContext(), "파일을 감지하지 못했습니다.", Toast.LENGTH_LONG).show();
                 }
+                break;
             }
         }
     }

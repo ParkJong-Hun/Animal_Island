@@ -288,6 +288,24 @@ public class RegisterActivity extends AppCompatActivity {
                                                         }
                                                     });
 
+                                            Map<String, String> whoLoveYou = new HashMap<>();
+                                            whoLoveYou.put("uid", uid);
+
+                                            db.collection("users").document(uid).collection("popularity").document(uid)
+                                                    .set(whoLoveYou)
+                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+                                                            Log.d("Success", "호감도 컬렉션 생성 성공");
+                                                        }
+                                                    })
+                                                    .addOnFailureListener(new OnFailureListener() {
+                                                        @Override
+                                                        public void onFailure(@NonNull Exception e) {
+                                                            Log.w("fail", "호감도 컬렉션 생성 실패");
+                                                        }
+                                                    });
+
                                             //로그인 화면으로 이동
                                             Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                                             startActivity(intent);
