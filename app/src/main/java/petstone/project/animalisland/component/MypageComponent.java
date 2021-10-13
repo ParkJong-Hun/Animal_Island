@@ -32,6 +32,7 @@ import com.bumptech.glide.annotation.GlideModule;
 import com.bumptech.glide.signature.ObjectKey;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.common.util.concurrent.AtomicDouble;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -152,19 +153,14 @@ public class MypageComponent extends Fragment {
 
                             db.collection("users").document(auth.getUid())
                                     .collection("popularity")
+                                    .whereNotEqualTo("uid", auth.getUid())
                                     .get()
                                     .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                                         @Override
                                         public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                                            for (DocumentSnapshot document :
-                                                    queryDocumentSnapshots) {
-                                                //한 사람 추천당 0.1 +
-                                                ratingBar.setRating(ratingBar.getRating() + 0.1f);
-                                                //권한 없으면 80이 최대
-                                                if (ratingBar.getRating() > 4.0 && !((boolean)document.get("sell_permission") || (boolean)document.get("is_petfriend"))) {
-                                                    ratingBar.setRating(4.0f);
-                                                }
-                                            }
+                                            //한 사람 추천당 0.1 +
+                                            //권한 없으면 80이 최대
+                                            ratingBar.setRating(2.5f + 0.1f * queryDocumentSnapshots.getDocuments().size());
                                         }
                                     })
                                     .addOnFailureListener(new OnFailureListener() {
@@ -173,7 +169,26 @@ public class MypageComponent extends Fragment {
                                             Log.d("fail", "현재 생성된 하위 컬렉션이 없는 에러이거나, 진짜로 아무도 안함.");
                                         }
                                     });
-
+                            db.collection("users").document(auth.getUid())
+                                    .get()
+                                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                            if (ratingBar.getRating() > 4.0f && !((boolean)documentSnapshot.get("sell_permission") || (boolean)documentSnapshot.get("is_petfriend"))) {
+                                                ratingBar.setRating(4.0f);
+                                            } else if ((boolean)documentSnapshot.get("sell_permission") || (boolean)documentSnapshot.get("is_petfriend")) {
+                                                ratingBar.setRating(ratingBar.getRating() + 1.0f);
+                                            } else if (ratingBar.getRating() > 5.0f) {
+                                                ratingBar.setRating(5.0f);
+                                            }
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.d("fail", "유저 컬렉션 에러");
+                                        }
+                                    });
 
                             nickname.setText(document.get("nickname").toString());
 
