@@ -34,6 +34,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import petstone.project.animalisland.R;
 
@@ -223,7 +225,10 @@ public class RegisterActivity extends AppCompatActivity {
                         sex = Sex.interSex;
                     }
                     //로그인 정보 일치
-                    if (password.equals(password_check) && email.contains("@") && validate_id && validate_nickname && (password.length() >= 8) && (password.length() <= 20) && (id.length() >= 6)) {
+                    String regex = "^[_a-zA-Z0-9-\\.]+@[\\.a-zA-Z0-9-]+\\.[a-zA-Z]+$";
+                    Pattern p = Pattern.compile(regex);
+                    Matcher m = p.matcher(email);
+                    if (password.equals(password_check) && m.matches() && validate_id && validate_nickname && (password.length() >= 8) && (password.length() <= 20) && (id.length() >= 6)) {
                         //로그인 정보 일치 O
                         //회원 생성
                         auth.createUserWithEmailAndPassword(email, password)

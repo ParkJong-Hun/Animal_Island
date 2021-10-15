@@ -193,17 +193,23 @@
 
             <EditText
                 android:id="@+id/mypage_info_edit_nickname_form"
-                android:layout_width="match_parent"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
 
-                android:focusableInTouchMode="false"
                 android:text="아지냥이"
-
-                android:textColor="@color/colorDaepyo"
                 app:layout_constraintStart_toStartOf="@+id/mypage_info_edit_nickname"
                 app:layout_constraintTop_toBottomOf="@+id/mypage_info_edit_nickname" />
+
+            <Button
+                android:id="@+id/mypage_info_edit_validateButton"
+                android:layout_width="70dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/button_round"
+                android:text="중복 확인"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/mypage_info_edit_nickname_form" />
             <!--이메일-->
             <TextView
                 android:id="@+id/mypage_info_edit_email"
@@ -221,7 +227,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
+                android:focusableInTouchMode="false"
                 android:text="fesu12355@naver.com"
+                android:textColor="@color/colorDaepyo"
                 app:layout_constraintStart_toStartOf="@+id/mypage_info_edit_email"
                 app:layout_constraintTop_toBottomOf="@+id/mypage_info_edit_email" />
             <!--펫프렌즈 주소-->
