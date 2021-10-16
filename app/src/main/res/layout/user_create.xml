@@ -235,7 +235,7 @@
                 android:textColor="@color/red"
                 android:textStyle="bold"
 
-                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintLeft_toLeftOf="@id/et_nickname"
                 app:layout_constraintTop_toBottomOf="@id/et_nickname"/>
 
             <TextView
