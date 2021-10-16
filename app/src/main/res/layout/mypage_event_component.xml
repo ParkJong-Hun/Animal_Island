@@ -1,42 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:layout_width="300dp"
+<LinearLayout android:layout_width="300dp"
     android:layout_height="wrap_content"
-    android:maxHeight="400dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="center"
     android:orientation="vertical"
     android:padding="10dp">
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="이벤트"
+
         android:textAlignment="center"
-        android:textSize="20sp"/>
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:fillViewport="true">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
-            <TextView
-                android:id="@+id/mypage_event_article"
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/event_recycler"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="이벤트 내용입니다."
-                android:layout_marginTop="5dp"/>
+                android:layout_height="wrap_content"/>
+
             <Button
                 android:id="@+id/mypage_event_button"
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="확인"
-                android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="@color/white"
-                android:background="@color/colorDaepyo"/>
+                android:padding="5dp"
+                android:backgroundTint="@color/colorDaepyo"/>
+
         </LinearLayout>
+
     </ScrollView>
+
 </LinearLayout>

@@ -42,9 +42,10 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="550dp"
+        android:layout_height="0dp"
         android:fillViewport="true"
-        app:layout_constraintTop_toBottomOf="@id/toolbar">
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintBottom_toTopOf="@id/bottom_button">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cslayout"
@@ -53,14 +54,26 @@
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp">
 
-                <ImageView
-                    android:id="@+id/image"
-                    android:layout_width="110dp"
-                    android:layout_height="110dp"
-                    android:layout_weight="1"
-                    android:src="@drawable/image"
-                    app:layout_constraintTop_toTopOf="@id/cslayout"
-                    app:layout_constraintStart_toStartOf="parent"/>
+            <Button
+                android:background="@color/colorDaepyo"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:id="@+id/img_button"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:text="이미지 선택"
+                app:layout_constraintTop_toTopOf="@id/cslayout"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/free_recycler_img"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="invisible"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintTop_toBottomOf="@id/img_button"
+                app:layout_constraintStart_toStartOf="parent"/>
 
             <TextView
                 android:id="@+id/title"
@@ -68,7 +81,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="제목"
-                app:layout_constraintTop_toBottomOf="@id/image"
+                app:layout_constraintTop_toBottomOf="@id/free_recycler_img"
                 app:layout_constraintStart_toStartOf="parent"/>
 
             <EditText
@@ -76,6 +89,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="제목을 입력하세요"
+                android:inputType="text"
+                android:imeOptions="actionDone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/title"/>
 
@@ -88,29 +103,29 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/getTitle"/>
 
-                <Spinner
-                    android:id="@+id/local_city"
-                    android:layout_width="125dp"
-                    android:layout_height="50dp"
-                    android:spinnerMode="dropdown"
-                    app:layout_constraintTop_toBottomOf="@id/local"
-                    app:layout_constraintStart_toStartOf="parent"/>
+            <Spinner
+                android:id="@+id/local_city"
+                android:layout_width="125dp"
+                android:layout_height="50dp"
+                android:spinnerMode="dropdown"
+                app:layout_constraintTop_toBottomOf="@id/local"
+                app:layout_constraintStart_toStartOf="parent"/>
 
-                <Spinner
-                    android:id="@+id/local_borough"
-                    android:layout_width="125dp"
-                    android:layout_height="50dp"
-                    android:spinnerMode="dropdown"
-                    app:layout_constraintTop_toBottomOf="@id/local"
-                    app:layout_constraintStart_toEndOf="@id/local_city"/>
+            <Spinner
+                android:id="@+id/local_borough"
+                android:layout_width="125dp"
+                android:layout_height="50dp"
+                android:spinnerMode="dropdown"
+                app:layout_constraintTop_toBottomOf="@id/local"
+                app:layout_constraintStart_toEndOf="@id/local_city"/>
 
-                <Spinner
-                    android:id="@+id/local_town"
-                    android:layout_width="125dp"
-                    android:layout_height="50dp"
-                    android:spinnerMode="dropdown"
-                    app:layout_constraintTop_toBottomOf="@id/local"
-                    app:layout_constraintStart_toEndOf="@id/local_borough"/>
+            <Spinner
+                android:id="@+id/local_town"
+                android:layout_width="125dp"
+                android:layout_height="50dp"
+                android:spinnerMode="dropdown"
+                app:layout_constraintTop_toBottomOf="@id/local"
+                app:layout_constraintStart_toEndOf="@id/local_borough"/>
 
 
             <TextView
@@ -122,22 +137,21 @@
                 app:layout_constraintTop_toBottomOf="@id/local_city"
                 app:layout_constraintStart_toStartOf="parent"/>
 
-                <Spinner
-                    android:id="@+id/type"
-                    android:layout_width="150dp"
-                    android:layout_height="50dp"
-                    android:spinnerMode="dropdown"
-                    app:layout_constraintTop_toBottomOf="@id/animal_type"
-                    app:layout_constraintStart_toStartOf="parent"/>
+            <Spinner
+                android:id="@+id/type"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:spinnerMode="dialog"
+                app:layout_constraintTop_toBottomOf="@id/animal_type"
+                app:layout_constraintStart_toStartOf="parent"/>
 
-                <Spinner
-                    android:id="@+id/breed"
-                    android:layout_width="150dp"
-                    android:layout_height="50dp"
-                    android:spinnerMode="dropdown"
-                    app:layout_constraintTop_toBottomOf="@id/animal_type"
-                    app:layout_constraintStart_toEndOf="@id/type"/>
-
+            <Spinner
+                android:id="@+id/breed"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:spinnerMode="dialog"
+                app:layout_constraintTop_toBottomOf="@id/animal_type"
+                app:layout_constraintStart_toEndOf="@id/type"/>
 
             <TextView
                 android:id="@+id/birth_sex"
@@ -211,7 +225,8 @@
                     android:id="@+id/inoculation"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:spinnerMode="dialog"/>
 
                 <RadioGroup
                     android:layout_width="0dp"
@@ -268,6 +283,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:background="@drawable/border"
+                android:inputType="textMultiLine"
                 app:layout_constraintTop_toBottomOf="@id/content"
                 app:layout_constraintStart_toStartOf="parent"/>
 
@@ -276,6 +292,7 @@
     </ScrollView>
 
     <LinearLayout
+        android:id="@+id/bottom_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"

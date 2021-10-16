@@ -102,6 +102,7 @@ public class MypageComponent extends Fragment {
 
         profileImagesRef = storage.getReference("profileImages");
 
+
         db.collection("users")
                 .whereEqualTo("uid", auth.getCurrentUser().getUid())
                 .get()
@@ -117,7 +118,7 @@ public class MypageComponent extends Fragment {
                                     .atZone(ZoneId.systemDefault())
                                     .toLocalDate();
                             int age = Period.between(local_birth, LocalDate.now()).getYears();
-                            
+
                             String description_str = "성명 : " + document.get("name") + "(";
                             switch (document.get("sex").toString()) {
                                 case "male":
@@ -244,14 +245,12 @@ public class MypageComponent extends Fragment {
                     //이벤트
                     case 2: {
                         MypageEventDialog dlg = new MypageEventDialog(getContext());
-                        dlg.addArticle("아아아아 내용");
                         dlg.show();
                         break;
                     }
                     //공지사항
                     case 3: {
                         MypageNewsDialog dlg = new MypageNewsDialog(getContext());
-                        dlg.addArticle("아아아아 내용");
                         dlg.show();
                         break;
                     }
@@ -269,6 +268,7 @@ public class MypageComponent extends Fragment {
 
         return rootView;
     }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
