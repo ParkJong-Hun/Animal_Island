@@ -95,5 +95,4 @@
         app:layout_constraintTop_toBottomOf="@+id/petfrient_list_info_tv" />
 
 
-
 </androidx.constraintlayout.widget.ConstraintLayout>

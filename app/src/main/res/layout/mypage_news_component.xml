@@ -12,23 +12,23 @@
         android:layout_height="wrap_content"
         android:text="공지사항"
         android:textAlignment="center"
-        android:textSize="17sp"/>
+        android:textSize="20sp"
+        android:textStyle="bold"/>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/news_recycler"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"/>
+                android:layout_height="wrap_content"/>
 
             <Button
                 android:id="@+id/mypage_news_button"

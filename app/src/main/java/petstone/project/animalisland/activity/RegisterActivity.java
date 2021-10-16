@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -75,6 +76,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     //닉네임
     TextView nickname_check_text;
+
     EditText et_nickname;
     String nickname = "";
     //닉네임 중복확인
@@ -139,6 +141,7 @@ public class RegisterActivity extends AppCompatActivity {
                 finish();
             }
         });
+
 
 
         //아이디 중복 확인 버튼 클릭 리스너
@@ -215,6 +218,7 @@ public class RegisterActivity extends AppCompatActivity {
                             et_nickname.setTextColor(Color.RED);
 
                             nickname_check_text.setText("닉네임을 정확하게 입력해주세요.");
+
                         } else {
                             //있으면 거짓으로 변경
                             Log.d("fail", queryDocumentSnapshots.getDocuments().toString());
@@ -222,6 +226,7 @@ public class RegisterActivity extends AppCompatActivity {
                             et_nickname.setTextColor(Color.RED);
 
                             nickname_check_text.setText("이미 동일한 닉네임이 존재합니다.");
+
                         }
                     }
                 });

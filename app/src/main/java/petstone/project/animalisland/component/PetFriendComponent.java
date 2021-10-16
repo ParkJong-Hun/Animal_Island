@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCanceledListener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -84,9 +85,8 @@ public class PetFriendComponent extends Fragment {
         user_rv.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getContext());
         user_rv.setLayoutManager(layoutManager);
-        // 유저 리스트 리사이클러 뷰 어댑터 설정
+        // 유저 리스트 리사이클러 뷰 어댑터, 리스트 설정
         arrayList = new ArrayList<>(); // pertfrienduser 객체를 담을 어레이 리스트(어댑터쪽)
-
         user_adapter = new PetfriendUserList_CustomAdapter(arrayList, getContext());
         user_rv.setAdapter(user_adapter);
 
@@ -122,7 +122,8 @@ public class PetFriendComponent extends Fragment {
         search_recyclerView.addItemDecoration(new RecyclerDecoration(10));
         pfs_adapter.notifyDataSetChanged();
 
-        firebaseSearch();
+        if(arrayList!=null)
+            firebaseSearch();
 
 
         //검색 기록 리사이클뷰 호라이즌
@@ -135,7 +136,6 @@ public class PetFriendComponent extends Fragment {
         listView = view.findViewById(R.id.petfriend_listview);
         adapter = new PetfriendCustomAdapter(getContext());
         listView.setAdapter(adapter);
-
         //유저 클릭시 유저 정보 뛰움
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -143,10 +143,8 @@ public class PetFriendComponent extends Fragment {
                 Intent intent;
                 intent = new Intent(getContext(), PetfriendUserSelect.class);
                 startActivity(intent);
-
             }
         });
-
         */
 
         // floating 버튼 클릭시, 조건문으로 펫프랜즈 권한확인후 버튼 활성화 or 권한없으면 비활성화 하거나 신청 화면으로 연결
@@ -170,16 +168,21 @@ public class PetFriendComponent extends Fragment {
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        //해당컬렉션에 모든 문서를 가져옴
 
                         arrayList.clear(); // 기존 배열 초기화 예방차원
-
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d("firebaseSearch", document.getId() + " => " + document.getData() + "\n");
+                                //리스트에 petfriend 컬렉션에서 모든 문서들의 데이터(닉네임,uid,비용,시간,자격증)를 가져와서 arrayList에 넣기
+                                //String uid, String nickname, String address
                                 arrayList.add(new PetfriendUser(
                                         document.getData().get("uid").toString()
-                                ));
+                                        ,document.getData().get("nickname").toString()
+                                        ,document.getData().get("address").toString()
 
+                                ));
+                                //어댑터 새로고침
                                 user_adapter.notifyDataSetChanged();
 
                             }
@@ -194,4 +197,3 @@ public class PetFriendComponent extends Fragment {
 
     }
 }
-

@@ -102,7 +102,7 @@ public class MypageComponent extends Fragment {
 
         profileImagesRef = storage.getReference("profileImages");
 
-        /*
+
         db.collection("users")
                 .whereEqualTo("uid", auth.getCurrentUser().getUid())
                 .get()
@@ -118,7 +118,7 @@ public class MypageComponent extends Fragment {
                                     .atZone(ZoneId.systemDefault())
                                     .toLocalDate();
                             int age = Period.between(local_birth, LocalDate.now()).getYears();
-                            
+
                             String description_str = "성명 : " + document.get("name") + "(";
                             switch (document.get("sex").toString()) {
                                 case "male":
@@ -222,7 +222,7 @@ public class MypageComponent extends Fragment {
                 Intent intent = new Intent(getContext(), MypageInfoEditActivity.class);
                 startActivityForResult(intent, 0 );
             }
-        }); */
+        });
 
         //하단 리스트 클릭 리스너
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -269,7 +269,7 @@ public class MypageComponent extends Fragment {
         return rootView;
     }
 
-    /*
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -450,5 +450,5 @@ public class MypageComponent extends Fragment {
                 .load(profileImagesRef.child("/"+auth.getCurrentUser().getUid()+".jpg"))
                 .signature(new ObjectKey(System.currentTimeMillis()))
                 .into(profile_image);
-    }*/
+    }
 }

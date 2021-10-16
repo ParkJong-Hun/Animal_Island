@@ -45,8 +45,8 @@ public class MypageEventDialog extends Dialog {
         e_adapter = new EventAdapter(mList);
         event_recycler.setAdapter(e_adapter);
 
-        addItem("이건 제목이지롱", "이건 내용이지롱");
-        addItem("안녕안녕", "ㅎㅎ히히히");
+        addItem("♡펫 프렌즈 이용 고객님♡", "저희 펫 프렌즈를 이용해주셔서 대단히 감사합니다♡\n저희를 믿고 맡겨주신 그 마음 보답해드리고자 ANIMAL ISLAND 팀이 이벤트를 준비했습니다♡\n\n10월 31일 하루 !! 펫 프렌즈 이용 고객님께 !!\n펫 프렌즈 이용 금액 30%를 지원해드립니다 !!\n많은 이용과 관심 부탁드립니다♡");
+        addItem("유기·유실동물 입양비 지원", "지자체 동물보호센터에서 보호하고 있는 유기·유실동물을 반려의 목적으로 입양할 경우 동물 등록비 및 중성화 수술비 등을 지원 받을 수 있습니다.\n\n\n아래의 링크를 참고해주세요. \nhttps://www.animal.go.kr");
 
         snapHelper.attachToRecyclerView(event_recycler);
 

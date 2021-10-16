@@ -75,6 +75,7 @@
                 android:layout_height="wrap_content"
                 android:hint="아이디"
                 android:inputType="text"
+                android:privateImeOptions="defaultInputmode=english"
                 app:layout_constraintTop_toBottomOf="@id/tv_id"
                 app:layout_constraintLeft_toLeftOf="@id/tv_id"/>
 

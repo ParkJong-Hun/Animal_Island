@@ -59,16 +59,6 @@ public class LoginActivity extends AppCompatActivity {
         id_editText = findViewById(R.id.login_id_et);
         password_editText = findViewById(R.id.login_pw_et);
 
-        login_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                intent.putExtra("activity", "login");
-                startActivity(intent);
-            }
-        });
-
-        /*
         //로그인 버튼
         login_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,7 +100,7 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "아이디와 비밀번호를 모두 작성해주십시오.", Toast.LENGTH_SHORT).show();
                 }
             }
-        });*/
+        });
 
         //회원가입 버튼
         user_create_button.setOnClickListener(new View.OnClickListener() {
@@ -122,7 +112,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    /*
+
     //안드로이드 사이클 create -> start일 때
     @Override
     public void onStart() {
@@ -135,5 +125,5 @@ public class LoginActivity extends AppCompatActivity {
             intent.putExtra("activity", "login");
             startActivity(intent);
         }
-    }*/
+    }
 }

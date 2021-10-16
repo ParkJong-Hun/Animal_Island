@@ -37,7 +37,7 @@ public class CirclePagerIndicatorDecoration extends RecyclerView.ItemDecoration 
         float paddingBetweenItems = Math.max(0, itemCount - 1) * mIndicatorItemPadding;
         float indicatorTotalWidth = totalLength + paddingBetweenItems;
         float indicatorStartX = (parent.getWidth() - indicatorTotalWidth) / 2F;
-        float indicatorPosY = parent.getHeight() - mIndicatorHeight / 0.4F;
+        float indicatorPosY = 20F;
         drawInactiveIndicators(c, indicatorStartX, indicatorPosY, itemCount);
         LinearLayoutManager layoutManager = (LinearLayoutManager) parent.getLayoutManager();
         int activePosition = layoutManager.findFirstVisibleItemPosition();
