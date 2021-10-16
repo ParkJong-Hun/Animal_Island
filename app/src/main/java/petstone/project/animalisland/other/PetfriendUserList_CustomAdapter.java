@@ -35,7 +35,10 @@ public class PetfriendUserList_CustomAdapter extends RecyclerView.Adapter<Petfri
     @Override
     public void onBindViewHolder(@NonNull CustomViewholder holder, int position) {
         //임시로 uid 닉네임 설정
-        holder.tv_nickname.setText(arrayList.get(position).getUid());
+        //holder.tv_nickname.setText(arrayList.get(position).getUid());
+        holder.tv_nickname.setText(arrayList.get(position).getNickname());
+        holder.tv_Address.setText(arrayList.get(position).getAddress());
+
     }
 
     @Override
@@ -47,11 +50,13 @@ public class PetfriendUserList_CustomAdapter extends RecyclerView.Adapter<Petfri
     public class CustomViewholder extends RecyclerView.ViewHolder {
 
         TextView tv_nickname;
+        TextView tv_Address;
 
         public CustomViewholder(@NonNull View itemView)
         {
             super(itemView);
             this.tv_nickname = itemView.findViewById(R.id.user_name);
+            this.tv_Address = itemView.findViewById(R.id.user_info);
         }
     }
 }

@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCanceledListener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -84,9 +85,8 @@ public class PetFriendComponent extends Fragment {
         user_rv.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getContext());
         user_rv.setLayoutManager(layoutManager);
-        // 유저 리스트 리사이클러 뷰 어댑터 설정
+        // 유저 리스트 리사이클러 뷰 어댑터, 리스트 설정
         arrayList = new ArrayList<>(); // pertfrienduser 객체를 담을 어레이 리스트(어댑터쪽)
-
         user_adapter = new PetfriendUserList_CustomAdapter(arrayList, getContext());
         user_rv.setAdapter(user_adapter);
 
@@ -122,6 +122,7 @@ public class PetFriendComponent extends Fragment {
         search_recyclerView.addItemDecoration(new RecyclerDecoration(10));
         pfs_adapter.notifyDataSetChanged();
 
+        if(arrayList!=null)
         firebaseSearch();
 
 
@@ -165,29 +166,34 @@ public class PetFriendComponent extends Fragment {
 
     void firebaseSearch() {
 
-        db.collection("petfriend")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+            db.collection("petfriend")
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            //해당컬렉션에 모든 문서를 가져옴
 
-                        arrayList.clear(); // 기존 배열 초기화 예방차원
+                            arrayList.clear(); // 기존 배열 초기화 예방차원
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    Log.d("firebaseSearch", document.getId() + " => " + document.getData() + "\n");
+                                    //리스트에 petfriend 컬렉션에서 모든 문서들의 데이터(닉네임,uid,비용,시간,자격증)를 가져와서 arrayList에 넣기
+                                    //String uid, String nickname, String address
+                                    arrayList.add(new PetfriendUser(
+                                            document.getData().get("uid").toString()
+                                            ,document.getData().get("nickname").toString()
+                                            ,document.getData().get("address").toString()
 
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d("firebaseSearch", document.getId() + " => " + document.getData() + "\n");
-                                arrayList.add(new PetfriendUser(
-                                        document.getData().get("uid").toString()
-                                ));
+                                    ));
+                                    //어댑터 새로고침
+                                    user_adapter.notifyDataSetChanged();
 
-                                user_adapter.notifyDataSetChanged();
-
+                                }
+                            } else {
+                                Log.d("firebaseSearch", "Error getting documents: ", task.getException());
                             }
-                        } else {
-                            Log.d("firebaseSearch", "Error getting documents: ", task.getException());
                         }
-                    }
-                });
+                    });
 
 
 
