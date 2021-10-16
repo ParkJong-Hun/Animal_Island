@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="spinner_type">
+        <item>동물종류</item>
+        <item>강아지</item>
+        <item>고양이</item>
+    </string-array>
+
+    <string-array name="spinner_dog">
+        <item>강아지 품종</item>
+        <item>말티즈</item>
+        <item>푸들</item>
+        <item>비숑</item>
+        <item>비글</item>
+        <item>사모예드</item>
+        <item>시바</item>
+        <item>시츄</item>
+        <item>요크셔테리어</item>
+        <item>웰시코기</item>
+        <item>스피츠</item>
+        <item>치와와</item>
+        <item>진돗개</item>
+        <item>포메라니안</item>
+        <item>불독</item>
+        <item>퍼그</item>
+        <item>보더콜리</item>
+        <item>골든리트리버</item>
+        <item>닥스훈트</item>
+        <item>믹스견</item>
+    </string-array>
+
+    <string-array name="spinner_cat">
+        <item>고양이 품종</item>
+        <item>랙돌</item>
+        <item>러시안블루</item>
+        <item>먼치킨</item>
+        <item>뱅갈</item>
+        <item>노르웨이숲고양이</item>
+        <item>샴</item>
+        <item>스핑크스</item>
+        <item>페르시안</item>
+        <item>아메리칸쇼트헤어</item>
+        <item>아비시니안</item>
+        <item>터키시앙고라</item>
+        <item>브리티시쇼트</item>
+        <item>코리안쇼트헤어</item>
+    </string-array>
+
+    <string-array name="spinner_inoculation">
+        <item>차수 선택(최대 7차)</item>
+        <item>1차</item>
+        <item>2차</item>
+        <item>3차</item>
+        <item>4차</item>
+        <item>5차</item>
+        <item>6차</item>
+        <item>7차</item>
+    </string-array>
+
+</resources>

@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -48,7 +49,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
 
-
         //파이어베이스 인증 인스턴스 초기화
         auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
@@ -88,6 +88,7 @@ public class LoginActivity extends AppCompatActivity {
                                         //로그인 정보 일치
                                         Log.d("Success", "이메일로 로그인:success");
                                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                        intent.putExtra("activity", "login");
                                         startActivity(intent);
                                     } else {
                                         //로그인 정보 불일치
@@ -112,6 +113,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+
     //안드로이드 사이클 create -> start일 때
     @Override
     public void onStart() {
@@ -121,6 +123,7 @@ public class LoginActivity extends AppCompatActivity {
         if(currentUser != null) {
             Log.d("Success", "자동 로그인됨: " + currentUser.getEmail());
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            intent.putExtra("activity", "login");
             startActivity(intent);
         }
     }

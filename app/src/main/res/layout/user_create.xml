@@ -38,211 +38,242 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <TextView
-        android:id="@+id/tv_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="이름"
-        android:layout_marginTop="15dp"
-        android:layout_marginStart="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"/>
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="이름"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/toolbar"/>
 
-    <EditText
-        android:id="@+id/et_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="이름을 입력해주세요."
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        app:layout_constraintTop_toBottomOf="@id/tv_name"
-        app:layout_constraintLeft_toLeftOf="@id/tv_name"/>
+            <EditText
+                android:id="@+id/et_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="이름을 입력해주세요."
+                android:inputType="textPersonName"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_name"
+                app:layout_constraintLeft_toLeftOf="@id/tv_name"/>
 
-    <TextView
-        android:id="@+id/tv_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="아이디"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/et_name"/>
+            <TextView
+                android:id="@+id/tv_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="20dp"
+                android:text="아이디"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/et_name"/>
 
-    <EditText
-        android:id="@+id/et_id"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:hint="아이디"
-        app:layout_constraintTop_toBottomOf="@id/tv_id"
-        app:layout_constraintLeft_toLeftOf="@id/tv_id"/>
+            <EditText
+                android:id="@+id/et_id"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:hint="아이디"
+                android:inputType="text"
+                app:layout_constraintTop_toBottomOf="@id/tv_id"
+                app:layout_constraintLeft_toLeftOf="@id/tv_id"/>
 
-    <Button
-        android:id="@+id/validateButton"
-        android:layout_width="70dp"
-        android:layout_height="40dp"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/button_round"
-        android:text="중복 확인"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_id"/>
+            <Button
+                android:id="@+id/validateButton"
+                android:layout_width="70dp"
+                android:layout_height="40dp"
+                android:background="@drawable/button_round"
+                android:text="중복 확인"
+                android:textColor="@color/white"
+                android:layout_marginEnd="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_id"/>
 
-    <TextView
-        android:id="@+id/tv_pw"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="비밀번호"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintTop_toBottomOf="@id/et_id"
-        app:layout_constraintStart_toStartOf="parent"/>
+            <TextView
+                android:id="@+id/id_check_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
 
-    <EditText
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:id="@+id/et_pw"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="비밀번호"
-        app:layout_constraintTop_toBottomOf="@id/tv_pw"/>
+                android:textColor="@color/red"
+                android:textStyle="bold"
 
-    <TextView
-        android:id="@+id/tv_pw_check"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="비밀번호 확인"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintTop_toBottomOf="@id/et_pw"
-        app:layout_constraintStart_toStartOf="parent"/>
+                app:layout_constraintLeft_toLeftOf="@id/tv_id"
+                app:layout_constraintTop_toBottomOf="@id/et_id"/>
 
-    <EditText
-        android:id="@+id/et_pwck"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:hint="비밀번호 확인"
-        app:layout_constraintTop_toBottomOf="@id/tv_pw_check"/>
+            <TextView
+                android:id="@+id/tv_pw"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="비밀번호"
+                android:layout_marginStart="20dp"
+                app:layout_constraintTop_toBottomOf="@id/id_check_text"
+                app:layout_constraintStart_toStartOf="parent"/>
 
-    <TextView
-        android:id="@+id/tv_age"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="생년월일"
-        app:layout_constraintLeft_toLeftOf="@id/et_pwck"
-        app:layout_constraintTop_toBottomOf="@id/et_pwck"/>
+            <EditText
+                android:id="@+id/et_pw"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="비밀번호 8자 이상 20자 이하로 입력"
+                android:inputType="textPassword"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_pw"/>
 
-    <EditText
-        android:id="@+id/et_age"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:focusableInTouchMode="false"
-        android:textAlignment="center"
-        app:layout_constraintLeft_toLeftOf="@id/tv_age"
-        app:layout_constraintTop_toBottomOf="@id/tv_age"
-        android:hint="생년월일 입력"/>
+            <TextView
+                android:id="@+id/tv_pw_check"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="비밀번호 확인"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="20dp"
+                app:layout_constraintTop_toBottomOf="@id/et_pw"
+                app:layout_constraintStart_toStartOf="parent"/>
 
-    <TextView
-        android:id="@+id/tv_sex"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="160dp"
-        android:text="성별"
-        android:layout_marginTop="10dp"
-        app:layout_constraintLeft_toRightOf="@id/tv_age"
-        app:layout_constraintTop_toBottomOf="@id/et_pwck"/>
+            <EditText
+                android:id="@+id/et_pwck"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="비밀번호 확인"
+                android:inputType="textPassword"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_pw_check"/>
 
-    <RadioGroup
-        android:id="@+id/radio_sex"
-        android:layout_width="wrap_content"
-        android:layout_height="45dp"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/tv_sex"
-        app:layout_constraintStart_toStartOf="@id/tv_sex">
+            <TextView
+                android:id="@+id/tv_age"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="생년월일"
+                app:layout_constraintLeft_toLeftOf="@id/et_pwck"
+                app:layout_constraintTop_toBottomOf="@id/et_pwck"/>
 
-        <RadioButton
-            android:layout_width="55dp"
-            android:layout_height="match_parent"
-            android:text="여자"
-            android:textAlignment="center"
-            android:button="@null"
-            android:background="@drawable/button_shape"/>
+            <EditText
+                android:id="@+id/et_age"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:focusableInTouchMode="false"
+                android:textAlignment="center"
+                app:layout_constraintLeft_toLeftOf="@id/tv_age"
+                app:layout_constraintTop_toBottomOf="@id/tv_age"
+                android:inputType="date"
+                android:hint="생년월일 입력"/>
 
-        <RadioButton
-            android:layout_marginStart="5dp"
-            android:layout_width="55dp"
-            android:layout_height="match_parent"
-            android:text="남자"
-            android:textAlignment="center"
-            android:button="@null"
-            android:background="@drawable/button_shape"/>
+            <TextView
+                android:id="@+id/tv_sex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="160dp"
+                android:text="성별"
+                android:layout_marginTop="10dp"
+                app:layout_constraintLeft_toRightOf="@id/tv_age"
+                app:layout_constraintTop_toBottomOf="@id/et_pwck"/>
 
-    </RadioGroup>
+            <RadioGroup
+                android:id="@+id/radio_sex"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/tv_sex"
+                app:layout_constraintStart_toStartOf="@id/tv_sex">
 
+                <RadioButton
+                    android:layout_width="55dp"
+                    android:layout_height="match_parent"
+                    android:text="여자"
+                    android:textAlignment="center"
+                    android:button="@null"
+                    android:background="@drawable/button_shape"/>
 
-    <TextView
-        android:id="@+id/tv_nickname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="닉네임"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/et_age"/>
+                <RadioButton
+                    android:layout_marginStart="5dp"
+                    android:layout_width="55dp"
+                    android:layout_height="match_parent"
+                    android:text="남자"
+                    android:textAlignment="center"
+                    android:button="@null"
+                    android:background="@drawable/button_shape"/>
 
-    <EditText
-        android:id="@+id/et_nickname"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:hint="닉네임"
-        app:layout_constraintTop_toBottomOf="@id/tv_nickname"
-        app:layout_constraintLeft_toLeftOf="@id/tv_nickname"/>
-
-    <Button
-        android:id="@+id/validateButton2"
-        android:layout_width="70dp"
-        android:layout_height="40dp"
-        android:background="@drawable/button_round"
-        android:text="중복 확인"
-        android:textColor="@color/white"
-        android:layout_marginEnd="20dp"
-        app:layout_constraintTop_toBottomOf="@id/tv_nickname"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
-    <TextView
-        android:id="@+id/tv_email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="이메일"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintTop_toBottomOf="@id/et_nickname"
-        app:layout_constraintStart_toStartOf="parent"/>
-
-    <EditText
-        android:id="@+id/et_mail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:hint="이메일을 입력해주세요."
-        app:layout_constraintTop_toBottomOf="@id/tv_email" />
+            </RadioGroup>
 
 
-    <Button
-        android:id="@+id/btn_register"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/button_round"
-        android:text="ANIMAL ISLAND 시작하기"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        android:textSize="20sp"
-        app:layout_constraintTop_toBottomOf="@id/et_mail"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+            <TextView
+                android:id="@+id/tv_nickname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="닉네임"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/et_age"/>
+
+            <EditText
+                android:id="@+id/et_nickname"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:hint="닉네임"
+                android:inputType="text"
+                app:layout_constraintTop_toBottomOf="@id/tv_nickname"
+                app:layout_constraintLeft_toLeftOf="@id/tv_nickname"/>
+
+            <Button
+                android:id="@+id/validateButton2"
+                android:layout_width="70dp"
+                android:layout_height="40dp"
+                android:background="@drawable/button_round"
+                android:text="중복 확인"
+                android:textColor="@color/white"
+                android:layout_marginEnd="20dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_nickname"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                android:id="@+id/nickname_check_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:textColor="@color/red"
+                android:textStyle="bold"
+
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/et_nickname"/>
+
+            <TextView
+                android:id="@+id/tv_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="이메일"
+                android:layout_marginStart="20dp"
+                app:layout_constraintTop_toBottomOf="@id/nickname_check_text"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <EditText
+                android:id="@+id/et_mail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:hint="이메일을 입력해주세요."
+                android:inputType="textEmailAddress"
+                app:layout_constraintTop_toBottomOf="@id/tv_email" />
+
+            <Button
+                android:id="@+id/btn_register"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:backgroundTint="@color/colorDaepyo"
+
+                android:text="ANIMAL ISLAND 시작하기"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="18sp"
+
+                app:layout_constraintTop_toBottomOf="@id/et_mail"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

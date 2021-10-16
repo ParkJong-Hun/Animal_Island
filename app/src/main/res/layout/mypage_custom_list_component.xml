@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
     android:id="@+id/layout"
     android:paddingTop="10dp"
     android:paddingBottom="10dp">
 
-
     <ImageView
+        android:layout_marginStart="10dp"
         android:id="@+id/mypage_custom_list_icon"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:scaleType="centerCrop"
-        android:layout_marginStart="10dp"
         />
+
     <TextView
         android:id="@+id/mypage_custom_list_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="18dp"
         android:padding="5dp"
+        android:layout_marginStart="5dp"
 
         android:text="hi"
         android:textSize="15dp"

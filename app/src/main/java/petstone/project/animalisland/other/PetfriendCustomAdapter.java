@@ -8,6 +8,11 @@ import android.widget.BaseAdapter;
 
 import petstone.project.animalisland.R;
 
+
+
+// 이거 안씀
+
+
 public class PetfriendCustomAdapter extends BaseAdapter {
 
     Context context;

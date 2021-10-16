@@ -14,7 +14,7 @@ import petstone.project.animalisland.R;
 public class MypageCustomListAdapter extends BaseAdapter {
     Context context;
     String[] strings = new String[]{"펫 프렌즈 신청", "유료 분양 권한 신청", "이벤트", "공지사항", "로그아웃"};
-    int[] imageId = new int[]{R.drawable.document, R.drawable.document, R.drawable.document, R.drawable.document, R.drawable.password};
+    int[] imageId = new int[]{R.drawable.apply, R.drawable.apply, R.drawable.event, R.drawable.news, R.drawable.password};
 
     public MypageCustomListAdapter(Context context) {
         this.context = context;
