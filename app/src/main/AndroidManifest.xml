@@ -23,7 +23,7 @@
          </activity>
         <activity android:name="petstone.project.animalisland.activity.MainActivity" />
         <activity android:name="petstone.project.animalisland.activity.MypageInfoEditActivity" />
-        <activity android:name="petstone.project.animalisland.activity.MypagePetfriendApplyActivity" android:windowSoftInputMode="adjustPan"  />
+        <activity android:name="petstone.project.animalisland.activity.MypagePetfriendApplyActivity" android:windowSoftInputMode="adjustPan" />
         <activity android:name="petstone.project.animalisland.activity.MypageSellApplyActivity" />
         <activity android:name="petstone.project.animalisland.activity.PetfriendUserSelect" />
         <activity android:name=".activity.RegisterActivity" />

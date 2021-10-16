@@ -1,35 +1,53 @@
 package petstone.project.animalisland.activity;
 
 import android.app.DatePickerDialog;
+import android.content.ClipData;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+import java.util.Calendar;
 
 
 import java.util.Calendar;
 import petstone.project.animalisland.R;
+import petstone.project.animalisland.other.FreeSubmitImageAdapter;
 
 public class RehomeFreeSubmitActivity extends AppCompatActivity {
+
+    private static final String TAG = "MultiImageActivity";
+    RecyclerView recycler_img;
+    FreeSubmitImageAdapter adapter;
+    ArrayList<Uri> uriList = new ArrayList<>();
+    Button img_button;
 
     EditText birth;
     ImageView back;
     Button cancel, submit;
     Spinner city, borough, town, type, breed, inoculation;
 
+    ArrayAdapter<CharSequence> type_adapter, breed_adapter, inoculation_adapter;
+
     String[] city_name = {"시/도"};
     String[] borough_name = {"시/구/군"};
     String[] town_name = {"동/읍/면"};
-    String[] type_name = {"동물종류"};
-    String[] breed_name = {"품종"};
-    String[] inoculation_name = {"차수 선택(최대 7차)", "1차", "2차", "3차", "4차", "5차", "6차", "7차", "접종 안함"};
 
 
     @Override
@@ -48,8 +66,21 @@ public class RehomeFreeSubmitActivity extends AppCompatActivity {
         type = findViewById(R.id.type);
         breed = findViewById(R.id.breed);
         inoculation = findViewById(R.id.inoculation);
-
         birth = findViewById(R.id.birth);
+
+        img_button = findViewById(R.id.img_button);
+        recycler_img = findViewById(R.id.free_recycler_img);
+
+        img_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent, 1);
+            }
+        });
 
         ArrayAdapter<String> city_adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, city_name);
         city_adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
@@ -63,16 +94,33 @@ public class RehomeFreeSubmitActivity extends AppCompatActivity {
         town_adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         town.setAdapter(town_adapter);
 
-        ArrayAdapter<String> type_adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, type_name);
-        type_adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        type_adapter = ArrayAdapter.createFromResource(this, R.array.spinner_type, android.R.layout.simple_spinner_dropdown_item);
+        type_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         type.setAdapter(type_adapter);
 
-        ArrayAdapter<String> breed_adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, breed_name);
-        breed_adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-        breed.setAdapter(breed_adapter);
+        type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (type_adapter.getItem(i).equals("강아지")){
+                    breed_adapter = ArrayAdapter.createFromResource(RehomeFreeSubmitActivity.this, R.array.spinner_dog, android.R.layout.simple_spinner_dropdown_item);
+                    breed_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    breed.setAdapter(breed_adapter);
+                }
+                else if (type_adapter.getItem(i).equals("고양이")){
+                    breed_adapter = ArrayAdapter.createFromResource(RehomeFreeSubmitActivity.this, R.array.spinner_cat, android.R.layout.simple_spinner_dropdown_item);
+                    breed_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    breed.setAdapter(breed_adapter);
+                }
+            }
 
-        ArrayAdapter<String> inoculation_adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, inoculation_name);
-        inoculation_adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        inoculation_adapter = ArrayAdapter.createFromResource(this, R.array.spinner_inoculation, android.R.layout.simple_spinner_dropdown_item);
+        inoculation_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         inoculation.setAdapter(inoculation_adapter);
 
         cancel.setOnClickListener(new View.OnClickListener() {
@@ -111,4 +159,56 @@ public class RehomeFreeSubmitActivity extends AppCompatActivity {
         });
 
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == 1){
+            if(data == null){
+                Toast.makeText(getApplicationContext(), "이미지를 선택하지 않았습니다.", Toast.LENGTH_LONG).show();
+            }
+            else{
+                if(data.getClipData() == null){
+                    Log.e("single choice: ", String.valueOf(data.getData()));
+                    Uri imageUri = data.getData();
+                    uriList.add(imageUri);
+
+                    recycler_img.setVisibility(View.VISIBLE);
+
+                    adapter = new FreeSubmitImageAdapter(uriList, getApplicationContext());
+                    recycler_img.setAdapter(adapter);
+                    recycler_img.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+                }
+                else{
+                    ClipData clipData = data.getClipData();
+                    Log.e("clipData", String.valueOf(clipData.getItemCount()));
+
+                    if(clipData.getItemCount() > 5){
+                        Toast.makeText(getApplicationContext(), "사진은 5장까지 선택 가능합니다.", Toast.LENGTH_LONG).show();
+                    }
+                    else{
+                        Log.e(TAG, "multiple choice");
+
+                        for (int i = 0; i < clipData.getItemCount(); i++){
+                            Uri imageUri = clipData.getItemAt(i).getUri();
+                            try {
+                                uriList.add(imageUri);
+
+                            } catch (Exception e) {
+                                Log.e(TAG, "File select error", e);
+                            }
+                        }
+
+                        recycler_img.setVisibility(View.VISIBLE);
+
+                        adapter = new FreeSubmitImageAdapter(uriList, getApplicationContext());
+                        recycler_img.setAdapter(adapter);
+                        recycler_img.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+                    }
+                }
+            }
+        }
+    }
+
 }

@@ -68,7 +68,7 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
         license3.setVisibility(View.GONE);
 
 
-        //유저 정보 확인 
+        //유저 정보 확인
         usercheck();
 
         //취소 버튼
@@ -207,7 +207,6 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
         db.collection("petfriend").add(petfriendUser)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
-
                     public void onSuccess(DocumentReference documentReference) {
                         Log.d(uploader,"UID create post :" + documentReference.getId());
                     }
@@ -218,7 +217,6 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
                         Log.w("uploader", e.toString());
                     }
                 });
-
          */
 
 
@@ -351,7 +349,6 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
             mAlertDialog = null;
         }
     }
-
  */
 
     @Override

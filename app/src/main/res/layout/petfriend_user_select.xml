@@ -50,6 +50,7 @@
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="550dp"
+        android:fillViewport="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
@@ -72,8 +73,8 @@
 
             <ImageView
                 android:id="@+id/user_image"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
                 android:layout_marginStart="25dp"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/border"
@@ -87,7 +88,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="5dp"
                 android:text="닉네임"
-                android:textSize="20sp"
+                android:textSize="17sp"
                 android:textStyle="bold"
                 android:textColor="@color/colorDaepyo"
                 app:layout_constraintStart_toEndOf="@+id/user_image"
@@ -100,7 +101,6 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="5dp"
                 android:text="이름 : \n나이 : \n지역 : \n시간 :\n비용 :"
-                android:textSize="15sp"
                 app:layout_constraintStart_toEndOf="@+id/user_image"
                 app:layout_constraintTop_toBottomOf="@+id/user_name" />
 
