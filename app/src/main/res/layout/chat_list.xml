@@ -25,7 +25,7 @@
             android:layout_marginTop="5dp"
 
             android:text="아지냥이"
-            android:textSize="20sp"
+            android:textSize="17sp"
             android:textColor="@color/colorDaepyo"
             android:textStyle="bold"
 

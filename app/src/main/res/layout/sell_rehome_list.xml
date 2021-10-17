@@ -7,8 +7,8 @@
 
     <ImageView
         android:id="@+id/main_img"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
         android:layout_marginStart="20dp"
         android:src="@drawable/image"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -29,7 +29,7 @@
         <ImageView
             android:id="@+id/sell_gender"
             android:layout_width="20dp"
-            android:layout_height="30dp"
+            android:layout_height="20dp"
             android:src="@drawable/female"/>
 
         <TextView
@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="[동물종류]"
-            android:textSize="20sp"
+            android:textSize="17sp"
             android:layout_marginStart="5dp" />
 
 
@@ -46,7 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=" 품종"
-            android:textSize="20sp"/>
+            android:textSize="17sp"/>
 
     </LinearLayout>
 
@@ -66,7 +66,6 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:text="지역 : "
-        android:textSize="15sp"
         app:layout_constraintLeft_toRightOf="@id/main_img"
         app:layout_constraintTop_toBottomOf="@id/frist_line" />
 
@@ -77,7 +76,6 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
         android:text="작성일 : "
-        android:textSize="15sp"
         app:layout_constraintLeft_toRightOf="@id/main_img"
         app:layout_constraintTop_toBottomOf="@id/sell_local" />
 
@@ -88,7 +86,6 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
         android:text="생년월일 : "
-        android:textSize="15sp"
         app:layout_constraintLeft_toRightOf="@id/main_img"
         app:layout_constraintTop_toBottomOf="@id/sell_date" />
 
@@ -98,7 +95,6 @@
         android:layout_height="wrap_content"
         android:text="분양비용"
         android:textColor="@color/red"
-        android:textSize="17sp"
         app:layout_constraintLeft_toLeftOf="@id/main_img"
         app:layout_constraintRight_toRightOf="@id/main_img"
         app:layout_constraintTop_toBottomOf="@id/main_img" />

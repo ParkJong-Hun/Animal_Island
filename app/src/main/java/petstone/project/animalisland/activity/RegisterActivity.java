@@ -7,11 +7,15 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -45,6 +49,9 @@ public class RegisterActivity extends AppCompatActivity {
     FirebaseAuth auth;
     FirebaseFirestore db;
 
+    //뒤로가기
+    ImageView back;
+
     //회원가입 버튼
     Button btn_register;
 
@@ -53,6 +60,7 @@ public class RegisterActivity extends AppCompatActivity {
     String name = "";
 
     //아이디
+    TextView id_check_text;
     EditText et_id;
     String id = "";
     //아이디 중복확인
@@ -67,6 +75,8 @@ public class RegisterActivity extends AppCompatActivity {
     String password_check = "";
 
     //닉네임
+    TextView nickname_check_text;
+
     EditText et_nickname;
     String nickname = "";
     //닉네임 중복확인
@@ -119,6 +129,20 @@ public class RegisterActivity extends AppCompatActivity {
         et_mail = findViewById(R.id.et_mail);
         et_nickname = findViewById(R.id.et_nickname);
 
+        id_check_text = findViewById(R.id.id_check_text);
+        nickname_check_text = findViewById(R.id.nickname_check_text);
+
+        back =findViewById(R.id.back);
+
+        //뒤로가기 버튼
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+
 
         //아이디 중복 확인 버튼 클릭 리스너
         validateButton.setOnClickListener(new View.OnClickListener() {
@@ -137,28 +161,31 @@ public class RegisterActivity extends AppCompatActivity {
                             //없으면 참으로 변경
                             validate_id = true;
                             et_id.setTextColor(Color.GREEN);
-                            Toast.makeText(RegisterActivity.this, "사용 가능한 아이디입니다.",
-                                    Toast.LENGTH_SHORT).show();
+
+                            id_check_text.setText("사용 가능한 아이디입니다.");
+
                         } else if (id.isEmpty()) {
                             //비면 거짓으로 변경
                             Log.d("fail", queryDocumentSnapshots.getDocuments().toString());
                             validate_id = false;
                             et_id.setTextColor(Color.RED);
-                            Toast.makeText(RegisterActivity.this, "아이디를 정확히 입력해주세요.",
-                                    Toast.LENGTH_SHORT).show();
+
+                            id_check_text.setText("아이디를 정확히 입력해주세요.");
+
                         } else if (id.length() < 6) {
                             //길이가 작으면 거짓으로 변경
                             validate_id = false;
                             et_id.setTextColor(Color.RED);
-                            Toast.makeText(RegisterActivity.this, "아이디를 6자 이상 입력해주세요.",
-                                    Toast.LENGTH_SHORT).show();
+
+                            id_check_text.setText("아이디를 6자 이상 입력해주세요.");
+
                         } else {
                             //있으면 거짓으로 변경
                             Log.d("fail", queryDocumentSnapshots.getDocuments().toString());
                             validate_id = false;
                             et_id.setTextColor(Color.RED);
-                            Toast.makeText(RegisterActivity.this, "이미 동일한 아이디가 존재합니다.",
-                                    Toast.LENGTH_SHORT).show();
+
+                            id_check_text.setText("이미 동일한 아이디가 존재합니다.");
                         }
                     }
                 });
@@ -182,21 +209,24 @@ public class RegisterActivity extends AppCompatActivity {
                             //없으면 참으로 변경
                             validate_nickname = true;
                             et_nickname.setTextColor(Color.GREEN);
-                            Toast.makeText(RegisterActivity.this, "사용 가능한 닉네임입니다.",
-                                    Toast.LENGTH_SHORT).show();
+
+                            nickname_check_text.setText("사용 가능한 닉네임입니다.");
+
                         } else if (nickname.isEmpty()) {
                             //비면 거짓으로 변경
                             validate_nickname = false;
                             et_nickname.setTextColor(Color.RED);
-                            Toast.makeText(RegisterActivity.this, "닉네임을 정확히 입력해주세요.",
-                                    Toast.LENGTH_SHORT).show();
+
+                            nickname_check_text.setText("닉네임을 정확하게 입력해주세요.");
+
                         } else {
                             //있으면 거짓으로 변경
                             Log.d("fail", queryDocumentSnapshots.getDocuments().toString());
                             validate_nickname = false;
                             et_nickname.setTextColor(Color.RED);
-                            Toast.makeText(RegisterActivity.this, "이미 동일한 닉네임이 존재합니다.",
-                                    Toast.LENGTH_SHORT).show();
+
+                            nickname_check_text.setText("이미 동일한 닉네임이 존재합니다.");
+
                         }
                     }
                 });
@@ -361,6 +391,15 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                     datePickerDialog.show();
+            }
+        });
+
+        et_pwck.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                if(i == keyEvent.KEYCODE_ENTER)
+                    datePickerDialog.show();
+                return false;
             }
         });
 

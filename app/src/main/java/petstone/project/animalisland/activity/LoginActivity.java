@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -57,7 +58,6 @@ public class LoginActivity extends AppCompatActivity {
         user_create_button = findViewById(R.id.user_create_button);
         id_editText = findViewById(R.id.login_id_et);
         password_editText = findViewById(R.id.login_pw_et);
-
 
         //로그인 버튼
         login_button.setOnClickListener(new View.OnClickListener() {
@@ -111,6 +111,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
 
     //안드로이드 사이클 create -> start일 때
     @Override

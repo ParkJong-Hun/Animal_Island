@@ -123,7 +123,7 @@ public class PetFriendComponent extends Fragment {
         pfs_adapter.notifyDataSetChanged();
 
         if(arrayList!=null)
-        firebaseSearch();
+            firebaseSearch();
 
 
         //검색 기록 리사이클뷰 호라이즌
@@ -136,7 +136,6 @@ public class PetFriendComponent extends Fragment {
         listView = view.findViewById(R.id.petfriend_listview);
         adapter = new PetfriendCustomAdapter(getContext());
         listView.setAdapter(adapter);
-
         //유저 클릭시 유저 정보 뛰움
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -144,10 +143,8 @@ public class PetFriendComponent extends Fragment {
                 Intent intent;
                 intent = new Intent(getContext(), PetfriendUserSelect.class);
                 startActivity(intent);
-
             }
         });
-
         */
 
         // floating 버튼 클릭시, 조건문으로 펫프랜즈 권한확인후 버튼 활성화 or 권한없으면 비활성화 하거나 신청 화면으로 연결
@@ -166,38 +163,37 @@ public class PetFriendComponent extends Fragment {
 
     void firebaseSearch() {
 
-            db.collection("petfriend")
-                    .get()
-                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            //해당컬렉션에 모든 문서를 가져옴
+        db.collection("petfriend")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        //해당컬렉션에 모든 문서를 가져옴
 
-                            arrayList.clear(); // 기존 배열 초기화 예방차원
-                            if (task.isSuccessful()) {
-                                for (QueryDocumentSnapshot document : task.getResult()) {
-                                    Log.d("firebaseSearch", document.getId() + " => " + document.getData() + "\n");
-                                    //리스트에 petfriend 컬렉션에서 모든 문서들의 데이터(닉네임,uid,비용,시간,자격증)를 가져와서 arrayList에 넣기
-                                    //String uid, String nickname, String address
-                                    arrayList.add(new PetfriendUser(
-                                            document.getData().get("uid").toString()
-                                            ,document.getData().get("nickname").toString()
-                                            ,document.getData().get("address").toString()
+                        arrayList.clear(); // 기존 배열 초기화 예방차원
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d("firebaseSearch", document.getId() + " => " + document.getData() + "\n");
+                                //리스트에 petfriend 컬렉션에서 모든 문서들의 데이터(닉네임,uid,비용,시간,자격증)를 가져와서 arrayList에 넣기
+                                //String uid, String nickname, String address
+                                arrayList.add(new PetfriendUser(
+                                        document.getData().get("uid").toString()
+                                        ,document.getData().get("nickname").toString()
+                                        ,document.getData().get("address").toString()
 
-                                    ));
-                                    //어댑터 새로고침
-                                    user_adapter.notifyDataSetChanged();
+                                ));
+                                //어댑터 새로고침
+                                user_adapter.notifyDataSetChanged();
 
-                                }
-                            } else {
-                                Log.d("firebaseSearch", "Error getting documents: ", task.getException());
                             }
+                        } else {
+                            Log.d("firebaseSearch", "Error getting documents: ", task.getException());
                         }
-                    });
+                    }
+                });
 
 
 
 
     }
 }
-
