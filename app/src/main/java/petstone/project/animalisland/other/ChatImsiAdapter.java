@@ -13,14 +13,14 @@ import petstone.project.animalisland.R;
 
 public class ChatImsiAdapter extends BaseAdapter {
     Context context;
-    String[] strings = new String[]{"홍길동"};
+    String[] names = new String[]{"홍길동", "hi"};
 
     public ChatImsiAdapter(Context context) {
         this.context = context;
     }
     @Override
     public int getCount() {
-        return strings.length;
+        return names.length;
     }
 
     @Override
@@ -36,7 +36,11 @@ public class ChatImsiAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(context);
         convertView = inflater.inflate(R.layout.chat_list, parent, false);
-
+        TextView nickname = convertView.findViewById(R.id.chat_nickname);
+        TextView updatedMessage = convertView.findViewById(R.id.chat_updated_message);
+        TextView updatedCount = convertView.findViewById(R.id.chat_updated_count);
+        TextView updatedAt = convertView.findViewById(R.id.chat_updatedAt);
+        nickname.setText(names[position]);
         return convertView;
     }
 }
