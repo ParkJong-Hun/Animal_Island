@@ -15,6 +15,9 @@ import petstone.project.animalisland.other.VPAdapter;
 
 //채팅
 public class ChatActivity extends AppCompatActivity {
+    String whoUID = ""; //상대방 uid
+    //TODO: 상대방 UID를 이전 화면에서 가져오기
+
     ImageView back;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

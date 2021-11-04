@@ -72,7 +72,7 @@ public class ChatAdapter extends BaseAdapter {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.chatlist_component, parent, false);
 
-            layout = (LinearLayout) convertView.findViewById(R.id.layout);
+            layout = (LinearLayout) convertView.findViewById(R.id.chat_list_layout);
             text = (TextView) convertView.findViewById(R.id.text);
             //viewRight = (View) convertView.findViewById(R.id.imageViewright);
             //viewLeft = (View) convertView.findViewById(R.id.imageViewleft);
