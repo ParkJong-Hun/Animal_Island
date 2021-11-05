@@ -9,18 +9,23 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import petstone.project.animalisland.R;
 
-public class ChatImsiAdapter extends BaseAdapter {
+public class ChatAdapter extends BaseAdapter {
     Context context;
-    String[] names = new String[]{"홍길동", "hi"};
+    ArrayList<String> names = new ArrayList<>();
+    ArrayList<String> updatedMessages = new ArrayList<>();
+    ArrayList<Integer> updatedCounts = new ArrayList<Integer>();
+    ArrayList<Integer> updatedAts = new ArrayList<Integer>();
 
-    public ChatImsiAdapter(Context context) {
+    public ChatAdapter(Context context) {
         this.context = context;
     }
     @Override
     public int getCount() {
-        return names.length;
+        return names.size();
     }
 
     @Override
@@ -32,15 +37,22 @@ public class ChatImsiAdapter extends BaseAdapter {
     public long getItemId(int position) {
         return position;
     }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(context);
         convertView = inflater.inflate(R.layout.chat_list, parent, false);
+
         TextView nickname = convertView.findViewById(R.id.chat_nickname);
         TextView updatedMessage = convertView.findViewById(R.id.chat_updated_message);
         TextView updatedCount = convertView.findViewById(R.id.chat_updated_count);
         TextView updatedAt = convertView.findViewById(R.id.chat_updatedAt);
-        nickname.setText(names[position]);
+
+        nickname.setText(names.get(position));
+        updatedMessage.setText(updatedMessages.get(position));
+        updatedAt.setText(updatedAts.get(position));
+        updatedCount.setText(updatedCounts.get(position));
+
         return convertView;
     }
 }
