@@ -6,12 +6,15 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
-    <Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    <!--채팅 창-->
+
+    <Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#ffe1e1"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="33dp">
 
         <ImageView
             android:id="@+id/back"
@@ -21,27 +24,17 @@
 
 
         <TextView
+            android:id="@+id/chat_who"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="100dp"
-            android:text="ANIMAL"
+            android:layout_marginStart="140dp"
+            android:text="name"
             android:textColor="#668c47"
-            android:textSize="25sp"
-            android:textStyle="bold|italic" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:paddingTop="8dp"
-            android:text="ISLAND"
-            android:textColor="#843c0c"
             android:textSize="25sp"
             android:textStyle="bold|italic" />
 
     </Toolbar>
 
-    <!--채팅 창-->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chat_message"
         android:layout_width="match_parent"
@@ -69,7 +62,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/white"
-            android:hint="메세지 입력"
+            android:hint="메세지를 입력하세요."
             android:inputType="textMultiLine"
             android:maxLines="3"
             android:padding="10dp" />

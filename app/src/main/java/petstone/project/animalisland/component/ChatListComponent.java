@@ -93,7 +93,7 @@ public class ChatListComponent extends Fragment {
                                         }
                                     });
                         }
-                        
+                        //TODO: 아마도 데이터 동기화 안될듯
                         listAdapter = new ChatAdapter(getContext(), names, updatedMessages, updatedCounts, updatedAts);
                         list.setAdapter(listAdapter);
                     }
@@ -103,6 +103,7 @@ public class ChatListComponent extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getContext(), ChatActivity.class);
+                //TODO: 상대방 uid 보내기
                 intent.putExtra("whoUID", "123");
                 startActivity(intent);
             }
