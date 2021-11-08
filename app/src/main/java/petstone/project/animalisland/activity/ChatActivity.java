@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -37,6 +39,7 @@ public class ChatActivity extends AppCompatActivity {
     TextView whoText;
     Button button;
     TextView input;
+    RecyclerView chatMessage;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,13 +50,15 @@ public class ChatActivity extends AppCompatActivity {
         whoText = findViewById(R.id.chat_who);
         button = findViewById(R.id.chat_button);
         input = findViewById(R.id.chat_et);
+        chatMessage = findViewById(R.id.chat_message);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         FirebaseAuth auth = FirebaseAuth.getInstance();
 
         uid = auth.getUid();
 
-
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        chatMessage.setLayoutManager(linearLayoutManager);
 
         db.collection("users")
                 .document(whoUID)
@@ -84,6 +89,7 @@ public class ChatActivity extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Void aVoid) {
                                     Log.d("d", "메시지 전송 성공");
+                                    input.setText("");
                                 }
                             });
                 }
