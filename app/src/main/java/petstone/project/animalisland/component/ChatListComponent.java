@@ -34,6 +34,7 @@ public class ChatListComponent extends Fragment {
         View rootView = inflater.inflate(R.layout.chatlist_component, container, false);
 
         list = rootView.findViewById(R.id.chat_lv1);
+        ArrayList<String> uids = new ArrayList<String>();
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -59,6 +60,7 @@ public class ChatListComponent extends Fragment {
                                             @Override
                                             public void onSuccess(DocumentSnapshot documentSnapshot) {
                                                 names.add(documentSnapshot.getString("nickname"));
+                                                uids.add(documentSnapshot.getString("uid"));
                                             }
                                         });
                             else {
@@ -69,6 +71,7 @@ public class ChatListComponent extends Fragment {
                                             @Override
                                             public void onSuccess(DocumentSnapshot documentSnapshot) {
                                                 names.add(documentSnapshot.getString("nickname"));
+                                                uids.add(documentSnapshot.getString("uid"));
                                             }
                                         });
                             }
@@ -104,7 +107,7 @@ public class ChatListComponent extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getContext(), ChatActivity.class);
                 //TODO: 상대방 uid 보내기
-                intent.putExtra("whoUID", "123");
+                intent.putExtra("whoUID", uids);
                 startActivity(intent);
             }
         });

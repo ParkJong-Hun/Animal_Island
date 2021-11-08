@@ -43,6 +43,17 @@
             android:textSize="8dp"
             app:layout_constraintEnd_toStartOf="@+id/chat_message_my_text"
             app:layout_constraintTop_toBottomOf="@+id/chat_message_my_name" />
+
+        <TextView
+            android:id="@+id/chat_message_my_readed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="읽음"
+            android:textSize="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/chat_message_my_createdAt"
+            app:layout_constraintEnd_toStartOf="@+id/chat_message_my_createdAt" />
     </androidx.constraintlayout.widget.ConstraintLayout>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -83,6 +94,17 @@
             android:textSize="8dp"
             app:layout_constraintStart_toEndOf="@+id/chat_message_who_text"
             app:layout_constraintTop_toBottomOf="@+id/chat_message_who_name" />
+
+        <TextView
+            android:id="@+id/chat_message_who_readed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="읽음"
+            android:textSize="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/chat_message_who_createdAt"
+            app:layout_constraintStart_toEndOf="@+id/chat_message_who_createdAt" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>
