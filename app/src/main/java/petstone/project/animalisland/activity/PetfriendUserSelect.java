@@ -2,7 +2,6 @@ package petstone.project.animalisland.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Debug;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -27,6 +28,9 @@ public class PetfriendUserSelect extends AppCompatActivity {
     ImageView back;
     Button chat_btn;
     private FirebaseFirestore db;
+    private FirebaseUser user;
+    // 현재 유저 아이디
+    private String mMyUid;
     //파이어베이스에서 가져올 데이터들
     private String mUid, mNickName, mAddress;
     //Xml
@@ -53,6 +57,7 @@ public class PetfriendUserSelect extends AppCompatActivity {
 
 
         firebaseSearch();
+        usercheck();
 
 
 
@@ -61,7 +66,15 @@ public class PetfriendUserSelect extends AppCompatActivity {
         chat_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+
+                // 같은 사용자에게 채팅 못함
+                if(mMyUid.equals(mUid))
+                {
+                    Toast.makeText(getApplicationContext(),"나에게 챗팅 못함",Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    finish();
+                }
             }
         });
 
@@ -73,6 +86,13 @@ public class PetfriendUserSelect extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void usercheck() {
+        //uid 확인
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        mMyUid = user.getUid();
+        Log.d("MyUid", "내 UID : "+ mMyUid.toString());
     }
 
     // 파이어베이스 검색
