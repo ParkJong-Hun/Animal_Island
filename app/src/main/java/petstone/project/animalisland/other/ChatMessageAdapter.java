@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,14 +21,17 @@ import petstone.project.animalisland.R;
 
 public class ChatMessageAdapter extends RecyclerView.Adapter<ChatMessageAdapter.ViewHolder> {
 
-    private ArrayList<ChatMessage> messages = null ;
+    private ArrayList<ChatMessage> messages;
     private Context context;
-    private String myName, whoName;
+    private String myUid, whoUid;
+    private String myNickname, whoNickname;
 
-    public ChatMessageAdapter(ArrayList<ChatMessage> messages, String myName, String whoName) {
+    public ChatMessageAdapter(ArrayList<ChatMessage> messages, String myUid, String whoUid, String myNickname, String whoNickname) {
         this.messages = messages;
-        this.myName = myName;
-        this.whoName = whoName;
+        this.myUid = myUid;
+        this.whoUid = whoUid;
+        this.myNickname = myNickname;
+        this.whoNickname = whoNickname;
     }
 
     @Override
@@ -55,22 +57,22 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<ChatMessageAdapter.
 
         if (thisMessage.uid.equals(auth.getUid())) {
             holder.whoMessage.setVisibility(View.GONE);
-            holder.myNickname.setText(myName);
+            holder.myNickname.setText(myNickname);
             holder.myDate.setText(dateString);
-            holder.myReaded.setText(thisMessage.getReaded());
+            holder.myReaded.setText(String.valueOf(thisMessage.getReaded()).equals("0") ? "읽음" : "읽지 않음");
             holder.myText.setText(thisMessage.getArticle());
         } else {
             holder.myMessage.setVisibility(View.GONE);
-            holder.whoNickname.setText(whoName);
+            holder.whoNickname.setText(whoNickname);
             holder.whoDate.setText(dateString);
-            holder.whoReaded.setText(thisMessage.getReaded());
+            holder.whoReaded.setText(String.valueOf(thisMessage.getReaded()).equals("0") ? "읽음" : "읽지 않음");
             holder.whoText.setText(thisMessage.getArticle());
         }
     }
 
     @Override
     public int getItemCount() {
-        return messages.size() ;
+        return messages.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -82,7 +84,7 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<ChatMessageAdapter.
             myMessage = chatView.findViewById(R.id.chat_message_my);
             whoMessage = chatView.findViewById(R.id.chat_message_who);
 
-            myText = chatView.findViewById(R.id.chat_message_who_text);
+            myText = chatView.findViewById(R.id.chat_message_my_text);
             myDate = chatView.findViewById(R.id.chat_message_my_createdAt);
             myNickname = chatView.findViewById(R.id.chat_message_my_name);
             myReaded = chatView.findViewById(R.id.chat_message_my_readed);

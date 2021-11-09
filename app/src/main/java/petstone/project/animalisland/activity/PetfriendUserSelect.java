@@ -91,7 +91,7 @@ public class PetfriendUserSelect extends AppCompatActivity {
                         initData.put("uid", mMyUid);
                         initData.put("readed", 1);
                         initData.put("date", new Date());
-                        initData.put("article", mMyUid + "님이 입장했습니다.");
+                        initData.put("article",  mNickName + "님에게 손을 흔듭니다.");
 
                         String finalDocumentName = documentName;
                         db.collection("chats")
@@ -102,7 +102,7 @@ public class PetfriendUserSelect extends AppCompatActivity {
                                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                                         if (!documentSnapshot.exists()) {
                                             Map<String, Object> data = new HashMap<>();
-                                            if (mMyUid.compareTo(mUid) > 0) {
+                                            if (mMyUid.compareTo(mUid) < 0) {
                                                 data.put("uid", mMyUid);
                                                 data.put("uid2", mUid);
                                             } else {
