@@ -47,6 +47,11 @@ public class ChatActivity extends AppCompatActivity {
     RecyclerView chatMessage;
     RecyclerView.Adapter adapter;
 
+    String myNickname = "1";
+    String whoNickname = "1";
+
+    ArrayList<ChatMessage> messages = new ArrayList<>();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,28 +78,6 @@ public class ChatActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         chatMessage.setLayoutManager(linearLayoutManager);
 
-        ArrayList<ChatMessage> messages = new ArrayList<>();
-        db.collection("chats").document("chatName").collection("messages")
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        for (DocumentSnapshot document : queryDocumentSnapshots
-                             ) {
-                            ChatMessage newMessage = new ChatMessage();
-                            newMessage.setArticle(document.get("article").toString());
-                            newMessage.setDate(document.getTimestamp("date").toDate());
-                            newMessage.setReaded((Integer) document.get("readed"));
-                            newMessage.setUid(document.get("uid").toString());
-
-                            messages.add(newMessage);
-                        }
-                    }
-                });
-
-        adapter = new ChatMessageAdapter(messages, whoUID, uid);
-        chatMessage.setAdapter(adapter);
-
         db.collection("users")
                 .document(whoUID)
                 .get()
@@ -102,6 +85,17 @@ public class ChatActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         whoText.setText(documentSnapshot.getString("nickname"));
+                        whoNickname = documentSnapshot.getString("nickname");
+                        updateMessage();
+                    }
+                });
+        db.collection("users")
+                .document(uid)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        myNickname = documentSnapshot.getString("nickname");
                     }
                 });
 
@@ -125,6 +119,7 @@ public class ChatActivity extends AppCompatActivity {
                                 public void onSuccess(Void aVoid) {
                                     Log.d("d", "메시지 전송 성공");
                                     input.setText("");
+                                    updateMessage();
                                 }
                             });
                 }
@@ -137,5 +132,53 @@ public class ChatActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    void updateMessage() {
+        messages.clear();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("chats").document(chatName).collection("messages")
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (DocumentSnapshot document : queryDocumentSnapshots
+                        ) {
+                            ChatMessage newMessage = new ChatMessage();
+                            newMessage.setArticle(document.get("article").toString());
+                            newMessage.setDate(document.getTimestamp("date").toDate());
+                            String readed = String.valueOf(document.get("readed"));
+                            newMessage.setReaded(Integer.parseInt(readed));
+                            newMessage.setNickname(document.get("uid").toString());
+
+                            messages.add(newMessage);
+                        }
+                        Log.d("message", messages.toString());
+                        adapter = new ChatMessageAdapter(messages, whoUID, uid, myNickname, whoNickname);
+                        chatMessage.setAdapter(adapter);
+                    }
+                });
+    }
+
+    void reading() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("chats").document(chatName).collection("messages")
+                .whereEqualTo("uid", whoUID)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (DocumentSnapshot document : queryDocumentSnapshots
+                             ) {
+                            document.getReference().update("readed", "0").addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    //Log.d("d", "읽기 성공");
+                                }
+                            });
+                        }
+                    }
+                });
+        updateMessage();
     }
 }
