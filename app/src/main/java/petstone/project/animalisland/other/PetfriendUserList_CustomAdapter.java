@@ -20,6 +20,10 @@ import petstone.project.animalisland.R;
 import petstone.project.animalisland.activity.MypagePetfriendApplyActivity;
 import petstone.project.animalisland.activity.PetfriendUserSelect;
 
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+
 
 public class PetfriendUserList_CustomAdapter extends RecyclerView.Adapter<PetfriendUserList_CustomAdapter.CustomViewholder> {
     private ArrayList<PetfriendUser> arrayList;

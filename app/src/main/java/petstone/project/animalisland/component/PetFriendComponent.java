@@ -6,8 +6,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,35 +14,32 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnCanceledListener;
+//import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
+//import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+
 
 import java.util.ArrayList;
 
 import petstone.project.animalisland.R;
 import petstone.project.animalisland.activity.MypagePetfriendApplyActivity;
-import petstone.project.animalisland.activity.PetfriendUserSelect;
 import petstone.project.animalisland.other.PetfriendUser;
 import petstone.project.animalisland.other.PetfriendUserList_CustomAdapter;
 import petstone.project.animalisland.other.petfriend_recycelview_adapter.PetfriendRecycleAdapter;
 import petstone.project.animalisland.other.petfriend_recycelview_adapter.PetfriendSearchData;
 import petstone.project.animalisland.other.petfriend_recycelview_adapter.RecyclerDecoration;
-import petstone.project.animalisland.other.PetfriendCustomAdapter;
+
 
 public class PetFriendComponent extends Fragment {
     //private ListView listView;
-    private PetfriendCustomAdapter adapter;
+    //private PetfriendCustomAdapter adapter;
     private FloatingActionButton petfriend_submit;
     private SearchView petfriend_search_view;
     private RecyclerView search_recyclerView;
@@ -63,11 +58,16 @@ public class PetFriendComponent extends Fragment {
     private FirebaseFirestore db;
 
 
+
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.petfriend_component, container, false);
+
+         petfriend_search_view = view.findViewById(R.id.petfriend_search_view);
 
 
         //리사이클 뷰에 들어갈 리스트뷰
@@ -126,26 +126,30 @@ public class PetFriendComponent extends Fragment {
             firebaseSearch();
 
 
+
+
+        petfriend_search_view.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+               Search(s);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+               Search(s);
+                return true;
+            }
+        });
+
+
+
+
         //검색 기록 리사이클뷰 호라이즌
         /*LinearLayoutManager horizontalLayoutManagaer = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(horizontalLayoutManagaer); */
 
-
-/*
-        //유저리스트 리스트뷰
-        listView = view.findViewById(R.id.petfriend_listview);
-        adapter = new PetfriendCustomAdapter(getContext());
-        listView.setAdapter(adapter);
-        //유저 클릭시 유저 정보 뛰움
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent;
-                intent = new Intent(getContext(), PetfriendUserSelect.class);
-                startActivity(intent);
-            }
-        });
-        */
 
         // floating 버튼 클릭시, 조건문으로 펫프랜즈 권한확인후 버튼 활성화 or 권한없으면 비활성화 하거나 신청 화면으로 연결
         petfriend_submit.setOnClickListener(new View.OnClickListener() {
@@ -154,12 +158,44 @@ public class PetFriendComponent extends Fragment {
                 Intent intent;
                 intent = new Intent(getContext(), MypagePetfriendApplyActivity.class);
                 startActivity(intent);
+
             }
         });
 
-
         return view;
     }
+
+    public void Search(String s) {
+
+        ArrayList<PetfriendUser> mArrayList = new ArrayList<>();
+
+
+        for(int i =0; i< arrayList.size(); i++)
+        {
+            String searchNickName = arrayList.get(i).getNickname();
+            String searchAddress = arrayList.get(i).getAddress();
+
+            if(searchNickName.toLowerCase().contains(s.toLowerCase()) || searchAddress.toLowerCase().contains(s.toLowerCase()))
+            {
+                mArrayList.add(arrayList.get(i));
+            }
+        }
+
+        PetfriendUserList_CustomAdapter adapter = new PetfriendUserList_CustomAdapter(mArrayList, getContext());
+        user_rv.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+
+        if (s.isEmpty()) {
+
+            firebaseSearch();
+            user_adapter.notifyDataSetChanged();
+            user_rv.setAdapter(user_adapter);
+
+        }
+
+
+    }
+
 
     void firebaseSearch() {
 
@@ -178,8 +214,8 @@ public class PetFriendComponent extends Fragment {
                                 //String uid, String nickname, String address
                                 arrayList.add(new PetfriendUser(
                                         document.getData().get("uid").toString()
-                                        ,document.getData().get("nickname").toString()
-                                        ,document.getData().get("address").toString()
+                                        , document.getData().get("nickname").toString()
+                                        , document.getData().get("address").toString()
 
                                 ));
                                 //어댑터 새로고침
@@ -193,7 +229,10 @@ public class PetFriendComponent extends Fragment {
                 });
 
 
-
-
     }
+
 }
+
+
+
+

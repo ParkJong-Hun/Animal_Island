@@ -275,6 +275,21 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
     // 신청 내용 확인 메소드
     private void infoCheck() {
 
+        AddressCheck();
+        ScheduleCheck();
+
+    }
+
+
+
+    private void ScheduleCheck()
+    {
+
+    }
+
+
+    private void AddressCheck()
+    {
         if (!mJuso_tv.getText().toString().equals("juso")) {
             // 오리지날 주소
             mJuso = mJuso_tv.getText().toString();
@@ -321,7 +336,6 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
 
         mInfo = minfo_edt.getText().toString();
         Toast.makeText(getApplicationContext(), "현재주소 : " + mJuso, Toast.LENGTH_SHORT).show();
-
     }
 
 
