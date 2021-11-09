@@ -1,5 +1,6 @@
 package petstone.project.animalisland.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,12 +20,16 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import petstone.project.animalisland.R;
+import petstone.project.animalisland.other.ChatMessage;
+import petstone.project.animalisland.other.ChatMessageAdapter;
 import petstone.project.animalisland.other.VPAdapter;
 
 //채팅
@@ -40,12 +45,20 @@ public class ChatActivity extends AppCompatActivity {
     Button button;
     TextView input;
     RecyclerView chatMessage;
+    RecyclerView.Adapter adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chat);
-      
+
+        Intent intent = getIntent();
+        whoUID = intent.getStringExtra("whoUID");
+        chatName = intent.getStringExtra("chatName");
+
+        Log.d("whoUID", whoUID);
+        Log.d("chatName", chatName);
+
         back = findViewById(R.id.back);
         whoText = findViewById(R.id.chat_who);
         button = findViewById(R.id.chat_button);
@@ -60,6 +73,28 @@ public class ChatActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         chatMessage.setLayoutManager(linearLayoutManager);
 
+        ArrayList<ChatMessage> messages = new ArrayList<>();
+        db.collection("chats").document("chatName").collection("messages")
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (DocumentSnapshot document : queryDocumentSnapshots
+                             ) {
+                            ChatMessage newMessage = new ChatMessage();
+                            newMessage.setArticle(document.get("article").toString());
+                            newMessage.setDate(document.getTimestamp("date").toDate());
+                            newMessage.setReaded((Integer) document.get("readed"));
+                            newMessage.setUid(document.get("uid").toString());
+
+                            messages.add(newMessage);
+                        }
+                    }
+                });
+
+        adapter = new ChatMessageAdapter(messages, whoUID, uid);
+        chatMessage.setAdapter(adapter);
+
         db.collection("users")
                 .document(whoUID)
                 .get()
@@ -70,7 +105,7 @@ public class ChatActivity extends AppCompatActivity {
                     }
                 });
 
-        input.setOnClickListener(new View.OnClickListener() {
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!input.getText().equals("")) {
@@ -79,7 +114,7 @@ public class ChatActivity extends AppCompatActivity {
                     message.put("uid", uid);
                     message.put("readed", 1);
                     message.put("date", new Date());
-                    message.put("article", input.getText());
+                    message.put("article", input.getText().toString());
 
                     db.collection("chats")
                             .document(chatName).collection("messages")
