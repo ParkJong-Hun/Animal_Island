@@ -18,6 +18,7 @@ public class PetfriendUser {
 
 
 
+
     public PetfriendUser(String uid, String nickname, String address) {
         this.uid = uid;
         this.nickname = nickname;

@@ -48,5 +48,20 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-storage:7.2.0'
     //Glide(Storage 업로드 다운로드 편하게 하려고 하는 API)
     implementation 'com.github.bumptech.glide:glide:4.10.0'
+
+
+    // Firebase SDKs
+    implementation 'com.google.firebase:firebase-firestore:21.4.1'
+    implementation 'com.google.firebase:firebase-database:19.2.1'
+
+    // FirebaseUI for Real-time database
+    implementation 'com.firebaseui:firebase-ui-database:6.2.0'
+
+    // FirebaseUI for Cloud Firestore
+    implementation 'com.firebaseui:firebase-ui-firestore:6.2.0'
+
+    // Paging Library (For Pagination Only)
+    implementation 'android.arch.paging:runtime:1.0.1'
+
     annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
 }
