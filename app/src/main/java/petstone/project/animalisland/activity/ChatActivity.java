@@ -19,7 +19,9 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -137,14 +139,13 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     void updateMessage() {
-        messages.clear();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("chats").document(chatName).collection("messages")
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        for (DocumentSnapshot document : queryDocumentSnapshots
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        messages.clear();
+                        for (DocumentSnapshot document : value
                         ) {
                             ChatMessage newMessage = new ChatMessage();
                             newMessage.setArticle(document.get("article").toString());
