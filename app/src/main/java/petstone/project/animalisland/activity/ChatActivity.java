@@ -86,16 +86,18 @@ public class ChatActivity extends AppCompatActivity {
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         whoText.setText(documentSnapshot.getString("nickname"));
                         whoNickname = documentSnapshot.getString("nickname");
-                        updateMessage();
-                    }
-                });
-        db.collection("users")
-                .document(uid)
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        myNickname = documentSnapshot.getString("nickname");
+
+                        db.collection("users")
+                                .document(uid)
+                                .get()
+                                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                        myNickname = documentSnapshot.getString("nickname");
+
+                                        reading();
+                                    }
+                                });
                     }
                 });
 
@@ -119,7 +121,7 @@ public class ChatActivity extends AppCompatActivity {
                                 public void onSuccess(Void aVoid) {
                                     Log.d("d", "메시지 전송 성공");
                                     input.setText("");
-                                    updateMessage();
+                                    reading();
                                 }
                             });
                 }
@@ -156,6 +158,7 @@ public class ChatActivity extends AppCompatActivity {
                         Log.d("message", messages.toString());
                         adapter = new ChatMessageAdapter(messages, whoUID, uid, myNickname, whoNickname);
                         chatMessage.setAdapter(adapter);
+                        chatMessage.scrollToPosition(adapter.getItemCount());
                     }
                 });
     }
@@ -169,14 +172,14 @@ public class ChatActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         for (DocumentSnapshot document : queryDocumentSnapshots
-                             ) {
-                            document.getReference().update("readed", "0").addOnSuccessListener(new OnSuccessListener<Void>() {
+                        ) {
+                            document.getReference().update("readed", 0).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
-                                    //Log.d("d", "읽기 성공");
                                 }
                             });
                         }
+                        Log.d("d", "읽기 성공");
                     }
                 });
         updateMessage();
