@@ -125,7 +125,7 @@ public class MypageInfoEditActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(password.getText().toString().equals(password_check.getText().toString())&&!(password.getText().toString().equals(""))) {
+                if(password.getText().toString().equals(password_check.getText().toString())&&!(password.getText().toString().equals(""))&&password.getText().length() >= 8) {
                     password_checked.setText("일치함");
                     password_checked.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent));
                     password_checked.setVisibility(View.VISIBLE);
