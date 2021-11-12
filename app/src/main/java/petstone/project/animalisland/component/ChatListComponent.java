@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
@@ -45,41 +46,6 @@ public class ChatListComponent extends Fragment {
         listView = rootView.findViewById(R.id.chat_lv1);
         lists.clear();
 
-        //TODO: 비동기
-
-        db.collection("chats")
-                .whereEqualTo("uid", auth.getUid())
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                        lists.clear();
-                        for (DocumentSnapshot doc : value) {
-                            ChatList newList = new ChatList();
-                            newList.setUid(doc.getString("uid2"));
-                            lists.add(newList);
-                        }
-                        listAdapter = new ChatListAdapter(getContext(), lists);
-                        listView.setAdapter(listAdapter);
-
-                        db.collection("chats")
-                                .whereEqualTo("uid2", auth.getUid())
-                                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                                    @Override
-                                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                                        for (DocumentSnapshot doc : value) {
-                                            ChatList newList = new ChatList();
-                                            newList.setUid(doc.getString("uid"));
-                                            lists.add(newList);
-                                        }
-                                        listAdapter.notifyDataSetChanged();
-                                    }
-                                });
-                    }
-                });
-
-
-
-
         //채팅 입장
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -111,5 +77,84 @@ public class ChatListComponent extends Fragment {
         });
 
         return rootView;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        db.collection("chats")
+                .whereEqualTo("uid", auth.getUid())
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        lists.clear();
+                        for (DocumentSnapshot doc : value) {
+                            ChatList newList = new ChatList();
+                            newList.setUid(doc.getString("uid2"));
+                            lists.add(newList);
+                        }
+                        listAdapter = new ChatListAdapter(getContext(), lists);
+                        listView.setAdapter(listAdapter);
+
+                        db.collection("chats")
+                                .whereEqualTo("uid2", auth.getUid())
+                                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                                        for (DocumentSnapshot doc : value) {
+                                            ChatList newList = new ChatList();
+                                            newList.setUid(doc.getString("uid"));
+                                            lists.add(newList);
+                                        }
+                                        listAdapter.notifyDataSetChanged();
+
+                                        for (ChatList list : lists) {
+                                            
+
+                                            db.collection("users")
+                                                    .whereEqualTo("uid", list.getUid())
+                                                    .get()
+                                                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                                        @Override
+                                                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                                            for (DocumentSnapshot doc:queryDocumentSnapshots) {
+                                                                list.setWhoName(doc.getString("nickname"));
+                                                                listAdapter.notifyDataSetChanged();
+                                                                break;
+                                                            }
+                                                        }
+                                                    });
+                                            db.collection("chats")
+                                                    .whereEqualTo("uid", list.getUid())
+                                                    .get()
+                                                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                                        @Override
+                                                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                                            for (DocumentSnapshot doc : queryDocumentSnapshots) {
+                                                                doc.getReference().collection("messages")
+                                                                        .whereNotEqualTo("uid", auth.getUid())
+                                                                        .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                                                            @Override
+                                                                            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                                                                                list.setNewCount(0);
+                                                                                for (DocumentSnapshot doc:value) {
+                                                                                    if (doc.getLong("readed") == 1) {
+                                                                                        list.setNewCount(list.getNewCount() + 1);
+                                                                                        list.setUpdatedDate(doc.getDate("date"));
+                                                                                        list.setUpdatedMessage(doc.getString("article"));
+                                                                                    }
+                                                                                }
+                                                                                listAdapter.notifyDataSetChanged();
+                                                                            }
+                                                                        });
+                                                            }
+                                                        }
+                                                    });
+                                        }
+                                    }
+                                });
+                    }
+                });
     }
 }
