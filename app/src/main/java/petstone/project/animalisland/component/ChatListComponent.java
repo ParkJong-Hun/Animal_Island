@@ -9,12 +9,15 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -40,96 +43,61 @@ public class ChatListComponent extends Fragment {
         View rootView = inflater.inflate(R.layout.chatlist_component, container, false);
 
         listView = rootView.findViewById(R.id.chat_lv1);
+        lists.clear();
+
+        //TODO: 비동기
 
         db.collection("chats")
                 .whereEqualTo("uid", auth.getUid())
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        CountDownLatch fullLatch = new CountDownLatch(queryDocumentSnapshots.size());
-                        for (DocumentSnapshot document : queryDocumentSnapshots
-                        ) {
-                            ChatList list = new ChatList();
-                            CountDownLatch latch = new CountDownLatch(3);
-
-                            if (!document.getString("uid").equals(auth.getUid()))
-                                db.collection("users")
-                                        .document(document.getString("uid"))
-                                        .get()
-                                        .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                            @Override
-                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                                list.setWhoName(documentSnapshot.getString("nickname"));
-                                                list.setUid(documentSnapshot.getString("uid"));
-                                                latch.countDown();
-                                            }
-                                        });
-                            else {
-                                db.collection("users")
-                                        .document(document.getString("uid2"))
-                                        .get()
-                                        .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                            @Override
-                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                                list.setWhoName(documentSnapshot.getString("nickname"));
-                                                list.setUid(documentSnapshot.getString("uid"));
-                                                latch.countDown();
-                                            }
-                                        });
-                            }
-                            document.getReference().collection("messages")
-                                    .get()
-                                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                                        @Override
-                                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                                            List<DocumentSnapshot> documents = queryDocumentSnapshots.getDocuments();
-                                            list.setUpdatedMessage(documents.get(documents.size() - 1).getString("message"));
-                                            list.setUpdatedDate(documents.get(documents.size() - 1).getTimestamp("date").toDate());
-                                            latch.countDown();
-                                        }
-                                    });
-                            document.getReference().collection("messages")
-                                    .whereNotEqualTo("uid", auth.getUid())
-                                    .get()
-                                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                                        @Override
-                                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                                            for (DocumentSnapshot document : queryDocumentSnapshots) {
-                                                if(document.getLong("readed") == 1) {
-                                                    list.setNewCount(list.getNewCount() + 1);
-                                                }
-                                            }
-                                            latch.countDown();
-                                        }
-                                    });
-
-                            try {
-                                latch.await();
-                                fullLatch.countDown();
-                                lists.add(list);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        lists.clear();
+                        for (DocumentSnapshot doc : value) {
+                            ChatList newList = new ChatList();
+                            newList.setUid(doc.getString("uid2"));
+                            lists.add(newList);
                         }
-                        try {
-                            fullLatch.await();
-                            Log.d("", lists.toString());
-                            listAdapter = new ChatListAdapter(getContext(), lists);
-                            listView.setAdapter(listAdapter);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                        listAdapter = new ChatListAdapter(getContext(), lists);
+                        listView.setAdapter(listAdapter);
+
+                        db.collection("chats")
+                                .whereEqualTo("uid2", auth.getUid())
+                                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                                        for (DocumentSnapshot doc : value) {
+                                            ChatList newList = new ChatList();
+                                            newList.setUid(doc.getString("uid"));
+                                            lists.add(newList);
+                                        }
+                                        listAdapter.notifyDataSetChanged();
+                                    }
+                                });
                     }
                 });
+
+
 
 
         //채팅 입장
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d("", lists.toString());
+                String whoUID = lists.get(position).getUid();
+                String documentName = "";
+
                 Intent intent = new Intent(getContext(), ChatActivity.class);
-                intent.putExtra("whoUID", lists.get(position).getUid());
+                intent.putExtra("whoUID", whoUID);
+
+                if(whoUID.compareTo(auth.getUid()) > 0) {
+                    documentName = whoUID + "_" + auth.getUid();
+                } else {
+                    documentName = auth.getUid() + "_" + whoUID;
+                }
+
+                intent.putExtra("chatName", documentName);
                 startActivity(intent);
             }
         });
