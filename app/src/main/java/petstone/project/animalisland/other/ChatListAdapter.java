@@ -2,6 +2,8 @@ package petstone.project.animalisland.other;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,11 +11,16 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.google.rpc.context.AttributeContext;
 
 import java.lang.reflect.Array;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -53,6 +60,7 @@ public class ChatListAdapter extends BaseAdapter {
         TextView updatedMessage = convertView.findViewById(R.id.chat_updated_message);
         TextView updatedCount = convertView.findViewById(R.id.chat_updated_count);
         TextView updatedAt = convertView.findViewById(R.id.chat_updatedAt);
+        ImageView profile = convertView.findViewById(R.id.chat_user_img);
 
         nickname.setText(lists.get(position).getWhoName());
         updatedMessage.setText(lists.get(position).getUpdatedMessage());
@@ -62,7 +70,21 @@ public class ChatListAdapter extends BaseAdapter {
         updatedAt.setText(dateStr);
         updatedCount.setText(lists.get(position).getNewCount().toString());
 
+        if(updatedCount.getText().equals("0")) {
+            updatedCount.setVisibility(View.GONE);
+        } else {
+            updatedCount.setVisibility(View.VISIBLE);
+        }
+
+        StorageReference ref = FirebaseStorage.getInstance().getReference("profileImages/" + lists.get(position).getUid() + ".jpg");
+        Log.d("", ref.getName());
+        Glide.with(convertView.getContext())
+                .load(ref)
+                .centerCrop()
+                .into(profile);
+
         return convertView;
     }
+
 }
 
