@@ -60,7 +60,7 @@ public class ChatListAdapter extends BaseAdapter {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
         String dateStr = dateFormat.format(date);
         updatedAt.setText(dateStr);
-        updatedCount.setText(lists.get(position).getNewCount());
+        updatedCount.setText(lists.get(position).getNewCount().toString());
 
         return convertView;
     }
