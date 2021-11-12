@@ -21,23 +21,17 @@ import java.util.Date;
 
 import petstone.project.animalisland.R;
 
-public class ChatAdapter extends BaseAdapter {
+public class ChatListAdapter extends BaseAdapter {
     Context context;
-    ArrayList<String> names = new ArrayList<>();
-    ArrayList<String> updatedMessages = new ArrayList<>();
-    ArrayList<Integer> updatedCounts = new ArrayList<Integer>();
-    ArrayList<Timestamp> updatedAts = new ArrayList<Timestamp>();
+    ArrayList<ChatList> lists = new ArrayList<>();
 
-    public ChatAdapter(Context context, ArrayList<String> names, ArrayList<String> updatedMessages, ArrayList<Integer> updatedCounts, ArrayList<Timestamp> updatedAts) {
+    public ChatListAdapter(Context context, ArrayList<ChatList> lists) {
         this.context = context;
-        this.names = names;
-        this.updatedMessages = updatedMessages;
-        this.updatedCounts = updatedCounts;
-        this.updatedAts = updatedAts;
+        this.lists = lists;
     }
     @Override
     public int getCount() {
-        return names.size();
+        return lists!=null || !lists.isEmpty() ? lists.size() : 0;
     }
 
     @Override
@@ -60,13 +54,13 @@ public class ChatAdapter extends BaseAdapter {
         TextView updatedCount = convertView.findViewById(R.id.chat_updated_count);
         TextView updatedAt = convertView.findViewById(R.id.chat_updatedAt);
 
-        nickname.setText(names.get(position));
-        updatedMessage.setText(updatedMessages.get(position));
-        Date date = updatedAts.get(position).toDate();
+        nickname.setText(lists.get(position).getWhoName());
+        updatedMessage.setText(lists.get(position).getUpdatedMessage());
+        Date date = lists.get(position).getUpdatedDate();
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
         String dateStr = dateFormat.format(date);
         updatedAt.setText(dateStr);
-        updatedCount.setText(updatedCounts.get(position));
+        updatedCount.setText(lists.get(position).getNewCount());
 
         return convertView;
     }
