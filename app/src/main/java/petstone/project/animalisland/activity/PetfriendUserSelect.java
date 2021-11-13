@@ -1,6 +1,7 @@
 package petstone.project.animalisland.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -62,8 +63,10 @@ public class PetfriendUserSelect extends AppCompatActivity {
         mUserName = findViewById(R.id.user_name);
 
 
+
         firebaseSearch();
         usercheck();
+        btnChange();
 
 
 
@@ -155,6 +158,17 @@ public class PetfriendUserSelect extends AppCompatActivity {
                 finish();
             }
         });
+
+    }
+
+    private void btnChange() {
+
+        if(mMyUid.equals(mUid))
+        {
+            Toast.makeText(getApplicationContext(),"나에게 챗팅 못함",Toast.LENGTH_SHORT).show();
+            chat_btn.setBackgroundColor(Color.GRAY);
+            chat_btn.setText("자신한테는 채팅을 할 수 없습니다");
+        }
 
     }
 

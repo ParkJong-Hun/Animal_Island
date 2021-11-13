@@ -1,14 +1,18 @@
 package petstone.project.animalisland.component;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,6 +24,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 //import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -30,6 +37,9 @@ import java.util.ArrayList;
 
 import petstone.project.animalisland.R;
 import petstone.project.animalisland.activity.MypagePetfriendApplyActivity;
+import petstone.project.animalisland.activity.PetfriendUserSelect;
+import petstone.project.animalisland.other.PetfriendFireAdapter;
+import petstone.project.animalisland.other.PetfriendFireUser;
 import petstone.project.animalisland.other.PetfriendUser;
 import petstone.project.animalisland.other.PetfriendUserList_CustomAdapter;
 import petstone.project.animalisland.other.petfriend_recycelview_adapter.PetfriendRecycleAdapter;
@@ -44,6 +54,7 @@ public class PetFriendComponent extends Fragment {
     private SearchView petfriend_search_view;
     private RecyclerView search_recyclerView;
     private RecyclerView list_recyclerView;
+    private TextView userListSize;
     private LinearLayoutManager mLayoutManager;
     PetfriendRecycleAdapter pfs_adapter;
     ArrayList<PetfriendSearchData> search_list = null;
@@ -56,6 +67,16 @@ public class PetFriendComponent extends Fragment {
 
     //파이어 베이스
     private FirebaseFirestore db;
+    private FirebaseUser user;
+    // 내 uid
+    private String mMyUid;
+    //중복 여부
+    private boolean isJungbok = false;
+    //다이어로그
+    private AlertDialog mAlertDialog;
+
+    //파이어베이스 어댑터
+    private PetfriendFireAdapter fireAdapter;
 
 
 
@@ -68,6 +89,7 @@ public class PetFriendComponent extends Fragment {
         View view = inflater.inflate(R.layout.petfriend_component, container, false);
 
          petfriend_search_view = view.findViewById(R.id.petfriend_search_view);
+         userListSize = view.findViewById(R.id.petfriend_user_size);
 
 
         //리사이클 뷰에 들어갈 리스트뷰
@@ -92,6 +114,7 @@ public class PetFriendComponent extends Fragment {
 
         //파이어베이스 인스턴스 초기화
         db = FirebaseFirestore.getInstance();
+
 
 
 
@@ -122,8 +145,39 @@ public class PetFriendComponent extends Fragment {
         search_recyclerView.addItemDecoration(new RecyclerDecoration(10));
         pfs_adapter.notifyDataSetChanged();
 
+
+        // 현재 유저 확인
+        usercheck();
+        // 중복 체크
+        jungbokCheck();
+
         if(arrayList!=null)
             firebaseSearch();
+
+
+
+        /*
+        //파이어베이스에서 정보 읽어서 리사이클러뷰에 넣기
+        FireAdapter();
+        // 어댑터 클릭 이벤트
+        fireAdapter.setOnItemClickListner(new PetfriendFireAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
+                PetfriendFireUser petfriendFireUser = documentSnapshot.toObject(PetfriendFireUser.class);
+                // 클릭한유저 ID얻기
+                String id = documentSnapshot.getId();
+                String path = documentSnapshot.getReference().getPath();
+                Log.d("FireAdapterEvent" , "get position : " + position + "get ID : " + id );
+
+                // 인텐트
+                // 클릭한 유저 UID를 얻고 PetfriendUserSelect 클래스에 UID를 보냄
+                Intent intent = new Intent(getContext(), PetfriendUserSelect.class);
+                intent.putExtra("UID",id);
+                getContext().startActivity(intent);
+            }
+        });
+
+         */
 
 
 
@@ -138,7 +192,7 @@ public class PetFriendComponent extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String s) {
-               Search(s);
+                Search(s);
                 return true;
             }
         });
@@ -155,9 +209,14 @@ public class PetFriendComponent extends Fragment {
         petfriend_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent;
-                intent = new Intent(getContext(), MypagePetfriendApplyActivity.class);
-                startActivity(intent);
+                if(!isJungbok) {
+                    Intent intent;
+                    intent = new Intent(getContext(), MypagePetfriendApplyActivity.class);
+                    startActivity(intent);
+                }
+                else{
+                    sujungDialog();
+                }
 
             }
         });
@@ -165,38 +224,59 @@ public class PetFriendComponent extends Fragment {
         return view;
     }
 
+    // 이미 가입했을시 수정 다이어로그
+    private void sujungDialog() {
+        
+
+            try {
+
+                final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("이미 펫프랜즈를 신청했습니다.\n신청한 내용을 수정하실건가요?");
+
+
+                builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(getContext(), "취소", Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+
+                    }
+                });
+                builder.setPositiveButton("수정하기", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(getContext(), "수정완료", Toast.LENGTH_SHORT).show();
+
+                        Intent intent;
+                        intent = new Intent(getContext(), MypagePetfriendApplyActivity.class);
+                        startActivity(intent);
+
+
+                    }
+                });
+
+                mAlertDialog = builder.create();
+                mAlertDialog.show();
+
+            } catch (Exception e) {
+                Log.e("dialog error", e.toString());
+            }
+
+
+        }
+    // 검색 함수
     public void Search(String s) {
 
-        ArrayList<PetfriendUser> mArrayList = new ArrayList<>();
+        
 
-
-        for(int i =0; i< arrayList.size(); i++)
-        {
-            String searchNickName = arrayList.get(i).getNickname();
-            String searchAddress = arrayList.get(i).getAddress();
-
-            if(searchNickName.toLowerCase().contains(s.toLowerCase()) || searchAddress.toLowerCase().contains(s.toLowerCase()))
-            {
-                mArrayList.add(arrayList.get(i));
-            }
-        }
-
-        PetfriendUserList_CustomAdapter adapter = new PetfriendUserList_CustomAdapter(mArrayList, getContext());
-        user_rv.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
-
-        if (s.isEmpty()) {
-
-            firebaseSearch();
-            user_adapter.notifyDataSetChanged();
-            user_rv.setAdapter(user_adapter);
-
-        }
+        //배열에서 검색
+        ListSearch(s);
+        //파이어베이스에서 검색
+        //fireSearch(s);
 
 
     }
-
-
+    // 펫프랜즈 콜렉션에 모든 문서 가져오기
     void firebaseSearch() {
 
         db.collection("petfriend")
@@ -221,6 +301,7 @@ public class PetFriendComponent extends Fragment {
                                 //어댑터 새로고침
                                 user_adapter.notifyDataSetChanged();
 
+
                             }
                         } else {
                             Log.d("firebaseSearch", "Error getting documents: ", task.getException());
@@ -228,10 +309,146 @@ public class PetFriendComponent extends Fragment {
                     }
                 });
 
+    }
+    // 유저 확인
+    private void usercheck() {
+        //uid 확인
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        mMyUid = user.getUid();
+        Log.d("MyUid", "내 UID : "+ mMyUid.toString());
+    }
+    // 중복 확인
+    void jungbokCheck(){
+
+        db.collection("petfriend")
+                .whereEqualTo("uid", mMyUid)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d("jungbok", document.getId() + " => " + document.getData());
+                                isJungbok = true;
+                            }
+                        } else {
+                            Log.d("no,jungbok", "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+
+    }
+   // 파이어스토어 어댑터
+    void FireAdapter(){
+
+        Query query = db.collection("petfriend");
+
+        FirestoreRecyclerOptions<PetfriendFireUser> options = new FirestoreRecyclerOptions.Builder<PetfriendFireUser>()
+                .setQuery(query,PetfriendFireUser.class)
+                .build();
+
+        fireAdapter = new PetfriendFireAdapter(options);
+        user_rv.setAdapter(fireAdapter);
 
     }
 
+    //리스트에서에서 검색
+    private void ListSearch(String s) {
+
+        ArrayList<PetfriendUser> mArrayList = new ArrayList<>();
+
+        for(int i =0; i< arrayList.size(); i++)
+        {
+            String searchNickName = arrayList.get(i).getNickname();
+            String searchAddress = arrayList.get(i).getAddress();
+
+            if(searchNickName.toLowerCase().contains(s.toLowerCase()) || searchAddress.toLowerCase().contains(s.toLowerCase()))
+            {
+                mArrayList.add(arrayList.get(i));
+            }
+        }
+
+        PetfriendUserList_CustomAdapter adapter = new PetfriendUserList_CustomAdapter(mArrayList, getContext());
+        user_rv.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+
+        if (s.isEmpty()) {
+
+            firebaseSearch();
+            user_adapter.notifyDataSetChanged();
+            user_rv.setAdapter(user_adapter);
+
+        }
+
+    }
+
+    //파이어베이스에서 검색
+
+    private void fireSearch(String s){
+
+
+        Query query;
+        if (s.toString().isEmpty()) {
+            query = db.collection("petfriend");
+
+
+
+        }
+        else {
+            query = db.collection("petfriend")
+                    .orderBy("nickname")
+                    .startAt(s)
+                    .endAt(s +"\uf8ff");
+
+
+        }
+
+        FirestoreRecyclerOptions<PetfriendFireUser> options = new FirestoreRecyclerOptions.Builder<PetfriendFireUser>()
+                .setQuery(query, PetfriendFireUser.class)
+                .build();
+
+
+        fireAdapter.updateOptions(options);
+        fireAdapter.notifyDataSetChanged();
+        
+    }
+
+
+    // 다이어로그 오류 방지
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        if (mAlertDialog != null && mAlertDialog.isShowing()) {
+            mAlertDialog.dismiss();
+            mAlertDialog = null;
+        }
+
+    }
+
+
+
+    // 어댑터 실행
+    /*
+    @Override
+    public void onStart() {
+        super.onStart();
+        fireAdapter.startListening();
+    }
+
+    // 어댑터 멈춤
+    @Override
+    public void onStop() {
+        super.onStop();
+        fireAdapter.stopListening();
+    }
+
+     */
+
+
 }
+
+
 
 
 

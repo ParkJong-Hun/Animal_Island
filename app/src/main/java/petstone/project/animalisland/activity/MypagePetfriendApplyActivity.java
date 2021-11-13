@@ -27,15 +27,17 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
+
 import petstone.project.animalisland.R;
 import petstone.project.animalisland.other.PetfriendUser;
 
 //마이페이지 펫프렌즈 권한 신청
 public class MypagePetfriendApplyActivity extends AppCompatActivity {
 
-    private TextView mJuso_tv;
+    private TextView mJuso_tv, mSchedule_tv;
     private EditText minfo_edt;
-    Button cancel, submit, search_btn;
+    Button cancel, submit, search_btn, schedule_btn;
     ImageView back, license1, license2, license3;
     Switch toggle;
 
@@ -48,6 +50,7 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
     private AlertDialog mAlertDialog;
 
     private boolean addressNull;
+    private StringBuilder sb = new StringBuilder();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +69,9 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
         license1.setVisibility(View.GONE);
         license2.setVisibility(View.GONE);
         license3.setVisibility(View.GONE);
+
+        schedule_btn = findViewById(R.id.schedule_btn);
+        mSchedule_tv = findViewById(R.id.schedule_tv);
 
 
         //유저 정보 확인
@@ -112,6 +118,15 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), WebviewActivity.class);
                 startActivityForResult(intent, 0);
+            }
+        });
+
+        schedule_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sb.setLength(0);
+                Intent intent = new Intent(getApplicationContext(), ScheduleActivity.class);
+                startActivityForResult(intent, 1);
             }
         });
 
@@ -276,20 +291,42 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
     private void infoCheck() {
 
         AddressCheck();
-        ScheduleCheck();
 
     }
 
 
 
-    private void ScheduleCheck()
+    // 스케줄 가져오기
+    private void ScheduleCheck(Intent intent,String day)
     {
+        ArrayList<Integer> mlist = new ArrayList<>();
+        String str;
+
+        sb.append(day+" : ");
+        mlist = intent.getIntegerArrayListExtra(day);
+
+        try {
+            for (int i = 0; i < mlist.size(); i++) {
+                if ((i + 1) % 2 == 1)
+                    sb.append(mlist.get(i)+"시" + "-");
+                if ((i + 1) % 2 == 0)
+                    sb.append(mlist.get(i)+"시" + " ");
+            }
+
+            sb.append("\n");
+            str = sb.toString();
+            mSchedule_tv.setText(str);
+        }catch (Exception e)
+        {
+            Log.e("error", e.toString());
+        }
+
+
 
     }
 
 
-    private void AddressCheck()
-    {
+    private void AddressCheck() {
         if (!mJuso_tv.getText().toString().equals("juso")) {
             // 오리지날 주소
             mJuso = mJuso_tv.getText().toString();
@@ -339,10 +376,11 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
     }
 
 
-    //웹 인텐트 데이터 확인
+    // 인텐트 데이터 확인
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        //웹 인텐트
         if (requestCode == 0) {
             if (resultCode == RESULT_OK) {
                 String result = data.getStringExtra("data");
@@ -350,20 +388,28 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
                 mJuso_tv.setText(result);
             }
         }
-    }
-
-    // WindowLeaked 에러 해결
-/*
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if(mAlertDialog != null)
+        //스케줄 인텐트
+        else if(requestCode == 1)
         {
-            mAlertDialog.dismiss();
-            mAlertDialog = null;
+            if (resultCode == RESULT_OK) {
+                ArrayList<String> day = data.getStringArrayListExtra("time");
+                for (int i=0; i<day.size(); i++)
+                {
+                    switch (day.get(i)){
+                        case "월요일":Log.d(day.get(i), day.get(i).toString());ScheduleCheck(data,day.get(i));break;
+                        case "화요일":Log.d(day.get(i), day.get(i).toString());ScheduleCheck(data,day.get(i));break;
+                        case "수요일":Log.d(day.get(i), day.get(i).toString());ScheduleCheck(data,day.get(i));break;
+                        case "목요일":Log.d(day.get(i), day.get(i).toString());ScheduleCheck(data,day.get(i));break;
+                        case "금요일":Log.d(day.get(i), day.get(i).toString());ScheduleCheck(data,day.get(i));break;
+                        case "토요일":Log.d(day.get(i), day.get(i).toString());ScheduleCheck(data,day.get(i));break;
+                        case "일요일":Log.d(day.get(i), day.get(i).toString());ScheduleCheck(data,day.get(i));break;
+                    }
+                }
+            }
+
         }
     }
- */
+
 
     @Override
     protected void onDestroy() {
