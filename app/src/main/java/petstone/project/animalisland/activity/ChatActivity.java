@@ -22,6 +22,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -53,6 +54,8 @@ public class ChatActivity extends AppCompatActivity {
     String whoNickname = "1";
 
     ArrayList<ChatMessage> messages = new ArrayList<>();
+    LinearLayoutManager linearLayoutManager;
+    ListenerRegistration registration;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -77,7 +80,7 @@ public class ChatActivity extends AppCompatActivity {
 
         uid = auth.getUid();
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager = new LinearLayoutManager(this);
         chatMessage.setLayoutManager(linearLayoutManager);
 
         db.collection("users")
@@ -96,8 +99,7 @@ public class ChatActivity extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                                         myNickname = documentSnapshot.getString("nickname");
-
-                                        reading();
+                                        updateMessage();
                                     }
                                 });
                     }
@@ -123,7 +125,7 @@ public class ChatActivity extends AppCompatActivity {
                                 public void onSuccess(Void aVoid) {
                                     Log.d("d", "메시지 전송 성공");
                                     input.setText("");
-                                    reading();
+                                    updateMessage();
                                 }
                             });
                 }
@@ -133,6 +135,7 @@ public class ChatActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                registration.remove();
                 finish();
             }
         });
@@ -140,7 +143,8 @@ public class ChatActivity extends AppCompatActivity {
 
     void updateMessage() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("chats").document(chatName).collection("messages")
+        registration = db.collection("chats").document(chatName).collection("messages")
+                .orderBy("date")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -153,36 +157,19 @@ public class ChatActivity extends AppCompatActivity {
                             String readed = String.valueOf(document.get("readed"));
                             newMessage.setReaded(Integer.parseInt(readed));
                             newMessage.setNickname(document.get("uid").toString());
-
+                            if(newMessage.getReaded() == 1 && newMessage.getUid().equals(whoUID)) {
+                                document.getReference().update("readed", 0).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                    }
+                                });
+                            }
                             messages.add(newMessage);
                         }
-                        Log.d("message", messages.toString());
                         adapter = new ChatMessageAdapter(messages, whoUID, uid, myNickname, whoNickname);
                         chatMessage.setAdapter(adapter);
-                        chatMessage.scrollToPosition(adapter.getItemCount());
+                        linearLayoutManager.scrollToPosition(adapter.getItemCount() - 1);
                     }
                 });
-    }
-
-    void reading() {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("chats").document(chatName).collection("messages")
-                .whereEqualTo("uid", whoUID)
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        for (DocumentSnapshot document : queryDocumentSnapshots
-                        ) {
-                            document.getReference().update("readed", 0).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                }
-                            });
-                        }
-                        Log.d("d", "읽기 성공");
-                    }
-                });
-        updateMessage();
     }
 }

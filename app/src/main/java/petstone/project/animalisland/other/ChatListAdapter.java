@@ -77,12 +77,14 @@ public class ChatListAdapter extends BaseAdapter {
         }
 
         StorageReference ref = FirebaseStorage.getInstance().getReference("profileImages/" + lists.get(position).getUid() + ".jpg");
-        Log.d("", ref.getName());
+
         Glide.with(convertView.getContext())
                 .load(ref)
+                .placeholder(R.drawable.mypage_colored)
+                .fallback(R.drawable.mypage_colored)
+                .error(R.drawable.mypage_colored)
                 .centerCrop()
                 .into(profile);
-
         return convertView;
     }
 
