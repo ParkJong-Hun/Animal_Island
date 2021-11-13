@@ -87,7 +87,14 @@ public class ChatListComponent extends Fragment {
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.chat_list_menu_delete:
-                                db.collection("chats").document().delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                String whoUID = lists.get(position).getUid();
+                                String documentName = "";
+                                if(whoUID.compareTo(auth.getUid()) > 0) {
+                                    documentName = whoUID + "_" + auth.getUid();
+                                } else {
+                                    documentName = auth.getUid() + "_" + whoUID;
+                                }
+                                db.collection("chats").document(documentName).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         Log.d("d", "채팅 삭제 완료");
@@ -119,11 +126,14 @@ public class ChatListComponent extends Fragment {
 
         db.collection("chats")
                 .whereEqualTo("uid", auth.getUid())
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
-                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         lists.clear();
-                        for (DocumentSnapshot doc : value) {
+                        Log.d("", "초기화됨");
+
+                        for (DocumentSnapshot doc : queryDocumentSnapshots) {
                             ChatList newList = new ChatList();
                             newList.setUid(doc.getString("uid2"));
                             lists.add(newList);
@@ -144,8 +154,6 @@ public class ChatListComponent extends Fragment {
                                         listAdapter.notifyDataSetChanged();
 
                                         for (ChatList list : lists) {
-                                            
-
                                             db.collection("users")
                                                     .whereEqualTo("uid", list.getUid())
                                                     .get()
@@ -159,6 +167,7 @@ public class ChatListComponent extends Fragment {
                                                             }
                                                         }
                                                     });
+
                                             db.collection("chats")
                                                     .whereEqualTo("uid", list.getUid())
                                                     .get()
