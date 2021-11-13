@@ -1,13 +1,19 @@
 package petstone.project.animalisland.component;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,6 +35,7 @@ import petstone.project.animalisland.R;
 import petstone.project.animalisland.activity.ChatActivity;
 import petstone.project.animalisland.other.ChatListAdapter;
 import petstone.project.animalisland.other.ChatList;
+import petstone.project.animalisland.other.PopularityDialog;
 
 public class ChatListComponent extends Fragment {
 
@@ -72,7 +79,34 @@ public class ChatListComponent extends Fragment {
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                return false;
+                PopupMenu menu = new PopupMenu(getContext(), view);
+                PopularityDialog dialog = new PopularityDialog(getContext(), lists.get(position).getWhoName(), lists.get(position).getUid());
+                menu.getMenuInflater().inflate(R.menu.chat_list_menu, menu.getMenu());
+                menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.chat_list_menu_delete:
+                                db.collection("chats").document().delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.d("d", "채팅 삭제 완료");
+                                        listAdapter.notifyDataSetChanged();
+                                    }
+                                });
+                                break;
+                            case R.id.chat_list_menu_recommend:
+                                dialog.show();
+                                break;
+                            default:
+                                break;
+                        }
+                        return true;
+                    }
+                });
+                menu.show();
+
+                return true;
             }
         });
 

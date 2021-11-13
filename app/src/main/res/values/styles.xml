@@ -10,5 +10,4 @@
     <style name="tab_text" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">16sp</item>
     </style>
-
 </resources>
