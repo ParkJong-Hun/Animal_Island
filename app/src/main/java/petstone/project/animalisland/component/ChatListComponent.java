@@ -126,14 +126,13 @@ public class ChatListComponent extends Fragment {
 
         db.collection("chats")
                 .whereEqualTo("uid", auth.getUid())
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                         lists.clear();
                         Log.d("", "초기화됨");
 
-                        for (DocumentSnapshot doc : queryDocumentSnapshots) {
+                        for (DocumentSnapshot doc : value) {
                             ChatList newList = new ChatList();
                             newList.setUid(doc.getString("uid2"));
                             lists.add(newList);
@@ -184,9 +183,36 @@ public class ChatListComponent extends Fragment {
                                                                                 for (DocumentSnapshot doc:value) {
                                                                                     if (doc.getLong("readed") == 1) {
                                                                                         list.setNewCount(list.getNewCount() + 1);
-                                                                                        list.setUpdatedDate(doc.getDate("date"));
-                                                                                        list.setUpdatedMessage(doc.getString("article"));
                                                                                     }
+                                                                                    list.setUpdatedDate(doc.getDate("date"));
+                                                                                    list.setUpdatedMessage(doc.getString("article"));
+                                                                                }
+                                                                                listAdapter.notifyDataSetChanged();
+                                                                            }
+                                                                        });
+                                                            }
+                                                        }
+                                                    });
+
+                                            db.collection("chats")
+                                                    .whereEqualTo("uid2", list.getUid())
+                                                    .get()
+                                                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                                        @Override
+                                                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                                            for (DocumentSnapshot doc : queryDocumentSnapshots) {
+                                                                doc.getReference().collection("messages")
+                                                                        .whereNotEqualTo("uid", auth.getUid())
+                                                                        .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                                                            @Override
+                                                                            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                                                                                list.setNewCount(0);
+                                                                                for (DocumentSnapshot doc:value) {
+                                                                                    if (doc.getLong("readed") == 1) {
+                                                                                        list.setNewCount(list.getNewCount() + 1);
+                                                                                    }
+                                                                                    list.setUpdatedDate(doc.getDate("date"));
+                                                                                    list.setUpdatedMessage(doc.getString("article"));
                                                                                 }
                                                                                 listAdapter.notifyDataSetChanged();
                                                                             }
