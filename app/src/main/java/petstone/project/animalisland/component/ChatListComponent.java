@@ -28,6 +28,8 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
@@ -94,13 +96,28 @@ public class ChatListComponent extends Fragment {
                                 } else {
                                     documentName = auth.getUid() + "_" + whoUID;
                                 }
-                                db.collection("chats").document(documentName).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Log.d("d", "채팅 삭제 완료");
-                                        listAdapter.notifyDataSetChanged();
-                                    }
-                                });
+                                HashMap<String, Object> data = new HashMap<>();
+                                data.put("uid", auth.getUid());
+                                data.put("date", new Date());
+                                data.put("article", "정중히 인사하고 퇴장합니다.\n채팅이 종료됩니다.");
+                                data.put("readed", 1);
+
+                                String finalDocumentName = documentName;
+                                db.collection("chats").document(documentName).collection("messages")
+                                        .document(new Date() + auth.getUid())
+                                        .set(data)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                db.collection("chats").document(finalDocumentName).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        Log.d("d", "채팅 삭제 완료");
+                                                        listAdapter.notifyDataSetChanged();
+                                                    }
+                                                });
+                                            }
+                                        });
                                 break;
                             case R.id.chat_list_menu_recommend:
                                 dialog.show();

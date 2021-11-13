@@ -53,6 +53,7 @@ public class ChatListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        Log.d("", lists.toString());
         LayoutInflater inflater = LayoutInflater.from(context);
         convertView = inflater.inflate(R.layout.chat_list, parent, false);
 
