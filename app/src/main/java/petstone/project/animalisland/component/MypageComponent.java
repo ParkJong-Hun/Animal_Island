@@ -328,48 +328,7 @@ public class MypageComponent extends Fragment {
                                         } else {
                                             petFriend.setText("일반\n회원님");
                                         }
-/*
-                                        db.collection("users").document(auth.getUid())
-                                                .collection("popularity")
-                                                .whereNotEqualTo("uid", auth.getUid())
-                                                .get()
-                                                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                                                    @Override
-                                                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                                                        //한 사람 추천당 0.3 +
-                                                        //권한 없으면 80이 최대
-                                                        ratingBar.setRating(ratingBar.getRating() + 0.3f * queryDocumentSnapshots.getDocuments().size());
-                                                    }
-                                                });
-                                        db.collection("users").document(auth.getUid())
-                                                .collection("report")
-                                                .whereNotEqualTo("uid", auth.getUid())
-                                                .get()
-                                                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                                                    @Override
-                                                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                                                        //한 사람 추천당 0.3 +
-                                                        //권한 없으면 80이 최대
-                                                        ratingBar.setRating(ratingBar.getRating() - 0.3f * queryDocumentSnapshots.getDocuments().size());
-                                                    }
-                                                });
-                                        db.collection("users").document(auth.getUid())
-                                                .get()
-                                                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                                    @Override
-                                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                                        if (ratingBar.getRating() > 4.0f && !((boolean)documentSnapshot.get("sell_permission") || (boolean)documentSnapshot.get("is_petfriend"))) {
-                                                            ratingBar.setRating(4.0f);
-                                                        } else if ((boolean)documentSnapshot.get("sell_permission") || (boolean)documentSnapshot.get("is_petfriend")) {
-                                                            ratingBar.setRating(ratingBar.getRating() + 1.0f);
-                                                        } else if (ratingBar.getRating() > 5.0f) {
-                                                            ratingBar.setRating(5.0f);
-                                                        } else if (ratingBar.getRating() < 0) {
-                                                            ratingBar.setRating(0);
-                                                        }
-                                                    }
-                                                });
-*/
+                                        
                                         nickname.setText(document.get("nickname").toString());
 
                                         try {
