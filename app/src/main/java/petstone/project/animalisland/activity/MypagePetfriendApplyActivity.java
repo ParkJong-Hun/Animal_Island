@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.renderscript.Sampler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -20,10 +19,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.signature.ObjectKey;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -34,7 +33,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -58,16 +56,20 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
 
     private AlertDialog mAlertDialog;
 
-    private boolean addressNull;
+    private boolean addressNull = true;
     private StringBuilder sb = new StringBuilder();
 
     FirebaseStorage storage;
     StorageReference careerImagesRef;
+    private FirebaseAuth auth;
+    private StorageReference profileImagesRef;
     private Uri[] imgArrayUri = new Uri[3];
     private String[] StringUri = new String[3];
     String fileName;
     Uri file;
+    String profileUri;
 
+    private boolean setCarrer=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,6 +97,9 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
 
         //유저 정보 확인
         usercheck();
+        //프로필 가져오기
+        GetProfile();
+        //스토리지 주소 설정
         careerImagesRef = careerImagesRef.child("CarrerImg/"+uid+"_carrer"+"/");
 
         //취소 버튼
@@ -117,9 +122,11 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
 
                 //내용 확인 메소드
                 infoCheck();
-
+                // 주소가 빈칸이면 다이어로그 안나옴
+                if(!addressNull)
                 //가입 확인 하기전 확인 다이어로그
                 PetfriendDialog();
+                else {return;}
 
 
                 // 데이터삽입 uid 닉네임 비용 경력 시간 비용 등등
@@ -132,6 +139,7 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
             }
         });
 
+        // 이미지뷰 이벤트
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -164,6 +172,7 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
             }
         });
 
+        // 스케줄엑티비티 인텐트
         schedule_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -174,6 +183,7 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
         });
 
 
+        // 이미지 넣기
         toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -181,10 +191,12 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
                     license1.setVisibility(View.VISIBLE);
                     license2.setVisibility(View.VISIBLE);
                     license3.setVisibility(View.VISIBLE);
+                    setCarrer=true;
                 } else {
                     license1.setVisibility(View.GONE);
                     license2.setVisibility(View.GONE);
                     license3.setVisibility(View.GONE);
+                    setCarrer=false;
 
                 }
             }
@@ -200,51 +212,46 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
     }
 
 
+    // 갤러리에서 이미지 찾기
     private void GetImg(int requestCode)
     {
-
-        
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
         startActivityForResult(intent, requestCode );
 
     }
 
-    private void UriList(Uri uri, int index)
-    {
-        imgArrayUri[index] = uri;
-        StringUri[index] = careerImagesRef.toString();
-        String str = uri.toString();
+    // 이미지 업로드
+    private  void ImgUpload() {
+        
+        for(int i = 0; i < imgArrayUri.length; i++)
+        {
+            if(!imgArrayUri[i].equals(null))
+            {
+                Date date = new Date();
+                String fileName = uid + "_"+date.toString();
 
-        ImgUpload(index);
+                UploadTask uploadTask = careerImagesRef.child(fileName).putFile(imgArrayUri[i]);
+                Log.d("careerImagesRef", careerImagesRef.toString());
 
-
-        Log.d("StringUri" , StringUri[index]);
-    }
-
-    private  void ImgUpload(int index)
-    {
-        Uri file = imgArrayUri[index];
-        Date date = new Date();
-        String fileName = uid + "_"+date.toString();
-
-       UploadTask uploadTask = careerImagesRef.child(fileName).putFile(file);
-       Log.d("careerImagesRef", careerImagesRef.toString());
-
-        uploadTask.addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle unsuccessful uploads
-                Log.d("onFailure", exception.toString());
+                uploadTask.addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle unsuccessful uploads
+                        Log.d("onFailure", exception.toString());
+                    }
+                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                        // ...
+                        Log.d("ImgUpload", taskSnapshot.toString());
+                    }
+                });
             }
-        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-                // ...
-                Log.d("ImgUpload", taskSnapshot.toString());
-            }
-        });
+
+        }
+
     }
 
 
@@ -254,6 +261,8 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
         user = FirebaseAuth.getInstance().getCurrentUser();
         uid = user.getUid();
         Log.d("uid", uid.toString());
+
+
         // 유저 정보 가져오기
         download(uid);
     }
@@ -307,6 +316,10 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
             }
         });
 
+        if(setCarrer)
+        ImgUpload();
+
+
 
 
         /* 문서 이름 = 랜덤 파이어베이스 업로드
@@ -348,6 +361,11 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
             builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
+
+                    //주소입력 검사
+                    if(addressNull)
+                        return;
+                    
                     Toast.makeText(getApplicationContext(), "신청완료", Toast.LENGTH_SHORT).show();
 
                     // 데이터삽입 uid 닉네임 비용 경력 시간 비용 등등
@@ -357,9 +375,11 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
                             , mNickname
                             , mJuso
                             , StringUri[0]
-                    );
+                            , profileUri)
+                            ;
 
-                    //업로드 메소드
+
+                    //업로드
                     uploader(petfriendUser);
 
                     db = FirebaseFirestore.getInstance();
@@ -389,8 +409,7 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
 
 
     // 스케줄 가져오기
-    private void ScheduleCheck(Intent intent,String day)
-    {
+    private void ScheduleCheck(Intent intent,String day) {
         ArrayList<Integer> mlist = new ArrayList<>();
         String str;
 
@@ -413,10 +432,22 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
             Log.e("error", e.toString());
         }
 
-
-
     }
 
+    private void GetProfile()
+    {
+        db.collection("users")
+                .document(uid)
+                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                profileUri = documentSnapshot.get("image").toString();
+                Log.d("profile", profileUri);
+
+            }
+        });
+
+    }
 
     // 주소 가져오기
     private void AddressCheck() {
@@ -508,7 +539,7 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
             else{
 
                 Uri selectImg = data.getData();
-                UriList(selectImg,0);
+                imgArrayUri[0] = selectImg;
                 license1.setImageURI(selectImg);
                 //ImgUpload(selectImg);
 
@@ -521,7 +552,7 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
             else{
 
                 Uri selectImg = data.getData();
-                UriList(selectImg,1);
+                imgArrayUri[1] = selectImg;
                 license2.setImageURI(selectImg);
 
             }
@@ -533,7 +564,7 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
             else{
 
                 Uri selectImg = data.getData();
-                UriList(selectImg,2);
+                imgArrayUri[2] = selectImg;
                 license3.setImageURI(selectImg);
             }
         }

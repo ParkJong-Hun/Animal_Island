@@ -21,23 +21,25 @@ import androidx.recyclerview.widget.RecyclerView;
 //import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 //import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 
 import java.util.ArrayList;
 
 import petstone.project.animalisland.R;
 import petstone.project.animalisland.activity.MypagePetfriendApplyActivity;
-import petstone.project.animalisland.activity.PetfriendUserSelect;
 import petstone.project.animalisland.other.PetfriendFireAdapter;
 import petstone.project.animalisland.other.PetfriendFireUser;
 import petstone.project.animalisland.other.PetfriendUser;
@@ -68,6 +70,12 @@ public class PetFriendComponent extends Fragment {
     //파이어 베이스
     private FirebaseFirestore db;
     private FirebaseUser user;
+    private FirebaseAuth auth;
+    private FirebaseStorage storage;
+    private StorageReference profileImagesRef;
+
+    private String profileUri;
+
     // 내 uid
     private String mMyUid;
     //중복 여부
@@ -77,6 +85,8 @@ public class PetFriendComponent extends Fragment {
 
     //파이어베이스 어댑터
     private PetfriendFireAdapter fireAdapter;
+
+
 
 
 
@@ -279,6 +289,7 @@ public class PetFriendComponent extends Fragment {
     // 펫프랜즈 콜렉션에 모든 문서 가져오기
     void firebaseSearch() {
 
+
         db.collection("petfriend")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -290,6 +301,9 @@ public class PetFriendComponent extends Fragment {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d("firebaseSearch", document.getId() + " => " + document.getData() + "\n");
+
+                                profileUri = document.getData().get("profileImgUri").toString();
+
                                 //리스트에 petfriend 컬렉션에서 모든 문서들의 데이터(닉네임,uid,비용,시간,자격증)를 가져와서 arrayList에 넣기
                                 //String uid, String nickname, String address
                                 arrayList.add(new PetfriendUser(
@@ -297,7 +311,10 @@ public class PetFriendComponent extends Fragment {
                                         , document.getData().get("nickname").toString()
                                         , document.getData().get("address").toString()
                                         , null
-                                ));
+                                        , document.getData().get("profileImgUri").toString()
+
+                                        ));
+
                                 //어댑터 새로고침
                                 user_adapter.notifyDataSetChanged();
 
