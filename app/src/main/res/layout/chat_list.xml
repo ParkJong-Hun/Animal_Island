@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:id="@+id/layout">
+    android:id="@+id/chat_list_layout">
 
     <ImageView
         android:id="@+id/chat_user_img"
@@ -35,7 +35,7 @@
 
 
         <TextView
-            android:id="@+id/chat_message"
+            android:id="@+id/chat_updated_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -48,7 +48,7 @@
 
 
         <TextView
-            android:id="@+id/mypage_custom_list_text"
+            android:id="@+id/chat_updatedAt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -62,6 +62,7 @@
             />
 
         <TextView
+            android:id="@+id/chat_updated_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="40dp"
@@ -73,7 +74,7 @@
             android:textColor="@color/colorDaepyo"
 
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/mypage_custom_list_text"/>
+            app:layout_constraintTop_toBottomOf="@id/chat_updatedAt"/>
 
     <View
         android:id="@+id/bottom_line"

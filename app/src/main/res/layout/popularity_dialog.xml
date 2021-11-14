@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/round">
+
+    <TextView
+        android:id="@+id/popularity_dialog_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="7dp"
+        android:text="OO님을 다른 유저에게 추천하시겠습니까?\n(호감도 증가합니다.)"
+        android:textSize="18dp"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@+id/popularity_dialog_text"
+        app:layout_constraintStart_toStartOf="@+id/popularity_dialog_text"
+        app:layout_constraintTop_toBottomOf="@+id/popularity_dialog_text">
+
+        <Button
+            android:id="@+id/popularity_dialog_ok"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="15dp"
+            android:background="#00FF0000"
+            android:text="확인"
+            android:textColor="@color/colorAccent" />
+
+        <Button
+            android:id="@+id/popularity_dialog_cancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#00FF0000"
+            android:textSize="15dp"
+            android:text="취소"
+            android:textColor="@color/colorDaepyo" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

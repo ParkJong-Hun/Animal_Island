@@ -33,6 +33,7 @@
         <activity android:name="petstone.project.animalisland.activity.SelectSellRehomeActivity" />
         <activity android:name="petstone.project.animalisland.activity.ChatActivity" />
         <activity android:name=".activity.WebviewActivity"/>
+        <activity android:name=".activity.ScheduleActivity"/>
 
     </application>
 

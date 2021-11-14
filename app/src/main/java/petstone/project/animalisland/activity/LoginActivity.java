@@ -75,28 +75,28 @@ public class LoginActivity extends AppCompatActivity {
                             for (DocumentSnapshot doc : queryDocumentSnapshots.getDocuments()) {
                                 Log.d("success", doc.getString("email"));
                                 email = doc.getString("email");
+                                auth.signInWithEmailAndPassword(email, password)
+                                        .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                                if (task.isSuccessful()) {
+                                                    //로그인 정보 일치
+                                                    Log.d("Success", "이메일로 로그인:success");
+                                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                                    intent.putExtra("activity", "login");
+                                                    startActivity(intent);
+                                                } else {
+                                                    //로그인 정보 불일치
+                                                    Log.w("Fail", "이메일로 로그인:failure", task.getException());
+                                                    Toast.makeText(getApplicationContext(), "아이디 혹은 비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+                                        });
                             }
                         }
                     });
-
-                    auth.signInWithEmailAndPassword(email, password)
-                            .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if (task.isSuccessful()) {
-                                        //로그인 정보 일치
-                                        Log.d("Success", "이메일로 로그인:success");
-                                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                        intent.putExtra("activity", "login");
-                                        startActivity(intent);
-                                    } else {
-                                        //로그인 정보 불일치
-                                        Log.w("Fail", "이메일로 로그인:failure", task.getException());
-                                        Toast.makeText(getApplicationContext(), "아이디 혹은 비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
                 } catch (Exception e) {
+                    Log.d("w", e.toString());
                     Toast.makeText(getApplicationContext(), "아이디와 비밀번호를 모두 작성해주십시오.", Toast.LENGTH_SHORT).show();
                 }
             }

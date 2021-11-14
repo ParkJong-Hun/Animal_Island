@@ -19,8 +19,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -123,7 +125,7 @@ public class MypageInfoEditActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(password.getText().toString().equals(password_check.getText().toString())&&!(password.getText().toString().equals(""))) {
+                if(password.getText().toString().equals(password_check.getText().toString())&&!(password.getText().toString().equals(""))&&password.getText().length() >= 8) {
                     password_checked.setText("일치함");
                     password_checked.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent));
                     password_checked.setVisibility(View.VISIBLE);
@@ -199,6 +201,16 @@ public class MypageInfoEditActivity extends AppCompatActivity {
                         db.collection("users")
                                 .document(auth.getUid())
                                 .update("password", password.getText().toString());
+                        auth.getCurrentUser().updatePassword(password.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Log.d("success", "비밀번호 변경  성공");
+                                } else {
+                                    Log.d("fail", "비밀번호 변경 실패");
+                                }
+                            }
+                        });
                         setResult(RESULT_OK);
                         finish();
                     } else {
