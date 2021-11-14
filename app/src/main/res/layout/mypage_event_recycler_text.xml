@@ -21,7 +21,7 @@
 
     <TextView
         android:layout_marginTop="5dp"
-        android:id="@+id/event_context"
+        android:id="@+id/event_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="이벤트 내용"/>

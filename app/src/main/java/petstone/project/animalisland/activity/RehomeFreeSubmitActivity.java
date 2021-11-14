@@ -1,5 +1,6 @@
 package petstone.project.animalisland.activity;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.ClipData;
 import android.content.Intent;
@@ -14,20 +15,39 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 
 import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 import petstone.project.animalisland.R;
+import petstone.project.animalisland.component.FreeRehomeComponent;
 import petstone.project.animalisland.other.FreeSubmitImageAdapter;
 
 public class RehomeFreeSubmitActivity extends AppCompatActivity {
@@ -38,7 +58,9 @@ public class RehomeFreeSubmitActivity extends AppCompatActivity {
     ArrayList<Uri> uriList = new ArrayList<>();
     Button img_button;
 
-    EditText birth;
+    EditText title, birth, content;
+    String s_title, s_birth, s_content, s_type, s_breed, s_inoculation, s_sex, s_neutering, s_district, s_sell;
+    RadioGroup radio_sex, radio_neutering;
     ImageView back;
     Button cancel, submit;
     Spinner city, borough, town, type, breed, inoculation;
@@ -50,10 +72,24 @@ public class RehomeFreeSubmitActivity extends AppCompatActivity {
     String[] town_name = {"동/읍/면"};
 
 
+    FirebaseAuth auth;
+    FirebaseFirestore db;
+    String uid;
+    String document_id;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.rehome_free_submit);
+
+        auth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+
+        title = findViewById(R.id.getTitle);
+        content = findViewById(R.id.getContent);
+        radio_sex = findViewById(R.id.submit_sex);
+        radio_neutering = findViewById(R.id.submit_neutering);
 
         cancel = findViewById(R.id.cancel);
         submit = findViewById(R.id.submit);
@@ -71,6 +107,7 @@ public class RehomeFreeSubmitActivity extends AppCompatActivity {
         img_button = findViewById(R.id.img_button);
         recycler_img = findViewById(R.id.free_recycler_img);
 
+        //이미지 선택 버튼(최대 5개)
         img_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,6 +131,7 @@ public class RehomeFreeSubmitActivity extends AppCompatActivity {
         town_adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         town.setAdapter(town_adapter);
 
+        //동물종류, 품종 스피너에 데이터 넣기
         type_adapter = ArrayAdapter.createFromResource(this, R.array.spinner_type, android.R.layout.simple_spinner_dropdown_item);
         type_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         type.setAdapter(type_adapter);
@@ -119,10 +157,12 @@ public class RehomeFreeSubmitActivity extends AppCompatActivity {
             }
         });
 
+        //접종 스피너에 데이터 넣기
         inoculation_adapter = ArrayAdapter.createFromResource(this, R.array.spinner_inoculation, android.R.layout.simple_spinner_dropdown_item);
         inoculation_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         inoculation.setAdapter(inoculation_adapter);
 
+        //취소 버튼
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -130,6 +170,7 @@ public class RehomeFreeSubmitActivity extends AppCompatActivity {
             }
         });
 
+        //뒤로가기 버튼
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -137,6 +178,7 @@ public class RehomeFreeSubmitActivity extends AppCompatActivity {
             }
         });
 
+        //생년월일 선택하기 위한 DatePicker
         Calendar c = Calendar.getInstance();
         int mYear = c.get(Calendar.YEAR);
         int mMonth = c.get(Calendar.MONTH);
@@ -145,7 +187,7 @@ public class RehomeFreeSubmitActivity extends AppCompatActivity {
         DatePickerDialog datePickerDialog = new DatePickerDialog(RehomeFreeSubmitActivity.this,android.R.style.Theme_Holo_Light_Dialog_MinWidth ,new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                birth.setText(year + "년 " + (month+1) + "월 " + dayOfMonth + "일");
+                birth.setText(year%100 + ". " + (month+1) + ". " + dayOfMonth );
             }
         }, mYear, mMonth, mDay);
 
@@ -155,6 +197,15 @@ public class RehomeFreeSubmitActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 datePickerDialog.show();
+            }
+        });
+
+        //등록 버튼
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                upload();
+                finish();
             }
         });
 
@@ -209,6 +260,66 @@ public class RehomeFreeSubmitActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    @SuppressLint("ResourceType")
+    private void upload(){
+        //저장되는 날짜 가져오기
+        SimpleDateFormat sddate = new SimpleDateFormat("yyyy년 MM월 dd일 HH:mm:ss");
+        Date date = new Date();
+        String s_date = sddate.format(date);
+
+        //현재 사용자 아이디 가져오기
+        uid = auth.getCurrentUser().getUid();
+
+        document_id = uid + "_" + s_date;
+
+        s_title = title.getText().toString();
+        s_content = content.getText().toString();
+        s_birth = birth.getText().toString();
+        s_type = type.getSelectedItem().toString();
+        s_breed = breed.getSelectedItem().toString();
+        s_inoculation = inoculation.getSelectedItem().toString();
+        s_sell = "0";   //무료분양은 분양비 0원으로 저장
+
+        RadioButton rd_sex = findViewById(radio_sex.getCheckedRadioButtonId());
+        s_sex = rd_sex.getText().toString();
+
+        RadioButton rd_neutering = findViewById(radio_neutering.getCheckedRadioButtonId());
+        s_neutering = rd_neutering.getText().toString();
+
+
+        Map<String, Object> sale_posts = new HashMap<>();
+        sale_posts.put("uid", uid);
+        sale_posts.put("document_id", document_id);
+        sale_posts.put("date", s_date);
+        sale_posts.put("title", s_title);
+        sale_posts.put("district", null);
+        sale_posts.put("animal_type", s_type);
+        sale_posts.put("animal_breed", s_breed);
+        sale_posts.put("sex", s_sex);
+        sale_posts.put("is_inoculated", s_inoculation);
+        sale_posts.put("is_neutralized", s_neutering);
+        sale_posts.put("article", s_content);
+        sale_posts.put("is_sell", s_sell);
+        sale_posts.put("images", null);
+        sale_posts.put("birth", s_birth);
+
+        //데이터베이스 추가
+        db.collection("sale_posts").document(document_id)
+                .set(sale_posts)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("Success", "분양 데이터베이스 저장 성공");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("Fail", "분양 데이터베이스 저장 실패");
+                    }
+                });
     }
 
 }
