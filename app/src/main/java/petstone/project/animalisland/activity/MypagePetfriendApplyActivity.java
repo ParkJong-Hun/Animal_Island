@@ -89,7 +89,7 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
         mSchedule_tv = findViewById(R.id.schedule_tv);
         storage = FirebaseStorage.getInstance();
         careerImagesRef = storage.getReference();
-        careerImagesRef = careerImagesRef.child("CarrerImg/"+uid+"_Uid/"+fileName);
+        //careerImagesRef = careerImagesRef.child("CarrerImg/"+uid+"_Uid/"+fileName);
 
 
 
@@ -224,11 +224,10 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
         Uri file = uri;
         String fileName = uid+"_carrer";
 
-        //careerImagesRef = careerImagesRef.child("CarrerImg/"+uid+"_Uid/"+fileName);
+        careerImagesRef = careerImagesRef.child("CarrerImg/"+uid+"_Uid/"+fileName);
        UploadTask uploadTask = careerImagesRef.putFile(file);
        Log.d("careerImagesRef", careerImagesRef.toString());
 
-// Register observers to listen for when the download is done or if it fails
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {

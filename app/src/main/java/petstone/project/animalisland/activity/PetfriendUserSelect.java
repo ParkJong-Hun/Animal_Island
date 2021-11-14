@@ -60,12 +60,13 @@ public class PetfriendUserSelect extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
-        storageReference = storageReference.child("CarrerImg/"+mUid+"_Uid/");
 
 
 
         Intent intent = getIntent();
         mUid = intent.getStringExtra("UID");
+
+        storageReference = storageReference.child("CarrerImg/"+mUid+"_Uid/");
 
         Log.d(" mUid " ,"가져온 UID : " + mUid);
 
