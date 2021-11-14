@@ -296,7 +296,7 @@ public class PetFriendComponent extends Fragment {
                                         document.getData().get("uid").toString()
                                         , document.getData().get("nickname").toString()
                                         , document.getData().get("address").toString()
-
+                                       ,  null
                                 ));
                                 //어댑터 새로고침
                                 user_adapter.notifyDataSetChanged();
