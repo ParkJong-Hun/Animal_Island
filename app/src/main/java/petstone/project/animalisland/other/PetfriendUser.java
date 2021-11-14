@@ -1,5 +1,6 @@
 package petstone.project.animalisland.other;
 
+import android.net.Uri;
 import android.widget.ImageView;
 
 public class PetfriendUser {
@@ -19,10 +20,11 @@ public class PetfriendUser {
 
 
 
-    public PetfriendUser(String uid, String nickname, String address) {
+    public PetfriendUser(String uid, String nickname, String address, String carrerImgUri) {
         this.uid = uid;
         this.nickname = nickname;
         this.address = address;
+        this.carrerImgUri = carrerImgUri;
     }
 
     public String getUid() {
@@ -52,11 +54,14 @@ public class PetfriendUser {
     private String uid;
     private String nickname;
     private String address;
+    private String carrerImgUri;
 
 
+    public String getCarrerImgUri() {
+        return carrerImgUri;
+    }
 
-
-
-
-
+    public void setCarrerImgUri(String carrerImgUri) {
+        this.carrerImgUri = carrerImgUri;
+    }
 }

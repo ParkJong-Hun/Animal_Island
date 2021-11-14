@@ -2,6 +2,7 @@ package petstone.project.animalisland.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -23,6 +25,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.ListResult;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -36,12 +41,15 @@ public class PetfriendUserSelect extends AppCompatActivity {
     Button chat_btn;
     private FirebaseFirestore db;
     private FirebaseUser user;
+    private FirebaseStorage storage;
+    private StorageReference storageReference;
     // 현재 유저 아이디
     private String mMyUid;
     //파이어베이스에서 가져올 데이터들
     private String mUid, mNickName, mAddress;
     //Xml
     private TextView mUserName;
+    private ImageView minfoImg1;
 
 
     @Override
@@ -50,6 +58,9 @@ public class PetfriendUserSelect extends AppCompatActivity {
         setContentView(R.layout.petfriend_user_select);
 
         db = FirebaseFirestore.getInstance();
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
+        storageReference = storageReference.child("CarrerImg/"+mUid+"_Uid/");
 
 
 
@@ -61,10 +72,13 @@ public class PetfriendUserSelect extends AppCompatActivity {
         chat_btn = findViewById(R.id.petfriend_start_chating_button);
         back = findViewById(R.id.petfriend_user_select_back);
         mUserName = findViewById(R.id.user_name);
+        minfoImg1 = findViewById(R.id.user_info_image1);
+
 
 
 
         firebaseSearch();
+        imgSearch();
         usercheck();
         btnChange();
 
@@ -159,6 +173,42 @@ public class PetfriendUserSelect extends AppCompatActivity {
             }
         });
 
+    }
+
+    // 폴더안의 모든 이미지 불러옴
+    private void imgSearch() {
+
+        storageReference.listAll()
+                .addOnSuccessListener(new OnSuccessListener<ListResult>() {
+                    @Override
+                    public void onSuccess(ListResult listResult) {
+
+                        for (StorageReference item : listResult.getItems()){
+                            item.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Uri> task) {
+                                    if(task.isSuccessful())
+                                    {
+                                        Glide.with(getApplicationContext())
+                                                .load(task.getResult())
+                                                .into(minfoImg1);
+                                        Log.d("img", task.toString());
+                                    }
+                                    else{
+                                        Log.d("img", task.toString());
+                                    }
+
+                                }
+                            });
+                        }
+
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d("fail",e.toString());
+            }
+        });
     }
 
     private void btnChange() {

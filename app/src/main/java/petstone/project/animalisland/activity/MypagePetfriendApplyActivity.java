@@ -2,7 +2,9 @@ package petstone.project.animalisland.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.renderscript.Sampler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +20,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.signature.ObjectKey;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,7 +30,11 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import petstone.project.animalisland.R;
@@ -52,6 +60,13 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
     private boolean addressNull;
     private StringBuilder sb = new StringBuilder();
 
+    FirebaseStorage storage;
+    StorageReference careerImagesRef;
+    private Uri[] imgArrayUri = new Uri[3];
+    private String[] StringUri = new String[3];
+    String fileName;
+    Uri file;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +87,10 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
 
         schedule_btn = findViewById(R.id.schedule_btn);
         mSchedule_tv = findViewById(R.id.schedule_tv);
+        storage = FirebaseStorage.getInstance();
+        careerImagesRef = storage.getReference();
+        careerImagesRef = careerImagesRef.child("CarrerImg/"+uid+"_Uid/"+fileName);
+
 
 
         //유저 정보 확인
@@ -112,6 +131,29 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
             }
         });
 
+        View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId())
+                {
+                    case R.id.mypage_petfriend_apply_license_image1:
+                        GetImg(20);
+                        break;
+                    case R.id.mypage_petfriend_apply_license_image2:
+                        GetImg(21);
+                        break;
+                    case  R.id.mypage_petfriend_apply_license_image3:
+                        GetImg(22);
+                        break;
+                }
+            }
+        };
+
+        // 이미지 클릭 이벤트
+        license1.setOnClickListener(listener);
+        license2.setOnClickListener(listener);
+        license3.setOnClickListener(listener);
+        
         // 검색 버튼 누를시 웹뷰엑티비티 인텐드
         search_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,6 +194,53 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 finish();
+            }
+        });
+    }
+
+
+    private void GetImg(int requestCode)
+    {
+
+        
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+        startActivityForResult(intent, requestCode );
+
+    }
+
+    private void UriList(Uri uri, int index)
+    {
+        imgArrayUri[index] = uri;
+        StringUri[index] = careerImagesRef.toString();
+        String str = uri.toString();
+
+
+        Log.d("StringUri" , StringUri[index]);
+    }
+
+    private  void ImgUpload(Uri uri)
+    {
+        Uri file = uri;
+        String fileName = uid+"_carrer";
+
+        //careerImagesRef = careerImagesRef.child("CarrerImg/"+uid+"_Uid/"+fileName);
+       UploadTask uploadTask = careerImagesRef.putFile(file);
+       Log.d("careerImagesRef", careerImagesRef.toString());
+
+// Register observers to listen for when the download is done or if it fails
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle unsuccessful uploads
+                Log.d("onFailure", exception.toString());
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                // ...
+                Log.d("ImgUpload", taskSnapshot.toString());
             }
         });
     }
@@ -265,6 +354,7 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
                             uid
                             , mNickname
                             , mJuso
+                            , StringUri[0]
                     );
 
                     //업로드 메소드
@@ -326,6 +416,7 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
     }
 
 
+    // 주소 가져오기
     private void AddressCheck() {
         if (!mJuso_tv.getText().toString().equals("juso")) {
             // 오리지날 주소
@@ -407,6 +498,41 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
                 }
             }
 
+        }
+        else if(requestCode == 20){
+            if(data == null){
+                Toast.makeText(getApplicationContext(), "이미지를 선택하지 않았습니다.", Toast.LENGTH_LONG).show();
+            }
+            else{
+
+                Uri selectImg = data.getData();
+                UriList(selectImg,0);
+                license1.setImageURI(selectImg);
+                ImgUpload(selectImg);
+
+            }
+        }
+        else if(requestCode == 21){
+            if(data == null){
+                Toast.makeText(getApplicationContext(), "이미지를 선택하지 않았습니다.", Toast.LENGTH_LONG).show();
+            }
+            else{
+
+                Uri selectImg = data.getData();
+                UriList(selectImg,1);
+                license2.setImageURI(selectImg);
+            }
+        }
+        else if(requestCode == 22){
+            if(data == null){
+                Toast.makeText(getApplicationContext(), "이미지를 선택하지 않았습니다.", Toast.LENGTH_LONG).show();
+            }
+            else{
+
+                Uri selectImg = data.getData();
+                UriList(selectImg,2);
+                license3.setImageURI(selectImg);
+            }
         }
     }
 
