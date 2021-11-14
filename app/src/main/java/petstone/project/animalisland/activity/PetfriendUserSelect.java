@@ -139,12 +139,6 @@ public class PetfriendUserSelect extends AppCompatActivity {
                                             startActivity(intent);
                                         }
                                     }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Log.d("w", "채팅 에러");
-                                    }
                                 });
                     }
                 }

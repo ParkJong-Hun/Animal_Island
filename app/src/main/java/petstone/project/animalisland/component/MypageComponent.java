@@ -161,7 +161,25 @@ public class MypageComponent extends Fragment {
                                         public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                                             //한 사람 추천당 0.1 +
                                             //권한 없으면 80이 최대
-                                            ratingBar.setRating(2.5f + 0.1f * queryDocumentSnapshots.getDocuments().size());
+                                            ratingBar.setRating(2.5f + 0.3f * queryDocumentSnapshots.getDocuments().size());
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.d("fail", "현재 생성된 하위 컬렉션이 없는 에러이거나, 진짜로 아무도 안함.");
+                                        }
+                                    });
+                            db.collection("users").document(auth.getUid())
+                                    .collection("report")
+                                    .whereNotEqualTo("uid", auth.getUid())
+                                    .get()
+                                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                            //한 사람 추천당 0.1 +
+                                            //권한 없으면 80이 최대
+                                            ratingBar.setRating(2.5f - 0.3f * queryDocumentSnapshots.getDocuments().size());
                                         }
                                     })
                                     .addOnFailureListener(new OnFailureListener() {
@@ -181,6 +199,8 @@ public class MypageComponent extends Fragment {
                                                 ratingBar.setRating(ratingBar.getRating() + 1.0f);
                                             } else if (ratingBar.getRating() > 5.0f) {
                                                 ratingBar.setRating(5.0f);
+                                            } else if (ratingBar.getRating() < 0) {
+                                                ratingBar.setRating(0);
                                             }
                                         }
                                     })
