@@ -25,12 +25,15 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.ListResult;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import petstone.project.animalisland.R;
@@ -49,7 +52,10 @@ public class PetfriendUserSelect extends AppCompatActivity {
     private String mUid, mNickName, mAddress;
     //Xml
     private TextView mUserName;
-    private ImageView minfoImg1;
+    private ImageView minfoImg1,minfoImg2,minfoImg3;
+
+    //uri담을 리스트
+    ArrayList<Uri>uriList = new ArrayList<>();
 
 
     @Override
@@ -66,7 +72,7 @@ public class PetfriendUserSelect extends AppCompatActivity {
         Intent intent = getIntent();
         mUid = intent.getStringExtra("UID");
 
-        storageReference = storageReference.child("CarrerImg/"+mUid+"_Uid/");
+        storageReference = storageReference.child("CarrerImg/"+mUid+"_carrer"+"/");
 
         Log.d(" mUid " ,"가져온 UID : " + mUid);
 
@@ -74,6 +80,8 @@ public class PetfriendUserSelect extends AppCompatActivity {
         back = findViewById(R.id.petfriend_user_select_back);
         mUserName = findViewById(R.id.user_name);
         minfoImg1 = findViewById(R.id.user_info_image1);
+        minfoImg2 = findViewById(R.id.user_info_image2);
+        minfoImg3 = findViewById(R.id.user_info_image3);
 
 
 
@@ -179,29 +187,43 @@ public class PetfriendUserSelect extends AppCompatActivity {
     // 폴더안의 모든 이미지 불러옴
     private void imgSearch() {
 
+
+        //d
         storageReference.listAll()
                 .addOnSuccessListener(new OnSuccessListener<ListResult>() {
+                    int count = 0;
                     @Override
                     public void onSuccess(ListResult listResult) {
 
                         for (StorageReference item : listResult.getItems()){
+
                             item.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+
                                 @Override
                                 public void onComplete(@NonNull Task<Uri> task) {
+
                                     if(task.isSuccessful())
                                     {
-                                        Glide.with(getApplicationContext())
-                                                .load(task.getResult())
-                                                .into(minfoImg1);
-                                        Log.d("img", task.toString());
+                                        switch (count) {
+                                            case 0:setImg(task.getResult(),count); break;
+                                            case 1:setImg(task.getResult(),count); break;
+                                            case 2:setImg(task.getResult(),count); break;
+
+                                        }
+                                            count++;
+                                            Log.d("count", count+"");
                                     }
                                     else{
-                                        Log.d("img", task.toString());
+                                        Log.d("fail", "onfail");
                                     }
-
                                 }
+
+
                             });
+                            Log.d("3", uriList.size()+"");
                         }
+
+
 
                     }
                 }).addOnFailureListener(new OnFailureListener() {
@@ -210,7 +232,42 @@ public class PetfriendUserSelect extends AppCompatActivity {
                 Log.d("fail",e.toString());
             }
         });
+
+
     }
+
+    private void setImg(Uri uri,int i)
+    {
+
+        if(i ==0)
+        {
+            Glide.with(getApplicationContext())
+                    .load(uri)
+                    .into(minfoImg1);
+            Log.d("setImg1" , uri.toString());
+
+        }
+        else if(i ==1)
+        {
+            Glide.with(getApplicationContext())
+                    .load(uri)
+                    .into(minfoImg2);
+            Log.d("setImg2" , uri.toString());
+
+        }
+        else if(i ==2)
+        {
+            Glide.with(getApplicationContext())
+                    .load(uri)
+                    .into(minfoImg3);
+            Log.d("setImg3" , uri.toString());
+
+        }
+        else return;
+
+    }
+
+
 
     private void btnChange() {
 
