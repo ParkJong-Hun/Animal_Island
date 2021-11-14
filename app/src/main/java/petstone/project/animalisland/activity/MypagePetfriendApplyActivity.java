@@ -36,6 +36,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 
 import petstone.project.animalisland.R;
 import petstone.project.animalisland.other.PetfriendUser;
@@ -89,12 +90,12 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
         mSchedule_tv = findViewById(R.id.schedule_tv);
         storage = FirebaseStorage.getInstance();
         careerImagesRef = storage.getReference();
-        careerImagesRef = careerImagesRef.child("CarrerImg/"+uid+"_Uid/"+fileName);
 
 
 
         //유저 정보 확인
         usercheck();
+        careerImagesRef = careerImagesRef.child("CarrerImg/"+uid+"_carrer"+"/");
 
         //취소 버튼
         cancel.setOnClickListener(new View.OnClickListener() {
@@ -215,20 +216,21 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
         StringUri[index] = careerImagesRef.toString();
         String str = uri.toString();
 
+        ImgUpload(index);
+
 
         Log.d("StringUri" , StringUri[index]);
     }
 
-    private  void ImgUpload(Uri uri)
+    private  void ImgUpload(int index)
     {
-        Uri file = uri;
-        String fileName = uid+"_carrer";
+        Uri file = imgArrayUri[index];
+        Date date = new Date();
+        String fileName = uid + "_"+date.toString();
 
-        //careerImagesRef = careerImagesRef.child("CarrerImg/"+uid+"_Uid/"+fileName);
-       UploadTask uploadTask = careerImagesRef.putFile(file);
+       UploadTask uploadTask = careerImagesRef.child(fileName).putFile(file);
        Log.d("careerImagesRef", careerImagesRef.toString());
 
-// Register observers to listen for when the download is done or if it fails
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
@@ -508,7 +510,7 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
                 Uri selectImg = data.getData();
                 UriList(selectImg,0);
                 license1.setImageURI(selectImg);
-                ImgUpload(selectImg);
+                //ImgUpload(selectImg);
 
             }
         }
@@ -521,6 +523,7 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
                 Uri selectImg = data.getData();
                 UriList(selectImg,1);
                 license2.setImageURI(selectImg);
+
             }
         }
         else if(requestCode == 22){
