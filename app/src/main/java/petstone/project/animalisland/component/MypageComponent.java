@@ -102,6 +102,7 @@ public class MypageComponent extends Fragment {
 
         profileImagesRef = storage.getReference("profileImages");
 
+        ratingBar.setRating(2.5f);
 
         db.collection("users")
                 .whereEqualTo("uid", auth.getCurrentUser().getUid())
@@ -161,13 +162,7 @@ public class MypageComponent extends Fragment {
                                         public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                                             //한 사람 추천당 0.3 +
                                             //권한 없으면 80이 최대
-                                            ratingBar.setRating(2.5f + 0.3f * queryDocumentSnapshots.getDocuments().size());
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Log.d("fail", "현재 생성된 하위 컬렉션이 없는 에러이거나, 진짜로 아무도 안함.");
+                                            ratingBar.setRating(ratingBar.getRating() + 0.3f * queryDocumentSnapshots.getDocuments().size());
                                         }
                                     });
                             db.collection("users").document(auth.getUid())
@@ -179,13 +174,7 @@ public class MypageComponent extends Fragment {
                                         public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                                             //한 사람 신고당 0.3 -
                                             //권한 없으면 80이 최대
-                                            ratingBar.setRating(2.5f - 0.3f * queryDocumentSnapshots.getDocuments().size());
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Log.d("fail", "현재 생성된 하위 컬렉션이 없는 에러이거나, 진짜로 아무도 안함.");
+                                            ratingBar.setRating(ratingBar.getRating() - 0.3f * queryDocumentSnapshots.getDocuments().size());
                                         }
                                     });
                             db.collection("users").document(auth.getUid())
@@ -202,12 +191,6 @@ public class MypageComponent extends Fragment {
                                             } else if (ratingBar.getRating() < 0) {
                                                 ratingBar.setRating(0);
                                             }
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Log.d("fail", "유저 컬렉션 에러");
                                         }
                                     });
 
@@ -355,7 +338,7 @@ public class MypageComponent extends Fragment {
                                                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                                                         //한 사람 추천당 0.3 +
                                                         //권한 없으면 80이 최대
-                                                        ratingBar.setRating(2.5f + 0.3f * queryDocumentSnapshots.getDocuments().size());
+                                                        ratingBar.setRating(ratingBar.getRating() + 0.3f * queryDocumentSnapshots.getDocuments().size());
                                                     }
                                                 });
                                         db.collection("users").document(auth.getUid())
@@ -367,7 +350,7 @@ public class MypageComponent extends Fragment {
                                                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                                                         //한 사람 추천당 0.3 +
                                                         //권한 없으면 80이 최대
-                                                        ratingBar.setRating(2.5f - 0.3f * queryDocumentSnapshots.getDocuments().size());
+                                                        ratingBar.setRating(ratingBar.getRating() - 0.3f * queryDocumentSnapshots.getDocuments().size());
                                                     }
                                                 });
                                         db.collection("users").document(auth.getUid())
