@@ -5,7 +5,7 @@ import android.graphics.drawable.Drawable;
 public class SellRehomeList {
 
     Drawable main_img, gender;
-    String type, breed, birth, local, date, price;
+    String type, breed, birth, local, date, price, did;
 
     public void setImg(Drawable main) {
         main_img = main;
@@ -37,6 +37,8 @@ public class SellRehomeList {
         price = sprice;
     }
 
+    public void setDid(String sdid) { did = sdid; }
+
     public Drawable getImg() {
         return this.main_img;
     }
@@ -66,5 +68,7 @@ public class SellRehomeList {
     public String getPrice() {
         return this.price;
     }
+
+    public String getDid() { return this.did; }
 
 }

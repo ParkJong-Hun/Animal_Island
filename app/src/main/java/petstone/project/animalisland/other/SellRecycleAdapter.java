@@ -51,6 +51,7 @@ public class SellRecycleAdapter extends RecyclerView.Adapter<SellRecycleAdapter.
         holder.local.setText(item.getLocal()) ;
         holder.date.setText(item.getDate()) ;
         holder.price.setText(item.getPrice());
+        holder.did.setText(item.getDid());
     }
 
     // getItemCount() - 전체 데이터 갯수 리턴.
@@ -62,7 +63,7 @@ public class SellRecycleAdapter extends RecyclerView.Adapter<SellRecycleAdapter.
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView main_img, gender ;
-        TextView type, breed, birth, local, date, price ;
+        TextView type, breed, birth, local, date, price, did ;
 
         ViewHolder(View itemView) {
             super(itemView) ;
@@ -75,6 +76,7 @@ public class SellRecycleAdapter extends RecyclerView.Adapter<SellRecycleAdapter.
             local = itemView.findViewById(R.id.sell_local) ;
             date = itemView.findViewById(R.id.sell_date) ;
             price = itemView.findViewById(R.id.sell_price);
+            did = itemView.findViewById(R.id.document_id);
 
             itemView.setClickable(true);
 
@@ -84,6 +86,7 @@ public class SellRecycleAdapter extends RecyclerView.Adapter<SellRecycleAdapter.
                     int pos = getAdapterPosition();
                     if(pos != RecyclerView.NO_POSITION){
                         Intent intent = new Intent(s_context, SelectSellRehomeActivity.class);
+                        intent.putExtra("document_id", did.getText().toString());
                         s_context.startActivity(intent);
                     }
                 }

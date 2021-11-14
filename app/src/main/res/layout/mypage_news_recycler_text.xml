@@ -21,7 +21,7 @@
 
     <TextView
         android:layout_marginTop="5dp"
-        android:id="@+id/news_context"
+        android:id="@+id/news_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="공지사항 내용" />

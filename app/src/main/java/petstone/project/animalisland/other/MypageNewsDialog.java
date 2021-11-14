@@ -34,10 +34,15 @@ public class MypageNewsDialog extends Dialog {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mypage_news_component);
 
-        final Dialog dlg = new Dialog(context);
-
         news_recycler = findViewById(R.id.news_recycler);
         close = findViewById(R.id.mypage_news_button);
+
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dismiss();
+            }
+        });
 
         PagerSnapHelper snapHelper = new PagerSnapHelper();
         news_recycler.setLayoutManager(new LinearLayoutManager(getContext().getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
@@ -51,19 +56,13 @@ public class MypageNewsDialog extends Dialog {
 
         snapHelper.attachToRecyclerView(news_recycler);
 
-        close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dlg.dismiss();
-            }
-        });
     }
 
-    public void addItem(String title, String context){
+    public void addItem(String title, String content){
         NewsList item = new NewsList();
 
         item.setTitle(title);
-        item.setContext(context);
+        item.setContent(content);
 
         mList.add(item);
     }

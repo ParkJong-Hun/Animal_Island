@@ -34,8 +34,6 @@ public class MypageEventDialog extends Dialog {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mypage_event_component);
 
-        final Dialog dlg = new Dialog(context);
-
         event_recycler = findViewById(R.id.event_recycler);
         close = findViewById(R.id.mypage_event_button);
 
@@ -53,16 +51,16 @@ public class MypageEventDialog extends Dialog {
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dlg.cancel();
+                dismiss();
             }
         });
     }
 
-    public void addItem(String title, String context){
+    public void addItem(String title, String content){
         EventList item = new EventList();
 
         item.setTitle(title);
-        item.setContext(context);
+        item.setContent(content);
 
         mList.add(item);
     }
