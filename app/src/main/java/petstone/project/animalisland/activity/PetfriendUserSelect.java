@@ -25,7 +25,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.ListResult;
 import com.google.firebase.storage.StorageReference;
@@ -33,7 +32,6 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import petstone.project.animalisland.R;
@@ -52,7 +50,8 @@ public class PetfriendUserSelect extends AppCompatActivity {
     private String mUid, mNickName, mAddress;
     //Xml
     private TextView mUserName;
-    private ImageView minfoImg1,minfoImg2,minfoImg3;
+    private ImageView minfoImg1,minfoImg2,minfoImg3, mUserProfie;
+    private String profileUri;
 
     //uri담을 리스트
     ArrayList<Uri>uriList = new ArrayList<>();
@@ -82,6 +81,7 @@ public class PetfriendUserSelect extends AppCompatActivity {
         minfoImg1 = findViewById(R.id.user_info_image1);
         minfoImg2 = findViewById(R.id.user_info_image2);
         minfoImg3 = findViewById(R.id.user_info_image3);
+        mUserProfie = findViewById(R.id.select_user_profile);
 
 
 
@@ -187,8 +187,7 @@ public class PetfriendUserSelect extends AppCompatActivity {
     // 폴더안의 모든 이미지 불러옴
     private void imgSearch() {
 
-
-        //d
+        //폴더안의 모든 이미지 읽어옴
         storageReference.listAll()
                 .addOnSuccessListener(new OnSuccessListener<ListResult>() {
                     int count = 0;
@@ -302,9 +301,17 @@ public class PetfriendUserSelect extends AppCompatActivity {
 
                         mNickName = document.getData().get("nickname").toString();
                         mAddress = document.getData().get("address").toString();
+                        profileUri = document.getData().get("profileImgUri").toString();
+
 
                         Log.d("mNickName", mNickName);
+                        //이름
                         mUserName.setText(mNickName);
+                        //프로필이미지
+                        Glide.with(getApplicationContext())
+                                .load(Uri.parse(profileUri))
+                                .into(mUserProfie);
+
 
                     } else {
                         Log.d("petfriendUser", "No such document");
@@ -314,5 +321,9 @@ public class PetfriendUserSelect extends AppCompatActivity {
                 }
             }
         });
+
+
     }
+
+
 }
