@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,11 +28,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.ListResult;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
@@ -67,12 +64,17 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
     StorageReference careerImagesRef;
     private FirebaseAuth auth;
     private StorageReference profileImagesRef;
+    private StorageReference careerImagesDeletRef;
     private ArrayList<Uri> imgList = new ArrayList<>();
-    private ArrayList<String> userCarrerImg = new ArrayList<>();
+    private ArrayList<Uri> storageList = new ArrayList<>();
+    private String userCarrerImg;
     private StringBuilder uriSb = new StringBuilder();
     String fileName;
     Uri file;
     String profileUri;
+
+    boolean isThread =false;
+    Thread thread;
 
     private boolean setCarrer=false;
     @Override
@@ -107,10 +109,8 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
         GetProfile();
         //스토리지 주소 설정
         careerImagesRef = careerImagesRef.child("CarrerImg/"+uid+"_carrer"+"/");
-        //스토리지 이미지 불러오기
-        //StorageImgSearch();
-        //스토리지 이미지 삭제
-        //StorageDelete();
+        careerImagesDeletRef = careerImagesRef.child("CarrerImg/");
+
 
         //취소 버튼
         cancel.setOnClickListener(new View.OnClickListener() {
@@ -132,21 +132,10 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
 
                 //내용 확인 메소드
                 infoCheck();
+
                 // 주소가 빈칸이면 다이어로그 안나옴
                 if(!addressNull)
-                //가입 확인 하기전 확인 다이어로그
                 PetfriendDialog();
-                else return;
-
-
-
-                // 데이터삽입 uid 닉네임 비용 경력 시간 비용 등등
-                //PetfriendUser petfriendUser = new PetfriendUser(uid,mNickname);
-
-                //업로드 메소드
-                //uploader(petfriendUser);
-
-                //finish();
             }
         });
 
@@ -224,16 +213,38 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
 
 
     // 갤러리에서 이미지 찾기
-    private void GetImg(int requestCode)
-    {
+    private void GetImg(int requestCode) {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
         startActivityForResult(intent, requestCode );
 
     }
-
     // 이미지 업로드
     private  void ImgUpload() {
+
+
+        // 기존 이미지 삭제
+        for(int i=0; i<3; i++) {
+            int num = i;
+            String fName = (uid + "_" + num).toString();
+            careerImagesRef.child(fName).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Log.d("삭제", "삭제");
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.d("삭제못함", "삭제못함");
+                }
+            }).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    Log.d("삭제", "삭제");
+                }
+            });
+        }
+
 
         //리스트로 바꿈
         for(int i = 0; i < imgList.size(); i++)
@@ -242,8 +253,8 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
             if(!imgList.get(i).equals(null))
             {
                 Date date = new Date();
-                fileName = uid + "_"+date.toString();
-                uriSb.append(fileName + ")");
+                fileName = (uid+"_"+i).toString();
+                uriSb.append(fileName);
                 UploadTask uploadTask = careerImagesRef.child(fileName).putFile(imgList.get(i));
                 Log.d("careerImagesRef", careerImagesRef.toString());
 
@@ -262,54 +273,77 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
                         Log.d("ImgUpload", taskSnapshot.toString());
                     }
                 });
+
+                if(i == (imgList.size()-1))
+                    break;
             }
+            uriSb.append(" , ");
 
         }
 
     }
+    // 스토리지에서 이미지 갯수 찾기
+    private void StorageImgSearch() {
 
-    // 이미지 삭제
-    private void ImgDelete()
-    {
-        // 커리어 이미지 uri 가져옴
-        db.collection("petfriend")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        //폴더안의 모든 이미지 읽어옴
+        careerImagesRef.listAll()
+                .addOnSuccessListener(new OnSuccessListener<ListResult>() {
+
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        //해당컬렉션에 모든 문서를 가져옴
-                        // 기존 배열 초기화 예방차원
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d("firebaseSearch", document.getId() + " => " + document.getData() + "\n");
+                    public void onSuccess(ListResult listResult) {
 
-                                userCarrerImg.add(document.getData().get("carrerImgUri").toString());
-                            }
-                        } else {
-                            Log.d("firebaseSearch", "Error getting documents: ", task.getException());
+                        for (StorageReference item : listResult.getItems()) {
+
+                            item.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+
+                                @Override
+                                public void onComplete(@NonNull Task<Uri> task) {
+
+                                    if (task.isSuccessful()) {
+                                        storageList.add(task.getResult());
+                                        StorageImgDelete(storageList.size());
+                                        Log.d("storageList", storageList.size()+"");
+                                    }
+                                }
+                            });
                         }
                     }
-                });
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d("fail", e.toString());
+            }
+        });
 
-        for (int i=0; i<userCarrerImg.size(); i++)
-        {
-            //String str = userCarrerImg.get(i).split(")").toString();
-        }
+
+    }
+    // 스토리지 이미지 삭제
+    private void StorageImgDelete(int index) {
+
+        int num = index-1;
+        String fName = (uid+"_"+num).toString();
+        careerImagesRef.child(fName).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d("삭제", "삭제");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d("삭제못함", "삭제못함");
+            }
+        });
 
 
 
 
     }
-
-
     // 유저정보 확인
     private void usercheck() {
         //uid 확인
         user = FirebaseAuth.getInstance().getCurrentUser();
         uid = user.getUid();
         Log.d("uid", uid.toString());
-
-
         // 유저 정보 가져오기
         download(uid);
     }
@@ -351,8 +385,6 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
             DocumentReference documentReference = db.collection("petfriend").document(user.getUid());
 
             //petfriendUser.setCarrerImgUri(uriSb.toString());
-
-
 
             // 문서 이름 = 유저 UID 파이어베이스 업로드
             db.collection("petfriend").document(user.getUid()).set(petfriendUser).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -416,14 +448,19 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
 
+
                     Log.d("주소", "주소");
                     //주소입력 검사
                     if(addressNull)
                         return;
+
+                    // 토글 활성화시 이미지 업로드
                     if (setCarrer)
                         ImgUpload();
-
-
+                    // 비활성화시 모든 이미지 삭제
+                    else
+                        StorageImgSearch();
+                    
 
                         // 데이터삽입 uid 닉네임 비용 경력 시간 비용 등등
                         //String uid, String nickname, String originalAddress, String do_address, String gu_address, String ro_address, String dong_address
@@ -445,8 +482,8 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
                     db = FirebaseFirestore.getInstance();
 
                     Toast.makeText(getApplicationContext(), "신청완료", Toast.LENGTH_SHORT).show();
-                    finish();
 
+                    finish();
 
 
                 }
@@ -463,14 +500,7 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
     }
 
     // 신청 내용 확인 메소드
-    private void infoCheck() {
-
-        AddressCheck();
-        //StorageImgSearch();
-
-    }
-
-
+    private void infoCheck() { AddressCheck(); }
 
     // 스케줄 가져오기
     private void ScheduleCheck(Intent intent,String day) {
