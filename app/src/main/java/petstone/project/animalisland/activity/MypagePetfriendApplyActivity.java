@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +31,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.ListResult;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
@@ -64,7 +67,8 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private StorageReference profileImagesRef;
     private Uri[] imgArrayUri = new Uri[3];
-    private String[] StringUri = new String[3];
+    private ArrayList<Uri> StorageUri = new ArrayList<>();
+    private StringBuilder uriSb = new StringBuilder();
     String fileName;
     Uri file;
     String profileUri;
@@ -95,12 +99,17 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
 
 
 
+
         //유저 정보 확인
         usercheck();
         //프로필 가져오기
         GetProfile();
         //스토리지 주소 설정
         careerImagesRef = careerImagesRef.child("CarrerImg/"+uid+"_carrer"+"/");
+        //스토리지 이미지 불러오기
+        //StorageImgSearch();
+        //스토리지 이미지 삭제
+        //StorageDelete();
 
         //취소 버튼
         cancel.setOnClickListener(new View.OnClickListener() {
@@ -126,7 +135,8 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
                 if(!addressNull)
                 //가입 확인 하기전 확인 다이어로그
                 PetfriendDialog();
-                else {return;}
+                else return;
+
 
 
                 // 데이터삽입 uid 닉네임 비용 경력 시간 비용 등등
@@ -223,20 +233,22 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
 
     // 이미지 업로드
     private  void ImgUpload() {
-        
+
         for(int i = 0; i < imgArrayUri.length; i++)
         {
+
             if(!imgArrayUri[i].equals(null))
             {
                 Date date = new Date();
-                String fileName = uid + "_"+date.toString();
-
+                fileName = uid + "_"+date.toString();
+                uriSb.append(fileName + ")");
                 UploadTask uploadTask = careerImagesRef.child(fileName).putFile(imgArrayUri[i]);
                 Log.d("careerImagesRef", careerImagesRef.toString());
 
                 uploadTask.addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception exception) {
+
                         // Handle unsuccessful uploads
                         Log.d("onFailure", exception.toString());
                     }
@@ -251,6 +263,52 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
             }
 
         }
+
+    }
+
+
+    private void StorageImgSearch()
+    {
+        //폴더안의 모든 이미지 읽어옴
+        careerImagesRef.listAll()
+                .addOnSuccessListener(new OnSuccessListener<ListResult>() {
+                    int count = 0;
+                    @Override
+                    public void onSuccess(ListResult listResult) {
+
+                        for (StorageReference item : listResult.getItems()){
+
+                            item.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+
+                                @Override
+                                public void onComplete(@NonNull Task<Uri> task) {
+
+                                    if(task.isSuccessful())
+                                    {
+                                        StorageUri.add(task.getResult());
+
+                                        Log.d("StorageUri", StorageUri.get(count).toString());
+                                        count++;
+                                    }
+                                    else{
+                                        Log.d("fail", "onfail");
+                                    }
+                                }
+
+
+                            });
+                        }
+
+
+
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d("fail",e.toString());
+            }
+        });
+
 
     }
 
@@ -299,26 +357,33 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
     //파이어베이스 에 업로드
     private void uploader(PetfriendUser petfriendUser) {
         //파이어베이스 초기화
-        db = FirebaseFirestore.getInstance();
-        DocumentReference documentReference = db.collection("petfriend").document(user.getUid());
+        try {
+            db = FirebaseFirestore.getInstance();
+            DocumentReference documentReference = db.collection("petfriend").document(user.getUid());
 
+            //petfriendUser.setCarrerImgUri(uriSb.toString());
 
-        // 문서 이름 = 유저 UID 파이어베이스 업로드
-        db.collection("petfriend").document(user.getUid()).set(petfriendUser).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Log.d("uploader", "UID create post :" + documentReference.getId());
+            if (setCarrer) {
+                ImgUpload();
             }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.w("uploader", e.toString());
-            }
-        });
 
-        if(setCarrer)
-        ImgUpload();
+            // 문서 이름 = 유저 UID 파이어베이스 업로드
+            db.collection("petfriend").document(user.getUid()).set(petfriendUser).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Log.d("uploader", "UID create post :" + documentReference.getId());
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.w("uploader", e.toString());
+                }
+            });
 
+        }catch (Exception e)
+        {
+            Log.e("error",e.toString());
+        }
 
 
 
@@ -344,6 +409,8 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
     //신청 확인 얼트 다이어로그
     void PetfriendDialog() {
 
+        Log.d("다이어로그", "다이어로그");
+
         try {
 
             final AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -362,21 +429,23 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
 
+                    Log.d("주소", "주소");
                     //주소입력 검사
                     if(addressNull)
                         return;
-                    
-                    Toast.makeText(getApplicationContext(), "신청완료", Toast.LENGTH_SHORT).show();
 
-                    // 데이터삽입 uid 닉네임 비용 경력 시간 비용 등등
-                    //String uid, String nickname, String originalAddress, String do_address, String gu_address, String ro_address, String dong_address
-                    PetfriendUser petfriendUser = new PetfriendUser(
-                            uid
-                            , mNickname
-                            , mJuso
-                            , StringUri[0]
-                            , profileUri)
-                            ;
+                        // 데이터삽입 uid 닉네임 비용 경력 시간 비용 등등
+                        //String uid, String nickname, String originalAddress, String do_address, String gu_address, String ro_address, String dong_address
+                        PetfriendUser petfriendUser = new PetfriendUser(
+                                uid
+                                , mNickname
+                                , mJuso
+                                , careerImagesRef.toString()
+                                , profileUri
+                        );
+
+
+                        Log.d("업로드", "업로드");
 
 
                     //업로드
@@ -384,7 +453,10 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
 
                     db = FirebaseFirestore.getInstance();
 
+                    Toast.makeText(getApplicationContext(), "신청완료", Toast.LENGTH_SHORT).show();
                     finish();
+
+
 
                 }
             });
@@ -403,6 +475,7 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
     private void infoCheck() {
 
         AddressCheck();
+        //StorageImgSearch();
 
     }
 
@@ -499,6 +572,7 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), "현재주소 : " + mJuso, Toast.LENGTH_SHORT).show();
     }
 
+    //
 
     // 인텐트 데이터 확인
     @Override
@@ -541,7 +615,6 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
                 Uri selectImg = data.getData();
                 imgArrayUri[0] = selectImg;
                 license1.setImageURI(selectImg);
-                //ImgUpload(selectImg);
 
             }
         }
