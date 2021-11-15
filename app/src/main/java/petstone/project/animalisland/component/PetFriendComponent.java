@@ -306,7 +306,7 @@ public class PetFriendComponent extends Fragment {
 
                                 //리스트에 petfriend 컬렉션에서 모든 문서들의 데이터(닉네임,uid,비용,시간,자격증)를 가져와서 arrayList에 넣기
                                 //String uid, String nickname, String address
-                                //uid 닉네임 주소 자격증사진폴더주소 프로필사진
+                                //uid 닉네임 주소 자격증 프로필주소
                                 arrayList.add(new PetfriendUser(
                                         document.getData().get("uid").toString()
                                         , document.getData().get("nickname").toString()
