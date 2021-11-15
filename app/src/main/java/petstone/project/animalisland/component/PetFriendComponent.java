@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 //import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+//import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -358,7 +358,7 @@ public class PetFriendComponent extends Fragment {
 
     }
    // 파이어스토어 어댑터
-    void FireAdapter(){
+    /*void FireAdapter(){
 
         Query query = db.collection("petfriend");
 
@@ -369,7 +369,7 @@ public class PetFriendComponent extends Fragment {
         fireAdapter = new PetfriendFireAdapter(options);
         user_rv.setAdapter(fireAdapter);
 
-    }
+    }*/
 
     //리스트에서에서 검색
     private void ListSearch(String s) {
@@ -403,7 +403,7 @@ public class PetFriendComponent extends Fragment {
 
     //파이어베이스에서 검색
 
-    private void fireSearch(String s){
+    /*private void fireSearch(String s){
 
 
         Query query;
@@ -430,7 +430,7 @@ public class PetFriendComponent extends Fragment {
         fireAdapter.updateOptions(options);
         fireAdapter.notifyDataSetChanged();
         
-    }
+    }*/
 
 
     // 다이어로그 오류 방지
