@@ -93,6 +93,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:hint="수정할 비밀번호를 입력하세요."
+                android:textColor="@color/colorDaepyo_Accent"
                 android:inputType="textPassword"
                 app:layout_constraintStart_toStartOf="@+id/mypage_info_edit_password"
                 app:layout_constraintTop_toBottomOf="@+id/mypage_info_edit_password" />
@@ -126,6 +127,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:hint="수정할 비밀번호를 입력하세요."
+                android:textColor="@color/colorDaepyo_Accent"
                 android:inputType="textPassword"
                 app:layout_constraintStart_toStartOf="@+id/mypage_info_edit_password_check"
                 app:layout_constraintTop_toBottomOf="@+id/mypage_info_edit_password_check" />
@@ -172,6 +174,7 @@
                 android:layout_height="45dp"
 
                 android:text="남자"
+                android:textColor="@color/white"
                 android:textAlignment="center"
                 android:button="@null"
                 android:background="@drawable/button_round"
@@ -195,7 +198,7 @@
                 android:id="@+id/mypage_info_edit_nickname_form"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
-
+                android:textColor="@color/colorDaepyo_Accent"
                 android:text="아지냥이"
                 app:layout_constraintStart_toStartOf="@+id/mypage_info_edit_nickname"
                 app:layout_constraintTop_toBottomOf="@+id/mypage_info_edit_nickname" />

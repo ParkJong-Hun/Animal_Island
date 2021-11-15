@@ -14,6 +14,7 @@
         android:layout_margin="7dp"
         android:text="OO님을 다른 유저에게 신고하시겠습니까?\n(호감도가 감소합니다.\n경우에 따라 해당 사용자가 영구 정지될 수 있습니다.)"
         android:textSize="18dp"
+        android:textColor="@color/colorDaepyo_Dark"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,6 +29,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="비추천(신고) 사유를 작성해주세요."
+        android:textColor="@color/colorDaepyo_Dark"
         app:layout_constraintEnd_toEndOf="@+id/report_dialog_text"
         app:layout_constraintStart_toStartOf="@+id/report_dialog_text"
         app:layout_constraintTop_toBottomOf="@+id/report_dialog_text" />

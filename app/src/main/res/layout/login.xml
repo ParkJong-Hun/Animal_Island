@@ -33,6 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="70dp"
         android:hint="아이디를 입력하세요"
+        android:textColor="@color/colorDaepyo_Dark"
         android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logo_image"
@@ -56,6 +57,7 @@
         android:layout_marginStart="70dp"
         android:layout_marginTop="10dp"
         android:hint="비밀번호를 입력하세요"
+        android:textColor="@color/colorDaepyo_Dark"
         android:inputType="textPassword"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/login_id_et" />
