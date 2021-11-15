@@ -29,6 +29,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.ListResult;
@@ -67,7 +68,7 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private StorageReference profileImagesRef;
     private ArrayList<Uri> imgList = new ArrayList<>();
-    private ArrayList<Uri> StorageUri = new ArrayList<>();
+    private ArrayList<String> userCarrerImg = new ArrayList<>();
     private StringBuilder uriSb = new StringBuilder();
     String fileName;
     Uri file;
@@ -267,48 +268,35 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
 
     }
 
-
-    private void StorageImgSearch()
+    // 이미지 삭제
+    private void ImgDelete()
     {
-        //폴더안의 모든 이미지 읽어옴
-        careerImagesRef.listAll()
-                .addOnSuccessListener(new OnSuccessListener<ListResult>() {
-                    int count = 0;
+        // 커리어 이미지 uri 가져옴
+        db.collection("petfriend")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
-                    public void onSuccess(ListResult listResult) {
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        //해당컬렉션에 모든 문서를 가져옴
+                        // 기존 배열 초기화 예방차원
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d("firebaseSearch", document.getId() + " => " + document.getData() + "\n");
 
-                        for (StorageReference item : listResult.getItems()){
-
-                            item.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
-
-                                @Override
-                                public void onComplete(@NonNull Task<Uri> task) {
-
-                                    if(task.isSuccessful())
-                                    {
-                                        StorageUri.add(task.getResult());
-
-                                        Log.d("StorageUri", StorageUri.get(count).toString());
-                                        count++;
-                                    }
-                                    else{
-                                        Log.d("fail", "onfail");
-                                    }
-                                }
-
-
-                            });
+                                userCarrerImg.add(document.getData().get("carrerImgUri").toString());
+                            }
+                        } else {
+                            Log.d("firebaseSearch", "Error getting documents: ", task.getException());
                         }
-
-
-
                     }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.d("fail",e.toString());
-            }
-        });
+                });
+
+        for (int i=0; i<userCarrerImg.size(); i++)
+        {
+            //String str = userCarrerImg.get(i).split(")").toString();
+        }
+
+
 
 
     }
@@ -510,8 +498,7 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
 
     }
 
-    private void GetProfile()
-    {
+    private void GetProfile() {
         db.collection("users")
                 .document(uid)
                 .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -574,8 +561,6 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
         mInfo = minfo_edt.getText().toString();
         Toast.makeText(getApplicationContext(), "현재주소 : " + mJuso, Toast.LENGTH_SHORT).show();
     }
-
-    //
 
     // 인텐트 데이터 확인
     @Override
