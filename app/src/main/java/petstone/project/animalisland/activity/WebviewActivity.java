@@ -24,7 +24,7 @@ public class WebviewActivity extends AppCompatActivity {
 
             Log.d("data",data);
 
-            Intent i = new Intent(getApplicationContext(),MainActivity.class);
+            Intent i = new Intent(getApplicationContext(),MypagePetfriendApplyActivity.class);
             i.putExtra("data",data);
             setResult(RESULT_OK,i);
             finish();

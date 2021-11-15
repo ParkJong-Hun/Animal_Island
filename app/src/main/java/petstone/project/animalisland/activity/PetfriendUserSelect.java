@@ -103,7 +103,7 @@ public class PetfriendUserSelect extends AppCompatActivity {
                 //
                 if(mMyUid.equals(mUid))
                 {
-                    Toast.makeText(getApplicationContext(),"나에게 챗팅 못함",Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(),"나에게 챗팅 못함",Toast.LENGTH_SHORT).show();
                     return;
                 }
                 else {
@@ -219,7 +219,6 @@ public class PetfriendUserSelect extends AppCompatActivity {
 
 
                             });
-                            Log.d("3", uriList.size()+"");
                         }
 
 
