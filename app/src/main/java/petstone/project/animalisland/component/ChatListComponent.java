@@ -38,6 +38,7 @@ import petstone.project.animalisland.activity.ChatActivity;
 import petstone.project.animalisland.other.ChatListAdapter;
 import petstone.project.animalisland.other.ChatList;
 import petstone.project.animalisland.other.PopularityDialog;
+import petstone.project.animalisland.other.ReportDialog;
 
 public class ChatListComponent extends Fragment {
 
@@ -83,6 +84,7 @@ public class ChatListComponent extends Fragment {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 PopupMenu menu = new PopupMenu(getContext(), view);
                 PopularityDialog dialog = new PopularityDialog(getContext(), lists.get(position).getWhoName(), lists.get(position).getUid());
+                ReportDialog dialog2 = new ReportDialog(getContext(), lists.get(position).getWhoName(), lists.get(position).getUid());
                 menu.getMenuInflater().inflate(R.menu.chat_list_menu, menu.getMenu());
                 menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
@@ -122,6 +124,8 @@ public class ChatListComponent extends Fragment {
                             case R.id.chat_list_menu_recommend:
                                 dialog.show();
                                 break;
+                            case R.id.chat_list_menu_report:
+                                dialog2.show();
                             default:
                                 break;
                         }

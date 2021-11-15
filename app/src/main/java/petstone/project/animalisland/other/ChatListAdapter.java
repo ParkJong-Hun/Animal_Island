@@ -66,7 +66,7 @@ public class ChatListAdapter extends BaseAdapter {
         nickname.setText(lists.get(position).getWhoName());
         updatedMessage.setText(lists.get(position).getUpdatedMessage());
         Date date = lists.get(position).getUpdatedDate();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd a hh:mm");
         String dateStr = dateFormat.format(date);
         updatedAt.setText(dateStr);
         updatedCount.setText(lists.get(position).getNewCount().toString());

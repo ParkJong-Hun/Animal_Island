@@ -38,7 +38,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         EventList item = mData.get(position) ;
 
         holder.title.setText(item.getTitle());
-        holder.context.setText(item.getContext()) ;
+        holder.content.setText(item.getContent()) ;
 
     }
 
@@ -48,13 +48,13 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView title, context ;
+        TextView title, content ;
 
         ViewHolder(View itemView) {
             super(itemView) ;
 
             title = itemView.findViewById(R.id.event_title) ;
-            context = itemView.findViewById(R.id.event_context) ;
+            content = itemView.findViewById(R.id.event_content) ;
 
 
         }

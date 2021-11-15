@@ -50,6 +50,7 @@ public class FreeRecycleAdapter extends RecyclerView.Adapter<FreeRecycleAdapter.
         holder.birth.setText(item.getBirth()) ;
         holder.local.setText(item.getLocal()) ;
         holder.date.setText(item.getDate()) ;
+        holder.did.setText(item.getDid());
     }
 
     // getItemCount() - 전체 데이터 갯수 리턴.
@@ -61,7 +62,7 @@ public class FreeRecycleAdapter extends RecyclerView.Adapter<FreeRecycleAdapter.
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView main_img, gender ;
-        TextView type, breed, birth, local, date ;
+        TextView type, breed, birth, local, date, did ;
 
         ViewHolder(View itemView) {
             super(itemView) ;
@@ -73,6 +74,8 @@ public class FreeRecycleAdapter extends RecyclerView.Adapter<FreeRecycleAdapter.
             birth = itemView.findViewById(R.id.free_birth);
             local = itemView.findViewById(R.id.free_local) ;
             date = itemView.findViewById(R.id.free_date) ;
+            did = itemView.findViewById(R.id.document_id);
+
 
             itemView.setClickable(true);
 
@@ -82,6 +85,7 @@ public class FreeRecycleAdapter extends RecyclerView.Adapter<FreeRecycleAdapter.
                     int pos = getAdapterPosition();
                     if(pos != RecyclerView.NO_POSITION){
                         Intent intent = new Intent(context, SelectFreeRehomeActivity.class);
+                        intent.putExtra("document_id", did.getText().toString());
                         context.startActivity(intent);
                     }
                 }

@@ -173,6 +173,7 @@
                 app:layout_constraintTop_toBottomOf="@id/birth_sex"/>
 
             <RadioGroup
+                android:id="@+id/sell_submit_sex"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -231,6 +232,7 @@
                     android:spinnerMode="dialog"/>
 
                 <RadioGroup
+                    android:id="@+id/sell_submit_neutering"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"

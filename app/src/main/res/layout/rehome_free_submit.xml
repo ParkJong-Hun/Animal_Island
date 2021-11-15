@@ -173,6 +173,7 @@
                 app:layout_constraintTop_toBottomOf="@id/birth_sex" />
 
             <RadioGroup
+                android:id="@+id/submit_sex"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -223,49 +224,51 @@
 
                 <Spinner
                     android:id="@+id/inoculation"
-                    android:layout_width="0dp"
+                    android:layout_width="160dp"
                     android:layout_height="50dp"
-                    android:layout_weight="1"
                     android:spinnerMode="dialog"/>
-
-                <RadioGroup
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="중성화 "
+                        android:layout_gravity="center"
                         android:textAlignment="center" />
 
-                    <RadioButton
-                        android:id="@+id/yes"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                    <RadioGroup
+                        android:id="@+id/submit_neutering"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:padding="5dp"
-                        android:background="@drawable/button_shape"
-                        android:button="@null"
-                        android:text="O"
-                        android:textAlignment="center"/>
+                        android:gravity="center"
+                        android:orientation="horizontal">
 
-                    <RadioButton
-                        android:id="@+id/no"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_weight="1"
-                        android:padding="5dp"
-                        android:layout_marginStart="5dp"
-                        android:background="@drawable/button_shape"
-                        android:button="@null"
-                        android:text="X"
-                        android:textAlignment="center"/>
+                        <RadioButton
+                            android:id="@+id/yes"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:padding="5dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/button_shape"
+                            android:button="@null"
+                            android:text="O"
+                            android:textAlignment="center"/>
 
-                </RadioGroup>
+                        <RadioButton
+                            android:id="@+id/no"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:padding="5dp"
+                            android:layout_weight="1"
+                            android:layout_marginStart="5dp"
+                            android:background="@drawable/button_shape"
+                            android:button="@null"
+                            android:text="X"
+                            android:textAlignment="center"/>
+
+                    </RadioGroup>
+
 
             </LinearLayout>
 

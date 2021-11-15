@@ -112,7 +112,6 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-
     //안드로이드 사이클 create -> start일 때
     @Override
     public void onStart() {

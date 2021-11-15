@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/round">
+
+    <TextView
+        android:id="@+id/report_dialog_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="7dp"
+        android:text="OO님을 다른 유저에게 신고하시겠습니까?\n(호감도가 감소합니다.\n경우에 따라 해당 사용자가 영구 정지될 수 있습니다.)"
+        android:textSize="18dp"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <EditText
+        android:id="@+id/report_dialog_field"
+        android:inputType="textMultiLine"
+        android:lines="4"
+        android:minLines="1"
+        android:maxLines="4"
+        android:scrollbars="vertical"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="비추천(신고) 사유를 작성해주세요."
+        app:layout_constraintEnd_toEndOf="@+id/report_dialog_text"
+        app:layout_constraintStart_toStartOf="@+id/report_dialog_text"
+        app:layout_constraintTop_toBottomOf="@+id/report_dialog_text" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@+id/report_dialog_text"
+        app:layout_constraintStart_toStartOf="@+id/report_dialog_text"
+        app:layout_constraintTop_toBottomOf="@+id/report_dialog_field">
+
+        <Button
+            android:id="@+id/report_dialog_ok"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#00FF0000"
+            android:text="확인"
+            android:textColor="@color/colorAccent"
+            android:textSize="15dp" />
+
+        <Button
+            android:id="@+id/report_dialog_cancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#00FF0000"
+            android:text="취소"
+            android:textColor="@color/colorDaepyo"
+            android:textSize="15dp" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
