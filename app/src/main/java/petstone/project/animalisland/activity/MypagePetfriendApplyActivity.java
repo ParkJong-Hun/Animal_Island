@@ -234,9 +234,7 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
     // 이미지 업로드
     private  void ImgUpload() {
 
-        //imgList.size()
-        //imgArrayUri.length
-
+        //리스트로 바꿈
         for(int i = 0; i < imgList.size(); i++)
         {
 
