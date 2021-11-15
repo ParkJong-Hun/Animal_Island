@@ -66,7 +66,7 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
     StorageReference careerImagesRef;
     private FirebaseAuth auth;
     private StorageReference profileImagesRef;
-    private Uri[] imgArrayUri = new Uri[3];
+    private ArrayList<Uri> imgList = new ArrayList<>();
     private ArrayList<Uri> StorageUri = new ArrayList<>();
     private StringBuilder uriSb = new StringBuilder();
     String fileName;
@@ -234,15 +234,18 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
     // 이미지 업로드
     private  void ImgUpload() {
 
-        for(int i = 0; i < imgArrayUri.length; i++)
+        //imgList.size()
+        //imgArrayUri.length
+
+        for(int i = 0; i < imgList.size(); i++)
         {
 
-            if(!imgArrayUri[i].equals(null))
+            if(!imgList.get(i).equals(null))
             {
                 Date date = new Date();
                 fileName = uid + "_"+date.toString();
                 uriSb.append(fileName + ")");
-                UploadTask uploadTask = careerImagesRef.child(fileName).putFile(imgArrayUri[i]);
+                UploadTask uploadTask = careerImagesRef.child(fileName).putFile(imgList.get(i));
                 Log.d("careerImagesRef", careerImagesRef.toString());
 
                 uploadTask.addOnFailureListener(new OnFailureListener() {
@@ -363,9 +366,7 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
 
             //petfriendUser.setCarrerImgUri(uriSb.toString());
 
-            if (setCarrer) {
-                ImgUpload();
-            }
+
 
             // 문서 이름 = 유저 UID 파이어베이스 업로드
             db.collection("petfriend").document(user.getUid()).set(petfriendUser).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -433,6 +434,10 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
                     //주소입력 검사
                     if(addressNull)
                         return;
+                    if (setCarrer)
+                        ImgUpload();
+
+
 
                         // 데이터삽입 uid 닉네임 비용 경력 시간 비용 등등
                         //String uid, String nickname, String originalAddress, String do_address, String gu_address, String ro_address, String dong_address
@@ -440,7 +445,7 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
                                 uid
                                 , mNickname
                                 , mJuso
-                                , careerImagesRef.toString()
+                                , uriSb.toString()
                                 , profileUri
                         );
 
@@ -613,7 +618,7 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
             else{
 
                 Uri selectImg = data.getData();
-                imgArrayUri[0] = selectImg;
+                imgList.add(selectImg);
                 license1.setImageURI(selectImg);
 
             }
@@ -625,7 +630,7 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
             else{
 
                 Uri selectImg = data.getData();
-                imgArrayUri[1] = selectImg;
+                imgList.add(selectImg);
                 license2.setImageURI(selectImg);
 
             }
@@ -637,7 +642,7 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
             else{
 
                 Uri selectImg = data.getData();
-                imgArrayUri[2] = selectImg;
+                imgList.add(selectImg);
                 license3.setImageURI(selectImg);
             }
         }
