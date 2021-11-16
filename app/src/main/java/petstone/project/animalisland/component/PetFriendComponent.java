@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +29,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 //import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -52,6 +54,7 @@ import petstone.project.animalisland.other.petfriend_recycelview_adapter.Recycle
 public class PetFriendComponent extends Fragment {
     //private ListView listView;
     //private PetfriendCustomAdapter adapter;
+    // xml
     private FloatingActionButton petfriend_submit;
     private SearchView petfriend_search_view;
     private RecyclerView search_recyclerView;
@@ -59,6 +62,7 @@ public class PetFriendComponent extends Fragment {
     private TextView userListSize;
     private LinearLayoutManager mLayoutManager;
     PetfriendRecycleAdapter pfs_adapter;
+    private Button myPetfriend_btn;
     ArrayList<PetfriendSearchData> search_list = null;
 
     //유저리스트 리사이클러뷰
@@ -78,18 +82,18 @@ public class PetFriendComponent extends Fragment {
 
     // 내 uid
     private String mMyUid;
+
     //중복 여부
     private boolean isJungbok = false;
+
     //다이어로그
     private AlertDialog mAlertDialog;
 
     //파이어베이스 어댑터
     private PetfriendFireAdapter fireAdapter;
 
-
-
-
-
+    // 날짜 나누기
+    private String Days="";
 
 
     @Nullable
@@ -101,6 +105,8 @@ public class PetFriendComponent extends Fragment {
          petfriend_search_view = view.findViewById(R.id.petfriend_search_view);
          userListSize = view.findViewById(R.id.petfriend_user_size);
 
+
+         myPetfriend_btn = view.findViewById(R.id.myPetfriend_btn);
 
         //리사이클 뷰에 들어갈 리스트뷰
         search_list = new ArrayList<PetfriendSearchData>();
@@ -222,6 +228,7 @@ public class PetFriendComponent extends Fragment {
                 if(!isJungbok) {
                     Intent intent;
                     intent = new Intent(getContext(), MypagePetfriendApplyActivity.class);
+                    intent.putExtra("new",0);
                     startActivity(intent);
                 }
                 else{
@@ -255,10 +262,9 @@ public class PetFriendComponent extends Fragment {
                 builder.setPositiveButton("수정하기", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(getContext(), "수정완료", Toast.LENGTH_SHORT).show();
-
                         Intent intent;
                         intent = new Intent(getContext(), MypagePetfriendApplyActivity.class);
+                        intent.putExtra("new",1);
                         startActivity(intent);
 
 
@@ -289,7 +295,6 @@ public class PetFriendComponent extends Fragment {
     // 펫프랜즈 콜렉션에 모든 문서 가져오기
     void firebaseSearch() {
 
-
         db.collection("petfriend")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -303,6 +308,7 @@ public class PetFriendComponent extends Fragment {
                                 Log.d("firebaseSearch", document.getId() + " => " + document.getData() + "\n");
 
                                 profileUri = document.getData().get("profileImgUri").toString();
+                                Days = document.getData().get("days").toString();
 
                                 //리스트에 petfriend 컬렉션에서 모든 문서들의 데이터(닉네임,uid,비용,시간,자격증)를 가져와서 arrayList에 넣기
                                 //String uid, String nickname, String address
@@ -313,8 +319,10 @@ public class PetFriendComponent extends Fragment {
                                         , document.getData().get("address").toString()
                                         , document.getData().get("carrerImgUri").toString()
                                         , document.getData().get("profileImgUri").toString()
+                                        , SplitDays(Days)
+                                        , null,
 
-                                        ));
+                                        null, null));
 
                                 //어댑터 새로고침
                                 user_adapter.notifyDataSetChanged();
@@ -326,6 +334,10 @@ public class PetFriendComponent extends Fragment {
                         }
                     }
                 });
+
+
+
+
 
 
     }
@@ -349,12 +361,15 @@ public class PetFriendComponent extends Fragment {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d("jungbok", document.getId() + " => " + document.getData());
                                 isJungbok = true;
+                                myPetfriend_btn.setVisibility(View.VISIBLE);
                             }
                         } else {
                             Log.d("no,jungbok", "Error getting documents: ", task.getException());
                         }
                     }
                 });
+
+
 
     }
    // 파이어스토어 어댑터
@@ -369,6 +384,27 @@ public class PetFriendComponent extends Fragment {
         fireAdapter = new PetfriendFireAdapter(options);
         user_rv.setAdapter(fireAdapter);
 
+    }
+
+    String SplitDays(String days)
+    {
+        StringBuilder sb = new StringBuilder();
+        String s [] = days.split(" ");
+        for (int i =0; i < s.length ; i++)
+        {
+            switch (s[i])
+            {
+                case "월요일" : sb.append("월" + " ");break;
+                case "화요일" : sb.append("화" + " ");break;
+                case "수요일" : sb.append("수" + " ");break;
+                case "목요일" : sb.append("목" + " ");break;
+                case "금요일" : sb.append("금" + " ");break;
+                case "토요일" : sb.append("토" + " ");break;
+                case "일요일" : sb.append("일" + " ");break;
+                
+            }
+        }
+        return sb.toString();
     }
 
     //리스트에서에서 검색

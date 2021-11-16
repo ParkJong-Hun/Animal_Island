@@ -16,6 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+
         <!-- src 뒤로가기로 변경 -->
         <ImageView
             android:id="@+id/petfriend_user_select_back"
@@ -24,6 +25,7 @@
             android:src="@drawable/ic_baseline_keyboard_backspace_24"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
 
         <TextView
             android:layout_width="107dp"
@@ -179,6 +181,54 @@
                 android:background="@drawable/border"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/petfriend_tv_3" />
+
+            <ImageView
+                android:id="@+id/delete_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                android:layout_marginEnd="15dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/petfriend_tv_1"
+                app:srcCompat="@android:drawable/ic_menu_delete" />
+
+            <ImageView
+                android:id="@+id/edit_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                android:layout_marginEnd="10dp"
+                app:layout_constraintEnd_toStartOf="@+id/delete_iv"
+                app:layout_constraintTop_toTopOf="@+id/delete_iv"
+                app:srcCompat="@android:drawable/ic_menu_edit" />
+
+            <TextView
+                android:id="@+id/carrer_tv"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:hint="자격증을 소유하지 않은 유저입니다."
+                app:layout_constraintStart_toStartOf="@+id/petfriend_tv_3"
+                app:layout_constraintTop_toBottomOf="@+id/petfriend_tv_3" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:text="시간대"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/user_info_image1" />
+
+            <TextView
+                android:id="@+id/user_schedule_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="a"
+                app:layout_constraintStart_toStartOf="@+id/textView3"
+                app:layout_constraintTop_toBottomOf="@+id/textView3" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

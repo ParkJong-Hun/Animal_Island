@@ -51,6 +51,7 @@ public class PetfriendUserList_CustomAdapter extends RecyclerView.Adapter<Petfri
         //holder.tv_nickname.setText(arrayList.get(position).getUid());
         holder.tv_nickname.setText(arrayList.get(position).getNickname());
         holder.tv_Address.setText(arrayList.get(position).getAddress());
+        holder.tv_days.setText("요일 : "+arrayList.get(position).getDays());
         //holder.iv_profile.setImageURI(profileUri);
 
         Glide.with(context)
@@ -73,6 +74,7 @@ public class PetfriendUserList_CustomAdapter extends RecyclerView.Adapter<Petfri
         TextView tv_nickname;
         TextView tv_Address;
         ImageView iv_profile;
+        TextView tv_days;
 
         public CustomViewholder(@NonNull View itemView)
         {
@@ -80,6 +82,7 @@ public class PetfriendUserList_CustomAdapter extends RecyclerView.Adapter<Petfri
             this.tv_nickname = itemView.findViewById(R.id.user_name);
             this.tv_Address = itemView.findViewById(R.id.user_info);
             this.iv_profile = itemView.findViewById(R.id.select_user_profile);
+            this.tv_days = itemView.findViewById(R.id.petfriend_list_day_tv);
 
 
             // 리사이클러뷰 클릭 이벤트
