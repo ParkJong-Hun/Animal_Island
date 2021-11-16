@@ -4,12 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.snackbar.Snackbar;
 
 import petstone.project.animalisland.R;
 import petstone.project.animalisland.component.ChatListComponent;
@@ -27,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     ChatListComponent chatFrag;
     MypageComponent myFrag;
     String previousActivity = "";
+    Boolean snackBarOff = false;
 
     //화면 초기화
     @Override
@@ -63,6 +66,14 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     case R.id.bottom_chat:
                         getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, chatFrag).commitAllowingStateLoss();
+                        if (!snackBarOff) {
+                            Snackbar.make(findViewById(R.id.main_frame), "채팅 목록을 길게 누르면 채팅 삭제, 추천, 신고를 할 수 있습니다.", Snackbar.LENGTH_INDEFINITE).setAction("닫기", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    snackBarOff = true;
+                                }
+                            }).show();
+                        }
                         return true;
                     case R.id.bottom_mypage:
                         getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, myFrag).commitAllowingStateLoss();

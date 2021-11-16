@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="7dp"
-        android:text="OO님을 다른 유저에게 신고하시겠습니까?\n(호감도가 감소합니다.\n경우에 따라 해당 사용자가 영구 정지될 수 있습니다.)"
+        android:text="OO님을 다른 유저에게 신고하시겠습니까?\n(신뢰도가 감소합니다.\n경우에 따라 해당 사용자가 영구 정지될 수 있습니다.)"
         android:textSize="18dp"
         android:textColor="@color/colorDaepyo_Dark"
         android:textAlignment="center"

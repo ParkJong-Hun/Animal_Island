@@ -53,7 +53,7 @@ public class ReportDialog extends Dialog {
         cancel = findViewById(R.id.report_dialog_cancel);
         field = findViewById(R.id.report_dialog_field);
 
-        text.setText(nickname + "님을 다른 유저에게 신고하시겠습니까?\n(호감도가 감소합니다.\n경우에 따라 해당 사용자가 영구 정지될 수 있습니다.)");
+        text.setText(nickname + "님을 다른 유저에게 신고하시겠습니까?\n(신뢰도가 감소합니다.\n경우에 따라 해당 사용자가 영구 정지될 수 있습니다.)");
 
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
