@@ -42,6 +42,7 @@ import java.util.ArrayList;
 
 import petstone.project.animalisland.R;
 import petstone.project.animalisland.activity.MypagePetfriendApplyActivity;
+import petstone.project.animalisland.activity.PetfriendUserSelect;
 import petstone.project.animalisland.other.PetfriendFireAdapter;
 import petstone.project.animalisland.other.PetfriendFireUser;
 import petstone.project.animalisland.other.PetfriendUser;
@@ -196,6 +197,14 @@ public class PetFriendComponent extends Fragment {
          */
 
 
+        myPetfriend_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), PetfriendUserSelect.class);
+                intent.putExtra("UID",mMyUid);
+                getContext().startActivity(intent);
+            }
+        });
 
 
         petfriend_search_view.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -317,7 +326,7 @@ public class PetFriendComponent extends Fragment {
                                         document.getData().get("uid").toString()
                                         , document.getData().get("nickname").toString()
                                         , document.getData().get("address").toString()
-                                        , document.getData().get("carrerImgUri").toString()
+                                        , document.getData().get("carrerImgName").toString()
                                         , document.getData().get("profileImgUri").toString()
                                         , SplitDays(Days)
                                         , null,

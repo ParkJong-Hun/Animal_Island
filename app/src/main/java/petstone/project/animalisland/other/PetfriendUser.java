@@ -17,11 +17,11 @@ public class PetfriendUser {
 
 
 
-    public PetfriendUser(String uid, String nickname, String address, String carrerImgUri, String profileImg, String days, String info, String schedule, String originalAddress) {
+    public PetfriendUser(String uid, String nickname, String address, String carrerImgName, String profileImg, String days, String info, String schedule, String originalAddress) {
         this.uid = uid;
         this.nickname = nickname;
         this.address = address;
-        this.carrerImgUri = carrerImgUri;
+        this.carrerImgName = carrerImgName;
         this.profileImgUri = profileImg;
         Days = days;
         Info = info;
@@ -56,7 +56,7 @@ public class PetfriendUser {
     private String uid;
     private String nickname;
     private String address;
-    private String carrerImgUri;
+    private String carrerImgName;
     private String profileImgUri;
     private String Days;
     private String Info;
@@ -64,12 +64,12 @@ public class PetfriendUser {
     private String originalAddress;
 
 
-    public String getCarrerImgUri() {
-        return carrerImgUri;
+    public String getCarrerImgName() {
+        return carrerImgName;
     }
 
-    public void setCarrerImgUri(String carrerImgUri) {
-        this.carrerImgUri = carrerImgUri;
+    public void setCarrerImgName(String carrerImgName) {
+        this.carrerImgName = carrerImgName;
     }
 
     public String getProfileImgUri() {
