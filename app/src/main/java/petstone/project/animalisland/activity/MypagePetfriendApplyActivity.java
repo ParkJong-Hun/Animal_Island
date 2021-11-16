@@ -43,39 +43,56 @@ import petstone.project.animalisland.other.PetfriendUser;
 //마이페이지 펫프렌즈 권한 신청
 public class MypagePetfriendApplyActivity extends AppCompatActivity {
 
+    //xml
     private TextView mJuso_tv, mSchedule_tv;
     private EditText minfo_edt;
     Button cancel, submit, search_btn, schedule_btn;
     ImageView back, license1, license2, license3;
     Switch toggle;
 
+    // 가입 데이터
     private String uid;
     private String mJuso, mInfo, mTime, mDay, mJob, mNickname, mDo, mCity, mRo, mDong;
+    private String mOriginaAddress="", mSchedule="";
+    // 날짜를 담을 리스트
+    private ArrayList<String> mDays = new ArrayList<>();
+    private StringBuilder mDaySb = new StringBuilder();
+    private String Days ="";
 
-    private FirebaseUser user;
-    private FirebaseFirestore db;
-
+    // 다이어로그
     private AlertDialog mAlertDialog;
 
+    // 데이터값  확인
     private boolean addressNull = true;
     private StringBuilder sb = new StringBuilder();
 
+    //파이어베이스 관련
+    private FirebaseUser user;
+    private FirebaseFirestore db;
     FirebaseStorage storage;
     StorageReference careerImagesRef;
     private FirebaseAuth auth;
     private StorageReference profileImagesRef;
     private StorageReference careerImagesDeletRef;
+
+    // 스토리지 관련
     private ArrayList<Uri> imgList = new ArrayList<>();
     private ArrayList<Uri> storageList = new ArrayList<>();
     private String userCarrerImg;
     private StringBuilder uriSb = new StringBuilder();
+    private String carrerImgUri="";
     String fileName;
     Uri file;
-    String profileUri;
+    String profileUri="";
 
-    boolean isThread =false;
-    Thread thread;
+    // 기존 가입 여부 확인
+    private int newCreate;
+    private boolean reEdit=false;
 
+    // 기존 가입한 사람 데이터 불러옴
+    private String reJuso, reNickName;
+
+    // 자격증 토글 활성화 여부 확인
     private boolean setCarrer=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,13 +117,22 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
         storage = FirebaseStorage.getInstance();
         careerImagesRef = storage.getReference();
 
+        // 인텐트 가져옴
+        Intent intent = getIntent();
+        // 0 신규 1 수정
+        newCreate = intent.getIntExtra("new",2);
+        
+            //유저 정보 확인
+            usercheck();
+            //프로필 가져오기
+            GetProfile();
 
+            if(newCreate == 1)
+            {
+                firebaseSearch();
+                Toast.makeText(getApplicationContext(),  "기존 데이터 불러옴", Toast.LENGTH_SHORT).show();
+            }
 
-
-        //유저 정보 확인
-        usercheck();
-        //프로필 가져오기
-        GetProfile();
         //스토리지 주소 설정
         careerImagesRef = careerImagesRef.child("CarrerImg/"+uid+"_carrer"+"/");
         careerImagesDeletRef = careerImagesRef.child("CarrerImg/");
@@ -449,6 +475,7 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
                 public void onClick(DialogInterface dialog, int which) {
 
 
+
                     Log.d("주소", "주소");
                     //주소입력 검사
                     if(addressNull)
@@ -460,7 +487,10 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
                     // 비활성화시 모든 이미지 삭제
                     else
                         StorageImgSearch();
-                    
+
+                    getDays();
+                    carrerImgUri = uriSb.toString();
+
 
                         // 데이터삽입 uid 닉네임 비용 경력 시간 비용 등등
                         //String uid, String nickname, String originalAddress, String do_address, String gu_address, String ro_address, String dong_address
@@ -468,9 +498,12 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
                                 uid
                                 , mNickname
                                 , mJuso
-                                , uriSb.toString()
+                                , carrerImgUri
                                 , profileUri
-                        );
+                                ,Days
+                                ,mInfo
+                                ,mSchedule
+                                ,mOriginaAddress);
 
 
                         Log.d("업로드", "업로드");
@@ -500,12 +533,17 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
     }
 
     // 신청 내용 확인 메소드
-    private void infoCheck() { AddressCheck(); }
+    private void infoCheck() {
+        AddressCheck();
+        mInfo = minfo_edt.getText().toString();
+    }
 
     // 스케줄 가져오기
     private void ScheduleCheck(Intent intent,String day) {
         ArrayList<Integer> mlist = new ArrayList<>();
         String str;
+
+        mDays.add(day);
 
         sb.append(day+" : ");
         mlist = intent.getIntegerArrayListExtra(day);
@@ -521,10 +559,24 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
             sb.append("\n");
             str = sb.toString();
             mSchedule_tv.setText(str);
+            mSchedule = str;
+            Log.d("날짜 데이터 확인", mDays.size() +"");
         }catch (Exception e)
         {
             Log.e("error", e.toString());
         }
+
+    }
+
+    // 날짜 가져오기
+    private void getDays() {
+
+        for (int i =0; i < mDays.size(); i++)
+        {
+            Days += mDays.get(i) + " ";
+        }
+
+        Log.d("활성화된 날", Days );
 
     }
 
@@ -544,9 +596,12 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
 
     // 주소 가져오기
     private void AddressCheck() {
-        if (!mJuso_tv.getText().toString().equals("juso")) {
+        //addressNull
+        //!mJuso_tv.getText().toString().equals("juso")
+        if (addressNull || reEdit) {
             // 오리지날 주소
             mJuso = mJuso_tv.getText().toString();
+            mOriginaAddress = mJuso;
 
             // 숫자와 특수문자를 제거할 주소
             String sigungu = mJuso;
@@ -568,7 +623,6 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
             }
 
 
-
             // 도 , 시
             mDo = str_arr[1];
             Log.d("mDo", str_arr[1]);
@@ -587,8 +641,6 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
 
             addressNull = false;
         }
-
-        mInfo = minfo_edt.getText().toString();
         Toast.makeText(getApplicationContext(), "현재주소 : " + mJuso, Toast.LENGTH_SHORT).show();
     }
 
@@ -608,6 +660,8 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
         else if(requestCode == 1)
         {
             if (resultCode == RESULT_OK) {
+                mDays.clear();
+                Days ="";
                 ArrayList<String> day = data.getStringArrayListExtra("time");
                 for (int i=0; i<day.size(); i++)
                 {
@@ -659,6 +713,50 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
                 license3.setImageURI(selectImg);
             }
         }
+    }
+
+    private void firebaseSearch() {
+
+        addressNull = false;
+        reEdit = true;
+
+        // 팻프렌즈 콜렉션에 muid와 같은 이름의 문서를 가져옴
+        DocumentReference docRef = db.collection("petfriend").document(uid);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.d("petfriendUser", "DocumentSnapshot data: " + document.getData());
+
+                        reJuso = document.getData().get("address").toString();
+                        reNickName = document.getData().get("nickname").toString();
+                        Days = document.getData().get("days").toString();
+                        profileUri = document.getData().get("profileImgUri").toString();
+                        mOriginaAddress = document.getData().get("originalAddress").toString();
+                        mSchedule = document.getData().get("schedule").toString();
+                        mInfo = document.getData().get("info").toString();
+                        carrerImgUri = document.getData().get("carrerImgUri").toString();
+
+
+                        Log.d("reJuso", reJuso);
+                        //주소
+                        mJuso = reJuso;
+                        mJuso_tv.setText(mOriginaAddress);
+                        minfo_edt.setText(mInfo);
+                        mSchedule_tv.setText(mSchedule);
+
+                    } else {
+                        Log.d("petfriendUser", "No such document");
+                    }
+                } else {
+                    Log.d("petfriendUser", "get failed with ", task.getException());
+                }
+            }
+        });
+
+
     }
 
 

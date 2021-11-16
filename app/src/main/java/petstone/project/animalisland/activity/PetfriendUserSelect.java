@@ -38,23 +38,32 @@ import petstone.project.animalisland.R;
 
 public class PetfriendUserSelect extends AppCompatActivity {
 
-    ImageView back;
-    Button chat_btn;
+    // 파이어베이스 관련
     private FirebaseFirestore db;
     private FirebaseUser user;
     private FirebaseStorage storage;
     private StorageReference storageReference;
+
     // 현재 유저 아이디
     private String mMyUid;
+
     //파이어베이스에서 가져올 데이터들
-    private String mUid, mNickName, mAddress;
+    private String mUid, mNickName, mAddress, mInfo, mDays, mSchedule;
+
     //Xml
     private TextView mUserName;
     private ImageView minfoImg1,minfoImg2,minfoImg3, mUserProfie;
     private String profileUri;
+    private ImageView back;
+    private Button chat_btn;
+    private TextView mInfo_tv;
+    private TextView mUserInfo_tv;
+    private ImageView mSujung_iv,mDelete_iv;
+    private TextView carrer_tv;
 
     //uri담을 리스트
-    ArrayList<Uri>uriList = new ArrayList<>();
+    ArrayList<Integer>uriList = new ArrayList<>();
+    int mCount;
 
 
     @Override
@@ -82,7 +91,11 @@ public class PetfriendUserSelect extends AppCompatActivity {
         minfoImg2 = findViewById(R.id.user_info_image2);
         minfoImg3 = findViewById(R.id.user_info_image3);
         mUserProfie = findViewById(R.id.select_user_profile);
-
+        mInfo_tv = findViewById(R.id.petfriend_career_text);
+        mUserInfo_tv = findViewById(R.id.user_info);
+        mSujung_iv = findViewById(R.id.edit_iv);
+        mDelete_iv = findViewById(R.id.delete_iv);
+        carrer_tv = findViewById(R.id.carrer_tv);
 
 
 
@@ -197,23 +210,31 @@ public class PetfriendUserSelect extends AppCompatActivity {
 
                                     if(task.isSuccessful())
                                     {
+
                                         switch (count) {
                                             case 0:setImg(task.getResult(),count); break;
                                             case 1:setImg(task.getResult(),count); break;
                                             case 2:setImg(task.getResult(),count); break;
 
                                         }
-                                            count++;
+                                        count++;
+                                        mCount = count;
+                                        CarrerImgChange(mCount);
+
                                             Log.d("count", count+"");
                                     }
                                     else{
                                         Log.d("fail", "onfail");
-                                    }
-                                }
 
+                                    }
+
+                                }
 
                             });
                         }
+
+
+
 
 
 
@@ -228,8 +249,7 @@ public class PetfriendUserSelect extends AppCompatActivity {
 
     }
 
-    private void setImg(Uri uri,int i)
-    {
+    private void setImg(Uri uri,int i) {
 
         if(i ==0)
         {
@@ -255,6 +275,7 @@ public class PetfriendUserSelect extends AppCompatActivity {
             Log.d("setImg3" , uri.toString());
 
         }
+
         else return;
 
     }
@@ -265,10 +286,29 @@ public class PetfriendUserSelect extends AppCompatActivity {
 
         if(mMyUid.equals(mUid))
         {
-            Toast.makeText(getApplicationContext(),"나에게 챗팅 못함",Toast.LENGTH_SHORT).show();
+            mSujung_iv.setVisibility(View.VISIBLE);
+            mDelete_iv.setVisibility(View.VISIBLE);
+
             chat_btn.setBackgroundColor(Color.GRAY);
             chat_btn.setText("자신한테는 채팅을 할 수 없습니다");
         }
+
+    }
+
+    private void CarrerImgChange(int i)
+    {
+        if (i == 0) {
+            Log.d("mCount", mCount+"");
+            minfoImg1.setVisibility(View.GONE);
+            minfoImg2.setVisibility(View.GONE);
+            minfoImg3.setVisibility(View.GONE);
+            carrer_tv.setVisibility(View.VISIBLE);
+        } else {
+            Log.d("mCount", mCount+"");
+            minfoImg1.setVisibility(View.VISIBLE);
+            minfoImg2.setVisibility(View.VISIBLE);
+            minfoImg3.setVisibility(View.VISIBLE);
+            carrer_tv.setVisibility(View.GONE);}
 
     }
 
@@ -295,11 +335,15 @@ public class PetfriendUserSelect extends AppCompatActivity {
                         mNickName = document.getData().get("nickname").toString();
                         mAddress = document.getData().get("address").toString();
                         profileUri = document.getData().get("profileImgUri").toString();
+                        mDays = document.getData().get("days").toString();
+                        mInfo = document.getData().get("info").toString();
 
 
                         Log.d("mNickName", mNickName);
                         //이름
                         mUserName.setText(mNickName);
+                        mInfo_tv.setText(mInfo);
+                        mUserInfo_tv.setText("요일 : " + mDays +"\n");
                         //프로필이미지
                         Glide.with(getApplicationContext())
                                 .load(Uri.parse(profileUri))
