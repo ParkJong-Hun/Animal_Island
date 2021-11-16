@@ -52,7 +52,7 @@ public class PopularityDialog extends Dialog {
         ok = findViewById(R.id.popularity_dialog_ok);
         cancel = findViewById(R.id.popularity_dialog_cancel);
 
-        text.setText(nickname + "님을 다른 유저에게 추천하시겠습니까?\n(호감도 증가합니다.)");
+        text.setText(nickname + "님을 다른 유저에게 추천하시겠습니까?\n(신뢰도가 증가합니다.)");
 
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
