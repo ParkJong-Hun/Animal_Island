@@ -247,29 +247,26 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/mypage_info_edit_email_form" />
 
-            <Spinner
-                android:id="@+id/mypage_info_edit_address_city_form"
-                android:layout_width="125dp"
-                android:layout_height="50dp"
-                android:spinnerMode="dropdown"
+            <Button
+                android:id="@+id/mypage_info_edit_address_button"
+                android:layout_width="70dp"
+                android:layout_height="40dp"
+                android:background="@drawable/button_round"
+                android:text="주소 검색"
+                android:textColor="@color/white"
                 app:layout_constraintStart_toStartOf="@+id/mypage_info_edit_address"
                 app:layout_constraintTop_toBottomOf="@+id/mypage_info_edit_address" />
 
-            <Spinner
-                android:id="@+id/mypage_info_edit_address_ku_form"
-                android:layout_width="125dp"
-                android:layout_height="50dp"
-                android:spinnerMode="dropdown"
-                app:layout_constraintLeft_toRightOf="@+id/mypage_info_edit_address_city_form"
-                app:layout_constraintTop_toBottomOf="@+id/mypage_info_edit_address" />
-
-            <Spinner
-                android:id="@+id/mypage_info_edit_address_dong_form"
-                android:layout_width="125dp"
-                android:layout_height="50dp"
-                android:spinnerMode="dropdown"
-                app:layout_constraintLeft_toRightOf="@+id/mypage_info_edit_address_ku_form"
-                app:layout_constraintTop_toBottomOf="@+id/mypage_info_edit_address" />
+            <TextView
+                android:id="@+id/mypage_info_edit_address_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="주소"
+                android:textSize="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="20dp"
+                app:layout_constraintStart_toEndOf="@+id/mypage_info_edit_address_button"
+                app:layout_constraintTop_toTopOf="@+id/mypage_info_edit_address_button" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
     <LinearLayout
