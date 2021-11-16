@@ -737,7 +737,7 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
                         mOriginaAddress = document.getData().get("originalAddress").toString();
                         mSchedule = document.getData().get("schedule").toString();
                         mInfo = document.getData().get("info").toString();
-                        carrerImgUri = document.getData().get("carrerImgUri").toString();
+                        carrerImgUri = document.getData().get("carrerImgName").toString();
 
 
                         Log.d("reJuso", reJuso);

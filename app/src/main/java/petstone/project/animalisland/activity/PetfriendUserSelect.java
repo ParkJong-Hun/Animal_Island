@@ -1,5 +1,6 @@
 package petstone.project.animalisland.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -13,7 +14,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -48,7 +51,7 @@ public class PetfriendUserSelect extends AppCompatActivity {
     private String mMyUid;
 
     //파이어베이스에서 가져올 데이터들
-    private String mUid, mNickName, mAddress, mInfo, mDays, mSchedule;
+    private String mUid, mNickName, mAddress, mInfo, mDays, mSchedule, mCarrerImgUri="";
 
     //Xml
     private TextView mUserName;
@@ -59,7 +62,9 @@ public class PetfriendUserSelect extends AppCompatActivity {
     private TextView mInfo_tv;
     private TextView mUserInfo_tv;
     private ImageView mSujung_iv,mDelete_iv;
-    private TextView carrer_tv;
+    private TextView mCarrer_tv;
+    private AlertDialog mAlertDialog;
+    private TextView mSchedule_tv;
 
     //uri담을 리스트
     ArrayList<Integer>uriList = new ArrayList<>();
@@ -95,14 +100,16 @@ public class PetfriendUserSelect extends AppCompatActivity {
         mUserInfo_tv = findViewById(R.id.user_info);
         mSujung_iv = findViewById(R.id.edit_iv);
         mDelete_iv = findViewById(R.id.delete_iv);
-        carrer_tv = findViewById(R.id.carrer_tv);
+        mCarrer_tv = findViewById(R.id.carrer_tv);
+        mSchedule_tv = findViewById(R.id.user_schedule_tv);
 
 
 
-        firebaseSearch();
-        imgSearch();
-        usercheck();
-        btnChange();
+
+            firebaseSearch();
+            usercheck();
+            //imgSearch();
+            btnChange();
 
 
 
@@ -189,10 +196,25 @@ public class PetfriendUserSelect extends AppCompatActivity {
             }
         });
 
+        mSujung_iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               sujungDialog();
+
+            }
+        });
+        mDelete_iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               deleteDialog();
+            }
+        });
+
     }
 
     // 폴더안의 모든 이미지 불러옴
     private void imgSearch() {
+
 
         //폴더안의 모든 이미지 읽어옴
         storageReference.listAll()
@@ -222,6 +244,9 @@ public class PetfriendUserSelect extends AppCompatActivity {
                                         CarrerImgChange(mCount);
 
                                             Log.d("count", count+"");
+                                            String s[] = mCarrerImgUri.split(" , ");
+                                            Log.d("s", s.length+"");
+
                                     }
                                     else{
                                         Log.d("fail", "onfail");
@@ -233,18 +258,43 @@ public class PetfriendUserSelect extends AppCompatActivity {
                             });
                         }
 
-
-
-
-
-
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
+                CarrerImgChange(0);
                 Log.d("fail",e.toString());
             }
         });
+
+
+
+/*
+            String s[] = mCarrerImgUri.split(" , ");
+
+            for (int i = 0; i < s.length; i++) {
+
+                Log.d("s" , s[i]);
+
+                Uri uri = Uri.parse(s[i]);
+                switch (i) {
+                    case 0:
+                        setImg(uri,i);
+                        break;
+                    case 1:
+                        setImg(uri,i);
+                        break;
+                    case 2:
+                        setImg(uri,i);
+                        break;
+                }
+
+            }
+
+ */
+
+
+
 
 
     }
@@ -280,7 +330,86 @@ public class PetfriendUserSelect extends AppCompatActivity {
 
     }
 
+    private void sujungDialog() {
 
+
+        try {
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("내용을 수정하실건가요?");
+
+            builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Toast.makeText(getApplicationContext(), "취소", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+
+                }
+            });
+            builder.setPositiveButton("수정하기", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+
+            mAlertDialog = builder.create();
+            mAlertDialog.show();
+
+        } catch (Exception e) {
+            Log.e("dialog error", e.toString());
+        }
+
+
+    }
+    private void deleteDialog() {
+
+
+        try {
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("삭제하실건가요?");
+
+            builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Toast.makeText(getApplicationContext(), "취소", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+
+                }
+            });
+            builder.setPositiveButton("삭제하기", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                    db.collection("petfriend").document(mMyUid)
+                            .delete()
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.d("Delete", mMyUid);
+                                    finish();
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.w("Delete", "Error deleting document", e);
+                                }
+                            });
+
+                }
+            });
+
+            mAlertDialog = builder.create();
+            mAlertDialog.show();
+
+        } catch (Exception e) {
+            Log.e("dialog error", e.toString());
+        }
+
+
+    }
 
     private void btnChange() {
 
@@ -288,10 +417,10 @@ public class PetfriendUserSelect extends AppCompatActivity {
         {
             mSujung_iv.setVisibility(View.VISIBLE);
             mDelete_iv.setVisibility(View.VISIBLE);
-
             chat_btn.setBackgroundColor(Color.GRAY);
             chat_btn.setText("자신한테는 채팅을 할 수 없습니다");
         }
+
 
     }
 
@@ -301,14 +430,14 @@ public class PetfriendUserSelect extends AppCompatActivity {
             Log.d("mCount", mCount+"");
             minfoImg1.setVisibility(View.GONE);
             minfoImg2.setVisibility(View.GONE);
-            minfoImg3.setVisibility(View.GONE);
-            carrer_tv.setVisibility(View.VISIBLE);
+            this.minfoImg3.setVisibility(View.GONE);
+            this.mCarrer_tv.setVisibility(View.VISIBLE);
         } else {
             Log.d("mCount", mCount+"");
             minfoImg1.setVisibility(View.VISIBLE);
             minfoImg2.setVisibility(View.VISIBLE);
             minfoImg3.setVisibility(View.VISIBLE);
-            carrer_tv.setVisibility(View.GONE);}
+            mCarrer_tv.setVisibility(View.GONE);}
 
     }
 
@@ -337,13 +466,23 @@ public class PetfriendUserSelect extends AppCompatActivity {
                         profileUri = document.getData().get("profileImgUri").toString();
                         mDays = document.getData().get("days").toString();
                         mInfo = document.getData().get("info").toString();
+                        mSchedule = document.getData().get("schedule").toString();
+                        mCarrerImgUri = document.getData().get("carrerImgName").toString();
 
 
-                        Log.d("mNickName", mNickName);
+                        if(mCarrerImgUri.length()!=0)
+                            imgSearch();
+                        else
+                            CarrerImgChange(0);
+
+
+                        Log.d("mCarrerImgUri", mCarrerImgUri.length()+"");
                         //이름
                         mUserName.setText(mNickName);
                         mInfo_tv.setText(mInfo);
                         mUserInfo_tv.setText("요일 : " + mDays +"\n");
+                        mSchedule_tv.setText(mSchedule);
+
                         //프로필이미지
                         Glide.with(getApplicationContext())
                                 .load(Uri.parse(profileUri))
@@ -362,5 +501,17 @@ public class PetfriendUserSelect extends AppCompatActivity {
 
     }
 
+
+    // 다이어로그 오류 방지
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        if (mAlertDialog != null && mAlertDialog.isShowing()) {
+            mAlertDialog.dismiss();
+            mAlertDialog = null;
+        }
+
+    }
 
 }
