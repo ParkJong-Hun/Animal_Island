@@ -93,6 +93,9 @@ public class ReportDialog extends Dialog {
                                                         });
                                             }
                                         });
+                            } else {
+                                Toast.makeText(getContext(), "해당 유저의 신뢰도를 이미 감소시켰습니다.", Toast.LENGTH_SHORT).show();
+                                dismiss();
                             }
                         }
                     });

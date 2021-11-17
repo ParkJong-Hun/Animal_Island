@@ -74,11 +74,14 @@ public class PopularityDialog extends Dialog {
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void aVoid) {
-                                                Log.d("d", "호감도 증가 성공");
-                                                Toast.makeText(getContext(), "호감도 증가가 성공했습니다.", Toast.LENGTH_SHORT).show();
+                                                Log.d("d", "신뢰도 증가 성공");
+                                                Toast.makeText(getContext(), "신뢰도 증가가 성공했습니다.", Toast.LENGTH_SHORT).show();
                                                 dismiss();
                                             }
                                         });
+                            } else {
+                                Toast.makeText(getContext(), "해당 유저의 신뢰도를 이미 증가시켰습니다.", Toast.LENGTH_SHORT).show();
+                                dismiss();
                             }
                         }
                     });
