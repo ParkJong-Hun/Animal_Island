@@ -1,6 +1,7 @@
 package petstone.project.animalisland.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -122,6 +123,7 @@ public class ScheduleActivity extends AppCompatActivity {
                     if (i == 0) {
                         //시간 행안에 시간넣기
                         tv.setText(String.valueOf(num));
+                        tv.setBackgroundColor(getResources().getColor(R.color.colorDaepyo_Light));
                         tv.setLayoutParams(timeTvParams);
 
                     }
@@ -478,6 +480,7 @@ public class ScheduleActivity extends AppCompatActivity {
                     if (v.getId() == table[i][j].getId() && table[i][j].getText().equals("")) {
                         table[i][j].setText("V");
                         table[i][j].setGravity(Gravity.CENTER);
+
                         Log.d("넣기", "행 : " + String.valueOf(i) + " 열 : " + String.valueOf(j) + " 텍스트뷰 아이디 : " + table[i][j].getId() + " 텍스트 내용 : " + table[i][j].getText().toString());
                     }
                     else if (v.getId() == table[i][j].getId() && table[i][j].getText().equals("V")) {

@@ -265,9 +265,46 @@
                 android:layout_height="32dp"
                 android:layout_marginStart="10dp"
                 android:text="미용"
-                android:textSize="10dp"
+                android:textSize="10sp"
                 app:layout_constraintStart_toEndOf="@+id/petfriend_sanchack_btn"
                 app:layout_constraintTop_toTopOf="@+id/petfriend_dolbom_btn" />
+
+            <CheckBox
+                android:id="@+id/petfriend_sanchack_cb"
+                android:layout_width="60dp"
+                android:layout_height="32dp"
+                android:text="산책"
+                android:textSize="10sp"
+                android:textAlignment="center"
+                app:layout_constraintStart_toStartOf="@+id/petfriend_dolbom_btn"
+                app:layout_constraintTop_toBottomOf="@+id/petfriend_dolbom_btn"
+                android:background="@drawable/check_box"
+                android:button="@null"/>
+
+            <CheckBox
+                android:id="@+id/petfriend_dolbom_cb"
+                android:layout_width="60dp"
+                android:layout_height="32dp"
+                android:background="@drawable/check_box"
+                android:button="@null"
+                android:text="돌봄"
+                android:layout_marginStart="10dp"
+                android:textAlignment="center"
+                android:textSize="10sp"
+                app:layout_constraintStart_toEndOf="@+id/petfriend_sanchack_cb"
+                app:layout_constraintTop_toBottomOf="@+id/petfriend_dolbom_btn" />
+            <CheckBox
+                android:id="@+id/petfriend_beauty_cb"
+                android:layout_width="60dp"
+                android:layout_height="32dp"
+                android:background="@drawable/check_box"
+                android:button="@null"
+                android:text="미용"
+                android:layout_marginStart="10dp"
+                android:textAlignment="center"
+                android:textSize="10sp"
+                app:layout_constraintStart_toEndOf="@+id/petfriend_dolbom_cb"
+                app:layout_constraintTop_toBottomOf="@+id/petfriend_dolbom_btn" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
