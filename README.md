@@ -10,11 +10,11 @@ animal adoption and raising application with Android Platform
 <br>
 <b>Work</b>: 2021/03/31 ~ 2021/11/26
 <br>
-<b>Programming langugage</b>: Java, Xml
+<b>Programming langugage</b>: Java, Xml, (JavaScript)
 <br>
 <b>Tools</b>: Android studio, Photoshop, illustrator, KakaoOven, PowerPoint, Excel, Discord, Github, Webex, KakaoTalk
 <br>
-<b>Frameworks(Library)</b>: Firebase, Glide
+<b>Frameworks(Library)</b>: Firebase, Glide, Daum Address Public Data
 <br>
 <b>Released</b>: We won't release this app
 
