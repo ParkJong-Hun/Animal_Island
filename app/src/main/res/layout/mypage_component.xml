@@ -68,10 +68,11 @@
         <!--상세정보-->
 
         <!--정보수정-->
+
         <TextView
             android:id="@+id/mypage_descripiton"
             android:layout_width="wrap_content"
-
+            android:maxWidth="240dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="성명 : 김철수(男)\n나이 : 25살\n지역 : 서울시 용산구 한남동"
