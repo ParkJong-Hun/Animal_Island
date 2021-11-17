@@ -131,7 +131,7 @@ public class MypageSellApplyActivity extends AppCompatActivity {
                     setResult(RESULT_OK);
                     finish();
                 } else {
-                    Toast.makeText(getApplicationContext(), "내용을 작성해주세요.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "이미지와 내용을 작성해주세요.", Toast.LENGTH_SHORT).show();
                 }
             }
         });

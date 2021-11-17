@@ -73,6 +73,7 @@
             android:layout_height="200dp"
             android:gravity="top"
             android:layout_marginTop="5dp"
+            android:padding="5dp"
             android:background="@drawable/border"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
