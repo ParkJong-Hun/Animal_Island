@@ -17,7 +17,7 @@ public class PetfriendUser {
 
 
 
-    public PetfriendUser(String uid, String nickname, String address, String carrerImgName, String profileImg, String days, String info, String schedule, String originalAddress) {
+    public PetfriendUser(String uid, String nickname, String address, String carrerImgName, String profileImg, String days, String info, String schedule, String originalAddress, String pay) {
         this.uid = uid;
         this.nickname = nickname;
         this.address = address;
@@ -27,6 +27,7 @@ public class PetfriendUser {
         Info = info;
         this.schedule = schedule;
         this.originalAddress = originalAddress;
+        this.pay = pay;
     }
 
     public String getUid() {
@@ -62,6 +63,7 @@ public class PetfriendUser {
     private String Info;
     private String schedule;
     private String originalAddress;
+    private String pay;
 
 
     public String getCarrerImgName() {
@@ -110,5 +112,13 @@ public class PetfriendUser {
 
     public void setOriginalAddress(String originalAddress) {
         this.originalAddress = originalAddress;
+    }
+
+    public String getPay() {
+        return pay;
+    }
+
+    public void setPay(String pay) {
+        this.pay = pay;
     }
 }

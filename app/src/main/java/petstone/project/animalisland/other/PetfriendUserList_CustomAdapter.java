@@ -51,8 +51,18 @@ public class PetfriendUserList_CustomAdapter extends RecyclerView.Adapter<Petfri
         //holder.tv_nickname.setText(arrayList.get(position).getUid());
         holder.tv_nickname.setText(arrayList.get(position).getNickname());
         holder.tv_Address.setText(arrayList.get(position).getAddress());
-        holder.tv_days.setText("요일 : "+arrayList.get(position).getDays());
+        holder.tv_days.setText(" 요일 : "+arrayList.get(position).getDays());
+        holder.tv_pay.setText(" 시급 : "+arrayList.get(position).getPay()+"원");
         //holder.iv_profile.setImageURI(profileUri);
+
+        String i = arrayList.get(position).getCarrerImgName();
+        if(i.length() == 0)
+        {
+            holder.tv_carrer.setText(" 자격증 : X");
+        }
+        else {
+            holder.tv_carrer.setText(" 자격증 : O");
+        }
 
         Glide.with(context)
                 .load(profileUri)
@@ -75,6 +85,8 @@ public class PetfriendUserList_CustomAdapter extends RecyclerView.Adapter<Petfri
         TextView tv_Address;
         ImageView iv_profile;
         TextView tv_days;
+        TextView tv_pay;
+        TextView tv_carrer;
 
         public CustomViewholder(@NonNull View itemView)
         {
@@ -83,6 +95,8 @@ public class PetfriendUserList_CustomAdapter extends RecyclerView.Adapter<Petfri
             this.tv_Address = itemView.findViewById(R.id.user_info);
             this.iv_profile = itemView.findViewById(R.id.select_user_profile);
             this.tv_days = itemView.findViewById(R.id.petfriend_list_day_tv);
+            this.tv_pay = itemView.findViewById(R.id.petfriend_list_tv_pay);
+            this.tv_carrer = itemView.findViewById(R.id.petfrient_list_carrer_tv);
 
 
             // 리사이클러뷰 클릭 이벤트

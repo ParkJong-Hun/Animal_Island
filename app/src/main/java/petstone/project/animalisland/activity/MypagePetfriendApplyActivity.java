@@ -2,6 +2,7 @@ package petstone.project.animalisland.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -34,6 +35,7 @@ import com.google.firebase.storage.ListResult;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -49,11 +51,15 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
     Button cancel, submit, search_btn, schedule_btn;
     ImageView back, license1, license2, license3;
     Switch toggle;
+    private Button mSanchack_btn,mDolbom_btn,mBeauty_btn;
+
+    EditText mPay_edt;
 
     // 가입 데이터
     private String uid;
     private String mJuso, mInfo, mTime, mDay, mJob, mNickname, mDo, mCity, mRo, mDong;
     private String mOriginaAddress="", mSchedule="";
+    private String mPay="0";
     // 날짜를 담을 리스트
     private ArrayList<String> mDays = new ArrayList<>();
     private StringBuilder mDaySb = new StringBuilder();
@@ -74,6 +80,10 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private StorageReference profileImagesRef;
     private StorageReference careerImagesDeletRef;
+
+    private boolean isSanChck = false;
+    private boolean isDolbom = false;
+    private boolean isBeauty = false;
 
     // 스토리지 관련
     private ArrayList<Uri> imgList = new ArrayList<>();
@@ -111,6 +121,11 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
         license1.setVisibility(View.GONE);
         license2.setVisibility(View.GONE);
         license3.setVisibility(View.GONE);
+        mPay_edt = findViewById(R.id.mypage_petfriend_pay_edt);
+        // 행동 버튼
+        mSanchack_btn = findViewById(R.id.petfriend_sanchack_btn);
+        mDolbom_btn = findViewById(R.id.petfriend_dolbom_btn);
+        mBeauty_btn = findViewById(R.id.petfriend_beauty_btn);
 
         schedule_btn = findViewById(R.id.schedule_btn);
         mSchedule_tv = findViewById(R.id.schedule_tv);
@@ -150,7 +165,6 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
         // 확인버튼
         submit.setOnClickListener(new View.OnClickListener() {
 
-
             @Override
             public void onClick(View v) {
 
@@ -164,6 +178,60 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
                 PetfriendDialog();
             }
         });
+        
+        
+        mSanchack_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(isSanChck == false){
+                    isSanChck = true;
+                    Toast.makeText(getApplicationContext(),"산책" + isSanChck, Toast.LENGTH_SHORT).show();
+
+                }
+                else {
+                    isSanChck = false;
+                    Toast.makeText(getApplicationContext(),"산책" + isSanChck, Toast.LENGTH_SHORT).show();
+                }
+                
+            }
+        });
+        mDolbom_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(isDolbom == false){
+                    isDolbom = true;
+                    Toast.makeText(getApplicationContext(),"돌봄" + isDolbom, Toast.LENGTH_SHORT).show();
+
+                }
+                else {
+                    isDolbom = false;
+                    Toast.makeText(getApplicationContext(),"돌봄" + isDolbom, Toast.LENGTH_SHORT).show();
+                }
+                
+                
+            }
+        });
+        
+        mBeauty_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(isBeauty == false){
+                    isBeauty = true;
+                    Toast.makeText(getApplicationContext(),"미용" + isBeauty, Toast.LENGTH_SHORT).show();
+
+                }
+                else {
+                    isBeauty = false;
+                    Toast.makeText(getApplicationContext(),"미용" + isBeauty, Toast.LENGTH_SHORT).show();
+                }
+                
+                
+            }
+        });
+        
 
         // 이미지뷰 이벤트
         View.OnClickListener listener = new View.OnClickListener() {
@@ -489,6 +557,7 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
                         StorageImgSearch();
 
                     getDays();
+                    getPay();
                     carrerImgUri = uriSb.toString();
 
 
@@ -503,7 +572,9 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
                                 ,Days
                                 ,mInfo
                                 ,mSchedule
-                                ,mOriginaAddress);
+                                ,mOriginaAddress,
+                                mPay
+                        );
 
 
                         Log.d("업로드", "업로드");
@@ -531,6 +602,35 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
 
 
     }
+
+    private void getPay() {
+
+
+        mPay = mPay_edt.getText().toString();
+        Toast.makeText(getApplicationContext(),mPay+"",Toast.LENGTH_SHORT).show();
+        if(mPay.length()!=0) {
+            if (Integer.parseInt(mPay) <= 0 || mPay.length() == 0) {
+                mPay = "0";
+            } else {
+                mPay = getFormatDEC(mPay);
+            }
+        }
+        else {mPay = "0";}
+
+
+
+
+    }
+
+    private String getFormatDEC(String number) {
+
+        DecimalFormat dec = new DecimalFormat("##,###,###");
+        if (!number.trim().equals("")) {
+            number = dec.format(Long.valueOf(number));
+        }
+        return number;
+    }
+
 
     // 신청 내용 확인 메소드
     private void infoCheck() {
@@ -738,6 +838,14 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
                         mSchedule = document.getData().get("schedule").toString();
                         mInfo = document.getData().get("info").toString();
                         carrerImgUri = document.getData().get("carrerImgName").toString();
+                        mPay = document.getData().get("pay").toString();
+
+                        //sigungu = sigungu.replaceAll("\\p{Punct}", "");
+                        mPay = mPay.replaceAll("\\p{Punct}", "");
+                        mPay_edt.setText(mPay);
+
+
+
 
 
                         Log.d("reJuso", reJuso);
@@ -770,6 +878,8 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
         }
 
     }
+
+
 
 
 }
