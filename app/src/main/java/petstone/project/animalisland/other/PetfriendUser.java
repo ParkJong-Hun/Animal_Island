@@ -15,21 +15,19 @@ public class PetfriendUser {
  */
 
 
-
-
-    public PetfriendUser(String uid, String nickname, String address, String carrerImgName, String profileImg, String days, String info, String schedule, String originalAddress, String pay, boolean hwaldong_sancheck, boolean dolbom, boolean hwaldong_beauty, boolean petfriend) {
+    public PetfriendUser(String uid, String nickname, String address, String carrerImgName, String profileImgUri, String days, String info, String schedule, String originalAddress, String pay, boolean hwaldong_sancheck, boolean hwaldong_dolbom, boolean hwaldong_beauty, boolean petfriend) {
         this.uid = uid;
         this.nickname = nickname;
         this.address = address;
         this.carrerImgName = carrerImgName;
-        this.profileImgUri = profileImg;
+        this.profileImgUri = profileImgUri;
         Days = days;
         Info = info;
         this.schedule = schedule;
         this.originalAddress = originalAddress;
         this.pay = pay;
         this.hwaldong_sancheck = hwaldong_sancheck;
-        this.hwaldong_dolbom = dolbom;
+        this.hwaldong_dolbom = hwaldong_dolbom;
         this.hwaldong_beauty = hwaldong_beauty;
         this.petfriend = petfriend;
     }
@@ -57,22 +55,6 @@ public class PetfriendUser {
     public void setAddress(String address) {
         this.address = address;
     }
-
-    private String uid;
-    private String nickname;
-    private String address;
-    private String carrerImgName;
-    private String profileImgUri;
-    private String Days;
-    private String Info;
-    private String schedule;
-    private String originalAddress;
-    private String pay;
-    private boolean hwaldong_sancheck;
-    private boolean hwaldong_dolbom;
-    private boolean hwaldong_beauty;
-    private boolean petfriend;
-
 
     public String getCarrerImgName() {
         return carrerImgName;
@@ -161,4 +143,22 @@ public class PetfriendUser {
     public void setPetfriend(boolean petfriend) {
         this.petfriend = petfriend;
     }
+
+    private String uid;
+    private String nickname;
+    private String address;
+    private String carrerImgName;
+    private String profileImgUri;
+    private String Days;
+    private String Info;
+    private String schedule;
+    private String originalAddress;
+    private String pay;
+    private boolean hwaldong_sancheck;
+    private boolean hwaldong_dolbom;
+    private boolean hwaldong_beauty;
+    private boolean petfriend;
+
+
+
 }
