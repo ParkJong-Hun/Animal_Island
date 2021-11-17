@@ -44,7 +44,8 @@ public class MypageSellApplyActivity extends AppCompatActivity {
     FirebaseAuth auth;
     StorageReference thisFileRef;
 
-    Boolean imageCheck;
+    Boolean imageCheck1;
+    Boolean imageCheck2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,13 +66,12 @@ public class MypageSellApplyActivity extends AppCompatActivity {
         storage = FirebaseStorage.getInstance();
         imageRef = storage.getReference("sellApplyImages");
 
-        imageCheck = false;
+        imageCheck1 = false;
+        imageCheck2 = false;
 
         HashMap<String, Object> data = new HashMap<>();
         data.put("uid", auth.getUid());
-        data.put("image1", null);
-        data.put("image2", null);
-        data.put("image3", null);
+        data.put("article", "");
 
         db.collection("sell_apply")
                 .document(auth.getUid())
@@ -127,7 +127,16 @@ public class MypageSellApplyActivity extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(article.getText() != null && imageCheck) {
+                if(article.getText() != null && imageCheck1) {
+                    db.collection("sell_apply")
+                            .document(auth.getUid())
+                            .update("article", article.getText().toString())
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.d("d", "작성 성공");
+                                }
+                            });
                     setResult(RESULT_OK);
                     finish();
                 } else {
@@ -170,71 +179,14 @@ public class MypageSellApplyActivity extends AppCompatActivity {
             if (!file.equals(null)) {
                 switch (requestCode) {
                     case 1:
-                    thisFileRef = imageRef.child("/" + auth.getCurrentUser().getUid() + "_1.jpg");
-                    UploadTask uploadTask = thisFileRef.putFile(file);
-                    uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            uploadFile(thisFileRef, image1);
-                            Toast.makeText(getApplicationContext(), "사진이 업로드되었습니다.", Toast.LENGTH_LONG).show();
-                            thisFileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    db.collection("sellApply")
-                                            .document(auth.getUid())
-                                            .update("image1", uri.toString())
-                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                @Override
-                                                public void onSuccess(Void aVoid) {
-                                                    Log.d("success", "db 업데이트 성공");
-                                                    imageCheck = true;
-                                                }
-                                            })
-                                            .addOnFailureListener(new OnFailureListener() {
-                                                @Override
-                                                public void onFailure(@NonNull Exception e) {
-                                                    Log.d("fail", "db 업데이트 실패");
-                                                }
-                                            });
-                                }
-                            });
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(getApplicationContext(), "사진 업로드가 성공적으로 완료되지 못했습니다.", Toast.LENGTH_LONG).show();
-                        }
-                    });
-                    break;
-                    case 2:
-                        thisFileRef = imageRef.child("/" + auth.getCurrentUser().getUid() + "_2.jpg");
-                        UploadTask uploadTask2 = thisFileRef.putFile(file);
-                        uploadTask2.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        thisFileRef = imageRef.child("/" + auth.getCurrentUser().getUid() + "_1.jpg");
+                        UploadTask uploadTask = thisFileRef.putFile(file);
+                        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                uploadFile(thisFileRef, image2);
+                                uploadFile(thisFileRef, image1);
+                                imageCheck1 = true;
                                 Toast.makeText(getApplicationContext(), "사진이 업로드되었습니다.", Toast.LENGTH_LONG).show();
-                                thisFileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                    @Override
-                                    public void onSuccess(Uri uri) {
-                                        db.collection("sellApply")
-                                                .document(auth.getUid())
-                                                .update("image2", uri.toString())
-                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                    @Override
-                                                    public void onSuccess(Void aVoid) {
-                                                        Log.d("success", "db 업데이트 성공");
-                                                        imageCheck = true;
-                                                    }
-                                                })
-                                                .addOnFailureListener(new OnFailureListener() {
-                                                    @Override
-                                                    public void onFailure(@NonNull Exception e) {
-                                                        Log.d("fail", "db 업데이트 실패");
-                                                    }
-                                                });
-                                    }
-                                });
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
@@ -243,42 +195,46 @@ public class MypageSellApplyActivity extends AppCompatActivity {
                             }
                         });
                         break;
+                    case 2:
+                        if (imageCheck1) {
+                            thisFileRef = imageRef.child("/" + auth.getCurrentUser().getUid() + "_2.jpg");
+                            UploadTask uploadTask2 = thisFileRef.putFile(file);
+                            uploadTask2.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                @Override
+                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                    uploadFile(thisFileRef, image2);
+                                    imageCheck2 = true;
+                                    Toast.makeText(getApplicationContext(), "사진이 업로드되었습니다.", Toast.LENGTH_LONG).show();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(getApplicationContext(), "사진 업로드가 성공적으로 완료되지 못했습니다.", Toast.LENGTH_LONG).show();
+                                }
+                            });
+                        } else {
+                            Toast.makeText(getApplicationContext(), "사진을 차례대로 업로드해주세요.", Toast.LENGTH_LONG).show();
+                        }
+                        break;
                     case 3:
-                        thisFileRef = imageRef.child("/" + auth.getCurrentUser().getUid() + "_3.jpg");
-                        UploadTask uploadTask3 = thisFileRef.putFile(file);
-                        uploadTask3.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                            @Override
-                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                uploadFile(thisFileRef, image3);
-                                Toast.makeText(getApplicationContext(), "사진이 업로드되었습니다.", Toast.LENGTH_LONG).show();
-                                thisFileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                    @Override
-                                    public void onSuccess(Uri uri) {
-                                        db.collection("sellApply")
-                                                .document(auth.getUid())
-                                                .update("image3", uri.toString())
-                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                    @Override
-                                                    public void onSuccess(Void aVoid) {
-                                                        Log.d("success", "db 업데이트 성공");
-                                                        imageCheck = true;
-                                                    }
-                                                })
-                                                .addOnFailureListener(new OnFailureListener() {
-                                                    @Override
-                                                    public void onFailure(@NonNull Exception e) {
-                                                        Log.d("fail", "db 업데이트 실패");
-                                                    }
-                                                });
-                                    }
-                                });
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(getApplicationContext(), "사진 업로드가 성공적으로 완료되지 못했습니다.", Toast.LENGTH_LONG).show();
-                            }
-                        });
+                        if (imageCheck2) {
+                            thisFileRef = imageRef.child("/" + auth.getCurrentUser().getUid() + "_3.jpg");
+                            UploadTask uploadTask3 = thisFileRef.putFile(file);
+                            uploadTask3.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                @Override
+                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                    uploadFile(thisFileRef, image3);
+                                    Toast.makeText(getApplicationContext(), "사진이 업로드되었습니다.", Toast.LENGTH_LONG).show();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(getApplicationContext(), "사진 업로드가 성공적으로 완료되지 못했습니다.", Toast.LENGTH_LONG).show();
+                                }
+                            });
+                        } else {
+                            Toast.makeText(getApplicationContext(), "사진을 차례대로 업로드해주세요.", Toast.LENGTH_LONG).show();
+                        }
                         break;
                     default:
                         break;
