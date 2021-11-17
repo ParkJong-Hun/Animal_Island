@@ -51,7 +51,7 @@ public class PetfriendUserSelect extends AppCompatActivity {
     private String mMyUid;
 
     //파이어베이스에서 가져올 데이터들
-    private String mUid, mNickName, mAddress, mInfo, mDays, mSchedule, mCarrerImgUri="";
+    private String mUid, mNickName, mAddress, mInfo, mDays, mSchedule, mCarrerImgUri="",mPay;
 
     //Xml
     private TextView mUserName;
@@ -468,6 +468,7 @@ public class PetfriendUserSelect extends AppCompatActivity {
                         mInfo = document.getData().get("info").toString();
                         mSchedule = document.getData().get("schedule").toString();
                         mCarrerImgUri = document.getData().get("carrerImgName").toString();
+                        mPay = document.getData().get("pay").toString();
 
 
                         if(mCarrerImgUri.length()!=0)
@@ -480,7 +481,7 @@ public class PetfriendUserSelect extends AppCompatActivity {
                         //이름
                         mUserName.setText(mNickName);
                         mInfo_tv.setText(mInfo);
-                        mUserInfo_tv.setText("요일 : " + mDays +"\n");
+                        mUserInfo_tv.setText("요일 : " + mDays +"\n"+"비용 : "+mPay+"\n");
                         mSchedule_tv.setText(mSchedule);
 
                         //프로필이미지

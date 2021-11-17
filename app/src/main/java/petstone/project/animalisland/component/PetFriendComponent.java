@@ -22,16 +22,12 @@ import androidx.recyclerview.widget.RecyclerView;
 //import com.firebase.ui.database.FirebaseRecyclerOptions;
 //import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 //import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
@@ -44,7 +40,6 @@ import petstone.project.animalisland.R;
 import petstone.project.animalisland.activity.MypagePetfriendApplyActivity;
 import petstone.project.animalisland.activity.PetfriendUserSelect;
 import petstone.project.animalisland.other.PetfriendFireAdapter;
-import petstone.project.animalisland.other.PetfriendFireUser;
 import petstone.project.animalisland.other.PetfriendUser;
 import petstone.project.animalisland.other.PetfriendUserList_CustomAdapter;
 import petstone.project.animalisland.other.petfriend_recycelview_adapter.PetfriendRecycleAdapter;
@@ -329,9 +324,11 @@ public class PetFriendComponent extends Fragment {
                                         , document.getData().get("carrerImgName").toString()
                                         , document.getData().get("profileImgUri").toString()
                                         , SplitDays(Days)
-                                        , null,
-
-                                        null, null));
+                                        , null
+                                        , null
+                                        , null
+                                        , document.getData().get("pay").toString()
+                                ));
 
                                 //어댑터 새로고침
                                 user_adapter.notifyDataSetChanged();
