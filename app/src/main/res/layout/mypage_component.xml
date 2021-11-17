@@ -110,7 +110,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="8dp"
 
             android:text="나의 신뢰도"
             android:textColor="@color/colorDaepyo"
@@ -168,14 +168,15 @@
             android:id="@+id/mypage_petfriend_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
 
             android:text="펫 프렌즈\n회원님"
             android:textAlignment="center"
             android:textColor="@color/colorDaepyo"
             android:textSize="14sp"
             android:textStyle="bold"
+            android:layout_marginTop="8dp"
 
+            app:layout_constraintBottom_toBottomOf="@+id/mypage_sell_tv"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/mypage_sell_tv"
             app:layout_constraintTop_toBottomOf="@+id/mypage_top_line" />
@@ -184,7 +185,7 @@
             android:id="@+id/mypage_bottom_line"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="8dp"
             android:background="@color/light_gray"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/mypage_sell_tv" />
