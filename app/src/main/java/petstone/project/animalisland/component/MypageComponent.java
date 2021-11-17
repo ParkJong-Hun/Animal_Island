@@ -347,14 +347,6 @@ public class MypageComponent extends Fragment {
                 }
                 break;
             }
-            case 1: {//펫프렌즈 신청 결과
-                if (resultCode == -1) {
-
-                } else if (resultCode == 0) {
-
-                }
-                break;
-            }
             case 2: {//유료분양 권한 신청 결과
                 if (resultCode == -1) {
 
