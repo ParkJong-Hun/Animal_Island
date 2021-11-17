@@ -2,7 +2,6 @@ package petstone.project.animalisland.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -57,7 +56,7 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
 
     // 가입 데이터
     private String uid;
-    private String mJuso, mInfo, mTime, mDay, mJob, mNickname, mDo, mCity, mRo, mDong;
+    private String mJuso, mInfo="", mTime, mDay, mJob, mNickname, mDo, mCity, mRo, mDong;
     private String mOriginaAddress="", mSchedule="";
     private String mPay="0";
     // 날짜를 담을 리스트
@@ -91,7 +90,7 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
     private String userCarrerImg;
     private StringBuilder uriSb = new StringBuilder();
     private String carrerImgUri="";
-    String fileName;
+    String fileName="";
     Uri file;
     String profileUri="";
 
@@ -572,8 +571,12 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
                                 ,Days
                                 ,mInfo
                                 ,mSchedule
-                                ,mOriginaAddress,
-                                mPay
+                                ,mOriginaAddress
+                                ,mPay
+                                , isSanChck
+                                , isDolbom
+                                , isBeauty
+                                , true
                         );
 
 
@@ -603,6 +606,7 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
 
     }
 
+    // 돈
     private void getPay() {
 
 
@@ -622,6 +626,7 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
 
     }
 
+    // 돈 천에자리에서 , 넣기
     private String getFormatDEC(String number) {
 
         DecimalFormat dec = new DecimalFormat("##,###,###");
@@ -680,6 +685,7 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
 
     }
 
+    // 프로필 이미지 가져오기
     private void GetProfile() {
         db.collection("users")
                 .document(uid)

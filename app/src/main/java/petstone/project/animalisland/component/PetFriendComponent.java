@@ -21,13 +21,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 //import com.firebase.ui.database.FirebaseRecyclerOptions;
 //import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 //import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
@@ -40,6 +45,7 @@ import petstone.project.animalisland.R;
 import petstone.project.animalisland.activity.MypagePetfriendApplyActivity;
 import petstone.project.animalisland.activity.PetfriendUserSelect;
 import petstone.project.animalisland.other.PetfriendFireAdapter;
+import petstone.project.animalisland.other.PetfriendFireUser;
 import petstone.project.animalisland.other.PetfriendUser;
 import petstone.project.animalisland.other.PetfriendUserList_CustomAdapter;
 import petstone.project.animalisland.other.petfriend_recycelview_adapter.PetfriendRecycleAdapter;
@@ -160,12 +166,11 @@ public class PetFriendComponent extends Fragment {
 
         // 현재 유저 확인
         usercheck();
-        // 중복 체크
-        jungbokCheck();
-
         if(arrayList!=null)
             firebaseSearch();
 
+        // 중복 체크
+        jungbokCheck();
 
 
         /*
@@ -188,8 +193,9 @@ public class PetFriendComponent extends Fragment {
                 getContext().startActivity(intent);
             }
         });
-
          */
+
+
 
 
         myPetfriend_btn.setOnClickListener(new View.OnClickListener() {
@@ -299,6 +305,7 @@ public class PetFriendComponent extends Fragment {
     // 펫프랜즈 콜렉션에 모든 문서 가져오기
     void firebaseSearch() {
 
+
         db.collection("petfriend")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -309,10 +316,11 @@ public class PetFriendComponent extends Fragment {
                         arrayList.clear(); // 기존 배열 초기화 예방차원
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d("firebaseSearch", document.getId() + " => " + document.getData() + "\n");
+                                Log.d("연동성공", "\n가져온 UID : " + document.getId() + " \n가져온 데이터 : " + document.getData() + "\n");
 
                                 profileUri = document.getData().get("profileImgUri").toString();
                                 Days = document.getData().get("days").toString();
+
 
                                 //리스트에 petfriend 컬렉션에서 모든 문서들의 데이터(닉네임,uid,비용,시간,자격증)를 가져와서 arrayList에 넣기
                                 //String uid, String nickname, String address
@@ -328,6 +336,10 @@ public class PetFriendComponent extends Fragment {
                                         , null
                                         , null
                                         , document.getData().get("pay").toString()
+                                        , document.getBoolean("hwaldong_sancheck")
+                                        , document.getBoolean("hwaldong_dolbom")
+                                        , document.getBoolean("hwaldong_beauty")
+                                        , document.getBoolean("petfriend")
                                 ));
 
                                 //어댑터 새로고침
@@ -336,7 +348,7 @@ public class PetFriendComponent extends Fragment {
 
                             }
                         } else {
-                            Log.d("firebaseSearch", "Error getting documents: ", task.getException());
+                            Log.d("연동 실패", "Error getting documents: ", task.getException());
                         }
                     }
                 });
@@ -365,12 +377,12 @@ public class PetFriendComponent extends Fragment {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d("jungbok", document.getId() + " => " + document.getData());
+                                Log.d("중복된 파일이 있음", document.getId() + " => " + document.getData());
                                 isJungbok = true;
                                 myPetfriend_btn.setVisibility(View.VISIBLE);
                             }
                         } else {
-                            Log.d("no,jungbok", "Error getting documents: ", task.getException());
+                            Log.d("중복된 파일이 없음", "Error getting documents: ", task.getException());
                         }
                     }
                 });
@@ -379,7 +391,7 @@ public class PetFriendComponent extends Fragment {
 
     }
    // 파이어스토어 어댑터
-    /*void FireAdapter(){
+    void FireAdapter(){
 
         Query query = db.collection("petfriend");
 
@@ -390,7 +402,7 @@ public class PetFriendComponent extends Fragment {
         fireAdapter = new PetfriendFireAdapter(options);
         user_rv.setAdapter(fireAdapter);
 
-    }*/
+    }
 
     String SplitDays(String days)
     {
@@ -490,6 +502,7 @@ public class PetFriendComponent extends Fragment {
 
 
     // 어댑터 실행
+
     /*
     @Override
     public void onStart() {
@@ -504,7 +517,7 @@ public class PetFriendComponent extends Fragment {
         fireAdapter.stopListening();
     }
 
-     */
+*/
 
 
 }

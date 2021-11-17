@@ -17,7 +17,7 @@ public class PetfriendUser {
 
 
 
-    public PetfriendUser(String uid, String nickname, String address, String carrerImgName, String profileImg, String days, String info, String schedule, String originalAddress, String pay) {
+    public PetfriendUser(String uid, String nickname, String address, String carrerImgName, String profileImg, String days, String info, String schedule, String originalAddress, String pay, boolean hwaldong_sancheck, boolean dolbom, boolean hwaldong_beauty, boolean petfriend) {
         this.uid = uid;
         this.nickname = nickname;
         this.address = address;
@@ -28,6 +28,10 @@ public class PetfriendUser {
         this.schedule = schedule;
         this.originalAddress = originalAddress;
         this.pay = pay;
+        this.hwaldong_sancheck = hwaldong_sancheck;
+        this.hwaldong_dolbom = dolbom;
+        this.hwaldong_beauty = hwaldong_beauty;
+        this.petfriend = petfriend;
     }
 
     public String getUid() {
@@ -64,6 +68,10 @@ public class PetfriendUser {
     private String schedule;
     private String originalAddress;
     private String pay;
+    private boolean hwaldong_sancheck;
+    private boolean hwaldong_dolbom;
+    private boolean hwaldong_beauty;
+    private boolean petfriend;
 
 
     public String getCarrerImgName() {
@@ -120,5 +128,37 @@ public class PetfriendUser {
 
     public void setPay(String pay) {
         this.pay = pay;
+    }
+
+    public boolean isHwaldong_sancheck() {
+        return hwaldong_sancheck;
+    }
+
+    public void setHwaldong_sancheck(boolean hwaldong_sancheck) {
+        this.hwaldong_sancheck = hwaldong_sancheck;
+    }
+
+    public boolean isHwaldong_dolbom() {
+        return hwaldong_dolbom;
+    }
+
+    public void setHwaldong_dolbom(boolean hwaldong_dolbom) {
+        this.hwaldong_dolbom = hwaldong_dolbom;
+    }
+
+    public boolean isHwaldong_beauty() {
+        return hwaldong_beauty;
+    }
+
+    public void setHwaldong_beauty(boolean hwaldong_beauty) {
+        this.hwaldong_beauty = hwaldong_beauty;
+    }
+
+    public boolean isPetfriend() {
+        return petfriend;
+    }
+
+    public void setPetfriend(boolean petfriend) {
+        this.petfriend = petfriend;
     }
 }
