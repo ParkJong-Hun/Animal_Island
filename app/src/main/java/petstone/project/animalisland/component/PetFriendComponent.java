@@ -7,7 +7,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,14 +26,11 @@ import androidx.recyclerview.widget.RecyclerView;
 //import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 //import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -97,6 +97,14 @@ public class PetFriendComponent extends Fragment {
     // 날짜 나누기
     private String Days="";
 
+    // 스피너
+    private Spinner mHwaldong_sp;
+    private Spinner mOrderbyMoney_sp;
+    // 스피너 어뎁터
+    private ArrayAdapter spinerAdapter;
+    // 스피너 리스트
+    private String[] mHwaldong_list = {"활동","산책","돌봄","미용"};
+
 
     @Nullable
     @Override
@@ -106,6 +114,9 @@ public class PetFriendComponent extends Fragment {
 
          petfriend_search_view = view.findViewById(R.id.petfriend_search_view);
          userListSize = view.findViewById(R.id.petfriend_user_size);
+
+         mHwaldong_sp = view.findViewById(R.id.hwaldong_filter);
+         mOrderbyMoney_sp = view.findViewById(R.id.money_filter);
 
 
          myPetfriend_btn = view.findViewById(R.id.myPetfriend_btn);
@@ -133,6 +144,10 @@ public class PetFriendComponent extends Fragment {
         //파이어베이스 인스턴스 초기화
         db = FirebaseFirestore.getInstance();
 
+        //스피너 어댑터
+        spinerAdapter = new ArrayAdapter(getContext(),R.layout.support_simple_spinner_dropdown_item,mHwaldong_list);
+
+        mHwaldong_sp.setAdapter(spinerAdapter);
 
 
 
@@ -167,10 +182,35 @@ public class PetFriendComponent extends Fragment {
         // 현재 유저 확인
         usercheck();
         if(arrayList!=null)
-            firebaseSearch();
+            //firebaseSearch();
+
+        mHwaldong_sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getContext(),"선택 : "+mHwaldong_sp.getItemAtPosition(position),Toast.LENGTH_SHORT).show();
+                String m = mHwaldong_sp.getItemAtPosition(position).toString();
+                switch (m)
+                {
+                    case "산책": HwaldongFilter(m);break;
+                    case "돌봄": HwaldongFilter(m);break;
+                    case "미용": HwaldongFilter(m);break;
+
+                    default: HwaldongFilter(m);break;
+
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+                Toast.makeText(getContext(),"선택 : " + null,Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
         // 중복 체크
         jungbokCheck();
+
 
 
         /*
@@ -352,6 +392,128 @@ public class PetFriendComponent extends Fragment {
                         }
                     }
                 });
+
+
+
+
+
+
+    }
+    // 필터
+    void HwaldongFilter(String s) {
+
+        String filter = "";
+
+        switch (s)
+        {
+            case "산책": filter ="hwalodng_sancheck";break;
+            case "돌봄": filter ="hwaldong_dolbom";break;
+            case "미용": filter ="hwaldong_beauty";break;
+
+            default: break;
+        }
+
+        /*
+        db.collection("petfriend")
+                .whereEqualTo(filter, true)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        //해당컬렉션에 모든 문서를 가져옴
+
+                        arrayList.clear(); // 기존 배열 초기화 예방차원
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d("필터링", "\n가져온 UID : " + document.getId() + " \n가져온 데이터 : " + document.getData() + "\n");
+
+                                profileUri = document.getData().get("profileImgUri").toString();
+                                Days = document.getData().get("days").toString();
+
+
+                                //리스트에 petfriend 컬렉션에서 모든 문서들의 데이터(닉네임,uid,비용,시간,자격증)를 가져와서 arrayList에 넣기
+                                //String uid, String nickname, String address
+                                //uid 닉네임 주소 자격증 프로필주소
+                                arrayList.add(new PetfriendUser(
+                                        document.getData().get("uid").toString()
+                                        , document.getData().get("nickname").toString()
+                                        , document.getData().get("address").toString()
+                                        , document.getData().get("carrerImgName").toString()
+                                        , document.getData().get("profileImgUri").toString()
+                                        , SplitDays(Days)
+                                        , null
+                                        , null
+                                        , null
+                                        , document.getData().get("pay").toString()
+                                        , document.getBoolean("hwaldong_sancheck")
+                                        , document.getBoolean("hwaldong_dolbom")
+                                        , document.getBoolean("hwaldong_beauty")
+                                        , document.getBoolean("petfriend")
+                                ));
+
+                                //어댑터 새로고침
+                                user_adapter.notifyDataSetChanged();
+
+
+                            }
+                        } else {
+                            Log.d("필터실패", "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+
+         */
+        ArrayList<PetfriendUser> mArrayList = new ArrayList<>();
+
+        if(s.equals("산책")) {
+
+            for (int i = 0; i < arrayList.size(); i++) {
+                boolean isSancheck = arrayList.get(i).isHwaldong_sancheck();
+
+                if (isSancheck) {
+                    mArrayList.add(arrayList.get(i));
+                }
+            }
+            PetfriendUserList_CustomAdapter adapter = new PetfriendUserList_CustomAdapter(mArrayList, getContext());
+            user_rv.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+        }
+        else if(s.equals("돌봄"))
+        {
+            for (int i = 0; i < arrayList.size(); i++) {
+                boolean isDolbom = arrayList.get(i).isHwaldong_dolbom();
+
+                if (isDolbom) {
+                    mArrayList.add(arrayList.get(i));
+                }
+            }
+            PetfriendUserList_CustomAdapter adapter = new PetfriendUserList_CustomAdapter(mArrayList, getContext());
+            user_rv.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+        }
+        else if(s.equals("미용"))
+        {
+            for (int i = 0; i < arrayList.size(); i++) {
+                boolean isBeauty = arrayList.get(i).isHwaldong_beauty();
+
+                if (isBeauty) {
+                    mArrayList.add(arrayList.get(i));
+                }
+            }
+            PetfriendUserList_CustomAdapter adapter = new PetfriendUserList_CustomAdapter(mArrayList, getContext());
+            user_rv.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+
+        }
+        else{
+
+            firebaseSearch();
+            user_adapter.notifyDataSetChanged();
+            user_rv.setAdapter(user_adapter);
+
+        }
+
+
 
 
 

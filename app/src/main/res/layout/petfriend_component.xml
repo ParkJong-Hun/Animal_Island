@@ -93,6 +93,7 @@
             android:layout_weight="2.5"/>
 
         <Spinner
+            android:id="@+id/hwaldong_filter"
             android:layout_marginStart="5dp"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
@@ -102,6 +103,7 @@
             android:layout_weight="2.5"/>
 
         <Spinner
+            android:id="@+id/money_filter"
             android:layout_marginStart="5dp"
             android:layout_marginEnd="10dp"
             android:layout_width="wrap_content"
