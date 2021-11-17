@@ -68,10 +68,11 @@
         <!--상세정보-->
 
         <!--정보수정-->
+
         <TextView
             android:id="@+id/mypage_descripiton"
             android:layout_width="wrap_content"
-
+            android:maxWidth="240dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="성명 : 김철수(男)\n나이 : 25살\n지역 : 서울시 용산구 한남동"
@@ -85,12 +86,13 @@
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_marginEnd="10dp"
-            android:backgroundTint="#00FF0000"
             android:background="#00FF0000"
+            android:backgroundTint="#00FF0000"
             android:text="정보수정"
+            android:layout_marginTop="90dp"
             android:textColor="@color/colorDaepyo"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mypage_descripiton" />
+            app:layout_constraintTop_toTopOf="@+id/mypage_profile_image" />
 
         <View
             android:id="@+id/mypage_top_line"
