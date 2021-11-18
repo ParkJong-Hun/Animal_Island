@@ -227,18 +227,12 @@ public class PetFriendComponent extends Fragment {
 
                 }
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
                 Toast.makeText(getContext(), "선택 : " + null, Toast.LENGTH_SHORT).show();
             }
         });
-
-
-
-
-
 
         mOrderbyMoney_sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -250,13 +244,9 @@ public class PetFriendComponent extends Fragment {
                     case "비용": MoneyOrderBy(m);break;
                     case "저가순": MoneyOrderBy(m);break;
                     case "고가순": MoneyOrderBy(m);break;
-
                     default: break;
-
                 }
-                
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
@@ -370,12 +360,13 @@ public class PetFriendComponent extends Fragment {
 
     }
 
+    // 쿼리형식으로 변경
     // 펫프랜즈 콜렉션에 모든 문서 가져오기
     void firebaseSearch() {
 
 
-        db.collection("petfriend")
-                .get()
+
+        query.get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -533,7 +524,6 @@ public class PetFriendComponent extends Fragment {
             query.orderBy("pay", Query.Direction.DESCENDING);
             Log.d("내림차순 작동" , "내림차순");
 
-
         } else {
             query = db.collection("petfriend");
         }
@@ -553,7 +543,6 @@ public class PetFriendComponent extends Fragment {
     // 중복 확인
     void jungbokCheck() {
 
-
         db.collection("petfriend")
                 .whereEqualTo("uid", mMyUid)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -568,17 +557,17 @@ public class PetFriendComponent extends Fragment {
                         for (DocumentChange dc : snapshots.getDocumentChanges()) {
                             switch (dc.getType()) {
                                 case ADDED:
-                                    Log.d("add", "New city: " + dc.getDocument().getData());
+                                    Log.d("add", mMyUid + dc.getDocument().getData());
                                     myPetfriend_btn.setVisibility(View.VISIBLE);
                                     isJungbok = true;
                                     break;
                                 case MODIFIED:
-                                    Log.d("sujung", "Modified city: " + dc.getDocument().getData());
+                                    Log.d("sujung", mMyUid + dc.getDocument().getData());
                                     myPetfriend_btn.setVisibility(View.VISIBLE);
                                     isJungbok = true;
                                     break;
                                 case REMOVED:
-                                    Log.d("remove", "Removed city: " + dc.getDocument().getData());
+                                    Log.d("remove", mMyUid + dc.getDocument().getData());
                                     myPetfriend_btn.setVisibility(View.GONE);
                                     isJungbok = false;
                                     break;
