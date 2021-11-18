@@ -360,6 +360,7 @@ public class PetFriendComponent extends Fragment {
 
     }
 
+    // 쿼리형식으로 변경
     // 펫프랜즈 콜렉션에 모든 문서 가져오기
     void firebaseSearch() {
 
