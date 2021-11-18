@@ -38,6 +38,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import petstone.project.animalisland.R;
+import petstone.project.animalisland.component.PetFriendComponent;
 
 public class PetfriendUserSelect extends AppCompatActivity {
 
@@ -267,38 +268,9 @@ public class PetfriendUserSelect extends AppCompatActivity {
             }
         });
 
-
-
-/*
-            String s[] = mCarrerImgUri.split(" , ");
-
-            for (int i = 0; i < s.length; i++) {
-
-                Log.d("s" , s[i]);
-
-                Uri uri = Uri.parse(s[i]);
-                switch (i) {
-                    case 0:
-                        setImg(uri,i);
-                        break;
-                    case 1:
-                        setImg(uri,i);
-                        break;
-                    case 2:
-                        setImg(uri,i);
-                        break;
-                }
-
-            }
-
- */
-
-
-
-
-
     }
 
+    // 이미지 설정
     private void setImg(Uri uri,int i) {
 
         if(i ==0)
@@ -330,6 +302,7 @@ public class PetfriendUserSelect extends AppCompatActivity {
 
     }
 
+    // 펫프렌즈 수정 다이어로그
     private void sujungDialog() {
 
 
@@ -362,6 +335,7 @@ public class PetfriendUserSelect extends AppCompatActivity {
 
 
     }
+    // 삭제 펫프렌즈 다이어로그
     private void deleteDialog() {
 
 
@@ -388,6 +362,18 @@ public class PetfriendUserSelect extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Void aVoid) {
                                     Log.d("Delete", mMyUid);
+
+                                    // 플래그먼트에 데이터 보내기
+                                    PetFriendComponent fragment = new PetFriendComponent();
+                                    Bundle bundle = new Bundle(1);
+                                    bundle.putBoolean("delete",false);
+                                    fragment.setArguments(bundle);
+                                    // 인텐트
+                                    /*
+                                    Intent i = new Intent(getApplicationContext(),PetFriendComponent.class);
+                                    i.putExtra("delete",true);
+                                    setResult(RESULT_OK,i);
+                                     */
                                     finish();
                                 }
                             })
@@ -471,17 +457,28 @@ public class PetfriendUserSelect extends AppCompatActivity {
                         mPay = document.getData().get("pay").toString();
 
 
+                        //커리어 이미지 이름이 있다면 이미지 검색
                         if(mCarrerImgUri.length()!=0)
                             imgSearch();
                         else
                             CarrerImgChange(0);
+
+                        // 비용이 0일때
+                        String s = mPay;
+                        s = s.replaceAll("\\p{Punct}", "");
+                        int money = Integer.parseInt(s);
+                        if(money == 0)
+                        {
+                            mPay = "무료";
+                        }
+
 
 
                         Log.d("mCarrerImgUri", mCarrerImgUri.length()+"");
                         //이름
                         mUserName.setText(mNickName);
                         mInfo_tv.setText(mInfo);
-                        mUserInfo_tv.setText("요일 : " + mDays +"\n"+"비용 : "+mPay+"\n");
+                        mUserInfo_tv.setText("요일 : " + SplitDays(mDays) +"\n"+"비용 : "+mPay+"\n");
                         mSchedule_tv.setText(mSchedule);
 
                         //프로필이미지
@@ -501,6 +498,28 @@ public class PetfriendUserSelect extends AppCompatActivity {
 
 
     }
+
+    String SplitDays(String days)
+    {
+        StringBuilder sb = new StringBuilder();
+        String s [] = days.split(" ");
+        for (int i =0; i < s.length ; i++)
+        {
+            switch (s[i])
+            {
+                case "월요일" : sb.append("월" + " ");break;
+                case "화요일" : sb.append("화" + " ");break;
+                case "수요일" : sb.append("수" + " ");break;
+                case "목요일" : sb.append("목" + " ");break;
+                case "금요일" : sb.append("금" + " ");break;
+                case "토요일" : sb.append("토" + " ");break;
+                case "일요일" : sb.append("일" + " ");break;
+
+            }
+        }
+        return sb.toString();
+    }
+
 
 
     // 다이어로그 오류 방지

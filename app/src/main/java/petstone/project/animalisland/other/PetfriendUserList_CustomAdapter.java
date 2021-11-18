@@ -52,9 +52,24 @@ public class PetfriendUserList_CustomAdapter extends RecyclerView.Adapter<Petfri
         holder.tv_nickname.setText(arrayList.get(position).getNickname());
         holder.tv_Address.setText(arrayList.get(position).getAddress());
         holder.tv_days.setText(" 요일 : "+arrayList.get(position).getDays());
-        holder.tv_pay.setText(" 시급 : "+arrayList.get(position).getPay()+"원");
+
+
+        // 비용이 0일떄
+        String s = arrayList.get(position).getPay();
+        s = s.replaceAll("\\p{Punct}", "");
+        int money = Integer.parseInt(s);
+        if(money == 0)
+        {
+            holder.tv_pay.setText(" 시급 : " + "무료");
+        }
+        else
+        {
+            holder.tv_pay.setText(" 시급 : "+arrayList.get(position).getPay()+"원");
+        }
+        
         //holder.iv_profile.setImageURI(profileUri);
 
+        // 이미지 이름이 없을경우
         String i = arrayList.get(position).getCarrerImgName();
         if(i.length() == 0)
         {

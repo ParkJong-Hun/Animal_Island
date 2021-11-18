@@ -33,7 +33,7 @@ public class PetfriendFireUser {
     }
 
     public String getDays() {
-        return Days;
+        return days;
     }
 
     public String getInfo() {
@@ -74,7 +74,7 @@ public class PetfriendFireUser {
         this.address = address;
         this.carrerImgName = carrerImgName;
         this.profileImgUri = profileImgUri;
-        Days = days;
+        this.days = days;
         Info = info;
         this.schedule = schedule;
         this.originalAddress = originalAddress;
@@ -87,7 +87,7 @@ public class PetfriendFireUser {
 
     private String carrerImgName;
     private String profileImgUri;
-    private String Days;
+    private String days;
     private String Info;
     private String schedule;
     private String originalAddress;
