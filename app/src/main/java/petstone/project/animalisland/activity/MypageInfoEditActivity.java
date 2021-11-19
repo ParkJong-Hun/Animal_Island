@@ -198,6 +198,23 @@ public class MypageInfoEditActivity extends AppCompatActivity {
                         db.collection("users")
                                 .document(auth.getUid())
                                 .update("address", address.getText().toString());
+                        db.collection("petfriend")
+                                .document(auth.getUid())
+                                .get()
+                                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                        if(documentSnapshot.exists()) {
+                                            documentSnapshot.getReference().update("nickname", nickname_tv.getText().toString())
+                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+                                                            Log.d("success", "펫프렌즈 닉네임 변경 성공");
+                                                        }
+                                                    });
+                                        }
+                                    }
+                                });
                         auth.getCurrentUser().updatePassword(password.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
