@@ -1,6 +1,7 @@
 package petstone.project.animalisland.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -51,11 +53,13 @@ public class MypageInfoEditActivity extends AppCompatActivity {
     TextView password_checked;
     boolean password_checked_switch = false;//비밀번호 일치하는지 판별
     boolean nickname_checked_switch = true;
-    Spinner city, ku, dong;
     ImageView back;
     FirebaseAuth auth;
     FirebaseFirestore db;
     Button validate;
+    TextView address;
+    Button address_button;
+    String beforeNickname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,10 +78,9 @@ public class MypageInfoEditActivity extends AppCompatActivity {
         password_check = findViewById(R.id.mypage_info_edit_password_check_form);
         password_checked = findViewById(R.id.mypage_info_edit_password_checked);
         email = findViewById(R.id.mypage_info_edit_email_form);
-        city = findViewById(R.id.mypage_info_edit_address_city_form);
-        ku = findViewById(R.id.mypage_info_edit_address_ku_form);
-        dong = findViewById(R.id.mypage_info_edit_address_dong_form);
         validate = findViewById(R.id.mypage_info_edit_validateButton);
+        address = findViewById(R.id.mypage_info_edit_address_text);
+        address_button = findViewById(R.id.mypage_info_edit_address_button);
 
         auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
@@ -101,6 +104,12 @@ public class MypageInfoEditActivity extends AppCompatActivity {
                             email.setText(document.get("email").toString());
                             sex_tv.setText(document.get("sex").toString());
                             nickname_tv.setText(document.get("nickname").toString());
+                            beforeNickname = document.get("nickname").toString();
+                            if (document.get("address") != null) {
+                                address.setText(document.get("address").toString());
+                            } else {
+                                address.setText("주소");
+                            }
                         }
                     }
                 })
@@ -152,9 +161,15 @@ public class MypageInfoEditActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         if (queryDocumentSnapshots.getDocuments().size() > 0) {
-                            nickname_checked_switch = false;
-                            nickname_tv.setTextColor(Color.RED);
-                            Toast.makeText(getApplicationContext(), "닉네임을 사용할 수 없습니다.", Toast.LENGTH_SHORT).show();
+                            if(nickname_tv.getText().toString().equals(beforeNickname)) {
+                                nickname_checked_switch = true;
+                                nickname_tv.setTextColor(Color.GREEN);
+                                Toast.makeText(getApplicationContext(), "닉네임을 사용할 수 있습니다.", Toast.LENGTH_SHORT).show();
+                            } else {
+                                nickname_checked_switch = false;
+                                nickname_tv.setTextColor(Color.RED);
+                                Toast.makeText(getApplicationContext(), "닉네임을 사용할 수 없습니다.", Toast.LENGTH_SHORT).show();
+                            }
                         } else {
                             nickname_checked_switch = true;
                             nickname_tv.setTextColor(Color.GREEN);
@@ -164,19 +179,6 @@ public class MypageInfoEditActivity extends AppCompatActivity {
                 });
             }
         });
-
-        //시/도
-        ArrayAdapter cityAdapter = ArrayAdapter.createFromResource(this, R.array.도광역시, android.R.layout.simple_spinner_dropdown_item);
-        cityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        city.setAdapter(cityAdapter);
-        //시/군/구
-        ArrayAdapter kuAdapter = ArrayAdapter.createFromResource(this, R.array.서울시, android.R.layout.simple_spinner_dropdown_item);
-        kuAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        ku.setAdapter(kuAdapter);
-        //동/읍/면
-        ArrayAdapter dongAdapter = ArrayAdapter.createFromResource(this, R.array.종로구, android.R.layout.simple_spinner_dropdown_item);
-        dongAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        dong.setAdapter(dongAdapter);
         
         //취소버튼
         cancel.setOnClickListener(new View.OnClickListener() {
@@ -190,7 +192,7 @@ public class MypageInfoEditActivity extends AppCompatActivity {
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(password_checked_switch && !(email.getText().toString().equals("")) && !(nickname_tv.getText().toString().equals("")) && nickname_checked_switch) {
+                if(password_checked_switch && !(email.getText().toString().equals("")) && !(nickname_tv.getText().toString().equals("")) && nickname_checked_switch && !address.getText().equals("주소")) {
                     //이메일 형식 체크
                     String regex = "^[_a-zA-Z0-9-\\.]+@[\\.a-zA-Z0-9-]+\\.[a-zA-Z]+$";
                     Pattern p = Pattern.compile(regex);
@@ -202,6 +204,26 @@ public class MypageInfoEditActivity extends AppCompatActivity {
                         db.collection("users")
                                 .document(auth.getUid())
                                 .update("password", password.getText().toString());
+                        db.collection("users")
+                                .document(auth.getUid())
+                                .update("address", address.getText().toString());
+                        db.collection("petfriend")
+                                .document(auth.getUid())
+                                .get()
+                                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                        if(documentSnapshot.exists()) {
+                                            documentSnapshot.getReference().update("nickname", nickname_tv.getText().toString())
+                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+                                                            Log.d("success", "펫프렌즈 닉네임 변경 성공");
+                                                        }
+                                                    });
+                                        }
+                                    }
+                                });
                         auth.getCurrentUser().updatePassword(password.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
@@ -222,6 +244,15 @@ public class MypageInfoEditActivity extends AppCompatActivity {
                 }
             }
         });
+        //주소 검색
+        address_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), WebviewActivity.class);
+                startActivityForResult(intent, 0);
+            }
+        });
+        
         //뒤로가기
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -229,5 +260,18 @@ public class MypageInfoEditActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //웹 인텐트
+        if (requestCode == 0) {
+            if (resultCode == RESULT_OK) {
+                String result = data.getStringExtra("data");
+                Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+                address.setText(result);
+            }
+        }
     }
 }

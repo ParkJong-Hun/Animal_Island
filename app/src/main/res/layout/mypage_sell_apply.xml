@@ -11,52 +11,16 @@
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar_mypage_sell_apply">
-        <!--지역-->
-        <TextView
-            android:id="@+id/mypage_sell_apply_address"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="15dp"
-
-            android:text="지역"
-
-
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-        <Spinner
-            android:id="@+id/mypage_sell_apply_address_city_form"
-            android:layout_width="130dp"
-            android:layout_height="40dp"
-            android:spinnerMode="dropdown"
-            app:layout_constraintStart_toStartOf="@+id/mypage_sell_apply_address"
-            app:layout_constraintTop_toBottomOf="@+id/mypage_sell_apply_address" />
-
-        <Spinner
-            android:id="@+id/mypage_sell_apply_address_ku_form"
-            android:layout_width="130dp"
-            android:layout_height="40dp"
-            android:spinnerMode="dropdown"
-            app:layout_constraintLeft_toRightOf="@+id/mypage_sell_apply_address_city_form"
-            app:layout_constraintTop_toBottomOf="@+id/mypage_sell_apply_address" />
-
-        <Spinner
-            android:id="@+id/mypage_sell_apply_address_dong_form"
-            android:layout_width="130dp"
-            android:layout_height="40dp"
-            android:spinnerMode="dropdown"
-            app:layout_constraintLeft_toRightOf="@+id/mypage_sell_apply_address_ku_form"
-            app:layout_constraintTop_toBottomOf="@+id/mypage_sell_apply_address" />
         <!--자격증-->
         <TextView
             android:id="@+id/mypage_sell_apply_license"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:text="자격증"
-            app:layout_constraintStart_toStartOf="@+id/mypage_sell_apply_address"
-            app:layout_constraintTop_toBottomOf="@+id/mypage_sell_apply_address_dong_form" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/mypage_sell_apply_license_image1"
@@ -103,10 +67,13 @@
             android:layout_marginLeft="20dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/mypage_sell_apply_license_image2"/>
-        <ListView
+        <EditText
+            android:id="@+id/mypage_sell_apply_article"
             android:layout_width="360dp"
             android:layout_height="200dp"
+            android:gravity="top"
             android:layout_marginTop="5dp"
+            android:padding="5dp"
             android:background="@drawable/border"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

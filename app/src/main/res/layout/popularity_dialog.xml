@@ -5,14 +5,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/round">
+    android:background="@drawable/round"
+    android:padding="10dp">
 
     <TextView
         android:id="@+id/popularity_dialog_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="7dp"
-        android:text="OO님을 다른 유저에게 추천하시겠습니까?\n(호감도 증가합니다.)"
+        android:text="OO님을 다른 유저에게 추천하시겠습니까?\n(신뢰도가 증가합니다.)"
         android:textSize="18dp"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"

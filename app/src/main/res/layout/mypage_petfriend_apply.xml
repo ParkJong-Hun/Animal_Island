@@ -10,12 +10,13 @@
         android:id="@+id/toolbar_petfriend_apply"/>
 
     <!--취소 신청 버튼-->
+
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="550dp"
+        android:layout_height="625dp"
         android:fillViewport="true"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar_petfriend_apply">
 
@@ -31,22 +32,21 @@
                 android:id="@+id/mypage_petfriend_apply_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="15dp"
-
-                android:text="지역"
-
+                android:text="활동 지역"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/mypage_petfriend_apply_address_city_tv"
-                android:layout_width="125dp"
+                android:layout_width="280dp"
                 android:layout_height="40dp"
-                android:text="juso"
-                app:layout_constraintStart_toStartOf="@+id/mypage_petfriend_apply_address"
-                app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_address" />
+                android:gravity="left"
+                android:hint="검색 버튼을 눌러주세요."
+                android:background="@drawable/round2"
+                app:layout_constraintStart_toEndOf="@+id/search_btn"
+                app:layout_constraintTop_toTopOf="@+id/search_btn" />
 
 
             <!--요일-->
@@ -54,141 +54,46 @@
                 android:id="@+id/mypage_petfriend_apply_day"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:layout_marginStart="20dp"
-
-
                 android:layout_marginTop="10dp"
-                android:text="요일"
+                android:text="활동 요일"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_address_city_tv" />
+                app:layout_constraintTop_toBottomOf="@+id/petfriend_sanchack_btn" />
 
-            <CheckBox
-                android:id="@+id/mypage_petfriend_apply_monday"
+            <Button
+                android:id="@+id/schedule_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="월"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/round_ffe1e1"
+                android:text="스케줄 생성"
                 android:textSize="15sp"
                 app:layout_constraintStart_toStartOf="@+id/mypage_petfriend_apply_day"
                 app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_day" />
 
-            <CheckBox
-                android:id="@+id/mypage_petfriend_apply_tuesday"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:text="화"
-                android:textSize="15sp"
-                app:layout_constraintStart_toEndOf="@+id/mypage_petfriend_apply_monday"
-                app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_day" />
 
-            <CheckBox
-                android:id="@+id/mypage_petfriend_apply_wednesday"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:text="수"
-                android:textSize="15sp"
-                app:layout_constraintStart_toEndOf="@+id/mypage_petfriend_apply_tuesday"
-                app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_day" />
-
-            <CheckBox
-                android:id="@+id/mypage_petfriend_apply_thursday"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:text="목"
-                android:textSize="15sp"
-                app:layout_constraintStart_toEndOf="@+id/mypage_petfriend_apply_wednesday"
-                app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_day" />
-
-            <CheckBox
-                android:id="@+id/mypage_petfriend_apply_friday"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:text="금"
-                android:textSize="15sp"
-                app:layout_constraintStart_toEndOf="@+id/mypage_petfriend_apply_thursday"
-                app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_day" />
-
-            <CheckBox
-                android:id="@+id/mypage_petfriend_apply_saturday"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:text="토"
-                android:textSize="15sp"
-                app:layout_constraintStart_toEndOf="@+id/mypage_petfriend_apply_friday"
-                app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_day" />
-
-            <CheckBox
-                android:id="@+id/mypage_petfriend_apply_sunday"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:text="일"
-                android:textSize="15sp"
-                app:layout_constraintStart_toEndOf="@+id/mypage_petfriend_apply_saturday"
-                app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_day" />
             <!--시간/비용-->
+
             <TextView
                 android:id="@+id/mypage_petfriend_apply_time_salary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
-                android:text="시간/비용"
 
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_monday" />
-
-            <Spinner
-                android:id="@+id/mypage_petfriend_apply_time_start"
-                android:layout_width="100dp"
-                android:layout_height="30dp"
-                app:layout_constraintStart_toStartOf="@+id/mypage_petfriend_apply_time_salary"
-                app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_time_salary" />
-
-            <TextView
-                android:id="@+id/mypage_petfriend_apply_to"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:text="~"
-                app:layout_constraintStart_toEndOf="@+id/mypage_petfriend_apply_time_start"
-                app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_time_salary" />
-
-            <Spinner
-                android:id="@+id/mypage_petfriend_apply_time_end"
-                android:layout_width="100dp"
-                android:layout_height="30dp"
-                app:layout_constraintStart_toEndOf="@+id/mypage_petfriend_apply_to"
-                app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_time_salary" />
-
-            <Spinner
-                android:id="@+id/mypage_petfriend_apply_salary_choice"
-                android:layout_width="50dp"
-                android:layout_height="30dp"
-                android:layout_marginLeft="20dp"
-                app:layout_constraintStart_toEndOf="@+id/mypage_petfriend_apply_time_end"
-                app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_time_salary" />
+                android:text="시급"
+                app:layout_constraintBottom_toBottomOf="@+id/mypage_petfriend_apply_day"
+                app:layout_constraintStart_toEndOf="@+id/petfriend_dolbom_btn"
+                app:layout_constraintTop_toTopOf="@+id/mypage_petfriend_apply_day" />
 
             <EditText
-                android:id="@+id/mypage_petfriend_apply_salary"
-                android:layout_width="70dp"
-                android:layout_height="30dp"
-                app:layout_constraintStart_toEndOf="@+id/mypage_petfriend_apply_salary_choice"
-                app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_time_salary" />
+                android:id="@+id/mypage_petfriend_pay_edt"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:maxLength="6"
+                android:numeric="integer"
+                app:layout_constraintBottom_toBottomOf="@+id/schedule_btn"
+                app:layout_constraintStart_toStartOf="@+id/mypage_petfriend_apply_time_salary"
+                app:layout_constraintTop_toTopOf="@+id/schedule_btn" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:layout_marginTop="5dp"
-                android:text="원"
-                app:layout_constraintStart_toEndOf="@+id/mypage_petfriend_apply_salary"
-                app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_time_salary" />
-            <!--자격증-->
 
             <TextView
                 android:id="@+id/mypage_petfriend_apply_license"
@@ -196,8 +101,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="자격증"
-                app:layout_constraintStart_toStartOf="@+id/mypage_petfriend_apply_time_start"
-                app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_time_start" />
+                app:layout_constraintStart_toStartOf="@+id/schedule_btn"
+                app:layout_constraintTop_toBottomOf="@+id/schedule_btn" />
             <!--
             <ToggleButton
                 android:id="@+id/mypage_petfriend_apply_toggleButton"
@@ -216,10 +121,10 @@
                 android:id="@+id/mypage_petfriend_apply_toggleButton"
                 android:layout_width="50dp"
                 android:layout_height="25dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="7dp"
+                android:layout_marginStart="10dp"
+                app:layout_constraintBottom_toBottomOf="@+id/mypage_petfriend_apply_license"
                 app:layout_constraintStart_toEndOf="@+id/mypage_petfriend_apply_license"
-                app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_time_start" />
+                app:layout_constraintTop_toTopOf="@+id/mypage_petfriend_apply_license" />
 
             <ImageView
                 android:id="@+id/mypage_petfriend_apply_license_image1"
@@ -261,7 +166,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
-                android:text="경력 사항"
+                android:text="소개 글"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_license_image2" />
 
@@ -271,39 +176,37 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/border"
-                android:ems="10"
                 android:gravity="top"
-                android:hint="내용입력"
+                android:hint="최대 150자를 작성할수있습니다.\n짧게 경력 사항 혹은 자기 소개를 써보세요 \n주의 사항은 반드시 작성해 주십시요 "
                 android:inputType="textMultiLine"
                 android:lines="8"
+                android:maxLength="150"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/myapge_petfriend_apply_career" />
 
+            <!--
             <Button
                 android:id="@+id/search_btn"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
+                android:layout_height="38dp"
+                android:layout_marginTop="3dp"
+                android:visibility="gone"
                 android:text="검색"
-                app:layout_constraintStart_toEndOf="@+id/mypage_petfriend_apply_address_city_tv"
+                android:background="@drawable/round_ffe1e1"
+                app:layout_constraintStart_toStartOf="@+id/mypage_petfriend_apply_address"
                 app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_address" />
+            -->
 
-            <Button
-                android:id="@+id/schedule_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/search_btn"
-                app:layout_constraintTop_toTopOf="@+id/search_btn" />
+
 
             <TextView
                 android:id="@+id/Day"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:text="요일"
+                android:layout_marginTop="10dp"
+                android:text="요일 확인"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_user_info_edt" />
 
@@ -311,16 +214,153 @@
                 android:id="@+id/schedule_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:text="TextView"
-                app:layout_constraintStart_toStartOf="parent"
+                android:background="@drawable/round2"
+                android:hint="스케줄 만들기 버튼을 눌러주세요."
+                app:layout_constraintStart_toEndOf="@+id/imageView"
                 app:layout_constraintTop_toBottomOf="@+id/Day" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="원"
+                app:layout_constraintBottom_toBottomOf="@+id/mypage_petfriend_pay_edt"
+                app:layout_constraintStart_toEndOf="@+id/mypage_petfriend_pay_edt"
+                app:layout_constraintTop_toTopOf="@+id/mypage_petfriend_pay_edt" />
+
+            <TextView
+                android:id="@+id/petfriend_bunya_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="활동 분야"
+                app:layout_constraintStart_toStartOf="@+id/search_btn"
+                app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_address_city_tv" />
+
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="@+id/petfriend_bunya_tv"
+                app:layout_constraintTop_toBottomOf="@+id/petfriend_bunya_tv" />
+
+
+            <CheckBox
+                android:id="@+id/petfriend_dolbom_btn"
+                android:layout_width="60dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="20dp"
+                android:background="@drawable/check_box"
+                android:button="@null"
+                android:text="돌봄"
+                android:textAlignment="center"
+                android:textSize="12sp"
+                app:layout_constraintStart_toEndOf="@+id/petfriend_sanchack_btn"
+                app:layout_constraintTop_toTopOf="@+id/petfriend_sanchack_btn" />
+
+            <CheckBox
+                android:id="@+id/petfriend_sanchack_btn"
+                android:layout_width="60dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/check_box"
+                android:button="@null"
+                android:text="산책"
+                android:textAlignment="center"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="@+id/petfriend_bunya_tv"
+                app:layout_constraintTop_toBottomOf="@+id/petfriend_bunya_tv" />
+
+            <CheckBox
+                android:id="@+id/petfriend_beauty_btn"
+                android:layout_width="60dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="20dp"
+                android:background="@drawable/check_box"
+                android:button="@null"
+                android:text="미용"
+                android:textAlignment="center"
+                android:textSize="12sp"
+                app:layout_constraintStart_toEndOf="@+id/petfriend_dolbom_btn"
+                app:layout_constraintTop_toTopOf="@+id/petfriend_dolbom_btn" />
+
+            <CheckBox
+                android:id="@+id/petfriend_sanchack_cb"
+                android:layout_width="60dp"
+                android:layout_height="32dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/check_box"
+                android:button="@null"
+                android:text="산책"
+                android:visibility="gone"
+                android:textAlignment="center"
+                android:textSize="10sp"
+                app:layout_constraintStart_toStartOf="@+id/petfriend_sanchack_btn"
+                app:layout_constraintTop_toBottomOf="@+id/petfriend_dolbom_btn" />
+
+            <CheckBox
+                android:id="@+id/petfriend_dolbom_cb"
+                android:layout_width="60dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/check_box"
+                android:button="@null"
+                android:text="돌봄"
+                android:textAlignment="center"
+                android:textSize="10sp"
+                android:visibility="gone"
+                app:layout_constraintStart_toEndOf="@+id/petfriend_sanchack_cb"
+                app:layout_constraintTop_toTopOf="@+id/petfriend_sanchack_cb" />
+
+            <CheckBox
+                android:id="@+id/petfriend_beauty_cb"
+                android:layout_width="60dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/check_box"
+                android:button="@null"
+                android:text="미용"
+                android:textAlignment="center"
+                android:textSize="10sp"
+                android:visibility="gone"
+                app:layout_constraintStart_toEndOf="@+id/petfriend_dolbom_cb"
+                app:layout_constraintTop_toTopOf="@+id/petfriend_dolbom_cb" />
+
+            <ImageView
+                android:id="@+id/petfriend_delete_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                app:layout_constraintBottom_toBottomOf="@+id/mypage_petfriend_apply_toggleButton"
+                app:layout_constraintStart_toEndOf="@+id/mypage_petfriend_apply_toggleButton"
+                app:layout_constraintTop_toTopOf="@+id/mypage_petfriend_apply_toggleButton"
+                app:srcCompat="@android:drawable/ic_menu_delete" />
+
+            <ImageView
+                android:id="@+id/search_btn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:layout_constraintStart_toStartOf="@+id/mypage_petfriend_apply_address"
+                app:layout_constraintTop_toBottomOf="@+id/mypage_petfriend_apply_address"
+                app:srcCompat="@android:drawable/ic_search_category_default" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/Day"
+                app:srcCompat="@android:drawable/ic_menu_today" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"

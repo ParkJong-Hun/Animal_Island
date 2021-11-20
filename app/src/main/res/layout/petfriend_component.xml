@@ -39,36 +39,27 @@
 
     <TextView
         android:id="@+id/textview1"
+        android:visibility="visible"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="5dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="5dp"
-        android:text="최근검색어"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/petfriend_search_view" />
 
-
-    <TextView
-        android:id="@+id/day2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="20dp"
-        android:text="전체삭제"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/petfriend_search_view" />
 
 
 
     <LinearLayout
         android:id="@+id/linear_layout1"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="1dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textview1"
         android:orientation="horizontal">
 
         <androidx.recyclerview.widget.RecyclerView
+            android:visibility="invisible"
             android:id="@+id/search_result"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -100,15 +91,9 @@
             android:textAlignment="center"
             android:background="@drawable/round_ffe1e1"
             android:layout_weight="2.5"/>
+
         <Spinner
-            android:layout_marginStart="5dp"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:entries="@array/test1"
-            android:background="@drawable/round_ffe1e1"
-            android:textAlignment="center"
-            android:layout_weight="2.5"/>
-        <Spinner
+            android:id="@+id/hwaldong_filter"
             android:layout_marginStart="5dp"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
@@ -118,6 +103,7 @@
             android:layout_weight="2.5"/>
 
         <Spinner
+            android:id="@+id/money_filter"
             android:layout_marginStart="5dp"
             android:layout_marginEnd="10dp"
             android:layout_width="wrap_content"
@@ -126,6 +112,17 @@
             android:textAlignment="center"
             android:background="@drawable/round_ffe1e1"
             android:layout_weight="2.5"/>
+        <Button
+            android:id="@+id/myPetfriend_btn"
+            android:visibility="gone"
+            android:layout_marginStart="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="내글 보기"
+            android:background="@drawable/round_ffe1e1"
+            android:textAlignment="center"
+            android:layout_weight="2"
+            android:layout_marginEnd="10dp"/>
     </LinearLayout>
 
 

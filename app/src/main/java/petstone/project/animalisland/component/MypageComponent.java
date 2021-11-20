@@ -347,14 +347,6 @@ public class MypageComponent extends Fragment {
                 }
                 break;
             }
-            case 1: {//펫프렌즈 신청 결과
-                if (resultCode == -1) {
-
-                } else if (resultCode == 0) {
-
-                }
-                break;
-            }
             case 2: {//유료분양 권한 신청 결과
                 if (resultCode == -1) {
 
@@ -390,6 +382,15 @@ public class MypageComponent extends Fragment {
                                                     @Override
                                                     public void onFailure(@NonNull Exception e) {
                                                         Log.d("fail", "db 업데이트 실패");
+                                                    }
+                                                });
+                                        db.collection("petfriend")
+                                                .document(auth.getUid())
+                                                .update("profileImgUri", uri.toString())
+                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        Log.d("success", "펫프렌즈 이미지 업데이트 성공");
                                                     }
                                                 });
                                     }

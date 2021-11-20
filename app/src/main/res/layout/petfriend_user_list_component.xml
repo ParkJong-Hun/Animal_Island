@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/hasCarrerImg_iv"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="wrap_content">
 
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -12,8 +13,8 @@
         android:layout_height="100dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
-        android:src="@drawable/petfriend"
         android:foreground="@drawable/circle_image_background"
+        android:src="@drawable/petfriend"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -35,7 +36,6 @@
         android:text="일당 or 시급 :"
         app:layout_constraintStart_toStartOf="@+id/user_info"
         app:layout_constraintTop_toBottomOf="@+id/user_info" />
-
 
 
     <TextView
@@ -61,12 +61,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/rating_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/round_ffe1e1"
-        android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:text="신뢰도"
+        android:background="@drawable/round_ffe1e1"
+        android:text="2.5점"
         app:layout_constraintEnd_toEndOf="@id/petfriend_user_info_line_1"
         app:layout_constraintTop_toTopOf="@id/user_info" />
 
@@ -93,6 +93,28 @@
         android:text="요일 :"
         app:layout_constraintStart_toStartOf="@+id/petfrient_list_info_tv"
         app:layout_constraintTop_toBottomOf="@+id/petfrient_list_info_tv" />
+
+    <ImageView
+        android:id="@+id/hasCarrer_Iv"
+        android:visibility="invisible"
+        android:layout_width="30dp"
+        android:layout_height="26dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="5dp"
+        app:layout_constraintEnd_toStartOf="@+id/rating_tv"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/caimg" />
+
+    <RatingBar
+        android:id="@+id/ratingBar2"
+        android:layout_width="117dp"
+        android:layout_height="23dp"
+        android:numStars="5"
+        android:rating="2.5"
+        android:stepSize="0.1"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

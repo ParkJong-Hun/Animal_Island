@@ -64,4 +64,8 @@ dependencies {
     implementation 'android.arch.paging:runtime:1.0.1'
 
     annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
+
+    //스낵바 위한 라이브러리
+    //noinspection GradleCompatible
+    implementation 'com.android.support:design:28.0.0'
 }

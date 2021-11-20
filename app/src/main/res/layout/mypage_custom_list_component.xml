@@ -25,6 +25,6 @@
 
         android:text="hi"
         android:textSize="15dp"
-        android:textColor="@color/black"
+        android:textColor="@color/colorDaepyo_Dark"
         />
 </LinearLayout>

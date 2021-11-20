@@ -43,6 +43,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="이름"
+                android:textColor="@color/colorDaepyo_Dark"
                 android:layout_marginTop="15dp"
                 android:layout_marginStart="20dp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -53,9 +54,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="이름을 입력해주세요."
+                android:textColor="@color/colorDaepyo_Dark"
                 android:inputType="textPersonName"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
+                android:background="@drawable/round2"
                 app:layout_constraintTop_toBottomOf="@id/tv_name"
                 app:layout_constraintLeft_toLeftOf="@id/tv_name"/>
 
@@ -66,6 +69,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="20dp"
                 android:text="아이디"
+                android:textColor="@color/colorDaepyo_Dark"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/et_name"/>
 
@@ -74,7 +78,9 @@
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:hint="아이디"
+                android:textColor="@color/colorDaepyo_Dark"
                 android:inputType="text"
+                android:background="@drawable/round2"
                 android:privateImeOptions="defaultInputmode=english"
                 app:layout_constraintTop_toBottomOf="@id/tv_id"
                 app:layout_constraintLeft_toLeftOf="@id/tv_id"/>
@@ -106,6 +112,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="비밀번호"
+                android:textColor="@color/colorDaepyo_Dark"
                 android:layout_marginStart="20dp"
                 app:layout_constraintTop_toBottomOf="@id/id_check_text"
                 app:layout_constraintStart_toStartOf="parent"/>
@@ -115,6 +122,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="비밀번호 8자 이상 20자 이하로 입력"
+                android:textColor="@color/colorDaepyo_Dark"
+                android:background="@drawable/round2"
                 android:inputType="textPassword"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
@@ -125,6 +134,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="비밀번호 확인"
+                android:textColor="@color/colorDaepyo_Dark"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="20dp"
                 app:layout_constraintTop_toBottomOf="@id/et_pw"
@@ -135,7 +145,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="비밀번호 확인"
+                android:textColor="@color/colorDaepyo_Dark"
                 android:inputType="textPassword"
+                android:background="@drawable/round2"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 app:layout_constraintTop_toBottomOf="@id/tv_pw_check"/>
@@ -146,15 +158,19 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="생년월일"
+                android:textColor="@color/colorDaepyo_Dark"
                 app:layout_constraintLeft_toLeftOf="@id/et_pwck"
                 app:layout_constraintTop_toBottomOf="@id/et_pwck"/>
 
             <EditText
                 android:id="@+id/et_age"
-                android:layout_width="150dp"
+                android:layout_width="wrap_content"
+                android:maxWidth="200dp"
                 android:layout_height="wrap_content"
                 android:focusableInTouchMode="false"
                 android:textAlignment="center"
+                android:textColor="@color/colorDaepyo_Dark"
+                android:background="@drawable/round2"
                 app:layout_constraintLeft_toLeftOf="@id/tv_age"
                 app:layout_constraintTop_toBottomOf="@id/tv_age"
                 android:inputType="date"
@@ -203,6 +219,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="닉네임"
+                android:textColor="@color/colorDaepyo_Dark"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="20dp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -213,7 +230,9 @@
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:hint="닉네임"
+                android:textColor="@color/colorDaepyo_Dark"
                 android:inputType="text"
+                android:background="@drawable/round2"
                 app:layout_constraintTop_toBottomOf="@id/tv_nickname"
                 app:layout_constraintLeft_toLeftOf="@id/tv_nickname"/>
 
@@ -244,6 +263,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="이메일"
+                android:textColor="@color/colorDaepyo_Dark"
                 android:layout_marginStart="20dp"
                 app:layout_constraintTop_toBottomOf="@id/nickname_check_text"
                 app:layout_constraintStart_toStartOf="parent"/>
@@ -255,6 +275,8 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:hint="이메일을 입력해주세요."
+                android:background="@drawable/round2"
+                android:textColor="@color/colorDaepyo_Dark"
                 android:inputType="textEmailAddress"
                 app:layout_constraintTop_toBottomOf="@id/tv_email" />
 
