@@ -38,7 +38,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -102,8 +104,6 @@ public class MypageComponent extends Fragment {
 
         profileImagesRef = storage.getReference("profileImages");
 
-
-
         db.collection("users")
                 .whereEqualTo("uid", auth.getCurrentUser().getUid())
                 .get()
@@ -156,39 +156,41 @@ public class MypageComponent extends Fragment {
                             db.collection("users").document(auth.getUid())
                                     .collection("popularity")
                                     .whereNotEqualTo("uid", auth.getUid())
-                                    .get()
-                                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
                                         @Override
-                                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                                            //한 사람 추천당 0.1 +
+                                        public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                                            //한 사람 추천당 0.3 +
                                             //권한 없으면 80이 최대
-                                            ratingBar.setRating(2.5f + 0.1f * queryDocumentSnapshots.getDocuments().size());
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Log.d("fail", "현재 생성된 하위 컬렉션이 없는 에러이거나, 진짜로 아무도 안함.");
-                                        }
-                                    });
-                            db.collection("users").document(auth.getUid())
-                                    .get()
-                                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                        @Override
-                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                            if (ratingBar.getRating() > 4.0f && !((boolean)documentSnapshot.get("sell_permission") || (boolean)documentSnapshot.get("is_petfriend"))) {
-                                                ratingBar.setRating(4.0f);
-                                            } else if ((boolean)documentSnapshot.get("sell_permission") || (boolean)documentSnapshot.get("is_petfriend")) {
-                                                ratingBar.setRating(ratingBar.getRating() + 1.0f);
-                                            } else if (ratingBar.getRating() > 5.0f) {
-                                                ratingBar.setRating(5.0f);
-                                            }
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Log.d("fail", "유저 컬렉션 에러");
+                                            ratingBar.setRating(2.5f);
+                                            ratingBar.setRating(ratingBar.getRating() + 0.3f * value.getDocuments().size());
+                                            db.collection("users").document(auth.getUid())
+                                                    .collection("report")
+                                                    .whereNotEqualTo("uid", auth.getUid())
+                                                    .get()
+                                                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                                        @Override
+                                                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                                            //한 사람 신고당 0.3 -
+                                                            //권한 없으면 80이 최대
+                                                            ratingBar.setRating(ratingBar.getRating() - 0.3f * queryDocumentSnapshots.getDocuments().size());
+                                                            db.collection("users").document(auth.getUid())
+                                                                    .get()
+                                                                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                                        @Override
+                                                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                                            if (ratingBar.getRating() > 4.0f && !((boolean)documentSnapshot.get("sell_permission") || (boolean)documentSnapshot.get("is_petfriend"))) {
+                                                                                ratingBar.setRating(4.0f);
+                                                                            } else if ((boolean)documentSnapshot.get("sell_permission") || (boolean)documentSnapshot.get("is_petfriend")) {
+                                                                                ratingBar.setRating(ratingBar.getRating() + 1.0f);
+                                                                            } else if (ratingBar.getRating() > 5.0f) {
+                                                                                ratingBar.setRating(5.0f);
+                                                                            } else if (ratingBar.getRating() < 0) {
+                                                                                ratingBar.setRating(0);
+                                                                            }
+                                                                        }
+                                                                    });
+                                                        }
+                                                    });
                                         }
                                     });
 
@@ -326,46 +328,7 @@ public class MypageComponent extends Fragment {
                                         } else {
                                             petFriend.setText("일반\n회원님");
                                         }
-
-                                        db.collection("users").document(auth.getUid())
-                                                .collection("popularity")
-                                                .whereNotEqualTo("uid", auth.getUid())
-                                                .get()
-                                                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                                                    @Override
-                                                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                                                        //한 사람 추천당 0.1 +
-                                                        //권한 없으면 80이 최대
-                                                        ratingBar.setRating(2.5f + 0.1f * queryDocumentSnapshots.getDocuments().size());
-                                                    }
-                                                })
-                                                .addOnFailureListener(new OnFailureListener() {
-                                                    @Override
-                                                    public void onFailure(@NonNull Exception e) {
-                                                        Log.d("fail", "현재 생성된 하위 컬렉션이 없는 에러이거나, 진짜로 아무도 안함.");
-                                                    }
-                                                });
-                                        db.collection("users").document(auth.getUid())
-                                                .get()
-                                                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                                    @Override
-                                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                                        if (ratingBar.getRating() > 4.0f && !((boolean)documentSnapshot.get("sell_permission") || (boolean)documentSnapshot.get("is_petfriend"))) {
-                                                            ratingBar.setRating(4.0f);
-                                                        } else if ((boolean)documentSnapshot.get("sell_permission") || (boolean)documentSnapshot.get("is_petfriend")) {
-                                                            ratingBar.setRating(ratingBar.getRating() + 1.0f);
-                                                        } else if (ratingBar.getRating() > 5.0f) {
-                                                            ratingBar.setRating(5.0f);
-                                                        }
-                                                    }
-                                                })
-                                                .addOnFailureListener(new OnFailureListener() {
-                                                    @Override
-                                                    public void onFailure(@NonNull Exception e) {
-                                                        Log.d("fail", "유저 컬렉션 에러");
-                                                    }
-                                                });
-
+                                        
                                         nickname.setText(document.get("nickname").toString());
 
                                         try {

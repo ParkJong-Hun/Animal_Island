@@ -103,30 +103,14 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/getTitle"/>
 
-            <Spinner
-                android:id="@+id/local_city"
-                android:layout_width="125dp"
-                android:layout_height="50dp"
-                android:spinnerMode="dropdown"
-                app:layout_constraintTop_toBottomOf="@id/local"
-                app:layout_constraintStart_toStartOf="parent"/>
-
-            <Spinner
-                android:id="@+id/local_borough"
-                android:layout_width="125dp"
-                android:layout_height="50dp"
-                android:spinnerMode="dropdown"
-                app:layout_constraintTop_toBottomOf="@id/local"
-                app:layout_constraintStart_toEndOf="@id/local_city"/>
-
-            <Spinner
-                android:id="@+id/local_town"
-                android:layout_width="125dp"
-                android:layout_height="50dp"
-                android:spinnerMode="dropdown"
-                app:layout_constraintTop_toBottomOf="@id/local"
-                app:layout_constraintStart_toEndOf="@id/local_borough"/>
-
+            <EditText
+                android:id="@+id/edit_local"
+                android:hint="지역을 검색하세요"
+                android:focusableInTouchMode="false"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/local"/>
 
             <TextView
                 android:id="@+id/animal_type"
@@ -134,7 +118,7 @@
                 android:layout_height="wrap_content"
                 android:text="동물종류"
                 android:layout_marginTop="10dp"
-                app:layout_constraintTop_toBottomOf="@id/local_city"
+                app:layout_constraintTop_toBottomOf="@id/edit_local"
                 app:layout_constraintStart_toStartOf="parent"/>
 
             <Spinner
@@ -224,50 +208,50 @@
 
                 <Spinner
                     android:id="@+id/inoculation"
-                    android:layout_width="160dp"
+                    android:layout_width="0dp"
                     android:layout_height="50dp"
+                    android:layout_weight="1"
                     android:spinnerMode="dialog"/>
+
+                <RadioGroup
+                    android:id="@+id/free_submit_neutering"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="중성화 "
-                        android:layout_gravity="center"
                         android:textAlignment="center" />
 
-                    <RadioGroup
-                        android:id="@+id/submit_neutering"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                    <RadioButton
+                        android:id="@+id/yes"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="horizontal">
+                        android:padding="5dp"
+                        android:background="@drawable/button_shape"
+                        android:button="@null"
+                        android:text="O"
+                        android:textAlignment="center"/>
 
-                        <RadioButton
-                            android:id="@+id/yes"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:padding="5dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/button_shape"
-                            android:button="@null"
-                            android:text="O"
-                            android:textAlignment="center"/>
+                    <RadioButton
+                        android:id="@+id/no"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:padding="5dp"
+                        android:layout_marginStart="5dp"
+                        android:background="@drawable/button_shape"
+                        android:button="@null"
+                        android:text="X"
+                        android:textAlignment="center"/>
 
-                        <RadioButton
-                            android:id="@+id/no"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:padding="5dp"
-                            android:layout_weight="1"
-                            android:layout_marginStart="5dp"
-                            android:background="@drawable/button_shape"
-                            android:button="@null"
-                            android:text="X"
-                            android:textAlignment="center"/>
-
-                    </RadioGroup>
+                </RadioGroup>
 
 
             </LinearLayout>

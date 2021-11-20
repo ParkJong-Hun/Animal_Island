@@ -2,6 +2,7 @@ package petstone.project.animalisland.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,14 +19,22 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.util.ArrayList;
+import java.util.Date;
 
 import petstone.project.animalisland.R;
 import petstone.project.animalisland.other.PetfriendUser;
@@ -33,9 +42,9 @@ import petstone.project.animalisland.other.PetfriendUser;
 //마이페이지 펫프렌즈 권한 신청
 public class MypagePetfriendApplyActivity extends AppCompatActivity {
 
-    private TextView mJuso_tv;
+    private TextView mJuso_tv, mSchedule_tv;
     private EditText minfo_edt;
-    Button cancel, submit, search_btn;
+    Button cancel, submit, search_btn, schedule_btn;
     ImageView back, license1, license2, license3;
     Switch toggle;
 
@@ -47,8 +56,20 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
 
     private AlertDialog mAlertDialog;
 
-    private boolean addressNull;
+    private boolean addressNull = true;
+    private StringBuilder sb = new StringBuilder();
 
+    FirebaseStorage storage;
+    StorageReference careerImagesRef;
+    private FirebaseAuth auth;
+    private StorageReference profileImagesRef;
+    private Uri[] imgArrayUri = new Uri[3];
+    private String[] StringUri = new String[3];
+    String fileName;
+    Uri file;
+    String profileUri;
+
+    private boolean setCarrer=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,9 +88,19 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
         license2.setVisibility(View.GONE);
         license3.setVisibility(View.GONE);
 
+        schedule_btn = findViewById(R.id.schedule_btn);
+        mSchedule_tv = findViewById(R.id.schedule_tv);
+        storage = FirebaseStorage.getInstance();
+        careerImagesRef = storage.getReference();
+
+
 
         //유저 정보 확인
         usercheck();
+        //프로필 가져오기
+        GetProfile();
+        //스토리지 주소 설정
+        careerImagesRef = careerImagesRef.child("CarrerImg/"+uid+"_carrer"+"/");
 
         //취소 버튼
         cancel.setOnClickListener(new View.OnClickListener() {
@@ -91,9 +122,11 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
 
                 //내용 확인 메소드
                 infoCheck();
-
+                // 주소가 빈칸이면 다이어로그 안나옴
+                if(!addressNull)
                 //가입 확인 하기전 확인 다이어로그
                 PetfriendDialog();
+                else {return;}
 
 
                 // 데이터삽입 uid 닉네임 비용 경력 시간 비용 등등
@@ -106,6 +139,30 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
             }
         });
 
+        // 이미지뷰 이벤트
+        View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId())
+                {
+                    case R.id.mypage_petfriend_apply_license_image1:
+                        GetImg(20);
+                        break;
+                    case R.id.mypage_petfriend_apply_license_image2:
+                        GetImg(21);
+                        break;
+                    case  R.id.mypage_petfriend_apply_license_image3:
+                        GetImg(22);
+                        break;
+                }
+            }
+        };
+
+        // 이미지 클릭 이벤트
+        license1.setOnClickListener(listener);
+        license2.setOnClickListener(listener);
+        license3.setOnClickListener(listener);
+        
         // 검색 버튼 누를시 웹뷰엑티비티 인텐드
         search_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,7 +172,18 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
             }
         });
 
+        // 스케줄엑티비티 인텐트
+        schedule_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sb.setLength(0);
+                Intent intent = new Intent(getApplicationContext(), ScheduleActivity.class);
+                startActivityForResult(intent, 1);
+            }
+        });
 
+
+        // 이미지 넣기
         toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -123,10 +191,12 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
                     license1.setVisibility(View.VISIBLE);
                     license2.setVisibility(View.VISIBLE);
                     license3.setVisibility(View.VISIBLE);
+                    setCarrer=true;
                 } else {
                     license1.setVisibility(View.GONE);
                     license2.setVisibility(View.GONE);
                     license3.setVisibility(View.GONE);
+                    setCarrer=false;
 
                 }
             }
@@ -142,12 +212,57 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
     }
 
 
+    // 갤러리에서 이미지 찾기
+    private void GetImg(int requestCode)
+    {
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+        startActivityForResult(intent, requestCode );
+
+    }
+
+    // 이미지 업로드
+    private  void ImgUpload() {
+        
+        for(int i = 0; i < imgArrayUri.length; i++)
+        {
+            if(!imgArrayUri[i].equals(null))
+            {
+                Date date = new Date();
+                String fileName = uid + "_"+date.toString();
+
+                UploadTask uploadTask = careerImagesRef.child(fileName).putFile(imgArrayUri[i]);
+                Log.d("careerImagesRef", careerImagesRef.toString());
+
+                uploadTask.addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle unsuccessful uploads
+                        Log.d("onFailure", exception.toString());
+                    }
+                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                        // ...
+                        Log.d("ImgUpload", taskSnapshot.toString());
+                    }
+                });
+            }
+
+        }
+
+    }
+
+
     // 유저정보 확인
     private void usercheck() {
         //uid 확인
         user = FirebaseAuth.getInstance().getCurrentUser();
         uid = user.getUid();
         Log.d("uid", uid.toString());
+
+
         // 유저 정보 가져오기
         download(uid);
     }
@@ -201,6 +316,10 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
             }
         });
 
+        if(setCarrer)
+        ImgUpload();
+
+
 
 
         /* 문서 이름 = 랜덤 파이어베이스 업로드
@@ -242,6 +361,11 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
             builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
+
+                    //주소입력 검사
+                    if(addressNull)
+                        return;
+                    
                     Toast.makeText(getApplicationContext(), "신청완료", Toast.LENGTH_SHORT).show();
 
                     // 데이터삽입 uid 닉네임 비용 경력 시간 비용 등등
@@ -250,9 +374,12 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
                             uid
                             , mNickname
                             , mJuso
-                    );
+                            , StringUri[0]
+                            , profileUri)
+                            ;
 
-                    //업로드 메소드
+
+                    //업로드
                     uploader(petfriendUser);
 
                     db = FirebaseFirestore.getInstance();
@@ -275,6 +402,55 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
     // 신청 내용 확인 메소드
     private void infoCheck() {
 
+        AddressCheck();
+
+    }
+
+
+
+    // 스케줄 가져오기
+    private void ScheduleCheck(Intent intent,String day) {
+        ArrayList<Integer> mlist = new ArrayList<>();
+        String str;
+
+        sb.append(day+" : ");
+        mlist = intent.getIntegerArrayListExtra(day);
+
+        try {
+            for (int i = 0; i < mlist.size(); i++) {
+                if ((i + 1) % 2 == 1)
+                    sb.append(mlist.get(i)+"시" + "-");
+                if ((i + 1) % 2 == 0)
+                    sb.append(mlist.get(i)+"시" + " ");
+            }
+
+            sb.append("\n");
+            str = sb.toString();
+            mSchedule_tv.setText(str);
+        }catch (Exception e)
+        {
+            Log.e("error", e.toString());
+        }
+
+    }
+
+    private void GetProfile()
+    {
+        db.collection("users")
+                .document(uid)
+                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                profileUri = documentSnapshot.get("image").toString();
+                Log.d("profile", profileUri);
+
+            }
+        });
+
+    }
+
+    // 주소 가져오기
+    private void AddressCheck() {
         if (!mJuso_tv.getText().toString().equals("juso")) {
             // 오리지날 주소
             mJuso = mJuso_tv.getText().toString();
@@ -321,14 +497,14 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
 
         mInfo = minfo_edt.getText().toString();
         Toast.makeText(getApplicationContext(), "현재주소 : " + mJuso, Toast.LENGTH_SHORT).show();
-
     }
 
 
-    //웹 인텐트 데이터 확인
+    // 인텐트 데이터 확인
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        //웹 인텐트
         if (requestCode == 0) {
             if (resultCode == RESULT_OK) {
                 String result = data.getStringExtra("data");
@@ -336,20 +512,64 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
                 mJuso_tv.setText(result);
             }
         }
-    }
-
-    // WindowLeaked 에러 해결
-/*
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if(mAlertDialog != null)
+        //스케줄 인텐트
+        else if(requestCode == 1)
         {
-            mAlertDialog.dismiss();
-            mAlertDialog = null;
+            if (resultCode == RESULT_OK) {
+                ArrayList<String> day = data.getStringArrayListExtra("time");
+                for (int i=0; i<day.size(); i++)
+                {
+                    switch (day.get(i)){
+                        case "월요일":Log.d(day.get(i), day.get(i).toString());ScheduleCheck(data,day.get(i));break;
+                        case "화요일":Log.d(day.get(i), day.get(i).toString());ScheduleCheck(data,day.get(i));break;
+                        case "수요일":Log.d(day.get(i), day.get(i).toString());ScheduleCheck(data,day.get(i));break;
+                        case "목요일":Log.d(day.get(i), day.get(i).toString());ScheduleCheck(data,day.get(i));break;
+                        case "금요일":Log.d(day.get(i), day.get(i).toString());ScheduleCheck(data,day.get(i));break;
+                        case "토요일":Log.d(day.get(i), day.get(i).toString());ScheduleCheck(data,day.get(i));break;
+                        case "일요일":Log.d(day.get(i), day.get(i).toString());ScheduleCheck(data,day.get(i));break;
+                    }
+                }
+            }
+
+        }
+        else if(requestCode == 20){
+            if(data == null){
+                Toast.makeText(getApplicationContext(), "이미지를 선택하지 않았습니다.", Toast.LENGTH_LONG).show();
+            }
+            else{
+
+                Uri selectImg = data.getData();
+                imgArrayUri[0] = selectImg;
+                license1.setImageURI(selectImg);
+                //ImgUpload(selectImg);
+
+            }
+        }
+        else if(requestCode == 21){
+            if(data == null){
+                Toast.makeText(getApplicationContext(), "이미지를 선택하지 않았습니다.", Toast.LENGTH_LONG).show();
+            }
+            else{
+
+                Uri selectImg = data.getData();
+                imgArrayUri[1] = selectImg;
+                license2.setImageURI(selectImg);
+
+            }
+        }
+        else if(requestCode == 22){
+            if(data == null){
+                Toast.makeText(getApplicationContext(), "이미지를 선택하지 않았습니다.", Toast.LENGTH_LONG).show();
+            }
+            else{
+
+                Uri selectImg = data.getData();
+                imgArrayUri[2] = selectImg;
+                license3.setImageURI(selectImg);
+            }
         }
     }
- */
+
 
     @Override
     protected void onDestroy() {

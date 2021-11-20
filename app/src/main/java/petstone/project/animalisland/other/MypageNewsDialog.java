@@ -8,9 +8,16 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
@@ -23,6 +30,7 @@ public class MypageNewsDialog extends Dialog {
     Button close;
     NewsAdapter n_adapter ;
     ArrayList<NewsList> mList = new ArrayList<NewsList>();
+    FirebaseFirestore db;
 
     public MypageNewsDialog(Context context) {
         super(context);
@@ -37,6 +45,8 @@ public class MypageNewsDialog extends Dialog {
         news_recycler = findViewById(R.id.news_recycler);
         close = findViewById(R.id.mypage_news_button);
 
+        db = FirebaseFirestore.getInstance();
+
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -49,6 +59,20 @@ public class MypageNewsDialog extends Dialog {
         news_recycler.addItemDecoration(new CirclePagerIndicatorDecoration());
         n_adapter = new NewsAdapter(mList);
         news_recycler.setAdapter(n_adapter);
+
+        /*
+        db.collection("mypage_news")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        for (DocumentSnapshot document : value) {
+                            addItem(document.getData().get("news_title").toString(),
+                                    document.getData().get("news_article").toString()) ;
+                        }
+                    }
+                });
+         */
+
 
         addItem("서비스 이용 일시 중단 안내", "정보 보호 관리 체계 인증 및 서버 안정화를 위한 서버 증설 작업을 실시합니다. \n작업 시간 동안에는 ANIMAL ISLAND의 모든 서비스 이용이 전면 중단되오니 이용에 참고 부탁드립니다. \n\n중단 일시\n2021년 12월 15일 수요일 00:00~06:00(6시간)");
         addItem("유료 분양 권한 신청 안내", "동물보호법 개정에 따라 각 지자체에서 동물 판매업으로 허가를 받지 않은 업체나 가정에서 반려동물을 유료로 분양하면 모두 불법입니다. \n따라서 저희 ANIMAL ISLAND는 유료 분양 권한 신청을 통해 유료 분양이 가능한지를 심사하고 유료 분양이 가능한 기준이 된다면 게시글을 작성할 수 있는 권한을 얻을 수 있습니다.");

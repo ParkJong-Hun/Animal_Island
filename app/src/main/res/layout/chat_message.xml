@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/chat_message_my">
+
+        <TextView
+            android:id="@+id/chat_message_my_text"
+            android:layout_width="wrap_content"
+            android:maxWidth="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@color/colorDaepyo_Accent"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="message"
+            android:textColor="@color/white"
+            android:textSize="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/chat_message_my_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="name"
+            android:textSize="10dp"
+            app:layout_constraintEnd_toStartOf="@+id/chat_message_my_text"
+            app:layout_constraintTop_toTopOf="@+id/chat_message_my_text" />
+
+        <TextView
+            android:id="@+id/chat_message_my_createdAt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2021/01/01 01:01"
+            android:textSize="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/chat_message_my_text"
+            app:layout_constraintTop_toBottomOf="@+id/chat_message_my_name" />
+
+        <TextView
+            android:id="@+id/chat_message_my_readed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:text="읽음"
+            android:textSize="9dp"
+            app:layout_constraintBottom_toBottomOf="@+id/chat_message_my_createdAt"
+            app:layout_constraintEnd_toStartOf="@+id/chat_message_my_createdAt" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/chat_message_who">
+
+        <TextView
+            android:id="@+id/chat_message_who_text"
+            android:layout_width="wrap_content"
+            android:maxWidth="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@color/colorDaepyo"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="message"
+            android:textColor="@color/white"
+            android:textSize="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/chat_message_who_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="name"
+            android:textSize="10dp"
+            app:layout_constraintStart_toEndOf="@+id/chat_message_who_text"
+            app:layout_constraintTop_toTopOf="@+id/chat_message_who_text" />
+
+        <TextView
+            android:id="@+id/chat_message_who_createdAt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2021/01/01 01:01"
+            android:textSize="8dp"
+            app:layout_constraintStart_toEndOf="@+id/chat_message_who_text"
+            app:layout_constraintTop_toBottomOf="@+id/chat_message_who_name" />
+
+        <TextView
+            android:id="@+id/chat_message_who_readed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:text="읽음"
+            android:textSize="9dp"
+            app:layout_constraintBottom_toBottomOf="@+id/chat_message_who_createdAt"
+            app:layout_constraintStart_toEndOf="@+id/chat_message_who_createdAt" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

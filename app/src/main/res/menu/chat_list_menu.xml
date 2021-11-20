@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:enabled="true"
+        android:title="채팅 삭제하기"
+        android:id="@+id/chat_list_menu_delete"
+        />
+    <item
+        android:enabled="true"
+        android:title="다른 유저에게 추천하기"
+        android:id="@+id/chat_list_menu_recommend"
+        />
+    <item
+        android:enabled="true"
+        android:title="다른 유저에게 비추천하기(신고하기)"
+        android:id="@+id/chat_list_menu_report"
+        />
+</menu>

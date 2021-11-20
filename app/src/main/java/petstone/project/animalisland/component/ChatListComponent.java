@@ -1,109 +1,250 @@
 package petstone.project.animalisland.component;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
 
-import com.google.android.material.tabs.TabLayout;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 import petstone.project.animalisland.R;
 import petstone.project.animalisland.activity.ChatActivity;
-import petstone.project.animalisland.other.ChatAdapter;
-import petstone.project.animalisland.other.ChatImsiAdapter;
-import petstone.project.animalisland.other.MypageCustomListAdapter;
-import petstone.project.animalisland.other.VPAdapter;
+import petstone.project.animalisland.other.ChatListAdapter;
+import petstone.project.animalisland.other.ChatList;
+import petstone.project.animalisland.other.PopularityDialog;
+import petstone.project.animalisland.other.ReportDialog;
 
 public class ChatListComponent extends Fragment {
 
-    ListView list;
-    ChatImsiAdapter listAdapter;
+    ListView listView;
+    ChatListAdapter listAdapter;
+
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    FirebaseAuth auth = FirebaseAuth.getInstance();
+
+    ArrayList<ChatList> lists = new ArrayList<>();
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.chatlist_component, container, false);
 
-        list = rootView.findViewById(R.id.chat_lv1);
-        listAdapter = new ChatImsiAdapter(getContext());
-        list.setAdapter(listAdapter);
+        listView = rootView.findViewById(R.id.chat_lv1);
+        lists.clear();
 
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        //채팅 입장
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d("", lists.toString());
+                String whoUID = lists.get(position).getUid();
+                String documentName = "";
+
                 Intent intent = new Intent(getContext(), ChatActivity.class);
+                intent.putExtra("whoUID", whoUID);
+
+                if(whoUID.compareTo(auth.getUid()) > 0) {
+                    documentName = whoUID + "_" + auth.getUid();
+                } else {
+                    documentName = auth.getUid() + "_" + whoUID;
+                }
+
+                intent.putExtra("chatName", documentName);
                 startActivity(intent);
+            }
+        });
+
+        //채팅 리스트 길게 누르기(채팅 삭제 및 신뢰도 증가 다이얼로그 표시)
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                PopupMenu menu = new PopupMenu(getContext(), view);
+                PopularityDialog dialog = new PopularityDialog(getContext(), lists.get(position).getWhoName(), lists.get(position).getUid());
+                ReportDialog dialog2 = new ReportDialog(getContext(), lists.get(position).getWhoName(), lists.get(position).getUid());
+                menu.getMenuInflater().inflate(R.menu.chat_list_menu, menu.getMenu());
+                menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.chat_list_menu_delete:
+                                String whoUID = lists.get(position).getUid();
+                                String documentName = "";
+                                if(whoUID.compareTo(auth.getUid()) > 0) {
+                                    documentName = whoUID + "_" + auth.getUid();
+                                } else {
+                                    documentName = auth.getUid() + "_" + whoUID;
+                                }
+                                HashMap<String, Object> data = new HashMap<>();
+                                data.put("uid", auth.getUid());
+                                data.put("date", new Date());
+                                data.put("article", "정중히 인사하고 퇴장합니다.\n채팅이 종료됩니다.");
+                                data.put("readed", 1);
+
+                                String finalDocumentName = documentName;
+                                db.collection("chats").document(documentName).collection("messages")
+                                        .document(new Date() + auth.getUid())
+                                        .set(data)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                db.collection("chats").document(finalDocumentName).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        Log.d("d", "채팅 삭제 완료");
+                                                        listAdapter.notifyDataSetChanged();
+                                                    }
+                                                });
+                                            }
+                                        });
+                                break;
+                            case R.id.chat_list_menu_recommend:
+                                dialog.show();
+                                break;
+                            case R.id.chat_list_menu_report:
+                                dialog2.show();
+                            default:
+                                break;
+                        }
+                        return true;
+                    }
+                });
+                menu.show();
+
+                return true;
             }
         });
 
         return rootView;
     }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        db.collection("chats")
+                .whereEqualTo("uid", auth.getUid())
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        lists.clear();
+                        Log.d("", "초기화됨");
+
+                        for (DocumentSnapshot doc : value) {
+                            ChatList newList = new ChatList();
+                            newList.setUid(doc.getString("uid2"));
+                            lists.add(newList);
+                        }
+                        listAdapter = new ChatListAdapter(getContext(), lists);
+                        listView.setAdapter(listAdapter);
+
+                        db.collection("chats")
+                                .whereEqualTo("uid2", auth.getUid())
+                                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                                        for (DocumentSnapshot doc : value) {
+                                            ChatList newList = new ChatList();
+                                            newList.setUid(doc.getString("uid"));
+                                            lists.add(newList);
+                                        }
+                                        listAdapter.notifyDataSetChanged();
+
+                                        for (ChatList list : lists) {
+                                            db.collection("users")
+                                                    .whereEqualTo("uid", list.getUid())
+                                                    .get()
+                                                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                                        @Override
+                                                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                                            for (DocumentSnapshot doc:queryDocumentSnapshots) {
+                                                                list.setWhoName(doc.getString("nickname"));
+                                                                listAdapter.notifyDataSetChanged();
+                                                                break;
+                                                            }
+                                                        }
+                                                    });
+
+                                            db.collection("chats")
+                                                    .whereEqualTo("uid", list.getUid())
+                                                    .get()
+                                                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                                        @Override
+                                                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                                            for (DocumentSnapshot doc : queryDocumentSnapshots) {
+                                                                doc.getReference().collection("messages")
+                                                                        .whereNotEqualTo("uid", auth.getUid())
+                                                                        .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                                                            @Override
+                                                                            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                                                                                list.setNewCount(0);
+                                                                                for (DocumentSnapshot doc:value) {
+                                                                                    if (doc.getLong("readed") == 1) {
+                                                                                        list.setNewCount(list.getNewCount() + 1);
+                                                                                    }
+                                                                                    list.setUpdatedDate(doc.getDate("date"));
+                                                                                    list.setUpdatedMessage(doc.getString("article"));
+                                                                                }
+                                                                                listAdapter.notifyDataSetChanged();
+                                                                            }
+                                                                        });
+                                                            }
+                                                        }
+                                                    });
+
+                                            db.collection("chats")
+                                                    .whereEqualTo("uid2", list.getUid())
+                                                    .get()
+                                                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                                        @Override
+                                                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                                            for (DocumentSnapshot doc : queryDocumentSnapshots) {
+                                                                doc.getReference().collection("messages")
+                                                                        .whereNotEqualTo("uid", auth.getUid())
+                                                                        .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                                                            @Override
+                                                                            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                                                                                list.setNewCount(0);
+                                                                                for (DocumentSnapshot doc:value) {
+                                                                                    if (doc.getLong("readed") == 1) {
+                                                                                        list.setNewCount(list.getNewCount() + 1);
+                                                                                    }
+                                                                                    list.setUpdatedDate(doc.getDate("date"));
+                                                                                    list.setUpdatedMessage(doc.getString("article"));
+                                                                                }
+                                                                                listAdapter.notifyDataSetChanged();
+                                                                            }
+                                                                        });
+                                                            }
+                                                        }
+                                                    });
+                                        }
+                                    }
+                                });
+                    }
+                });
+    }
 }
-    /*
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View chat_view = inflater.inflate(R.layout.chatlist_component, container, false);
-
-        c_Adapter = new ChatComponent();
-        c_ListView.setAdapter(c_Adapter);
-
-        // 커스텀 어댑터 생성
-        c_Adapter = new ChatComponent();
-
-        // Xml에서 추가한 ListView 연결
-        c_ListView = (ListView) c_ListView.findViewById(R.id.chat_lv1);
-
-        // ListView에 어댑터 연결
-        c_ListView.setAdapter(c_Adapter);
-        c_ArrayList = new ArrayList<>();
-
-        c_ArrayList.add(Integer.parseInt("펫 프렌즈 보고 연락드려요", 0));
-        c_ArrayList.add(Integer.parseInt("날짜와 시간, 장소 알려주세요", 1));
-        c_ArrayList.add(Integer.parseInt("25일 성북구청 가능할까요?", 0));
-        c_ArrayList.add(Integer.parseInt("네 가능합니다 시간 알려주시겠어요?", 1));
-        c_ArrayList.add(Integer.parseInt("11시에서 3시정도 괜찮으신가요?", 0));
-        c_ArrayList.add(Integer.parseInt("네 가능합니다. 25일에 다시 연락 바랄게요", 1));
-        c_ArrayList.add(Integer.parseInt("2021/05/25", 2));
-        c_ArrayList.add(Integer.parseInt("11시에 잘 부탁드릴게요", 0));
-        c_ArrayList.add(Integer.parseInt("네 알겠습니다", 0));
-        c_ArrayList.add(Integer.parseInt("감사합니다~", 1));
-
-        return chat_view;
-
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.chatlist_component, container, false);
-        return inflater.inflate(R.layout.chatlist_component, container, false);
-    }
-
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.chat);
-
-        // 커스텀 어댑터 생성
-        c_Adapter = new ChatComponent();
-
-        // Xml에서 추가한 ListView 연결
-        c_ListView = (ListView) findViewById(R.id.chat_lv1);
-
-        // ListView에 어댑터 연결
-        c_ListView.setAdapter(c_Adapter);
-
-        c_Adapter.add("펫 프렌즈 보고 연락드려요", 0);
-        c_Adapter.add("날짜와 시간, 장소 알려주세요", 1);
-        c_Adapter.add("25일 성북구청 가능할까요?", 0);
-        c_Adapter.add("네 가능합니다 시간 알려주시겠어요?", 1);
-        c_Adapter.add("11시에서 3시정도 괜찮으신가요?", 0);
-        c_Adapter.add("네 가능합니다. 25일에 다시 연락 바랄게요", 1);
-        c_Adapter.add("2021/05/25", 2);
-        c_Adapter.add("11시에 잘 부탁드릴게요", 0);
-        c_Adapter.add("네 알겠습니다", 0);
-        c_Adapter.add("감사합니다~", 1);
-    } */
