@@ -194,11 +194,16 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
                 setResult(RESULT_OK);
 
                 //내용 확인 메소드
-                infoCheck();
+                //infoCheck();
 
+                infoCheck();
                 // 주소가 빈칸이면 다이어로그 안나옴
-                if (!addressNull)
+                if (!addressNull) {
                     PetfriendDialog();
+                }
+                else
+                    Toast.makeText(getApplicationContext(), "주소를 추가해 주세요.", Toast.LENGTH_SHORT).show();
+                    return;
             }
         });
 
@@ -281,18 +286,18 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
                     case R.id.mypage_petfriend_apply_license_image1:
                         if (isImgNull_1 == false) {
                             ImgDeleteDialog(1);
-                            Toast.makeText(getApplicationContext(), "롱클릭 삭제", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getApplicationContext(), "롱클릭 삭제", Toast.LENGTH_SHORT).show();
                         }
                         break;
                     case R.id.mypage_petfriend_apply_license_image2:
                         if (isImgNull_2 == false) {
                             ImgDeleteDialog(2);
-                            Toast.makeText(getApplicationContext(), "롱클릭 삭제", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getApplicationContext(), "롱클릭 삭제", Toast.LENGTH_SHORT).show();
                         }
                         break;
                     case R.id.mypage_petfriend_apply_license_image3:
                         if (isImgNull_3 == false) {
-                            Toast.makeText(getApplicationContext(), "롱클릭 삭제", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getApplicationContext(), "롱클릭 삭제", Toast.LENGTH_SHORT).show();
                             ImgDeleteDialog(3);
                         }
                         break;
@@ -828,7 +833,7 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
     private void getPay() {
 
         mPay = mPay_edt.getText().toString();
-        Toast.makeText(getApplicationContext(), mPay + "", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), mPay + "", Toast.LENGTH_SHORT).show();
         if (mPay.length() != 0) {
             if (Integer.parseInt(mPay) <= 0 || mPay.length() == 0) {
                 mPay = "0";
@@ -919,7 +924,8 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
     private void AddressCheck() {
         //addressNull
         //!mJuso_tv.getText().toString().equals("juso")
-        if (addressNull || reEdit) {
+        //addressNull ||reEdit
+        if (mJuso_tv.getText().toString().length() > 0) {
             // 오리지날 주소
             mJuso = mJuso_tv.getText().toString();
             mOriginaAddress = mJuso;
@@ -962,7 +968,7 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
 
             addressNull = false;
         }
-        Toast.makeText(getApplicationContext(), "현재주소 : " + mJuso, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), "현재주소 : " + mJuso, Toast.LENGTH_SHORT).show();
     }
 
     // 인텐트 데이터 확인
