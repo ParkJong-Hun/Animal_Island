@@ -281,14 +281,14 @@ public class PetFriendComponent extends Fragment {
 
             @Override
             public boolean onQueryTextSubmit(String s) {
-                Search(s);
-                return true;
+                //Search(s);
+                return false;
             }
 
             @Override
             public boolean onQueryTextChange(String s) {
                 Search(s);
-                return false;
+                return true;
             }
         });
 
@@ -430,6 +430,7 @@ public class PetFriendComponent extends Fragment {
                     //리스트에 petfriend 컬렉션에서 모든 문서들의 데이터(닉네임,uid,비용,시간,자격증)를 가져와서 arrayList에 넣기
                     //String uid, String nickname, String address
                     //uid 닉네임 주소 자격증 프로필주소
+                    //SplitDays(Days)
                     arrayList.add(new PetfriendUser(
                             doc.getData().get("uid").toString()
                             , doc.getData().get("nickname").toString()
@@ -678,18 +679,17 @@ public class PetFriendComponent extends Fragment {
     //리스트에서에서 검색
     private void ListSearch(String s) {
 
-
-
         // 펫프렌즈 데이터 가져오기
         firebaseSearch();
 
         ArrayList<PetfriendUser> mArrayList = new ArrayList<>();
 
         for (int i = 0; i < arrayList.size(); i++) {
+
             String searchNickName = arrayList.get(i).getNickname();
             String searchAddress = arrayList.get(i).getAddress();
 
-            if (searchNickName.toLowerCase().contains(s.toLowerCase()) || searchAddress.toLowerCase().contains(s.toLowerCase()) && s.length()>1) {
+            if (searchNickName.toLowerCase().contains(s.toLowerCase()) || searchAddress.toLowerCase().contains(s.toLowerCase())) {
                 mArrayList.add(arrayList.get(i));
             }
         }
