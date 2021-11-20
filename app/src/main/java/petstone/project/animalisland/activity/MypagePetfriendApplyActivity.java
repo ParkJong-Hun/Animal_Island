@@ -202,7 +202,7 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
                     PetfriendDialog();
                 }
                 else
-                    Toast.makeText(getApplicationContext(), "주소1를 추가해 주세요.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "주소를 추가해 주세요.", Toast.LENGTH_SHORT).show();
                     return;
             }
         });
