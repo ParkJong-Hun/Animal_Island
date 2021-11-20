@@ -142,6 +142,9 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+        et_age.setFocusable(false);
+        et_age.setClickable(false);
+
 
 
         //아이디 중복 확인 버튼 클릭 리스너

@@ -164,7 +164,8 @@
 
             <EditText
                 android:id="@+id/et_age"
-                android:layout_width="150dp"
+                android:layout_width="wrap_content"
+                android:maxWidth="200dp"
                 android:layout_height="wrap_content"
                 android:focusableInTouchMode="false"
                 android:textAlignment="center"
