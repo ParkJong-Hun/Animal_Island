@@ -117,7 +117,7 @@
             android:visibility="gone"
             android:layout_marginStart="5dp"
             android:layout_width="wrap_content"
-            android:layout_height="25dp"
+            android:layout_height="30dp"
             android:text="내글 보기"
             android:background="@drawable/round_ffe1e1"
             android:textAlignment="center"

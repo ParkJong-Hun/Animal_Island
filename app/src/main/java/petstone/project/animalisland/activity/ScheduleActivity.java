@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -53,7 +54,7 @@ public class ScheduleActivity extends AppCompatActivity {
     ArrayList<Integer> to_time_list;
     ArrayList<Integer> il_time_list;
 
-    Button mbtn_ok,mbtn_reset,mbtn_out;
+    ImageView mbtn_ok,mbtn_reset,mbtn_out;
 
     Intent i;
     ArrayList<String> time = new ArrayList<>();

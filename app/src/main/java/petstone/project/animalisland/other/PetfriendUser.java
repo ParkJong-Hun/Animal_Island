@@ -15,7 +15,7 @@ public class PetfriendUser {
  */
 
 
-    public PetfriendUser(String uid, String nickname, String address, String carrerImgName, String profileImgUri, String days, String info, String schedule, String originalAddress, String pay, boolean hwaldong_sancheck, boolean hwaldong_dolbom, boolean hwaldong_beauty, boolean petfriend) {
+    public PetfriendUser(String uid, String nickname, String address, String carrerImgName, String profileImgUri, String days, String info, String schedule, String originalAddress, String pay, boolean hwaldong_sancheck, boolean hwaldong_dolbom, boolean hwaldong_beauty, boolean petfriend, int payint) {
         this.uid = uid;
         this.nickname = nickname;
         this.address = address;
@@ -30,6 +30,7 @@ public class PetfriendUser {
         this.hwaldong_dolbom = hwaldong_dolbom;
         this.hwaldong_beauty = hwaldong_beauty;
         this.petfriend = petfriend;
+        this.payint = payint;
     }
 
     public String getUid() {
@@ -158,7 +159,14 @@ public class PetfriendUser {
     private boolean hwaldong_dolbom;
     private boolean hwaldong_beauty;
     private boolean petfriend;
+    private int payint;
 
 
+    public int getPayint() {
+        return payint;
+    }
 
+    public void setPayint(int payint) {
+        this.payint = payint;
+    }
 }

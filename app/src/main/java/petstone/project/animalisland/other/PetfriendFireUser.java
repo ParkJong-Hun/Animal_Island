@@ -68,7 +68,7 @@ public class PetfriendFireUser {
         return petfriend;
     }
 
-    public PetfriendFireUser(String uid, String nickname, String address, String carrerImgName, String profileImgUri, String days, String info, String schedule, String originalAddress, String pay, boolean hwaldong_sancheck, boolean hwaldong_dolbom, boolean hwaldong_beauty, boolean petfriend) {
+    public PetfriendFireUser(String uid, String nickname, String address, String carrerImgName, String profileImgUri, String days, String info, String schedule, String originalAddress, String pay, int payint, boolean hwaldong_sancheck, boolean hwaldong_dolbom, boolean hwaldong_beauty, boolean petfriend) {
         this.uid = uid;
         this.nickname = nickname;
         this.address = address;
@@ -79,10 +79,12 @@ public class PetfriendFireUser {
         this.schedule = schedule;
         this.originalAddress = originalAddress;
         this.pay = pay;
+        this.payint = payint;
         this.hwaldong_sancheck = hwaldong_sancheck;
         this.hwaldong_dolbom = hwaldong_dolbom;
         this.hwaldong_beauty = hwaldong_beauty;
         this.petfriend = petfriend;
+ ;
     }
 
     private String carrerImgName;
@@ -92,8 +94,14 @@ public class PetfriendFireUser {
     private String schedule;
     private String originalAddress;
     private String pay;
+    private int payint;
     private boolean hwaldong_sancheck;
     private boolean hwaldong_dolbom;
     private boolean hwaldong_beauty;
     private boolean petfriend;
+
+
+    public int getPayint() {
+        return payint;
+    }
 }
