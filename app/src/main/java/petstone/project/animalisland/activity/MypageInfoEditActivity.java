@@ -59,6 +59,7 @@ public class MypageInfoEditActivity extends AppCompatActivity {
     Button validate;
     TextView address;
     Button address_button;
+    String beforeNickname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +103,7 @@ public class MypageInfoEditActivity extends AppCompatActivity {
                             email.setText(document.get("email").toString());
                             sex_tv.setText(document.get("sex").toString());
                             nickname_tv.setText(document.get("nickname").toString());
+                            beforeNickname = document.get("nickname").toString();
                             if (document.get("address") != null) {
                                 address.setText(document.get("address").toString());
                             } else {
@@ -158,9 +160,15 @@ public class MypageInfoEditActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         if (queryDocumentSnapshots.getDocuments().size() > 0) {
-                            nickname_checked_switch = false;
-                            nickname_tv.setTextColor(Color.RED);
-                            Toast.makeText(getApplicationContext(), "닉네임을 사용할 수 없습니다.", Toast.LENGTH_SHORT).show();
+                            if(nickname_tv.getText().toString().equals(beforeNickname)) {
+                                nickname_checked_switch = true;
+                                nickname_tv.setTextColor(Color.GREEN);
+                                Toast.makeText(getApplicationContext(), "닉네임을 사용할 수 있습니다.", Toast.LENGTH_SHORT).show();
+                            } else {
+                                nickname_checked_switch = false;
+                                nickname_tv.setTextColor(Color.RED);
+                                Toast.makeText(getApplicationContext(), "닉네임을 사용할 수 없습니다.", Toast.LENGTH_SHORT).show();
+                            }
                         } else {
                             nickname_checked_switch = true;
                             nickname_tv.setTextColor(Color.GREEN);
