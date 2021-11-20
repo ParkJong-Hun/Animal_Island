@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,6 +33,7 @@ public class ScheduleActivity extends AppCompatActivity {
 
     private TableLayout.LayoutParams tlParams;
     private TableRow.LayoutParams tvParams, timeTvParams;
+    private boolean isCreate = false;
 
     private TextView[][] table;
 
@@ -213,7 +215,6 @@ public class ScheduleActivity extends AppCompatActivity {
                 }
             }
         }
-
     }
     private void addList() {
         Reset();
@@ -226,6 +227,14 @@ public class ScheduleActivity extends AppCompatActivity {
                 }
             }
         }
+
+        // 예외처리
+        if(list.size() == 0) {
+            isCreate = false;
+            Toast.makeText(getApplicationContext(), "시간대를 선택해주세요.",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        else isCreate = true;
 
         // 날짜 자르기
         for (int i= 0 ; i< list.size(); i++)
@@ -289,6 +298,7 @@ public class ScheduleActivity extends AppCompatActivity {
         }
 
 
+        if(isCreate)
         makeSchedule();
 
     }
