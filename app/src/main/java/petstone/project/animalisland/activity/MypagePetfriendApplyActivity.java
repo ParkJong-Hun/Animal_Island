@@ -25,6 +25,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.errorprone.annotations.Var;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -912,8 +913,15 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
                 .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                profileUri = documentSnapshot.get("image").toString();
-                Log.d("profile", profileUri);
+
+                try {
+                    profileUri = documentSnapshot.get("image").toString();
+                    Log.d("profile", profileUri);
+                }catch (Exception e)
+                {
+                    Log.d("프로필이미지 없음", e.toString());
+                }
+
 
             }
         });
