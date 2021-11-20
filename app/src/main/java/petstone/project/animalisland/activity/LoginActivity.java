@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -72,6 +73,10 @@ public class LoginActivity extends AppCompatActivity {
                             .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                         @Override
                         public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                            if(queryDocumentSnapshots.isEmpty()) {
+                                //로그인 정보 불일치
+                                Toast.makeText(getApplicationContext(), "아이디 혹은 비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
+                            }
                             for (DocumentSnapshot doc : queryDocumentSnapshots.getDocuments()) {
                                 Log.d("success", doc.getString("email"));
                                 email = doc.getString("email");
@@ -91,10 +96,25 @@ public class LoginActivity extends AppCompatActivity {
                                                     Toast.makeText(getApplicationContext(), "아이디 혹은 비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
                                                 }
                                             }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                //로그인 정보 불일치
+                                                Log.w("Fail", "이메일로 로그인:failure");
+                                                Toast.makeText(getApplicationContext(), "아이디 혹은 비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
+                                            }
                                         });
                             }
                         }
-                    });
+                    })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    //로그인 정보 불일치
+                                    Toast.makeText(getApplicationContext(), "아이디 혹은 비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
+                                }
+                            });
                 } catch (Exception e) {
                     Log.d("w", e.toString());
                     Toast.makeText(getApplicationContext(), "아이디와 비밀번호를 모두 작성해주십시오.", Toast.LENGTH_SHORT).show();
