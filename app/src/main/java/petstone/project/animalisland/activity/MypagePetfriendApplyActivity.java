@@ -193,6 +193,7 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
 
                 setResult(RESULT_OK);
 
+                //
                 //내용 확인 메소드
                 //infoCheck();
 
