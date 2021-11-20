@@ -1125,6 +1125,7 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
                     mInfo = doc.getData().get("info").toString();
                     carrerImgUri = doc.getData().get("carrerImgName").toString();
                     mPay = doc.getData().get("pay").toString();
+                    mSchedule = doc.getData().get("schedule").toString();
 
                     // 돈가져옴
                     //sigungu = sigungu.replaceAll("\\p{Punct}", "");
@@ -1144,18 +1145,26 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
                             mDolbom_btn.setChecked(isDolbom);
                         if (isBeauty)
                             mBeauty_btn.setChecked(isBeauty);
-                        hwaldongNull = false;
-                    }else {
                     }
+
+                    //hwaldongNull = false;
+                    //addressNull = false;
+                    //scheduleNull = false;
 
                     // 스케줄 널값
                     try {
-                        mSchedule = doc.getData().get("schedule").toString();
-                        if (mSchedule.length() < 2)
+                        if (mSchedule.length() > 2)
                             scheduleNull = false;
-                    } catch (Exception e) {
-                        Log.d("스케줄 로딩 실패", "실패");
+                        if(reJuso.length() > 2)
+                            addressNull = false;
+                        if(isSanChck || isDolbom || isBeauty)
+                            hwaldongNull = false;
+
+                    }catch (Exception e)
+                    {
+
                     }
+                    Log.d("데이터 확인",scheduleNull + ":" +  addressNull +":"+hwaldongNull);
 
 
                     //storageReference = storage.getReference();
