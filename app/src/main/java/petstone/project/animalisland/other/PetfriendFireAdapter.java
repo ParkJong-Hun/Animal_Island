@@ -7,15 +7,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import petstone.project.animalisland.R;
 
@@ -45,6 +52,21 @@ public class PetfriendFireAdapter extends FirestoreRecyclerAdapter<PetfriendFire
         holder.tv_Address.setText(model.getAddress());
         holder.tv_days.setText(" 요일 : "+SplitDays(model.getDays()));
 
+        
+        // 레이팅바 가져오기
+        String uid = model.getUid();
+        getRating(holder.ratingBar,uid);
+
+        // 래이팅바 점수로 바꾸기
+        holder.ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                holder.tv_rating.setText(rating+"점");
+                Log.d("점수" , rating + uid);
+            }
+        });
+
+
 
 
         // 비용이 0일떄
@@ -66,10 +88,14 @@ public class PetfriendFireAdapter extends FirestoreRecyclerAdapter<PetfriendFire
         String i = model.getCarrerImgName();
         if(i.length() == 0)
         {
+            holder.iv_hasCarrer.setVisibility(View.INVISIBLE);
             holder.tv_carrer.setText(" 자격증 : X");
+            holder.tv_carrer.setVisibility(View.GONE);
         }
         else {
+            holder.iv_hasCarrer.setVisibility(View.VISIBLE);
             holder.tv_carrer.setText(" 자격증 : O");
+            holder.tv_carrer.setVisibility(View.GONE);
         }
 
         holder.iv_profile.setImageURI(profileUri);
@@ -79,7 +105,33 @@ public class PetfriendFireAdapter extends FirestoreRecyclerAdapter<PetfriendFire
                 .into(holder.iv_profile);
 
 
+
+        // 활동 가져오기
+        boolean mIsSancheck = model.isHwaldong_sancheck();
+        boolean mIsDolBom = model.isHwaldong_dolbom();
+        boolean mIsBeauty = model.isHwaldong_beauty();
+
+        StringBuilder sb = new StringBuilder();
+        if(mIsSancheck)
+            sb.append("산책" + " ");
+        if(mIsDolBom)
+            sb.append("돌봄" + " ");
+        if(mIsBeauty)
+            sb.append("미용" + " ");
+        String str = sb.toString();
+
+        holder.tv_work.setText(" 활동 : "+ str);
+        
+
+
+
+
+
         Log.d("profileUri",profileUri.toString());
+
+
+
+
     }
 
     @NonNull
@@ -99,6 +151,10 @@ public class PetfriendFireAdapter extends FirestoreRecyclerAdapter<PetfriendFire
         TextView tv_days;
         TextView tv_pay;
         TextView tv_carrer;
+        ImageView iv_hasCarrer;
+        TextView tv_work;
+        RatingBar ratingBar;
+        TextView tv_rating;
 
 
         public UserViewHolder(@NonNull View itemView) {
@@ -109,6 +165,10 @@ public class PetfriendFireAdapter extends FirestoreRecyclerAdapter<PetfriendFire
             this.tv_days = itemView.findViewById(R.id.petfriend_list_day_tv);
             this.tv_pay = itemView.findViewById(R.id.petfriend_list_tv_pay);
             this.tv_carrer = itemView.findViewById(R.id.petfrient_list_carrer_tv);
+            this.iv_hasCarrer = itemView.findViewById(R.id.hasCarrer_Iv);
+            this.tv_work = itemView.findViewById(R.id.petfrient_list_info_tv);
+            this.ratingBar = itemView.findViewById(R.id.ratingBar2);
+            this.tv_rating = itemView.findViewById(R.id.rating_tv);
 
             // 클릭한 포지션값 얻기
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -128,7 +188,7 @@ public class PetfriendFireAdapter extends FirestoreRecyclerAdapter<PetfriendFire
         }
     }
 
-    String SplitDays(String days) {
+    private String SplitDays(String days) {
         StringBuilder sb = new StringBuilder();
         String s[] = days.split(" ");
         for (int i = 0; i < s.length; i++) {
@@ -160,12 +220,57 @@ public class PetfriendFireAdapter extends FirestoreRecyclerAdapter<PetfriendFire
         return sb.toString();
     }
 
+    void getRating(RatingBar rb,String uid)
+    {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("users").document(uid)
+                .collection("popularity")
+                .whereNotEqualTo("uid", uid)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        //한 사람 추천당 0.3 +
+                        //권한 없으면 80이 최대
+                        rb.setRating(2.5f);
+                        rb.setRating(rb.getRating() + 0.3f * value.getDocuments().size());
+                        db.collection("users").document(uid)
+                                .collection("report")
+                                .whereNotEqualTo("uid", uid)
+                                .get()
+                                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                        //한 사람 신고당 0.3 -
+                                        //권한 없으면 80이 최대
+                                        rb.setRating(rb.getRating() - 0.3f * queryDocumentSnapshots.getDocuments().size());
+                                        db.collection("users").document(uid)
+                                                .get()
+                                                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                    @Override
+                                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                        if (rb.getRating() > 4.0f && !((boolean)documentSnapshot.get("sell_permission") || (boolean)documentSnapshot.get("is_petfriend"))) {
+                                                            rb.setRating(4.0f);
+                                                        } else if ((boolean)documentSnapshot.get("sell_permission") || (boolean)documentSnapshot.get("is_petfriend")) {
+                                                            rb.setRating(rb.getRating() + 1.0f);
+                                                        } else if (rb.getRating() > 5.0f) {
+                                                            rb.setRating(5.0f);
+                                                        } else if (rb.getRating() < 0) {
+                                                            rb.setRating(0);
+                                                        }
+                                                    }
+                                                });
+                                    }
+                                });
+                    }
+                });
+    }
+
+
     // 펫프렌즈컴포넌트에서 클릭 이벤트를 위한 인터페이스
     public interface OnItemClickListener{
         void onItemClick(DocumentSnapshot documentSnapshot, int position);
     }
     public void setOnItemClickListner(OnItemClickListener listner){
         this.listener = listner;
-
     }
 }

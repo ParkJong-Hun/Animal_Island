@@ -384,6 +384,15 @@ public class MypageComponent extends Fragment {
                                                         Log.d("fail", "db 업데이트 실패");
                                                     }
                                                 });
+                                        db.collection("petfriend")
+                                                .document(auth.getUid())
+                                                .update("profileImgUri", uri.toString())
+                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        Log.d("success", "펫프렌즈 이미지 업데이트 성공");
+                                                    }
+                                                });
                                     }
                                 });
                             }

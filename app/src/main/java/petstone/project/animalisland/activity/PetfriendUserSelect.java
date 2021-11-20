@@ -28,6 +28,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.ListResult;
 import com.google.firebase.storage.StorageReference;
@@ -53,6 +55,7 @@ public class PetfriendUserSelect extends AppCompatActivity {
 
     //파이어베이스에서 가져올 데이터들
     private String mUid, mNickName, mAddress, mInfo, mDays, mSchedule, mCarrerImgUri="",mPay;
+    private boolean mIsSancheck=false,mIsDolBom=false,mIsBeauty=false;
 
     //Xml
     private TextView mUserName;
@@ -322,7 +325,10 @@ public class PetfriendUserSelect extends AppCompatActivity {
             builder.setPositiveButton("수정하기", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-
+                    Intent intent;
+                    intent = new Intent(getApplicationContext(), MypagePetfriendApplyActivity.class);
+                    intent.putExtra("new", 1);
+                    startActivity(intent);
                 }
             });
 
@@ -437,64 +443,76 @@ public class PetfriendUserSelect extends AppCompatActivity {
     // 파이어베이스 검색
     private void firebaseSearch() {
 
-        // 팻프렌즈 콜렉션에 muid와 같은 이름의 문서를 가져옴
-        DocumentReference docRef = db.collection("petfriend").document(mUid);
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        db.collection("petfriend").whereEqualTo("uid", mUid).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        Log.d("petfriendUser", "DocumentSnapshot data: " + document.getData());
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                for(QueryDocumentSnapshot doc : queryDocumentSnapshots)
+                {
+                    Log.d("펫프렌즈 : 연동성공", "\n가져온 UID : " + doc.getId() + " \n가져온 데이터 : " + doc.getData() + "\n");
 
-                        mNickName = document.getData().get("nickname").toString();
-                        mAddress = document.getData().get("address").toString();
-                        profileUri = document.getData().get("profileImgUri").toString();
-                        mDays = document.getData().get("days").toString();
-                        mInfo = document.getData().get("info").toString();
-                        mSchedule = document.getData().get("schedule").toString();
-                        mCarrerImgUri = document.getData().get("carrerImgName").toString();
-                        mPay = document.getData().get("pay").toString();
+                    mNickName = doc.getData().get("nickname").toString();
+                    mAddress = doc.getData().get("address").toString();
+                    profileUri = doc.getData().get("profileImgUri").toString();
+                    mDays = doc.getData().get("days").toString();
+                    mInfo = doc.getData().get("info").toString();
+                    mSchedule = doc.getData().get("schedule").toString();
+                    mCarrerImgUri = doc.getData().get("carrerImgName").toString();
+                    mPay = doc.getData().get("pay").toString();
 
+                    //커리어 이미지 이름이 있다면 이미지 검색
+                    if(mCarrerImgUri.length()!=0)
+                        imgSearch();
+                    else
+                        CarrerImgChange(0);
 
-                        //커리어 이미지 이름이 있다면 이미지 검색
-                        if(mCarrerImgUri.length()!=0)
-                            imgSearch();
-                        else
-                            CarrerImgChange(0);
-
-                        // 비용이 0일때
-                        String s = mPay;
-                        s = s.replaceAll("\\p{Punct}", "");
-                        int money = Integer.parseInt(s);
-                        if(money == 0)
-                        {
-                            mPay = "무료";
-                        }
-
-
-
-                        Log.d("mCarrerImgUri", mCarrerImgUri.length()+"");
-                        //이름
-                        mUserName.setText(mNickName);
-                        mInfo_tv.setText(mInfo);
-                        mUserInfo_tv.setText("요일 : " + SplitDays(mDays) +"\n"+"비용 : "+mPay+"\n");
-                        mSchedule_tv.setText(mSchedule);
-
-                        //프로필이미지
-                        Glide.with(getApplicationContext())
-                                .load(Uri.parse(profileUri))
-                                .into(mUserProfie);
-
-
-                    } else {
-                        Log.d("petfriendUser", "No such document");
+                    // 비용이 0일때
+                    String s = mPay;
+                    s = s.replaceAll("\\p{Punct}", "");
+                    int money = Integer.parseInt(s);
+                    if(money == 0)
+                    {
+                        mPay = "무료";
                     }
-                } else {
-                    Log.d("petfriendUser", "get failed with ", task.getException());
+
+                    Log.d("mCarrerImgUri", mCarrerImgUri.length()+"");
+                    //이름
+                    mUserName.setText(mNickName);
+                    mInfo_tv.setText(mInfo);
+
+                    // 활동 가져오기
+                    mIsSancheck = doc.getBoolean("hwaldong_sancheck");
+                    mIsDolBom = doc.getBoolean("hwaldong_dolbom");
+                    mIsBeauty = doc.getBoolean("hwaldong_beauty");
+                    
+                    StringBuilder sb = new StringBuilder();
+                    if(mIsSancheck)
+                        sb.append("산책" + " ");
+                    if(mIsDolBom)
+                        sb.append("돌봄" + " ");
+                    if(mIsBeauty)
+                        sb.append("미용" + " ");
+                    String str = sb.toString();
+                    
+                    //mUserInfo_tv.setText("요일 : " + SplitDays(mDays) +"\n"+"시급 : "+mPay+"\n" + "활동 : "+str +"\n");
+                    mUserInfo_tv.setText( "지역 : "+ mAddress +"\n"+ "활동 : "+str+"\n"+"요일 : "+SplitDays(mDays) +"\n"+"시급 : "+mPay);
+                    mSchedule_tv.setText(mSchedule);
+                    
+
+
+
+
+
+
+                    //프로필이미지
+                    Glide.with(getApplicationContext())
+                            .load(Uri.parse(profileUri))
+                            .into(mUserProfie);
+
                 }
+
             }
         });
+
 
 
     }

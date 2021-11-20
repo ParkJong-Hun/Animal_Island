@@ -25,8 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 //import com.firebase.ui.database.FirebaseRecyclerOptions;
 //import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 //import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.auth.FirebaseAuth;
@@ -110,6 +109,12 @@ public class PetFriendComponent extends Fragment {
     // 스피너 리스트
     private String[] mHwaldong_list = {"활동", "산책", "돌봄", "미용"};
     private String[] mMoney_list = {"비용", "저가순", "고가순"};
+    // 필터
+    private String mFilter = "";
+
+    //유저 데이터
+    String mNickName = "";
+    float mRating;
 
     //파이어베이스 쿼리문
     Query query;
@@ -179,13 +184,15 @@ public class PetFriendComponent extends Fragment {
 
         // 현재 유저 확인
         usercheck();
-        //if(arrayList!=null)
-        //firebaseSearch();
+        if (arrayList != null)
+            firebaseSearch();
 
 
+        //중복체크
         jungbokCheck();
         //파이어베이스에서 정보 읽어서 리사이클러뷰에 넣기
         FireAdapter();
+        TotalUser();
         // 어댑터 클릭 이벤트
         fireAdapter.setOnItemClickListner(new PetfriendFireAdapter.OnItemClickListener() {
             @Override
@@ -220,13 +227,13 @@ public class PetFriendComponent extends Fragment {
                     case "미용":
                         HwaldongFilter(m);
                         break;
-
                     default:
                         HwaldongFilter(m);
                         break;
 
                 }
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
@@ -237,29 +244,28 @@ public class PetFriendComponent extends Fragment {
         mOrderbyMoney_sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getContext(),"활동선택 : "+mOrderbyMoney_sp.getItemAtPosition(position),Toast.LENGTH_SHORT).show();
                 String m = mOrderbyMoney_sp.getItemAtPosition(position).toString();
-                switch (m)
-                {
-                    case "비용": MoneyOrderBy(m);break;
-                    case "저가순": MoneyOrderBy(m);break;
-                    case "고가순": MoneyOrderBy(m);break;
-                    default: break;
+                Log.d("스피너 포지션 값", position + "\n" + view + "\n" + id);
+                switch (m) {
+                    case "저가순":
+                        MoneyOrderBy(m);
+                        break;
+                    case "고가순":
+                        MoneyOrderBy(m);
+                        break;
+                    default:
+                        MoneyOrderBy(m);
+                        break;
                 }
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
 
-
-
-
-        // 중복 체크
-        //jungbokCheck();
-
-
+        // 내글 보기?
         myPetfriend_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -270,18 +276,19 @@ public class PetFriendComponent extends Fragment {
         });
 
 
+        // 검색 이벤트
         petfriend_search_view.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
             @Override
             public boolean onQueryTextSubmit(String s) {
                 Search(s);
-                return false;
+                return true;
             }
 
             @Override
             public boolean onQueryTextChange(String s) {
                 Search(s);
-                return true;
+                return false;
             }
         });
 
@@ -351,21 +358,17 @@ public class PetFriendComponent extends Fragment {
     // 검색 함수
     public void Search(String s) {
 
-
         //배열에서 검색
         ListSearch(s);
-        //파이어베이스에서 검색
-        //fireSearch(s);
-
 
     }
 
-    // 쿼리형식으로 변경
+    // 쿼리형식으로
     // 펫프랜즈 콜렉션에 모든 문서 가져오기
     void firebaseSearch() {
 
 
-
+        /*
         query.get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -375,11 +378,10 @@ public class PetFriendComponent extends Fragment {
                         arrayList.clear(); // 기존 배열 초기화 예방차원
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d("연동성공", "\n가져온 UID : " + document.getId() + " \n가져온 데이터 : " + document.getData() + "\n");
+                                Log.d("firesearch : 연동성공", "\n가져온 UID : " + document.getId() + " \n가져온 데이터 : " + document.getData() + "\n");
 
                                 profileUri = document.getData().get("profileImgUri").toString();
                                 Days = document.getData().get("days").toString();
-
 
                                 //리스트에 petfriend 컬렉션에서 모든 문서들의 데이터(닉네임,uid,비용,시간,자격증)를 가져와서 arrayList에 넣기
                                 //String uid, String nickname, String address
@@ -403,6 +405,8 @@ public class PetFriendComponent extends Fragment {
 
                                 //어댑터 새로고침
                                 user_adapter.notifyDataSetChanged();
+                                int i = user_adapter.getItemCount();
+                                userListSize.setText(i + "명");
 
 
                             }
@@ -412,8 +416,50 @@ public class PetFriendComponent extends Fragment {
                     }
                 });
 
+         */
+
+        db.collection("petfriend").whereEqualTo("petfriend", true).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                    Log.d("파이어스토어 : 연동성공", "\n가져온 UID : " + doc.getId() + " \n가져온 데이터 : " + doc.getData() + "\n");
+
+                    profileUri = doc.getData().get("profileImgUri").toString();
+                    Days = doc.getData().get("days").toString();
+
+                    //리스트에 petfriend 컬렉션에서 모든 문서들의 데이터(닉네임,uid,비용,시간,자격증)를 가져와서 arrayList에 넣기
+                    //String uid, String nickname, String address
+                    //uid 닉네임 주소 자격증 프로필주소
+                    arrayList.add(new PetfriendUser(
+                            doc.getData().get("uid").toString()
+                            , doc.getData().get("nickname").toString()
+                            , doc.getData().get("address").toString()
+                            , doc.getData().get("carrerImgName").toString()
+                            , doc.getData().get("profileImgUri").toString()
+                            , SplitDays(Days)
+                            , null
+                            , null
+                            , null
+                            , doc.getData().get("pay").toString()
+                            , doc.getBoolean("hwaldong_sancheck")
+                            , doc.getBoolean("hwaldong_dolbom")
+                            , doc.getBoolean("hwaldong_beauty")
+                            , doc.getBoolean("petfriend")
+                            , Integer.parseInt(doc.getData().get("payint").toString())
+                    ));
+
+                    //어댑터 새로고침
+                    user_adapter.notifyDataSetChanged();
+                    int i = user_adapter.getItemCount();
+                    userListSize.setText(i + "명");
+
+                }
+            }
+        });
+
 
     }
+
 
     // 필터
     void HwaldongFilter(String s) {
@@ -422,83 +468,39 @@ public class PetFriendComponent extends Fragment {
 
         switch (s) {
             case "산책":
+                Log.d("산책 ", query.toString());
                 filter = "hwaldong_sancheck";
+                mOrderbyMoney_sp.setSelection(0);
                 query = db.collection("petfriend").whereEqualTo(filter, true);
                 break;
             case "돌봄":
+                Log.d("돌봄 ", query.toString());
                 filter = "hwaldong_dolbom";
+                mOrderbyMoney_sp.setSelection(0);
                 query = db.collection("petfriend").whereEqualTo(filter, true);
                 break;
             case "미용":
+                Log.d("미용 ", query.toString());
                 filter = "hwaldong_beauty";
+                mOrderbyMoney_sp.setSelection(0);
                 query = db.collection("petfriend").whereEqualTo(filter, true);
                 break;
 
             default:
+                filter = "기본";
                 query = db.collection("petfriend");
+                mOrderbyMoney_sp.setSelection(0);
                 break;
         }
 
+        mFilter = filter;
         FireAdapterFilter();
 
 
-
-
-
-        /*
-        ArrayList<PetfriendUser> mArrayList = new ArrayList<>();
-        if(s.equals("산책")) {
-
-            for (int i = 0; i < arrayList.size(); i++) {
-                boolean isSancheck = arrayList.get(i).isHwaldong_sancheck();
-
-                if (isSancheck) {
-                    mArrayList.add(arrayList.get(i));
-                }
-            }
-            PetfriendUserList_CustomAdapter adapter = new PetfriendUserList_CustomAdapter(mArrayList, getContext());
-            user_rv.setAdapter(adapter);
-            adapter.notifyDataSetChanged();
-        }
-        else if(s.equals("돌봄"))
-        {
-            for (int i = 0; i < arrayList.size(); i++) {
-                boolean isDolbom = arrayList.get(i).isHwaldong_dolbom();
-
-                if (isDolbom) {
-                    mArrayList.add(arrayList.get(i));
-                }
-            }
-            PetfriendUserList_CustomAdapter adapter = new PetfriendUserList_CustomAdapter(mArrayList, getContext());
-            user_rv.setAdapter(adapter);
-            adapter.notifyDataSetChanged();
-        }
-        else if(s.equals("미용"))
-        {
-            for (int i = 0; i < arrayList.size(); i++) {
-                boolean isBeauty = arrayList.get(i).isHwaldong_beauty();
-
-                if (isBeauty) {
-                    mArrayList.add(arrayList.get(i));
-                }
-            }
-            PetfriendUserList_CustomAdapter adapter = new PetfriendUserList_CustomAdapter(mArrayList, getContext());
-            user_rv.setAdapter(adapter);
-            adapter.notifyDataSetChanged();
-
-        }
-        else{
-
-            firebaseSearch();
-            user_adapter.notifyDataSetChanged();
-            user_rv.setAdapter(user_adapter);
-
-        }
-         */
-
     }
 
-    void FireAdapterFilter() {
+    // 쿼리문으로 필터 작동
+    private void FireAdapterFilter() {
 
         FirestoreRecyclerOptions<PetfriendFireUser> options = new FirestoreRecyclerOptions.Builder<PetfriendFireUser>()
                 .setQuery(query, PetfriendFireUser.class)
@@ -506,26 +508,30 @@ public class PetFriendComponent extends Fragment {
 
         fireAdapter.updateOptions(options);
         fireAdapter.notifyDataSetChanged();
+        user_adapter = fireAdapter;
         //user_rv.setAdapter(fireAdapter);
-        Log.d("필터 작동 ", query + "");
+        int i = user_adapter.getItemCount();
+        Log.d("필터 작동 ", query + "" + i);
+        userListSize.setText(i + "명");
 
     }
 
-    // 비용별 오더바이
+    // 돈 머니 비용별 오더바이
     void MoneyOrderBy(String s) {
 
-        if (s.equals("저가순")) {
-            //오름차순
-            query.orderBy("pay");
-            Log.d("오름차순 작동" , "오름차순");
+        if (s.equals("고가순")) {
+            Log.d("고가순 ", query.toString());
+            query = getHwadongQuery("내림");
+            Log.d("내림차순 작동", "내림차순");
 
-        } else if (s.equals("고가순")) {
-            //내림차순
-            query.orderBy("pay", Query.Direction.DESCENDING);
-            Log.d("내림차순 작동" , "내림차순");
-
+        } else if (s.equals("저가순")) {
+            Log.d("저가순 ", query.toString());
+            query = getHwadongQuery("오름");
+            Log.d("오름차순 작동", "오름차순");
         } else {
-            query = db.collection("petfriend");
+            Log.d("기본순 ", query.toString());
+            query = getHwadongQuery("기본");
+
         }
 
         FireAdapterFilter();
@@ -538,6 +544,41 @@ public class PetFriendComponent extends Fragment {
         user = FirebaseAuth.getInstance().getCurrentUser();
         mMyUid = user.getUid();
         Log.d("MyUid", "내 UID : " + mMyUid.toString());
+    }
+
+    // 활동 쿼리 가져오기
+    private Query getHwadongQuery(String bangsick) {
+        Query mQyery;
+
+        if (bangsick.equals("오름")) {
+
+            if (mFilter.length() > 5) {
+                mQyery = db.collection("petfriend").whereEqualTo(mFilter, true).orderBy("payint");
+            } else {
+                mQyery = db.collection("petfriend").orderBy("payint");
+            }
+
+        } else if (bangsick.equals("내림")) {
+
+            if (mFilter.length() > 5) {
+                mQyery = db.collection("petfriend").whereEqualTo(mFilter, true).orderBy("payint", Query.Direction.DESCENDING);
+            } else {
+                mQyery = db.collection("petfriend").orderBy("payint", Query.Direction.DESCENDING);
+            }
+
+        } else {
+
+            if (mFilter.length() > 5) {
+                mQyery = db.collection("petfriend").whereEqualTo(mFilter, true);
+            } else {
+                mQyery = db.collection("petfriend");
+            }
+
+
+        }
+
+
+        return mQyery;
     }
 
     // 중복 확인
@@ -570,6 +611,8 @@ public class PetFriendComponent extends Fragment {
                                     Log.d("remove", mMyUid + dc.getDocument().getData());
                                     myPetfriend_btn.setVisibility(View.GONE);
                                     isJungbok = false;
+                                    int i = fireAdapter.getItemCount();
+                                    userListSize.setText(i + "명");
                                     break;
                             }
                         }
@@ -594,24 +637,13 @@ public class PetFriendComponent extends Fragment {
         Log.d("어댑터에 파이어베이스 어댑터 넣기", "연결");
         user_adapter = fireAdapter;
         user_rv.setAdapter(fireAdapter);
-
-        /*
-        Query query1 = db.collection("petfriend").whereEqualTo("uid",mMyUid);
-
-        FirestoreRecyclerOptions<PetfriendFireUser> options1 = new FirestoreRecyclerOptions.Builder<PetfriendFireUser>()
-                .setQuery(query1,PetfriendFireUser.class)
-                .build();
-
-        PetfriendFireAdapter  fa = new PetfriendFireAdapter(options1);
-
-        Log.d("파이어 어댑터 사이즈",fa.getItemCount() + " ");
-
-         */
+        TotalUser();
 
 
     }
 
-    String SplitDays(String days) {
+
+    private String SplitDays(String days) {
         StringBuilder sb = new StringBuilder();
         String s[] = days.split(" ");
         for (int i = 0; i < s.length; i++) {
@@ -646,6 +678,9 @@ public class PetFriendComponent extends Fragment {
     //리스트에서에서 검색
     private void ListSearch(String s) {
 
+
+
+        // 펫프렌즈 데이터 가져오기
         firebaseSearch();
 
         ArrayList<PetfriendUser> mArrayList = new ArrayList<>();
@@ -654,15 +689,26 @@ public class PetFriendComponent extends Fragment {
             String searchNickName = arrayList.get(i).getNickname();
             String searchAddress = arrayList.get(i).getAddress();
 
-            if (searchNickName.toLowerCase().contains(s.toLowerCase()) || searchAddress.toLowerCase().contains(s.toLowerCase())) {
+            if (searchNickName.toLowerCase().contains(s.toLowerCase()) || searchAddress.toLowerCase().contains(s.toLowerCase()) && s.length()>1) {
                 mArrayList.add(arrayList.get(i));
             }
         }
 
+        // 배열 중복 방지
+        arrayList.clear();
+        // 새로운 어댑터 생성
         PetfriendUserList_CustomAdapter adapter = new PetfriendUserList_CustomAdapter(mArrayList, getContext());
-        user_rv.setAdapter(adapter);
+        // 어댑터 설정
+        user_adapter = adapter;
+        user_adapter.notifyDataSetChanged();
+        user_rv.setAdapter(user_adapter);
+        // 인원수 카운트
+        //int i = user_adapter.getItemCount();
+        //userListSize.setText(i + "명");
+        // 어댑터 새로고침
         adapter.notifyDataSetChanged();
 
+        // 검색창이 빈칸일떄
         if (s.isEmpty()) {
 
             //firebaseSearch();
@@ -670,41 +716,29 @@ public class PetFriendComponent extends Fragment {
             //user_rv.setAdapter(user_adapter);
             fireAdapter.notifyDataSetChanged();
             user_rv.setAdapter(fireAdapter);
+            TotalUser();
 
         }
 
     }
 
-    //파이어베이스에서 검색
 
-    /*private void fireSearch(String s){
+    // 유저 검색
+    private void TotalUser() {
 
+        user_adapter.notifyDataSetChanged();
 
-        Query query;
-        if (s.toString().isEmpty()) {
-            query = db.collection("petfriend");
+        user_adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                int totalNumberOfItems = user_adapter.getItemCount();
+                userListSize.setText(String.valueOf(totalNumberOfItems) + "명");
+                Log.d("총유저 : ", String.valueOf(totalNumberOfItems) + "명");
+            }
 
-
-
-        }
-        else {
-            query = db.collection("petfriend")
-                    .orderBy("nickname")
-                    .startAt(s)
-                    .endAt(s +"\uf8ff");
+        });
 
 
-        }
-
-        FirestoreRecyclerOptions<PetfriendFireUser> options = new FirestoreRecyclerOptions.Builder<PetfriendFireUser>()
-                .setQuery(query, PetfriendFireUser.class)
-                .build();
-
-
-        fireAdapter.updateOptions(options);
-        fireAdapter.notifyDataSetChanged();
-        
-    }*/
+    }
 
 
     // 다이어로그 오류 방지
