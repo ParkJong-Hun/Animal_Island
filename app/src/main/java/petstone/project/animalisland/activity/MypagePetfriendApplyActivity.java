@@ -392,7 +392,6 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
                             Log.d("삭제못함", "삭제못함");
                         }
                     });
-
                 }
                  */
 
@@ -657,9 +656,7 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
                     if (!isSanChck & !isDolbom & !isBeauty) {
                         Toast.makeText(getApplicationContext(), "활동을 골라 주세요.", Toast.LENGTH_SHORT).show();
                         return;
-
                     }
-
                      */
 
 

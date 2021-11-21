@@ -20,7 +20,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="100dp"
+            android:layout_marginStart="85dp"
             android:text="ANIMAL"
             android:textColor="#668c47"
             android:textSize="25sp"
@@ -35,6 +35,14 @@
             android:textColor="#843c0c"
             android:textSize="25sp"
             android:textStyle="bold|italic" />
+
+        <ImageView
+            android:id="@+id/delete"
+            android:layout_marginStart="80dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/delete"
+            android:visibility="invisible"/>
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -53,11 +61,11 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/select_img"
-                android:layout_width="match_parent"
-                android:layout_height="110dp"
+                android:layout_width="wrap_content"
+                android:layout_height="150dp"
                 android:layout_marginTop="15dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:orientation="vertical" />
 
 
@@ -203,12 +211,12 @@
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:background="@drawable/border"
-        android:padding="10dp">
+        android:padding="5dp">
 
         <ImageView
             android:id="@+id/profile"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:layout_marginStart="10dp"
             android:src="@drawable/mypage_colored"
             app:layout_constraintStart_toStartOf="parent"
@@ -219,7 +227,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:text="닉네임"
             android:textSize="17sp"
             app:layout_constraintLeft_toRightOf="@id/profile"
@@ -254,6 +262,7 @@
             app:layout_constraintTop_toBottomOf="@id/name" />
 
         <Button
+            android:id="@+id/btn_chat"
             android:layout_width="80dp"
             android:layout_height="35dp"
             android:background="@drawable/button_shape"
