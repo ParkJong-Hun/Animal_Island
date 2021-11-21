@@ -79,6 +79,8 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
 
     // 데이터값  확인
     private boolean addressNull = true;
+    private boolean scheduleNull = true;
+    private boolean hwaldongNull = true;
     private StringBuilder sb = new StringBuilder();
 
     //파이어베이스 관련
@@ -193,17 +195,13 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 setResult(RESULT_OK);
-
-                //내용 확인 메소드
-                //infoCheck();
-
+                
                 infoCheck();
                 // 주소가 빈칸이면 다이어로그 안나옴
-                if (!addressNull) {
+                if (!addressNull && !scheduleNull && !hwaldongNull) {
                     PetfriendDialog();
-                }
-                else
-                    Toast.makeText(getApplicationContext(), "주소를 추가해 주세요.", Toast.LENGTH_SHORT).show();
+                } else
+                    Toast.makeText(getApplicationContext(), "주소, 스케줄, 활동을 확인해 주세요.", Toast.LENGTH_SHORT).show();
                 return;
             }
         });
@@ -215,10 +213,12 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
 
                 if (isSanChck == false) {
                     isSanChck = true;
+                    hwaldongNull = false;
                     Log.d("산책 채크박스", isSanChck + "");
 
                 } else {
                     isSanChck = false;
+                    hwaldongNull = true;
                     Log.d("산책 채크박스", isSanChck + "");
                 }
 
@@ -230,10 +230,12 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
 
                 if (isDolbom == false) {
                     isDolbom = true;
+                    hwaldongNull = false;
                     Log.d("산책 채크박스", isDolbom + "");
 
                 } else {
                     isDolbom = false;
+                    hwaldongNull = true;
                     Log.d("산책 채크박스", isDolbom + "");
                 }
 
@@ -247,10 +249,12 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
 
                 if (isBeauty == false) {
                     isBeauty = true;
+                    hwaldongNull = false;
                     Log.d("산책 채크박스", isBeauty + "");
 
                 } else {
                     isBeauty = false;
+                    hwaldongNull = true;
                     Log.d("산책 채크박스", isBeauty + "");
                 }
 
@@ -431,7 +435,7 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
                 }
             }
 
-            //업로드
+            //업로드 
             for (int i = 0; i < imgNameArray.length; i++) {
                 if (!imgUriArray[i].equals("")) {
 
@@ -626,34 +630,45 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
 
-                    // 날짜 돈 변환
-                    getDays();
-                    getPay();
-
                     Log.d("검사 시작", "시작");
+                    if(addressNull || scheduleNull || hwaldongNull)
+                    {
+                        Toast.makeText(getApplicationContext(), "주소, 스케줄, 활동을 추가해 주세요.", Toast.LENGTH_SHORT).show();
+                        Log.d("검사 끝", "실패");
+                        return;
+                    }
+
+
+                    //날짜 돈 변환
+                    //getDays();
+                    //getPay();
+
                     //주소입력 검사
+                    /*
                     if (addressNull) {
                         Toast.makeText(getApplicationContext(), "주소를 추가해 주세요.", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    if(mSchedule.length() < 3 || Days.length() < 2) {
+                    if (mSchedule.length() < 3 || Days.length() < 2) {
                         Toast.makeText(getApplicationContext(), "스케줄을 추가해 주세요.", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    if(!isSanChck&!isDolbom&!isBeauty) {
+                    if (!isSanChck & !isDolbom & !isBeauty) {
                         Toast.makeText(getApplicationContext(), "활동을 골라 주세요.", Toast.LENGTH_SHORT).show();
                         return;
-
                     }
-                    Log.d("검사 끝", "끝");
+                     */
 
 
 
+                    //날짜 돈 변환
+                    getDays();
+                    getPay();
 
-                    // 토글 활성화시 이미지 업로드
+                    //토글 활성화시 이미지 업로드
                     if (setCarrer)
                         ImgUpload();
-                        // 비활성화시 모든 이미지 삭제
+                    // 비활성화시 모든 이미지 삭제
                     else
                         StorageImgSearch();
 
@@ -661,6 +676,8 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
                     if (carrerImgUri.length() < 5) {
                         carrerImgUri = "";
                     }
+
+
 
                     // 데이터삽입 uid 닉네임 비용 경력 시간 비용 등등
                     //String uid, String nickname, String originalAddress, String do_address, String gu_address, String ro_address, String dong_address
@@ -776,7 +793,6 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
         Log.d("다이어로그", "다이어로그");
 
 
-
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("모든 이미지를 삭제 하실건가요?");
 
@@ -826,7 +842,6 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
         mAlertDialog.show();
 
     }
-
 
 
     // 돈
@@ -887,6 +902,7 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
             str = sb.toString();
             mSchedule_tv.setText(str);
             mSchedule = str;
+            scheduleNull = false;
             Log.d("날짜 데이터 확인", mDays.size() + "");
         } catch (Exception e) {
             Log.e("error", e.toString());
@@ -916,9 +932,8 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
                 try {
                     profileUri = documentSnapshot.get("image").toString();
                     Log.d("profile", profileUri);
-                }catch (Exception e)
-                {
-                    Log.d("프로필이미지 없음", e.toString());
+                } catch (Exception e) {
+                    Log.d("프로필이미지 없음", profileUri.toString());
                 }
 
 
@@ -1104,10 +1119,10 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
                     Days = doc.getData().get("days").toString();
                     profileUri = doc.getData().get("profileImgUri").toString();
                     mOriginaAddress = doc.getData().get("originalAddress").toString();
-                    mSchedule = doc.getData().get("schedule").toString();
                     mInfo = doc.getData().get("info").toString();
                     carrerImgUri = doc.getData().get("carrerImgName").toString();
                     mPay = doc.getData().get("pay").toString();
+                    mSchedule = doc.getData().get("schedule").toString();
 
                     // 돈가져옴
                     //sigungu = sigungu.replaceAll("\\p{Punct}", "");
@@ -1120,12 +1135,33 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
                     isDolbom = doc.getBoolean("hwaldong_dolbom");
                     isBeauty = doc.getBoolean("hwaldong_beauty");
 
-                    if (isSanChck)
-                        mSanchack_btn.setChecked(isSanChck);
-                    if (isDolbom)
-                        mDolbom_btn.setChecked(isDolbom);
-                    if (isBeauty)
-                        mBeauty_btn.setChecked(isBeauty);
+                    if(isSanChck || isDolbom || isBeauty) {
+                        if (isSanChck)
+                            mSanchack_btn.setChecked(isSanChck);
+                        if (isDolbom)
+                            mDolbom_btn.setChecked(isDolbom);
+                        if (isBeauty)
+                            mBeauty_btn.setChecked(isBeauty);
+                    }
+
+                    //hwaldongNull = false;
+                    //addressNull = false;
+                    //scheduleNull = false;
+
+                    // 스케줄 널값
+                    try {
+                        if (mSchedule.length() > 2)
+                            scheduleNull = false;
+                        if(reJuso.length() > 2)
+                            addressNull = false;
+                        if(isSanChck || isDolbom || isBeauty)
+                            hwaldongNull = false;
+
+                    }catch (Exception e)
+                    {
+
+                    }
+                    Log.d("데이터 확인",scheduleNull + ":" +  addressNull +":"+hwaldongNull);
 
 
                     //storageReference = storage.getReference();
@@ -1134,84 +1170,91 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
 
                     // 커리어 이미지 여부 확인
 
-                    if (carrerImgUri.length() != 0) {
-
-                        storageReference = storage.getReference();
-                        storageReference = storageReference.child("CarrerImg/" + uid + "_carrer" + "/");
+                    try {
 
 
-                        reImgName.clear();
-                        toggle.setChecked(true);
-                        String imgName = doc.getData().get("carrerImgName").toString();
-                        // 이미지 이름 넣기
-                        String[] str = imgName.split(" ");
-                        for (int i = 0; i < str.length; i++) {
-                            imgNameArray[i] = str[i];
-                        }
+                        if (carrerImgUri.length() != 0) {
+
+                            storageReference = storage.getReference();
+                            storageReference = storageReference.child("CarrerImg/" + uid + "_carrer" + "/");
 
 
-                        //imgNameArray
-                        for (int i = 0; i < imgNameArray.length; i++) {
-                            Log.d("imgNameArray", imgNameArray[i] + "");
-                            if (imgNameArray[i].length() != 0) {
-                                //StorageReference sb = storageReference.child(imgNameArray[i]);
-                                switch (i) {
-                                    case 0:
-                                        if (imgNameArray[i].contains(uid + "_" + 0)) {
-                                            imgNameArray[0] = uid + "_" + 0;
-                                            StorageReference sb = storageReference.child(imgNameArray[0]);
-                                            isImgNull_1 = false;
-                                            LoadImg(0, sb);
-                                        }
-                                        break;
-                                    case 1:
-                                        if (imgNameArray[i].contains(uid + "_" + 1)) {
-                                            imgNameArray[1] = uid + "_" + 1;
-                                            StorageReference sb = storageReference.child(imgNameArray[1]);
-                                            isImgNull_2 = false;
-                                            LoadImg(1, sb);
-                                        }
-                                        break;
-                                    case 2:
-                                        if (imgNameArray[i].contains(uid + "_" + 2)) {
-                                            imgNameArray[2] = uid + "_" + 2;
-                                            StorageReference sb = storageReference.child(imgNameArray[2]);
-                                            isImgNull_3 = false;
-                                            LoadImg(2, sb);
-                                        }
-                                        break;
-                                    default:
-                                        break;
-                                }
-                            }
-                        }
-
-
-                        for (int i = 0; i < imgNameArray.length; i++) {
-
-                            if (imgName.length() != 0) {
-                                //LoadImg(i);
-                            } else {
-                                switch (i) {
-                                    case 0:
-                                        license1.setImageResource(R.drawable.image);
-                                    case 1:
-                                        license2.setImageResource(R.drawable.image);
-                                    case 2:
-                                        license3.setImageResource(R.drawable.image);
-                                }
-
+                            reImgName.clear();
+                            toggle.setChecked(true);
+                            String imgName = doc.getData().get("carrerImgName").toString();
+                            // 이미지 이름 넣기
+                            String[] str = imgName.split(" ");
+                            for (int i = 0; i < str.length; i++) {
+                                imgNameArray[i] = str[i];
                             }
 
+
+                            //imgNameArray
+                            for (int i = 0; i < imgNameArray.length; i++) {
+                                Log.d("imgNameArray", imgNameArray[i] + "");
+                                if (imgNameArray[i].length() != 0) {
+                                    //StorageReference sb = storageReference.child(imgNameArray[i]);
+                                    switch (i) {
+                                        case 0:
+                                            if (imgNameArray[i].contains(uid + "_" + 0)) {
+                                                imgNameArray[0] = uid + "_" + 0;
+                                                StorageReference sb = storageReference.child(imgNameArray[0]);
+                                                isImgNull_1 = false;
+                                                LoadImg(0, sb);
+                                            }
+                                            break;
+                                        case 1:
+                                            if (imgNameArray[i].contains(uid + "_" + 1)) {
+                                                imgNameArray[1] = uid + "_" + 1;
+                                                StorageReference sb = storageReference.child(imgNameArray[1]);
+                                                isImgNull_2 = false;
+                                                LoadImg(1, sb);
+                                            }
+                                            break;
+                                        case 2:
+                                            if (imgNameArray[i].contains(uid + "_" + 2)) {
+                                                imgNameArray[2] = uid + "_" + 2;
+                                                StorageReference sb = storageReference.child(imgNameArray[2]);
+                                                isImgNull_3 = false;
+                                                LoadImg(2, sb);
+                                            }
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }
+                            }
+
+
+                            for (int i = 0; i < imgNameArray.length; i++) {
+
+                                if (imgName.length() != 0) {
+                                    //LoadImg(i);
+                                } else {
+                                    switch (i) {
+                                        case 0:
+                                            license1.setImageResource(R.drawable.image);
+                                        case 1:
+                                            license2.setImageResource(R.drawable.image);
+                                        case 2:
+                                            license3.setImageResource(R.drawable.image);
+                                    }
+
+                                }
+
+                            }
+
+
+                            //uri
+                            //https://firebasestorage.googleapis.com/v0/b/animal-island-512cc.appspot.com/o/CarrerImg%2FDfLWml3R9McBFSQIOLXjpNmPMCJ2_carrer%2FDfLWml3R9McBFSQIOLXjpNmPMCJ2_0?alt=media&token=959c285d-581c-4d97-ab95-e71b8d9da4cb
+
+                        } else {
+                            toggle.setChecked(false);
+                            petfriend_delete_iv.setVisibility(View.GONE);
                         }
-
-
-                        //uri
-                        //https://firebasestorage.googleapis.com/v0/b/animal-island-512cc.appspot.com/o/CarrerImg%2FDfLWml3R9McBFSQIOLXjpNmPMCJ2_carrer%2FDfLWml3R9McBFSQIOLXjpNmPMCJ2_0?alt=media&token=959c285d-581c-4d97-ab95-e71b8d9da4cb
-
-                    } else {
-                        toggle.setChecked(false);
-                        petfriend_delete_iv.setVisibility(View.GONE);
+                    }catch (Exception e)
+                    {
+                        Log.d("이미지 로딩 실패", "실패");
                     }
 
 
