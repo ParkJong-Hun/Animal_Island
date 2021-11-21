@@ -42,6 +42,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import petstone.project.animalisland.R;
@@ -185,7 +186,7 @@ public class PetFriendComponent extends Fragment {
         // 현재 유저 확인
         usercheck();
         if (arrayList != null)
-            firebaseSearch();
+            //firebaseSearch();
 
 
         //중복체크
@@ -281,14 +282,14 @@ public class PetFriendComponent extends Fragment {
 
             @Override
             public boolean onQueryTextSubmit(String s) {
-                Search(s);
-                return true;
+                //Search(s);
+                return false;
             }
 
             @Override
             public boolean onQueryTextChange(String s) {
                 Search(s);
-                return false;
+                return true;
             }
         });
 
@@ -358,6 +359,7 @@ public class PetFriendComponent extends Fragment {
     // 검색 함수
     public void Search(String s) {
 
+        //firebaseSearch();
         //배열에서 검색
         ListSearch(s);
 
@@ -430,6 +432,7 @@ public class PetFriendComponent extends Fragment {
                     //리스트에 petfriend 컬렉션에서 모든 문서들의 데이터(닉네임,uid,비용,시간,자격증)를 가져와서 arrayList에 넣기
                     //String uid, String nickname, String address
                     //uid 닉네임 주소 자격증 프로필주소
+                    //SplitDays(Days)
                     arrayList.add(new PetfriendUser(
                             doc.getData().get("uid").toString()
                             , doc.getData().get("nickname").toString()
@@ -635,6 +638,8 @@ public class PetFriendComponent extends Fragment {
         fireAdapter = new PetfriendFireAdapter(options, getContext());
 
         Log.d("어댑터에 파이어베이스 어댑터 넣기", "연결");
+        user_adapter.notifyDataSetChanged();
+        fireAdapter.notifyDataSetChanged();
         user_adapter = fireAdapter;
         user_rv.setAdapter(fireAdapter);
         TotalUser();
@@ -678,26 +683,29 @@ public class PetFriendComponent extends Fragment {
     //리스트에서에서 검색
     private void ListSearch(String s) {
 
-
-
-        // 펫프렌즈 데이터 가져오기
+        ArrayList<PetfriendUser> mArrayList = new ArrayList<>();
         firebaseSearch();
 
-        ArrayList<PetfriendUser> mArrayList = new ArrayList<>();
-
         for (int i = 0; i < arrayList.size(); i++) {
+
             String searchNickName = arrayList.get(i).getNickname();
             String searchAddress = arrayList.get(i).getAddress();
 
-            if (searchNickName.toLowerCase().contains(s.toLowerCase()) || searchAddress.toLowerCase().contains(s.toLowerCase()) && s.length()>1) {
+            if (searchNickName.toLowerCase().contains(s.toLowerCase()) || searchAddress.toLowerCase().contains(s.toLowerCase())) {
                 mArrayList.add(arrayList.get(i));
+                Log.d("mArrayList.size", mArrayList.size() + "");
+
             }
         }
+
+
 
         // 배열 중복 방지
         arrayList.clear();
         // 새로운 어댑터 생성
         PetfriendUserList_CustomAdapter adapter = new PetfriendUserList_CustomAdapter(mArrayList, getContext());
+        // 어댑터 새로고침
+        adapter.notifyDataSetChanged();
         // 어댑터 설정
         user_adapter = adapter;
         user_adapter.notifyDataSetChanged();
@@ -705,16 +713,11 @@ public class PetFriendComponent extends Fragment {
         // 인원수 카운트
         //int i = user_adapter.getItemCount();
         //userListSize.setText(i + "명");
-        // 어댑터 새로고침
-        adapter.notifyDataSetChanged();
 
         // 검색창이 빈칸일떄
         if (s.isEmpty()) {
-
-            //firebaseSearch();
-            //user_adapter.notifyDataSetChanged();
-            //user_rv.setAdapter(user_adapter);
             fireAdapter.notifyDataSetChanged();
+            Log.d("fireAdapter Reset", fireAdapter.getItemCount()+ "");
             user_rv.setAdapter(fireAdapter);
             TotalUser();
 
