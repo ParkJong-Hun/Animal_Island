@@ -1,5 +1,7 @@
 package petstone.project.animalisland.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -53,11 +55,12 @@ public class SelectSellRehomeActivity extends AppCompatActivity {
     TextView name;
 
     String uid, mMyUid;
+    String document_id;
     FirebaseFirestore db;
     FirebaseAuth auth;
     FirebaseUser user;
     FirebaseStorage storage;
-    StorageReference ImgRef;
+    StorageReference ImgRef, postImgRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +68,7 @@ public class SelectSellRehomeActivity extends AppCompatActivity {
         setContentView(R.layout.select_sell_rehome);
 
         Intent intent = getIntent();
-        String document_id = intent.getStringExtra("document_id");
+        document_id = intent.getStringExtra("document_id");
 
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
@@ -188,7 +191,7 @@ public class SelectSellRehomeActivity extends AppCompatActivity {
                     }
                 });
 
-        StorageReference postImgRef = ImgRef.child(document_id);
+        postImgRef = ImgRef.child(document_id);
         postImgRef.listAll()
                 .addOnSuccessListener(new OnSuccessListener<ListResult>() {
 
@@ -223,21 +226,8 @@ public class SelectSellRehomeActivity extends AppCompatActivity {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                showDialog();
                 finish();
-
-                db.collection("sale_posts")
-                        .document(document_id)
-                        .delete()
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                            }
-                        });
             }
         });
 
@@ -247,5 +237,53 @@ public class SelectSellRehomeActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    void PostDelete(){
+        db.collection("sale_posts")
+                .document(document_id)
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        //게시글 삭제되면 이미지 스토리지도 삭제
+                        for(int i=1; i<=storageList.size(); i++){
+                            postImgRef.child("img"+i).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+
+                                }
+                            });
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                    }
+                });
+    }
+
+
+    void showDialog() {
+        AlertDialog.Builder msgBuilder = new AlertDialog.Builder(SelectSellRehomeActivity.this).setMessage("게시글 삭제하시겠습니까?").setPositiveButton("네", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                PostDelete();
+                finish();
+            }
+        }).setNegativeButton("아니요", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        AlertDialog msgDlg = msgBuilder.create();
+        msgDlg.show();
     }
 }

@@ -1,5 +1,7 @@
 package petstone.project.animalisland.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -39,6 +41,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import petstone.project.animalisland.R;
+import petstone.project.animalisland.other.FreeRecycleAdapter;
 import petstone.project.animalisland.other.FreeSelectImageAdapter;
 
 public class SelectFreeRehomeActivity extends AppCompatActivity {
@@ -52,13 +55,15 @@ public class SelectFreeRehomeActivity extends AppCompatActivity {
     TextView select_animal_type, select_breed, select_local, select_title, select_age, select_gender, select_neuter, select_inoculation, select_content;
     TextView name;
     RatingBar rating;
+    String document_id;
 
     String uid, mMyUid;
     FirebaseFirestore db;
     FirebaseAuth auth;
     FirebaseUser user;
     FirebaseStorage storage;
-    StorageReference ImgRef;
+    StorageReference ImgRef, postImgRef;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +71,7 @@ public class SelectFreeRehomeActivity extends AppCompatActivity {
         setContentView(R.layout.select_free_rehome);
 
         Intent intent = getIntent();
-        String document_id = intent.getStringExtra("document_id");
+        document_id = intent.getStringExtra("document_id");
 
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
@@ -99,11 +104,10 @@ public class SelectFreeRehomeActivity extends AppCompatActivity {
         //게시글 보여주기
         db.collection("sale_posts")
                 .whereEqualTo("document_id", document_id)
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        for (DocumentSnapshot document : queryDocumentSnapshots) {
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        for (DocumentSnapshot document : value) {
                             select_animal_type.setText("[" + document.getData().get("animal_type").toString() + "]");
                             select_breed.setText(document.getData().get("animal_breed").toString());
                             select_local.setText(document.getData().get("district").toString());
@@ -186,29 +190,19 @@ public class SelectFreeRehomeActivity extends AppCompatActivity {
                                     });
                         }
                     }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-
-            }
-        });
+                });
 
 
         //스토리지에서 이미지 가져와서 리사이클러뷰에 보여주기
-        StorageReference postImgRef = ImgRef.child(document_id);
+        postImgRef = ImgRef.child(document_id);
         postImgRef.listAll()
                 .addOnSuccessListener(new OnSuccessListener<ListResult>() {
-
                     @Override
                     public void onSuccess(ListResult listResult) {
-
                         for (StorageReference item : listResult.getItems()) {
-
                             item.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
-
                                 @Override
                                 public void onComplete(@NonNull Task<Uri> task) {
-
                                     if (task.isSuccessful()) {
                                         storageList.add(task.getResult());
 
@@ -231,36 +225,7 @@ public class SelectFreeRehomeActivity extends AppCompatActivity {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
-
-                db.collection("sale_posts")
-                        .document(document_id)
-                        .delete()
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                //게시글 삭제되면 이미지 스토리지도 삭제
-                                for(int i=1; i<=storageList.size(); i++){
-                                    postImgRef.child("img"+i).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void unused) {
-
-                                        }
-                                    }).addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-
-                                        }
-                                    });
-                                }
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                            }
-                        });
-
+                showDialog();
             }
         });
 
@@ -271,5 +236,52 @@ public class SelectFreeRehomeActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    void PostDelete(){
+        db.collection("sale_posts")
+                .document(document_id)
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        //게시글 삭제되면 이미지 스토리지도 삭제
+                        for(int i=1; i<=storageList.size(); i++){
+                            postImgRef.child("img"+i).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+
+                                }
+                            });
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                    }
+                });
+    }
+
+    void showDialog() {
+        AlertDialog.Builder msgBuilder = new AlertDialog.Builder(SelectFreeRehomeActivity.this).setMessage("게시글 삭제하시겠습니까?").setPositiveButton("네", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                PostDelete();
+                finish();
+            }
+        }).setNegativeButton("아니요", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        AlertDialog msgDlg = msgBuilder.create();
+        msgDlg.show();
     }
 }

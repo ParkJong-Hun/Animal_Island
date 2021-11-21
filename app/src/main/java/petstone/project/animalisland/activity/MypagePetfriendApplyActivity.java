@@ -25,6 +25,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.errorprone.annotations.Var;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -203,7 +204,7 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
                 }
                 else
                     Toast.makeText(getApplicationContext(), "주소를 추가해 주세요.", Toast.LENGTH_SHORT).show();
-                    return;
+                return;
             }
         });
 
@@ -387,7 +388,6 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
                             Log.d("삭제못함", "삭제못함");
                         }
                     });
-
                 }
                  */
 
@@ -431,7 +431,7 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
                 }
             }
 
-            //업로드 
+            //업로드
             for (int i = 0; i < imgNameArray.length; i++) {
                 if (!imgUriArray[i].equals("")) {
 
@@ -777,48 +777,48 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
 
 
 
-            final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("모든 이미지를 삭제 하실건가요?");
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("모든 이미지를 삭제 하실건가요?");
 
 
-            builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    Toast.makeText(getApplicationContext(), "취소", Toast.LENGTH_SHORT).show();
-                    dialog.dismiss();
+        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(getApplicationContext(), "취소", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
 
-                }
-            });
-            builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
 
 
-                    for (int i = 0; i < 3; i++) {
+                for (int i = 0; i < 3; i++) {
 
-                        if (i == 0) {
-                            imgNameArray[0] = "";
-                            imgUriArray[0] = "";
-                            license1.setImageResource(0);
-                            license1.setImageResource(R.drawable.image);
-                            isImgNull_1 = true;
-                        } else if (i == 1) {
-                            imgNameArray[1] = "";
-                            imgUriArray[1] = "";
-                            license2.setImageResource(0);
-                            license2.setImageResource(R.drawable.image);
-                            isImgNull_2 = true;
-                        } else {
-                            imgNameArray[2] = "";
-                            imgUriArray[2] = "";
-                            license3.setImageResource(0);
-                            license3.setImageResource(R.drawable.image);
-                            isImgNull_3 = true;
-                        }
-
+                    if (i == 0) {
+                        imgNameArray[0] = "";
+                        imgUriArray[0] = "";
+                        license1.setImageResource(0);
+                        license1.setImageResource(R.drawable.image);
+                        isImgNull_1 = true;
+                    } else if (i == 1) {
+                        imgNameArray[1] = "";
+                        imgUriArray[1] = "";
+                        license2.setImageResource(0);
+                        license2.setImageResource(R.drawable.image);
+                        isImgNull_2 = true;
+                    } else {
+                        imgNameArray[2] = "";
+                        imgUriArray[2] = "";
+                        license3.setImageResource(0);
+                        license3.setImageResource(R.drawable.image);
+                        isImgNull_3 = true;
                     }
 
-                    dialog.dismiss();
+                }
+
+                dialog.dismiss();
             }
         });
 
@@ -912,8 +912,15 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
                 .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                profileUri = documentSnapshot.get("image").toString();
-                Log.d("profile", profileUri);
+
+                try {
+                    profileUri = documentSnapshot.get("image").toString();
+                    Log.d("profile", profileUri);
+                }catch (Exception e)
+                {
+                    Log.d("프로필이미지 없음", e.toString());
+                }
+
 
             }
         });

@@ -110,7 +110,6 @@ public class RehomeSellSubmitActivity extends AppCompatActivity {
                 intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
                 intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(intent, 1);
-                img_button.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -171,7 +170,30 @@ public class RehomeSellSubmitActivity extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDialog();
+                try{
+
+                    if ((uriList.size()) == 0){
+                        throw new Exception();
+                    }
+
+                    s_title = title.getText().toString();
+                    s_content = content.getText().toString();
+                    s_birth = birth.getText().toString();
+                    s_type = type.getSelectedItem().toString();
+                    s_breed = breed.getSelectedItem().toString();
+                    s_inoculation = inoculation.getSelectedItem().toString();
+                    s_sell = sell.getText().toString();
+
+                    RadioButton rd_sex = findViewById(radio_sex.getCheckedRadioButtonId());
+                    s_sex = rd_sex.getText().toString();
+
+                    RadioButton rd_neutering = findViewById(radio_neutering.getCheckedRadioButtonId());
+                    s_neutering = rd_neutering.getText().toString();
+
+                    showDialog();
+                }catch (Exception e){
+                    Toast.makeText(getApplicationContext(), "게시글을 모두 작성해주십시오.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -218,6 +240,7 @@ public class RehomeSellSubmitActivity extends AppCompatActivity {
             else{
                 if(data.getClipData() == null){
                     Log.e("single choice: ", String.valueOf(data.getData()));
+                    uriList = new ArrayList<>();
                     Uri imageUri = data.getData();
                     uriList.add(imageUri);
 
@@ -236,6 +259,7 @@ public class RehomeSellSubmitActivity extends AppCompatActivity {
                     }
                     else{
                         Log.e(TAG, "multiple choice");
+                        uriList = new ArrayList<>();
 
                         for (int i = 0; i < clipData.getItemCount(); i++){
                             Uri imageUri = clipData.getItemAt(i).getUri();
@@ -268,20 +292,6 @@ public class RehomeSellSubmitActivity extends AppCompatActivity {
         //현재 사용자 아이디 가져오기
         uid = auth.getCurrentUser().getUid();
         document_id = s_date + "_" + uid;
-
-        s_title = title.getText().toString();
-        s_content = content.getText().toString();
-        s_birth = birth.getText().toString();
-        s_type = type.getSelectedItem().toString();
-        s_breed = breed.getSelectedItem().toString();
-        s_inoculation = inoculation.getSelectedItem().toString();
-        s_sell = sell.getText().toString();
-
-        RadioButton rd_sex = findViewById(radio_sex.getCheckedRadioButtonId());
-        s_sex = rd_sex.getText().toString();
-
-        RadioButton rd_neutering = findViewById(radio_neutering.getCheckedRadioButtonId());
-        s_neutering = rd_neutering.getText().toString();
 
         Map<String, Object> sale_posts = new HashMap<>();
         sale_posts.put("uid", uid);

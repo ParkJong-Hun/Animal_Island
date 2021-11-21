@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -49,7 +51,7 @@ public class FreeRehomeComponent extends Fragment {
     FloatingActionButton free_submit;
     RecyclerView recyclerView;
     FreeRecycleAdapter frAdapter ;
-    ArrayList<FreeRehomeList> mList = new ArrayList<FreeRehomeList>();
+    ArrayList<FreeRehomeList> mList;
     ArrayList<FreeRehomeList> FilterList = new ArrayList<FreeRehomeList>();
 
     SearchView free_search;
@@ -63,6 +65,8 @@ public class FreeRehomeComponent extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.free_rehome, container, false);
+
+        mList = new ArrayList<FreeRehomeList>();
 
         db = FirebaseFirestore.getInstance();
         storage = FirebaseStorage.getInstance();
@@ -111,8 +115,6 @@ public class FreeRehomeComponent extends Fragment {
                             StorageReference postImgRef = ImgRef.child(s_did);
                             main_img = postImgRef.child("img1");
 
-                            recyclerView.removeAllViewsInLayout();
-
                             addItem(main_img,
                                     sex,
                                     s_animal_type,
@@ -123,14 +125,14 @@ public class FreeRehomeComponent extends Fragment {
                                     s_did) ;
 
                             frAdapter = new FreeRecycleAdapter(mList);
+                            recyclerView.setHasFixedSize(true);
+                            recyclerView.removeAllViewsInLayout();
                             recyclerView.setAdapter(frAdapter);
-
                             recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-
+                            frAdapter.notifyDataSetChanged();
                         }
                     }
                 });
-
 
         //무료 분양 게시글 등록버튼
         free_submit.setOnClickListener(new View.OnClickListener() {

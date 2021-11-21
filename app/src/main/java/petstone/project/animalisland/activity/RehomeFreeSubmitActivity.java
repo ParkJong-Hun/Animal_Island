@@ -25,6 +25,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -44,6 +46,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import petstone.project.animalisland.R;
+import petstone.project.animalisland.component.FreeRehomeComponent;
+import petstone.project.animalisland.component.RehomeComponent;
+import petstone.project.animalisland.other.FreeRehomeList;
 import petstone.project.animalisland.other.FreeSubmitImageAdapter;
 
 public class RehomeFreeSubmitActivity extends AppCompatActivity {
@@ -110,7 +115,6 @@ public class RehomeFreeSubmitActivity extends AppCompatActivity {
                 intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
                 intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(intent, 1);
-                img_button.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -196,7 +200,29 @@ public class RehomeFreeSubmitActivity extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDialog();
+                try {
+
+                    if ((uriList.size()) == 0){
+                        throw new Exception();
+                    }
+
+                    s_title = title.getText().toString();
+                    s_content = content.getText().toString();
+                    s_birth = birth.getText().toString();
+                    s_type = type.getSelectedItem().toString();
+                    s_breed = breed.getSelectedItem().toString();
+                    s_inoculation = inoculation.getSelectedItem().toString();
+                    RadioButton rd_sex = findViewById(radio_sex.getCheckedRadioButtonId());
+                    s_sex = rd_sex.getText().toString();
+
+                    RadioButton rd_neutering = findViewById(radio_neutering.getCheckedRadioButtonId());
+                    s_neutering = rd_neutering.getText().toString();
+
+                    showDialog();
+
+                }catch (Exception e){
+                    Toast.makeText(getApplicationContext(), "게시글을 모두 작성해주십시오.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -219,7 +245,7 @@ public class RehomeFreeSubmitActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "이미지를 선택하지 않았습니다.", Toast.LENGTH_LONG).show();
             } else {
                 if(data.getClipData() == null){
-                    Log.e("single choice: ", String.valueOf(data.getData()));
+                    uriList = new ArrayList<>();
                     Uri img = data.getData();
                     uriList.add(img);
 
@@ -237,6 +263,7 @@ public class RehomeFreeSubmitActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "사진은 5장까지 선택 가능합니다.", Toast.LENGTH_LONG).show();
                     } else {
                         Log.e(TAG, "multiple choice");
+                        uriList = new ArrayList<>();
 
                         for (int i = 0; i < clipData.getItemCount(); i++){
                             Uri img = clipData.getItemAt(i).getUri();
@@ -273,19 +300,7 @@ public class RehomeFreeSubmitActivity extends AppCompatActivity {
         uid = auth.getCurrentUser().getUid();
         document_id = s_date + "_" + uid;
 
-        s_title = title.getText().toString();
-        s_content = content.getText().toString();
-        s_birth = birth.getText().toString();
-        s_type = type.getSelectedItem().toString();
-        s_breed = breed.getSelectedItem().toString();
-        s_inoculation = inoculation.getSelectedItem().toString();
         s_sell = "0";   //무료분양은 분양비 0원으로 저장
-
-        RadioButton rd_sex = findViewById(radio_sex.getCheckedRadioButtonId());
-        s_sex = rd_sex.getText().toString();
-
-        RadioButton rd_neutering = findViewById(radio_neutering.getCheckedRadioButtonId());
-        s_neutering = rd_neutering.getText().toString();
 
         Map<String, Object> sale_posts = new HashMap<>();
         sale_posts.put("uid", uid);

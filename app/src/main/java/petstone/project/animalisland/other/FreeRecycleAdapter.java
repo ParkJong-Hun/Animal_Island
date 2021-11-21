@@ -55,6 +55,7 @@ public class FreeRecycleAdapter extends RecyclerView.Adapter<FreeRecycleAdapter.
         holder.local.setText(item.getLocal()) ;
         holder.date.setText(item.getDate()) ;
         holder.did.setText(item.getDid());
+
     }
 
     // getItemCount() - 전체 데이터 갯수 리턴.
