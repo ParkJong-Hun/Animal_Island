@@ -985,8 +985,13 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
             mDong = str_arr[5];
             Log.d("mDong", str_arr[5]);
 
+            if(mDo.contains("제주"))
+            {
+                mDo = "제주도";
+            }
+
             // 최종주소(시 + 구)
-            mJuso = mDo + " " + mCity;
+            mJuso = mDo + " " + mCity + " " + mDong;
 
             addressNull = false;
         }

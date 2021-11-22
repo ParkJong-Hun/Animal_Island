@@ -194,6 +194,8 @@ public class PetFriendComponent extends Fragment {
         //파이어베이스에서 정보 읽어서 리사이클러뷰에 넣기
         FireAdapter();
         TotalUser();
+        //TotalFireUser();
+        FirebaseDataChange();
         // 어댑터 클릭 이벤트
         fireAdapter.setOnItemClickListner(new PetfriendFireAdapter.OnItemClickListener() {
             @Override
@@ -722,7 +724,9 @@ public class PetFriendComponent extends Fragment {
     // 유저 검색
     private void TotalUser() {
 
+        //fireAdapter.onDataChanged();
         user_adapter.notifyDataSetChanged();
+
 
         user_adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             public void onItemRangeInserted(int positionStart, int itemCount) {
@@ -732,6 +736,58 @@ public class PetFriendComponent extends Fragment {
             }
 
         });
+
+
+
+    }
+
+    private void FirebaseDataChange()
+    {
+        db.collection("petfriend")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot snapshots,
+                                        @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.w("스냅샷", "listen:error", e);
+                            return;
+                        }
+
+                        for (DocumentChange dc : snapshots.getDocumentChanges()) {
+                            switch (dc.getType()) {
+                                case REMOVED:
+                                    query = db.collection("petfriend");
+                                    FirestoreRecyclerOptions<PetfriendFireUser> options = new FirestoreRecyclerOptions.Builder<PetfriendFireUser>()
+                                            .setQuery(query, PetfriendFireUser.class)
+                                            .build();
+                                    fireAdapter.updateOptions(options);
+                                    user_adapter = fireAdapter;
+                                    TotalUser();
+                                    break;
+                            }
+                        }
+
+                    }
+                });
+    }
+
+    // 유저 검색
+    private void TotalFireUser() {
+
+        //fireAdapter.notifyDataSetChanged();
+
+
+        fireAdapter.notifyDataSetChanged();
+
+        fireAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                int totalNumberOfItems = fireAdapter.getItemCount();
+                userListSize.setText(String.valueOf(totalNumberOfItems) + "명");
+                Log.d("총유저 : ", String.valueOf(totalNumberOfItems) + "명");
+            }
+
+        });
+
 
 
     }

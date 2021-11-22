@@ -344,14 +344,14 @@ public class RehomeFreeSubmitActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(@NonNull Exception exception) {
                         // Handle unsuccessful uploads
-                        Log.d("onFailure", exception.toString());
+                        Log.d("이미지 업로드 실패", exception.toString());
                     }
                 }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
                         // ...
-                        Log.d("ImgUpload", taskSnapshot.toString());
+                        Log.d("이미지 업로드 성공", taskSnapshot.toString());
                     }
                 });
             }

@@ -105,11 +105,15 @@ public class FreeRehomeComponent extends Fragment {
                             s_did = document.getData().get("document_id").toString();
                             s_local = "지역 : " + document.getData().get("district").toString();
 
-                            if ((document.getData().get("sex").toString()).equals("암컷")){
-                                sex = getResources().getDrawable(R.drawable.female);
-                            }
-                            else if((document.getData().get("sex").toString()).equals("수컷")){
-                                sex = getResources().getDrawable(R.drawable.male);
+                            try {
+                                if ((document.getData().get("sex").toString()).equals("암컷")) {
+                                    sex = getResources().getDrawable(R.drawable.female);
+                                } else if ((document.getData().get("sex").toString()).equals("수컷")) {
+                                    sex = getResources().getDrawable(R.drawable.male);
+                                }
+                            }catch (Exception e)
+                            {
+                                Log.d("이미지에러", e.toString());
                             }
 
                             StorageReference postImgRef = ImgRef.child(s_did);
@@ -166,18 +170,22 @@ public class FreeRehomeComponent extends Fragment {
         String s_text = text;
         FilterList.clear();
 
-        for(int i=0; i<mList.size(); i++) {
-            if (mList.get(i).getLocal().toLowerCase().contains(s_text.toLowerCase())) {
-                FilterList.add(mList.get(i));
+        try{
+            for (int i = 0; i < mList.size(); i++) {
+                if (mList.get(i).getLocal().toLowerCase().contains(s_text.toLowerCase())) {
+                    FilterList.add(mList.get(i));
+                } else if (mList.get(i).getType().toLowerCase().contains(s_text.toLowerCase())) {
+                    FilterList.add(mList.get(i));
+                } else if (mList.get(i).getBreed().toLowerCase().contains(s_text.toLowerCase())) {
+                    FilterList.add(mList.get(i));
+                }
             }
-            else if(mList.get(i).getType().toLowerCase().contains(s_text.toLowerCase())){
-                FilterList.add(mList.get(i));
-            }
-            else if(mList.get(i).getBreed().toLowerCase().contains(s_text.toLowerCase())){
-                FilterList.add(mList.get(i));
-            }
+            frAdapter.filterList(FilterList);
+
+        }catch (Exception e)
+        {
+            Log.d("검색에러", e.toString());
         }
-        frAdapter.filterList(FilterList);
     }
 
 }
