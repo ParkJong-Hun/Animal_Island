@@ -164,21 +164,26 @@ public class SellRehomeComponent extends Fragment {
     }
 
     public void Search(String text){
-        String s_text = text;
-        FilterList.clear();
 
-        for(int i=0; i<mList.size(); i++) {
-            if (mList.get(i).getLocal().toLowerCase().contains(s_text.toLowerCase())) {
-                FilterList.add(mList.get(i));
+
+        try {
+            String s_text = text;
+            FilterList.clear();
+
+            for (int i = 0; i < mList.size(); i++) {
+                if (mList.get(i).getLocal().toLowerCase().contains(s_text.toLowerCase())) {
+                    FilterList.add(mList.get(i));
+                } else if (mList.get(i).getType().toLowerCase().contains(s_text.toLowerCase())) {
+                    FilterList.add(mList.get(i));
+                } else if (mList.get(i).getBreed().toLowerCase().contains(s_text.toLowerCase())) {
+                    FilterList.add(mList.get(i));
+                }
             }
-            else if(mList.get(i).getType().toLowerCase().contains(s_text.toLowerCase())){
-                FilterList.add(mList.get(i));
-            }
-            else if(mList.get(i).getBreed().toLowerCase().contains(s_text.toLowerCase())){
-                FilterList.add(mList.get(i));
-            }
+            srAdapter.filterList(FilterList);
+        }catch (Exception e)
+        {
+            Log.d("검색에러",e.toString());
         }
-        srAdapter.filterList(FilterList);
     }
 
     public void addItem(StorageReference main, int gender, String type, String breed, String birth, String local, String date, String price, String did) {

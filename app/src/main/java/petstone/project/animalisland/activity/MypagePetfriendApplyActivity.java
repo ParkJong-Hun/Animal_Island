@@ -968,7 +968,7 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
             // 배열안 데이터 확인
 
             for (int i = 0; i < str_arr.length; i++) {
-                Log.d("juso", String.valueOf(i + " : ") + str_arr[i]);
+                Log.d("주소확인", String.valueOf(i + " : ") + str_arr[i]);
             }
 
 
@@ -982,11 +982,30 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
             mRo = str_arr[3];
             Log.d("mRo", str_arr[3]);
             // 동
-            mDong = str_arr[5];
-            Log.d("mDong", str_arr[5]);
+            if(!mDo.contains("세종특별자치시")) {
+                mDong = str_arr[5];
+                Log.d("mDong", str_arr[5]);
+            }
+
+            if(mDo.contains("제주"))
+            {
+                mDo = "제주도";
+            }
+            else if(mDo.contains("세종특별자치시"))
+            {
+                mDo = "세종시";
+            }
+
+
 
             // 최종주소(시 + 구)
-            mJuso = mDo + " " + mCity;
+            if(mDo.contains("세종시")) {
+                //mJuso = mDo+ " " + mCity;
+                mJuso = mDo + " " + mCity +" "+ mRo;
+            }
+            else {
+                mJuso = mDo + " " + mCity + " " + mDong;
+            }
 
             addressNull = false;
         }

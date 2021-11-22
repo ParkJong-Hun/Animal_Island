@@ -44,7 +44,6 @@ public class PetfriendFireAdapter extends FirestoreRecyclerAdapter<PetfriendFire
         holder.tv_nickname.setText(model.getNickname());
         holder.tv_Address.setText(model.getAddress());
 
-
         Uri profileUri = Uri.parse(model.getProfileImgUri());
         //임시로 uid 닉네임 설정
         //holder.tv_nickname.setText(arrayList.get(position).getUid());
