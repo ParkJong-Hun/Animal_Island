@@ -25,7 +25,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="5dp"
         android:text="주소 : "
-        android:textSize="15sp"
+        android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/select_user_profile"
         app:layout_constraintTop_toBottomOf="@+id/petfriend_user_info_line_1" />
@@ -65,7 +65,7 @@
         android:id="@+id/rating_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
+        android:layout_marginEnd="10dp"
         android:background="@drawable/round_ffe1e1"
         android:text="2.5점"
         app:layout_constraintEnd_toEndOf="@id/petfriend_user_info_line_1"
@@ -97,13 +97,13 @@
 
     <ImageView
         android:id="@+id/hasCarrer_Iv"
-        android:visibility="invisible"
         android:layout_width="30dp"
-        android:layout_height="26dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="5dp"
-        app:layout_constraintEnd_toStartOf="@+id/rating_tv"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="5dp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/rating_tv"
+        app:layout_constraintStart_toStartOf="@+id/rating_tv"
+        app:layout_constraintTop_toBottomOf="@+id/rating_tv"
         app:srcCompat="@drawable/caimg" />
 
     <RatingBar
