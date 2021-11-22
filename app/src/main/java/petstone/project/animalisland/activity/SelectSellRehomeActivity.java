@@ -227,7 +227,6 @@ public class SelectSellRehomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 showDialog();
-                finish();
             }
         });
 

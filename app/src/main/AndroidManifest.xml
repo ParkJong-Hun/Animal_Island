@@ -30,7 +30,6 @@
         <activity android:name="petstone.project.animalisland.activity.RehomeFreeSubmitActivity" />
         <activity android:name="petstone.project.animalisland.activity.RehomeSellSubmitActivity" />
         <activity android:name="petstone.project.animalisland.activity.SelectFreeRehomeActivity" />
-        <activity android:name="petstone.project.animalisland.activity.SelectFreeRehomeActivity"/>
         <activity android:name="petstone.project.animalisland.activity.SelectSellRehomeActivity" />
         <activity android:name="petstone.project.animalisland.activity.ChatActivity" />
         <activity android:name=".activity.WebviewActivity"/>

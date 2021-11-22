@@ -59,7 +59,7 @@ public class SellRehomeComponent extends Fragment {
     FirebaseStorage storage;
     StorageReference ImgRef, main_img;
     String s_animal_type, s_birth, s_local, s_date, s_price, s_did ;
-    Drawable sex ;
+    int sex ;
 
 
     @Override
@@ -95,6 +95,7 @@ public class SellRehomeComponent extends Fragment {
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        mList.clear();
                         for (DocumentSnapshot document : value) {
                             s_animal_type = "[" + document.getData().get("animal_type").toString() + "]";
                             s_date = "작성날짜 : " + document.getData().get("date").toString();
@@ -104,17 +105,14 @@ public class SellRehomeComponent extends Fragment {
                             s_local = "지역 : " + document.getData().get("district").toString();
 
                             if ((document.getData().get("sex").toString()).equals("암컷")){
-                                sex = getResources().getDrawable(R.drawable.female);
+                                sex = R.drawable.female;
                             }
                             else if((document.getData().get("sex").toString()).equals("수컷")){
-                                sex = getResources().getDrawable(R.drawable.male);
+                                sex = R.drawable.male;
                             }
 
                             StorageReference postImgRef = ImgRef.child(s_did);
                             main_img = postImgRef.child("img1");
-
-                            recyclerView.removeAllViewsInLayout();
-                            recyclerView.setAdapter(srAdapter);
 
                             addItem(main_img,
                                     sex,
@@ -128,8 +126,10 @@ public class SellRehomeComponent extends Fragment {
 
                             srAdapter = new SellRecycleAdapter(mList);
                             recyclerView.setAdapter(srAdapter);
-
+                            recyclerView.setHasFixedSize(true);
+                            recyclerView.removeAllViewsInLayout();
                             recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+                            srAdapter.notifyDataSetChanged();
                         }
                     }
                 });
@@ -139,7 +139,6 @@ public class SellRehomeComponent extends Fragment {
                 .whereEqualTo("uid", auth.getCurrentUser().getUid())
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
@@ -182,7 +181,7 @@ public class SellRehomeComponent extends Fragment {
         srAdapter.filterList(FilterList);
     }
 
-    public void addItem(StorageReference main, Drawable gender, String type, String breed, String birth, String local, String date, String price, String did) {
+    public void addItem(StorageReference main, int gender, String type, String breed, String birth, String local, String date, String price, String did) {
         SellRehomeList item = new SellRehomeList();
 
         item.setImg(main);
