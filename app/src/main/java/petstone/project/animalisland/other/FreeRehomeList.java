@@ -1,13 +1,18 @@
 package petstone.project.animalisland.other;
 
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
+
+import com.google.firebase.storage.StorageReference;
 
 public class FreeRehomeList {
 
-    Drawable main_img, gender;
+    StorageReference main_img;
+    Drawable  gender;
     String type, breed, birth, local, date, did;
 
-    public void setImg(Drawable main) {
+    public void setImg(StorageReference main) {
         main_img = main;
     }
 
@@ -35,7 +40,7 @@ public class FreeRehomeList {
 
     public void setDid(String sdid) { did = sdid; }
 
-    public Drawable getImg() {
+    public StorageReference getImg() {
         return this.main_img;
     }
 

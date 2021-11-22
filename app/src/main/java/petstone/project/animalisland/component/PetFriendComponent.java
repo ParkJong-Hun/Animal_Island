@@ -378,15 +378,12 @@ public class PetFriendComponent extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         //해당컬렉션에 모든 문서를 가져옴
-
                         arrayList.clear(); // 기존 배열 초기화 예방차원
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d("firesearch : 연동성공", "\n가져온 UID : " + document.getId() + " \n가져온 데이터 : " + document.getData() + "\n");
-
                                 profileUri = document.getData().get("profileImgUri").toString();
                                 Days = document.getData().get("days").toString();
-
                                 //리스트에 petfriend 컬렉션에서 모든 문서들의 데이터(닉네임,uid,비용,시간,자격증)를 가져와서 arrayList에 넣기
                                 //String uid, String nickname, String address
                                 //uid 닉네임 주소 자격증 프로필주소
@@ -406,20 +403,16 @@ public class PetFriendComponent extends Fragment {
                                         , document.getBoolean("hwaldong_beauty")
                                         , document.getBoolean("petfriend")
                                 ));
-
                                 //어댑터 새로고침
                                 user_adapter.notifyDataSetChanged();
                                 int i = user_adapter.getItemCount();
                                 userListSize.setText(i + "명");
-
-
                             }
                         } else {
                             Log.d("연동 실패", "Error getting documents: ", task.getException());
                         }
                     }
                 });
-
          */
 
         db.collection("petfriend").whereEqualTo("petfriend", true).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -831,7 +824,6 @@ public class PetFriendComponent extends Fragment {
 
 
 }
-
 
 
 

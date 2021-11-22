@@ -2,12 +2,15 @@ package petstone.project.animalisland.other;
 
 import android.graphics.drawable.Drawable;
 
+import com.google.firebase.storage.StorageReference;
+
 public class SellRehomeList {
 
-    Drawable main_img, gender;
+    StorageReference main_img;
+    Drawable gender;
     String type, breed, birth, local, date, price, did;
 
-    public void setImg(Drawable main) {
+    public void setImg(StorageReference main) {
         main_img = main;
     }
 
@@ -39,7 +42,7 @@ public class SellRehomeList {
 
     public void setDid(String sdid) { did = sdid; }
 
-    public Drawable getImg() {
+    public StorageReference getImg() {
         return this.main_img;
     }
 

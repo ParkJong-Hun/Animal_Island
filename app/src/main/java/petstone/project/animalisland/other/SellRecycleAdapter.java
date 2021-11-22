@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 
 import petstone.project.animalisland.R;
@@ -43,7 +45,10 @@ public class SellRecycleAdapter extends RecyclerView.Adapter<SellRecycleAdapter.
 
         SellRehomeList item = mData.get(position) ;
 
-        holder.main_img.setImageDrawable(item.getImg()) ;
+        Glide.with(s_context)
+                .load(item.getImg())
+                .into(holder.main_img);
+
         holder.gender.setImageDrawable(item.getGender()) ;
         holder.type.setText(item.getType());
         holder.breed.setText(item.getBreed()) ;
@@ -58,6 +63,11 @@ public class SellRecycleAdapter extends RecyclerView.Adapter<SellRecycleAdapter.
     @Override
     public int getItemCount() {
         return mData.size() ;
+    }
+
+    public void filterList(ArrayList<SellRehomeList> filteredList){
+        mData = filteredList;
+        notifyDataSetChanged();
     }
 
 

@@ -85,6 +85,7 @@ public class MypageInfoEditActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
+
         db.collection("users")
                 .whereEqualTo("uid", auth.getUid())
                 .get()
