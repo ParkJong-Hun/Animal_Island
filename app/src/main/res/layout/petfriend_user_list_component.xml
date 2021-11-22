@@ -26,6 +26,7 @@
         android:layout_marginTop="5dp"
         android:text="주소 : "
         android:textSize="15sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/select_user_profile"
         app:layout_constraintTop_toBottomOf="@+id/petfriend_user_info_line_1" />
 
