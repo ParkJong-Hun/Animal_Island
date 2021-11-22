@@ -2,8 +2,10 @@ package petstone.project.animalisland.activity;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.util.Log;
@@ -33,6 +35,9 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -289,9 +294,8 @@ public class RegisterActivity extends AppCompatActivity {
                                             user.put("sell_permission", false);
                                             user.put("is_petfriend", false);
                                             user.put("image", null);
-
-                                            Map<String, Object> popularity = new HashMap<>();
-
+                                            
+                                            
                                             //데이터베이스에 추가
                                             db.collection("users").document(uid)
                                                     .set(user)
@@ -300,6 +304,30 @@ public class RegisterActivity extends AppCompatActivity {
                                                         public void onSuccess(Void aVoid) {
                                                             //데이터 베이스 저장 성공
                                                             Log.d("Success", "회원 데이터베이스 저장 성공");
+
+                                                            //기본 프로필 사진 추가
+                                                            FirebaseStorage storage = FirebaseStorage.getInstance();
+                                                            StorageReference ref = storage.getReference("profileImages").child("/" + auth.getCurrentUser().getUid() + ".jpg");
+                                                            Uri uri = Uri.parse("android.resource://" + R.class.getPackage().getName() + "/" + R.drawable.mypage_colored);
+                                                            UploadTask uploadTask = ref.putFile(uri);
+                                                            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                                                @Override
+                                                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                                                    ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                                                        @Override
+                                                                        public void onSuccess(Uri uri) {
+                                                                            db.collection("users").document(uid)
+                                                                                    .update("image", uri.toString())
+                                                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                                        @Override
+                                                                                        public void onSuccess(Void aVoid) {
+                                                                                            Log.d("success", "db 업데이트 성공");
+                                                                                        }
+                                                                                    });
+                                                                        }
+                                                                    });
+                                                                }
+                                                            });
                                                         }
                                                     })
                                                     .addOnFailureListener(new OnFailureListener() {
