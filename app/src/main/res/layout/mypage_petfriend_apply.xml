@@ -13,7 +13,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="625dp"
+        android:layout_height="wrap_content"
         android:fillViewport="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -40,11 +40,14 @@
 
             <TextView
                 android:id="@+id/mypage_petfriend_apply_address_city_tv"
-                android:layout_width="280dp"
-                android:layout_height="40dp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="60dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/round2"
                 android:gravity="left"
                 android:hint="검색 버튼을 눌러주세요."
-                android:background="@drawable/round2"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/search_btn"
                 app:layout_constraintTop_toTopOf="@+id/search_btn" />
 
@@ -64,6 +67,7 @@
                 android:id="@+id/schedule_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/round_ffe1e1"
                 android:text="스케줄 생성"
@@ -172,9 +176,11 @@
 
             <EditText
                 android:id="@+id/mypage_petfriend_user_info_edt"
-                android:layout_width="360dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="5dp"
+                android:layout_marginEnd="20dp"
                 android:background="@drawable/border"
                 android:gravity="top"
                 android:hint="최대 150자를 작성할수있습니다.\n짧게 경력 사항 혹은 자기 소개를 써보세요 \n주의 사항은 반드시 작성해 주십시요 "
@@ -212,11 +218,14 @@
 
             <TextView
                 android:id="@+id/schedule_tv"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginEnd="50dp"
                 android:background="@drawable/round2"
                 android:hint="스케줄 만들기 버튼을 눌러주세요."
-                app:layout_constraintStart_toEndOf="@+id/imageView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/Day" />
 
             <TextView
