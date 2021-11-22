@@ -98,6 +98,7 @@ public class FreeRehomeComponent extends Fragment {
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        mList.clear();
                         for (DocumentSnapshot document : value) {
                             s_animal_type = "[" + document.getData().get("animal_type").toString() + "]";
                             s_date = "작성날짜 : " + document.getData().get("date").toString();
