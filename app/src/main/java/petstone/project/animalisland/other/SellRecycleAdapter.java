@@ -49,7 +49,10 @@ public class SellRecycleAdapter extends RecyclerView.Adapter<SellRecycleAdapter.
                 .load(item.getImg())
                 .into(holder.main_img);
 
-        holder.gender.setImageDrawable(item.getGender()) ;
+        Glide.with(s_context)
+                .load(item.getGender())
+                .into(holder.gender);
+
         holder.type.setText(item.getType());
         holder.breed.setText(item.getBreed()) ;
         holder.birth.setText(item.getBirth()) ;

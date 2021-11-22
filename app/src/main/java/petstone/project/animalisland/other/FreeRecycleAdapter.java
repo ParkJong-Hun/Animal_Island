@@ -48,7 +48,11 @@ public class FreeRecycleAdapter extends RecyclerView.Adapter<FreeRecycleAdapter.
         Glide.with(context)
                 .load(item.getImg())
                 .into(holder.main_img);
-        holder.gender.setImageDrawable(item.getGender()) ;
+
+        Glide.with(context)
+                .load(item.getGender())
+                .into(holder.gender);
+
         holder.type.setText(item.getType());
         holder.breed.setText(item.getBreed()) ;
         holder.birth.setText(item.getBirth()) ;

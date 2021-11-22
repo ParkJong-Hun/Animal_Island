@@ -7,14 +7,14 @@ import com.google.firebase.storage.StorageReference;
 public class SellRehomeList {
 
     StorageReference main_img;
-    Drawable gender;
+    int gender;
     String type, breed, birth, local, date, price, did;
 
     public void setImg(StorageReference main) {
         main_img = main;
     }
 
-    public void setGenderImg(Drawable sgender) {
+    public void setGenderImg(int sgender) {
         gender = sgender;
     }
 
@@ -46,7 +46,7 @@ public class SellRehomeList {
         return this.main_img;
     }
 
-    public Drawable getGender() {
+    public int getGender() {
         return this.gender;
     }
 

@@ -39,6 +39,8 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import petstone.project.animalisland.R;
 import petstone.project.animalisland.other.FreeRecycleAdapter;
@@ -57,7 +59,7 @@ public class SelectFreeRehomeActivity extends AppCompatActivity {
     RatingBar rating;
     String document_id;
 
-    String uid, mMyUid;
+    String mUid, mMyUid, mNickName;
     FirebaseFirestore db;
     FirebaseAuth auth;
     FirebaseUser user;
@@ -118,10 +120,10 @@ public class SelectFreeRehomeActivity extends AppCompatActivity {
                             select_inoculation.setText("접종\n" + document.getData().get("is_inoculated").toString());
                             select_content.setText(document.getData().get("article").toString());
 
-                            uid = document.getData().get("uid").toString();
+                            mUid = document.getData().get("uid").toString();
 
                             //현재 사용자 uid와 게시글 uid 같을 경우 delete 활성화 & 채팅 버튼 없애기
-                            if (mMyUid.equals(uid)) {
+                            if (mMyUid.equals(mUid)) {
                                 delete.setVisibility(View.VISIBLE);
                                 chat.setVisibility(View.INVISIBLE);
                             } else
@@ -129,13 +131,13 @@ public class SelectFreeRehomeActivity extends AppCompatActivity {
 
                             //사용자 정보 보여주기
                             db.collection("users")
-                                    .whereEqualTo("uid", uid)
+                                    .whereEqualTo("uid", mUid)
                                     .addSnapshotListener(new EventListener<QuerySnapshot>() {
                                         @Override
                                         public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                                             for (DocumentSnapshot document : value) {
-                                                name.setText(document.getData().get("nickname").toString());
-
+                                                mNickName = document.getData().get("nickname").toString();
+                                                name.setText(mNickName);
                                                 try {
                                                     URL url = new URL((String) document.get("image"));
                                                     Uri uri = Uri.parse(url.toURI().toString());
@@ -148,9 +150,9 @@ public class SelectFreeRehomeActivity extends AppCompatActivity {
                                         }
                                     });
 
-                            db.collection("users").document(uid)
+                            db.collection("users").document(mUid)
                                     .collection("popularity")
-                                    .whereNotEqualTo("uid", uid)
+                                    .whereNotEqualTo("uid", mUid)
                                     .addSnapshotListener(new EventListener<QuerySnapshot>() {
                                         @Override
                                         public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -158,9 +160,9 @@ public class SelectFreeRehomeActivity extends AppCompatActivity {
                                             //권한 없으면 80이 최대
                                             rating.setRating(2.5f);
                                             rating.setRating(rating.getRating() + 0.3f * value.getDocuments().size());
-                                            db.collection("users").document(uid)
+                                            db.collection("users").document(mUid)
                                                     .collection("report")
-                                                    .whereNotEqualTo("uid", uid)
+                                                    .whereNotEqualTo("uid", mUid)
                                                     .get()
                                                     .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                                                         @Override
@@ -168,7 +170,7 @@ public class SelectFreeRehomeActivity extends AppCompatActivity {
                                                             //한 사람 신고당 0.3 -
                                                             //권한 없으면 80이 최대
                                                             rating.setRating(rating.getRating() - 0.3f * queryDocumentSnapshots.getDocuments().size());
-                                                            db.collection("users").document(uid)
+                                                            db.collection("users").document(mUid)
                                                                     .get()
                                                                     .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                                                         @Override
@@ -188,6 +190,70 @@ public class SelectFreeRehomeActivity extends AppCompatActivity {
                                                     });
                                         }
                                     });
+
+                            chat.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    String documentName = "";
+                                    if (mMyUid.compareTo(mUid) > 0) {
+                                        documentName = mMyUid + "_" + mUid;
+                                    } else {
+                                        documentName = mUid + "_" + mMyUid;
+                                    }
+                                    if (!documentName.isEmpty() || !documentName.equals("")) {
+                                        Map<String, Object> initData = new HashMap<>();
+                                        initData.put("uid", mMyUid);
+                                        initData.put("readed", 1);
+                                        initData.put("date", new Date());
+                                        initData.put("article",  mNickName + "님에게 손을 흔듭니다.");
+
+                                        String finalDocumentName = documentName;
+                                        db.collection("chats")
+                                                .document(documentName)
+                                                .get()
+                                                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                    @Override
+                                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                        if (!documentSnapshot.exists()) {
+                                                            Map<String, Object> data = new HashMap<>();
+                                                            if (mMyUid.compareTo(mUid) < 0) {
+                                                                data.put("uid", mMyUid);
+                                                                data.put("uid2", mUid);
+                                                            } else {
+                                                                data.put("uid", mUid);
+                                                                data.put("uid2", mMyUid);
+                                                            }
+
+                                                            db.collection("chats").document(finalDocumentName).set(data)
+                                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                        @Override
+                                                                        public void onSuccess(Void aVoid) {
+                                                                            Log.d("d", "채팅 생성 성공");
+
+                                                                            db.collection("chats").document(finalDocumentName).collection("messages").document(new Date().toString() + mMyUid).set(initData).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                                @Override
+                                                                                public void onSuccess(Void aVoid) {
+                                                                                    Log.d("d", "채팅 초기 메시지 생성 성공");
+                                                                                    Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
+                                                                                    intent.putExtra("whoUID", mUid);
+                                                                                    intent.putExtra("chatName", finalDocumentName);
+                                                                                    startActivity(intent);
+                                                                                }
+                                                                            });
+                                                                        }
+                                                                    });
+                                                        } else {
+                                                            Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
+                                                            intent.putExtra("whoUID", mUid);
+                                                            intent.putExtra("chatName", finalDocumentName);
+                                                            startActivity(intent);
+                                                        }
+                                                    }
+                                                });
+                                    }
+
+                                }
+                            });
                         }
                     }
                 });

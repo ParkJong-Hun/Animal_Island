@@ -51,7 +51,7 @@ public class FreeRehomeComponent extends Fragment {
     FloatingActionButton free_submit;
     RecyclerView recyclerView;
     FreeRecycleAdapter frAdapter ;
-    ArrayList<FreeRehomeList> mList;
+    ArrayList<FreeRehomeList> mList = new ArrayList<FreeRehomeList>();;
     ArrayList<FreeRehomeList> FilterList = new ArrayList<FreeRehomeList>();
 
     SearchView free_search;
@@ -60,13 +60,11 @@ public class FreeRehomeComponent extends Fragment {
     FirebaseStorage storage;
     StorageReference ImgRef, main_img;
     String s_animal_type, s_birth, s_local, s_date, s_did ;
-    Drawable sex ;
+    int sex ;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.free_rehome, container, false);
-
-        mList = new ArrayList<FreeRehomeList>();
 
         db = FirebaseFirestore.getInstance();
         storage = FirebaseStorage.getInstance();
@@ -106,15 +104,11 @@ public class FreeRehomeComponent extends Fragment {
                             s_did = document.getData().get("document_id").toString();
                             s_local = "지역 : " + document.getData().get("district").toString();
 
-                            try {
-                                if ((document.getData().get("sex").toString()).equals("암컷")) {
-                                    sex = getResources().getDrawable(R.drawable.female);
-                                } else if ((document.getData().get("sex").toString()).equals("수컷")) {
-                                    sex = getResources().getDrawable(R.drawable.male);
-                                }
-                            }catch (Exception e)
-                            {
-                                Log.d("이미지에러", e.toString());
+                            if ((document.getData().get("sex").toString()).equals("암컷")){
+                                sex = R.drawable.female;
+                            }
+                            else if((document.getData().get("sex").toString()).equals("수컷")){
+                                sex = R.drawable.male;
                             }
 
                             StorageReference postImgRef = ImgRef.child(s_did);
@@ -151,7 +145,7 @@ public class FreeRehomeComponent extends Fragment {
         return view;
     }
 
-    public void addItem(StorageReference main, Drawable gender, String type, String breed, String birth, String local, String date, String did) {
+    public void addItem(StorageReference main, int gender, String type, String breed, String birth, String local, String date, String did) {
         FreeRehomeList item = new FreeRehomeList();
 
         item.setImg(main);
@@ -171,22 +165,18 @@ public class FreeRehomeComponent extends Fragment {
         String s_text = text;
         FilterList.clear();
 
-        try{
-            for (int i = 0; i < mList.size(); i++) {
-                if (mList.get(i).getLocal().toLowerCase().contains(s_text.toLowerCase())) {
-                    FilterList.add(mList.get(i));
-                } else if (mList.get(i).getType().toLowerCase().contains(s_text.toLowerCase())) {
-                    FilterList.add(mList.get(i));
-                } else if (mList.get(i).getBreed().toLowerCase().contains(s_text.toLowerCase())) {
-                    FilterList.add(mList.get(i));
-                }
+        for(int i=0; i<mList.size(); i++) {
+            if (mList.get(i).getLocal().toLowerCase().contains(s_text.toLowerCase())) {
+                FilterList.add(mList.get(i));
             }
-            frAdapter.filterList(FilterList);
-
-        }catch (Exception e)
-        {
-            Log.d("검색에러", e.toString());
+            else if(mList.get(i).getType().toLowerCase().contains(s_text.toLowerCase())){
+                FilterList.add(mList.get(i));
+            }
+            else if(mList.get(i).getBreed().toLowerCase().contains(s_text.toLowerCase())){
+                FilterList.add(mList.get(i));
+            }
         }
+        frAdapter.filterList(FilterList);
     }
 
 }
