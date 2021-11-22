@@ -75,7 +75,7 @@ public class RehomeFreeSubmitActivity extends AppCompatActivity {
     StorageReference ImgRef;
 
     String uid;
-    String document_id ;
+    String document_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -202,7 +202,7 @@ public class RehomeFreeSubmitActivity extends AppCompatActivity {
             public void onClick(View view) {
                 try {
 
-                    if ((uriList.size()) == 0){
+                    if ((uriList.size()) == 0) {
                         throw new Exception();
                     }
 
@@ -220,7 +220,7 @@ public class RehomeFreeSubmitActivity extends AppCompatActivity {
 
                     showDialog();
 
-                }catch (Exception e){
+                } catch (Exception e) {
                     Toast.makeText(getApplicationContext(), "게시글을 모두 작성해주십시오.", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -244,7 +244,7 @@ public class RehomeFreeSubmitActivity extends AppCompatActivity {
             if (data == null) {
                 Toast.makeText(getApplicationContext(), "이미지를 선택하지 않았습니다.", Toast.LENGTH_LONG).show();
             } else {
-                if(data.getClipData() == null){
+                if (data.getClipData() == null) {
                     uriList = new ArrayList<>();
                     Uri img = data.getData();
                     uriList.add(img);
@@ -265,7 +265,7 @@ public class RehomeFreeSubmitActivity extends AppCompatActivity {
                         Log.e(TAG, "multiple choice");
                         uriList = new ArrayList<>();
 
-                        for (int i = 0; i < clipData.getItemCount(); i++){
+                        for (int i = 0; i < clipData.getItemCount(); i++) {
                             Uri img = clipData.getItemAt(i).getUri();
                             try {
                                 uriList.add(img);
@@ -334,10 +334,9 @@ public class RehomeFreeSubmitActivity extends AppCompatActivity {
                 });
 
         //이미지 저장
-        for (int i=0; i< uriList.size(); i++){
-            if(!uriList.get(i).equals(null))
-            {
-                String fileName = "img" + (i+1);
+        for (int i = 0; i < uriList.size(); i++) {
+            if (!uriList.get(i).equals(null)) {
+                String fileName = "img" + (i + 1);
                 StorageReference postImgRef = ImgRef.child(document_id);
                 UploadTask uploadTask = postImgRef.child(fileName).putFile(uriList.get(i));
                 uploadTask.addOnFailureListener(new OnFailureListener() {
@@ -393,11 +392,28 @@ public class RehomeFreeSubmitActivity extends AppCompatActivity {
         mRo = str_arr[3];
         Log.d("mRo", str_arr[3]);
         // 동
-        mDong = str_arr[5];
-        Log.d("mDong", str_arr[5]);
+        if (!mDo.contains("세종특별자치시")) {
+            mDong = str_arr[5];
+            Log.d("mDong", str_arr[5]);
+        }
+
+        if (mDo.contains("제주")) {
+            mDo = "제주도";
+        } else if (mDo.contains("세종특별자치시")) {
+            mDo = "세종시";
+        }
 
         // 최종주소(시 + 구)
-        s_district = mDo + " " + mCity + " " + mDong;
+        if (mDo.contains("세종시")) {
+            //mJuso = mDo+ " " + mCity;
+            s_district = mDo + " " + mCity + " " + mRo;
+        } else {
+            s_district = mDo + " " + mCity + " " + mDong;
+        }
+
+
+        // 최종주소(시 + 구)
+        //s_district = mDo + " " + mCity + " " + mDong;
     }
 
     void showDialog() {

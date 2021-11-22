@@ -384,11 +384,28 @@ public class RehomeSellSubmitActivity extends AppCompatActivity {
         mRo = str_arr[3];
         Log.d("mRo", str_arr[3]);
         // 동
-        mDong = str_arr[5];
-        Log.d("mDong", str_arr[5]);
+        if (!mDo.contains("세종특별자치시")) {
+            mDong = str_arr[5];
+            Log.d("mDong", str_arr[5]);
+        }
+
+        if (mDo.contains("제주")) {
+            mDo = "제주도";
+        } else if (mDo.contains("세종특별자치시")) {
+            mDo = "세종시";
+        }
 
         // 최종주소(시 + 구)
-        s_district = mDo + " " + mCity + " " + mDong;
+        if (mDo.contains("세종시")) {
+            //mJuso = mDo+ " " + mCity;
+            s_district = mDo + " " + mCity + " " + mRo;
+        } else {
+            s_district = mDo + " " + mCity + " " + mDong;
+        }
+
+
+        // 최종주소(시 + 구)
+        //s_district = mDo + " " + mCity + " " + mDong;
     }
 
     void showDialog() {
