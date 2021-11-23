@@ -77,6 +77,10 @@ public class PetfriendUserSelect extends AppCompatActivity {
     ArrayList<Integer>uriList = new ArrayList<>();
     int mCount;
 
+    Uri uri1;
+
+    boolean imgLoad1=false,isImgLoad2=false,isImgLoad3=false;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -118,7 +122,6 @@ public class PetfriendUserSelect extends AppCompatActivity {
             usercheck();
             //imgSearch();
             btnChange();
-
 
 
 
@@ -312,6 +315,19 @@ public class PetfriendUserSelect extends AppCompatActivity {
                     .load(uri)
                     .into(minfoImg1);
             Log.d("setImg1" , uri.toString());
+            //11월 24일 추가
+            imgLoad1 = true;
+            if(imgLoad1) {
+                minfoImg1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(getApplicationContext(), FullImageActivity.class);
+                        i.putExtra("fullimguri", uri.toString());
+                        startActivity(i);
+                    }
+                });
+            }
+            //여기까지
 
         }
         else if(i ==1)
@@ -320,6 +336,19 @@ public class PetfriendUserSelect extends AppCompatActivity {
                     .load(uri)
                     .into(minfoImg2);
             Log.d("setImg2" , uri.toString());
+            //11월 24일 추가
+            isImgLoad2 = true;
+            if(isImgLoad2) {
+                minfoImg2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(getApplicationContext(), FullImageActivity.class);
+                        i.putExtra("fullimguri", uri.toString());
+                        startActivity(i);
+                    }
+                });
+            }
+            //여기까지
 
         }
         else if(i ==2)
@@ -328,6 +357,19 @@ public class PetfriendUserSelect extends AppCompatActivity {
                     .load(uri)
                     .into(minfoImg3);
             Log.d("setImg3" , uri.toString());
+            //11월 24일 추가
+            isImgLoad3 = true;
+            if(isImgLoad3) {
+                minfoImg3.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(getApplicationContext(), FullImageActivity.class);
+                        i.putExtra("fullimguri", uri.toString());
+                        startActivity(i);
+                    }
+                });
+            }
+            //여기까지
 
         }
 
@@ -537,6 +579,17 @@ public class PetfriendUserSelect extends AppCompatActivity {
                     Glide.with(getApplicationContext())
                             .load(Uri.parse(profileUri))
                             .into(mUserProfie);
+                    //11월 24일 추가
+                    mUserProfie.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent i = new Intent(getApplicationContext(), FullImageActivity.class);
+                                i.putExtra("fullimguri", profileUri.toString());
+                                startActivity(i);
+                            }
+                        });
+                    //여기까지
+
 
                 }
 
