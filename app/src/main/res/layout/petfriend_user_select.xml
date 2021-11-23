@@ -79,7 +79,7 @@
                 android:layout_height="130dp"
                 android:layout_marginStart="25dp"
                 android:layout_marginTop="5dp"
-                android:background="@drawable/border"
+                android:background="@drawable/round2"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/petfriend_tv_1" />
 
@@ -133,8 +133,8 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
-                android:background="@drawable/border"
                 android:text="- 경력1\n- 경력2 "
+                android:background="@drawable/round2"
                 android:textSize="15sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -156,7 +156,6 @@
                 android:layout_height="100dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="5dp"
-                android:background="@drawable/border"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/petfriend_tv_3" />
 
@@ -168,7 +167,6 @@
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="5dp"
-                android:background="@drawable/border"
                 app:layout_constraintEnd_toStartOf="@+id/user_info_image3"
                 app:layout_constraintStart_toEndOf="@+id/user_info_image1"
                 app:layout_constraintTop_toBottomOf="@+id/petfriend_tv_3" />
@@ -179,7 +177,6 @@
                 android:layout_height="100dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="20dp"
-                android:background="@drawable/border"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/petfriend_tv_3" />
 
