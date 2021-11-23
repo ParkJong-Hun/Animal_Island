@@ -29,6 +29,7 @@
         app:layout_constraintStart_toEndOf="@+id/select_user_profile"
         app:layout_constraintTop_toBottomOf="@+id/petfriend_user_info_line_1" />
 
+
     <TextView
         android:id="@+id/petfriend_list_tv_pay"
         android:layout_width="wrap_content"
@@ -36,8 +37,7 @@
         android:layout_marginTop="5dp"
         android:text="일당 or 시급 :"
         app:layout_constraintStart_toStartOf="@+id/user_info"
-        app:layout_constraintTop_toBottomOf="@+id/user_info" />
-
+        app:layout_constraintTop_toBottomOf="@+id/petfriend_list_day_tv" />
 
     <TextView
         android:id="@+id/user_name"
@@ -85,10 +85,10 @@
         android:id="@+id/petfrient_list_info_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:text="경력 or 분야(산책 돌봄 미용)? : "
         app:layout_constraintStart_toStartOf="@+id/petfrient_list_carrer_tv"
-        app:layout_constraintTop_toBottomOf="@+id/petfrient_list_carrer_tv" />
+        app:layout_constraintTop_toBottomOf="@+id/user_info" />
 
     <TextView
         android:id="@+id/petfriend_list_day_tv"
