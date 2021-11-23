@@ -85,7 +85,7 @@
         android:id="@+id/petfrient_list_info_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:text="경력 or 분야(산책 돌봄 미용)? : "
         app:layout_constraintStart_toStartOf="@+id/petfrient_list_carrer_tv"
         app:layout_constraintTop_toBottomOf="@+id/user_info" />
