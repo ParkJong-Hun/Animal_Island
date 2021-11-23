@@ -171,7 +171,7 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
 
         if (newCreate == 1) {
             firebaseSearch();
-            Toast.makeText(getApplicationContext(), "기존 데이터 불러옴", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(), "기존 데이터 불러옴", Toast.LENGTH_SHORT).show();
         }
 
         //스토리지 주소 설정
@@ -556,7 +556,7 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
                 }
             });
         } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "예상하지못한 오류가 발생했습니다.", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -621,7 +621,7 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
             builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    Toast.makeText(getApplicationContext(), "취소", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "취소", Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
 
                 }
@@ -707,7 +707,7 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
 
                     db = FirebaseFirestore.getInstance();
 
-                    Toast.makeText(getApplicationContext(), "신청완료", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "신청 완료", Toast.LENGTH_LONG).show();
 
                     finish();
 
@@ -1020,7 +1020,7 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
         if (requestCode == 0) {
             if (resultCode == RESULT_OK) {
                 String result = data.getStringExtra("data");
-                Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
                 mJuso_tv.setText(result);
             }
         }

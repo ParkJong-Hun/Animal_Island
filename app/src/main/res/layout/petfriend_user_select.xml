@@ -51,7 +51,7 @@
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="550dp"
+        android:layout_height="wrap_content"
         android:fillViewport="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
@@ -160,10 +160,11 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/petfriend_tv_3" />
 
+
             <ImageView
                 android:id="@+id/user_info_image2"
-                android:layout_width="110dp"
-                android:layout_height="100dp"
+                android:layout_width="108dp"
+                android:layout_height="101dp"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="5dp"
@@ -202,6 +203,7 @@
                 app:layout_constraintTop_toTopOf="@+id/delete_iv"
                 app:srcCompat="@android:drawable/ic_menu_edit" />
 
+
             <TextView
                 android:id="@+id/carrer_tv"
                 android:visibility="gone"
@@ -224,28 +226,42 @@
 
             <TextView
                 android:id="@+id/user_schedule_tv"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/round2"
                 android:text="a"
-                app:layout_constraintStart_toStartOf="@+id/textView3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView3" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
-    <Button
-        android:id="@+id/petfriend_start_chating_button"
-        android:layout_width="350dp"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/button_round"
-        android:text="1:1 채팅하기"
-        android:textSize="20sp"
-        android:textColor="@color/white"
-        android:textStyle="bold"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2">
 
+        <Button
+            android:gravity="center"
+            android:id="@+id/petfriend_start_chating_button"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_round"
+            android:text="1:1 채팅하기"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
+    </LinearLayout>
 
 
 
