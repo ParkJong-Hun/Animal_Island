@@ -13,7 +13,6 @@
         android:layout_height="100dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
-        android:foreground="@drawable/circle_image_background"
         android:src="@drawable/petfriend"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -23,9 +22,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:text="주소 : "
-        android:textSize="14sp"
+        android:textSize="15sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/select_user_profile"
         app:layout_constraintTop_toBottomOf="@+id/petfriend_user_info_line_1" />
@@ -34,6 +33,7 @@
         android:id="@+id/petfriend_list_tv_pay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:text="일당 or 시급 :"
         app:layout_constraintStart_toStartOf="@+id/user_info"
         app:layout_constraintTop_toBottomOf="@+id/user_info" />
@@ -45,7 +45,7 @@
         android:layout_height="wrap_content"
         android:text="닉네임"
         android:textColor="#ff9696"
-        android:textSize="20sp"
+        android:textSize="17sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/select_user_profile"
         app:layout_constraintStart_toStartOf="@+id/select_user_profile"
@@ -75,6 +75,8 @@
         android:id="@+id/petfrient_list_carrer_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:visibility="gone"
         android:text="자격증 : O/X or 상장 아이콘"
         app:layout_constraintStart_toStartOf="@+id/petfriend_list_tv_pay"
         app:layout_constraintTop_toBottomOf="@+id/petfriend_list_tv_pay" />
@@ -83,6 +85,7 @@
         android:id="@+id/petfrient_list_info_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:text="경력 or 분야(산책 돌봄 미용)? : "
         app:layout_constraintStart_toStartOf="@+id/petfrient_list_carrer_tv"
         app:layout_constraintTop_toBottomOf="@+id/petfrient_list_carrer_tv" />
@@ -91,6 +94,7 @@
         android:id="@+id/petfriend_list_day_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:text="요일 :"
         app:layout_constraintStart_toStartOf="@+id/petfrient_list_info_tv"
         app:layout_constraintTop_toBottomOf="@+id/petfrient_list_info_tv" />
