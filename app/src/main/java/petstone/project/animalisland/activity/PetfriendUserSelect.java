@@ -25,9 +25,12 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
@@ -111,6 +114,7 @@ public class PetfriendUserSelect extends AppCompatActivity {
 
 
             firebaseSearch();
+            sujungUpdate();
             usercheck();
             //imgSearch();
             btnChange();
@@ -213,6 +217,32 @@ public class PetfriendUserSelect extends AppCompatActivity {
                deleteDialog();
             }
         });
+
+    }
+
+    private void sujungUpdate() {
+
+        db.collection("petfriend")
+                .whereEqualTo("uid", mUid)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot snapshots,
+                                        @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.w("error", "listen:error", e);
+                            return;
+                        }
+
+                        for (DocumentChange dc : snapshots.getDocumentChanges()) {
+                            switch (dc.getType()) {
+                                case MODIFIED:
+                                    firebaseSearch();
+                                    break;
+                            }
+                        }
+
+                    }
+                });
 
     }
 

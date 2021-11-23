@@ -19,7 +19,7 @@
 
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
@@ -29,7 +29,7 @@
                 android:text="가능한 시간대를 선택해주세요."
                 android:layout_gravity="bottom"
                 android:background="@drawable/round2"
-                android:textSize="12sp"
+                android:textStyle="bold"
                 android:layout_height="wrap_content"
                 />
 
