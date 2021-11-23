@@ -416,6 +416,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
         }, mYear, mMonth, mDay);
 
+        datePickerDialog.getDatePicker().setMaxDate(new Date().getTime());
         datePickerDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 
         et_age.setOnClickListener(new View.OnClickListener() {
