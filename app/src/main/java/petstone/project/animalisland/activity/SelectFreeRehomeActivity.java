@@ -275,6 +275,7 @@ public class SelectFreeRehomeActivity extends AppCompatActivity {
                                         adapter = new FreeSelectImageAdapter(storageList, getApplicationContext());
                                         select_img.setAdapter(adapter);
                                         select_img.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
+
                                     }
                                 }
                             });
