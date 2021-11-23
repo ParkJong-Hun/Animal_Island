@@ -36,6 +36,9 @@ import com.google.firebase.storage.StorageReference;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import petstone.project.animalisland.R;
 import petstone.project.animalisland.other.FreeSelectImageAdapter;
@@ -54,7 +57,7 @@ public class SelectSellRehomeActivity extends AppCompatActivity {
     TextView select_animal_type, select_breed, select_local, select_price, select_title, select_age, select_gender, select_neuter, select_inoculation, select_content;
     TextView name;
 
-    String uid, mMyUid;
+    String uid, mMyUid, mNickName;
     String document_id;
     FirebaseFirestore db;
     FirebaseAuth auth;
@@ -133,7 +136,8 @@ public class SelectSellRehomeActivity extends AppCompatActivity {
                                         @Override
                                         public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                                             for (DocumentSnapshot document : value) {
-                                                name.setText(document.getData().get("nickname").toString());
+                                                mNickName = document.getData().get("nickname").toString();
+                                                name.setText(mNickName);
 
                                                 try {
                                                     URL url = new URL((String) document.get("image"));
@@ -187,6 +191,70 @@ public class SelectSellRehomeActivity extends AppCompatActivity {
                                                     });
                                         }
                                     });
+
+                            chat.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    String documentName = "";
+                                    if (mMyUid.compareTo(uid) > 0) {
+                                        documentName = mMyUid + "_" + uid;
+                                    } else {
+                                        documentName = uid + "_" + mMyUid;
+                                    }
+                                    if (!documentName.isEmpty() || !documentName.equals("")) {
+                                        Map<String, Object> initData = new HashMap<>();
+                                        initData.put("uid", mMyUid);
+                                        initData.put("readed", 1);
+                                        initData.put("date", new Date());
+                                        initData.put("article",  mNickName + "님에게 손을 흔듭니다.");
+
+                                        String finalDocumentName = documentName;
+                                        db.collection("chats")
+                                                .document(documentName)
+                                                .get()
+                                                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                    @Override
+                                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                        if (!documentSnapshot.exists()) {
+                                                            Map<String, Object> data = new HashMap<>();
+                                                            if (mMyUid.compareTo(uid) < 0) {
+                                                                data.put("uid", mMyUid);
+                                                                data.put("uid2", uid);
+                                                            } else {
+                                                                data.put("uid", uid);
+                                                                data.put("uid2", mMyUid);
+                                                            }
+
+                                                            db.collection("chats").document(finalDocumentName).set(data)
+                                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                        @Override
+                                                                        public void onSuccess(Void aVoid) {
+                                                                            Log.d("d", "채팅 생성 성공");
+
+                                                                            db.collection("chats").document(finalDocumentName).collection("messages").document(new Date().toString() + mMyUid).set(initData).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                                @Override
+                                                                                public void onSuccess(Void aVoid) {
+                                                                                    Log.d("d", "채팅 초기 메시지 생성 성공");
+                                                                                    Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
+                                                                                    intent.putExtra("whoUID", uid);
+                                                                                    intent.putExtra("chatName", finalDocumentName);
+                                                                                    startActivity(intent);
+                                                                                }
+                                                                            });
+                                                                        }
+                                                                    });
+                                                        } else {
+                                                            Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
+                                                            intent.putExtra("whoUID", uid);
+                                                            intent.putExtra("chatName", finalDocumentName);
+                                                            startActivity(intent);
+                                                        }
+                                                    }
+                                                });
+                                    }
+
+                                }
+                            });
                         }
                     }
                 });
