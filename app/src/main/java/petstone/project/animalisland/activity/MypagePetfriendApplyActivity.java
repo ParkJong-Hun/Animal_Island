@@ -4,6 +4,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -25,14 +27,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.errorprone.annotations.Var;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
@@ -42,7 +41,6 @@ import com.google.firebase.storage.UploadTask;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import petstone.project.animalisland.R;
 import petstone.project.animalisland.other.PetfriendUser;
@@ -195,7 +193,7 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 setResult(RESULT_OK);
-                
+
                 infoCheck();
                 // 주소가 빈칸이면 다이어로그 안나옴
                 if (!addressNull && !scheduleNull && !hwaldongNull) {
@@ -631,8 +629,7 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
                 public void onClick(DialogInterface dialog, int which) {
 
                     Log.d("검사 시작", "시작");
-                    if(addressNull || scheduleNull || hwaldongNull)
-                    {
+                    if (addressNull || scheduleNull || hwaldongNull) {
                         Toast.makeText(getApplicationContext(), "주소, 스케줄, 활동을 추가해 주세요.", Toast.LENGTH_SHORT).show();
                         Log.d("검사 끝", "실패");
                         return;
@@ -660,7 +657,6 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
                      */
 
 
-
                     //날짜 돈 변환
                     getDays();
                     getPay();
@@ -668,7 +664,7 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
                     //토글 활성화시 이미지 업로드
                     if (setCarrer)
                         ImgUpload();
-                    // 비활성화시 모든 이미지 삭제
+                        // 비활성화시 모든 이미지 삭제
                     else
                         StorageImgSearch();
 
@@ -676,7 +672,6 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
                     if (carrerImgUri.length() < 5) {
                         carrerImgUri = "";
                     }
-
 
 
                     // 데이터삽입 uid 닉네임 비용 경력 시간 비용 등등
@@ -708,6 +703,31 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
                     db = FirebaseFirestore.getInstance();
 
                     Toast.makeText(getApplicationContext(), "신청 완료", Toast.LENGTH_LONG).show();
+
+                    //11/24
+                    /*
+                    boolean isThread = true;
+                    Thread thread = new Thread() {
+                        public void run() {
+                            while (isThread) {
+                                try {
+                                    sleep(2000);
+                                    finish();
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+
+                                handler.sendEmptyMessage(0);
+
+                            }
+                        }
+                    };
+                    thread.start();
+                    //여기까지
+                     */
+
+
+
 
                     finish();
 
@@ -982,28 +1002,23 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
             mRo = str_arr[3];
             Log.d("mRo", str_arr[3]);
             // 동
-            if(!mDo.contains("세종특별자치시")) {
+            if (!mDo.contains("세종특별자치시")) {
                 mDong = str_arr[5];
                 Log.d("mDong", str_arr[5]);
             }
 
-            if(mDo.contains("제주"))
-            {
+            if (mDo.contains("제주")) {
                 mDo = "제주도";
-            }
-            else if(mDo.contains("세종특별자치시"))
-            {
+            } else if (mDo.contains("세종특별자치시")) {
                 mDo = "세종시";
             }
 
 
-
             // 최종주소(시 + 구)
-            if(mDo.contains("세종시")) {
+            if (mDo.contains("세종시")) {
                 //mJuso = mDo+ " " + mCity;
-                mJuso = mDo + " " + mCity +" "+ mRo;
-            }
-            else {
+                mJuso = mDo + " " + mCity + " " + mRo;
+            } else {
                 mJuso = mDo + " " + mCity + " " + mDong;
             }
 
@@ -1154,7 +1169,7 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
                     isDolbom = doc.getBoolean("hwaldong_dolbom");
                     isBeauty = doc.getBoolean("hwaldong_beauty");
 
-                    if(isSanChck || isDolbom || isBeauty) {
+                    if (isSanChck || isDolbom || isBeauty) {
                         if (isSanChck)
                             mSanchack_btn.setChecked(isSanChck);
                         if (isDolbom)
@@ -1171,16 +1186,15 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
                     try {
                         if (mSchedule.length() > 2)
                             scheduleNull = false;
-                        if(reJuso.length() > 2)
+                        if (reJuso.length() > 2)
                             addressNull = false;
-                        if(isSanChck || isDolbom || isBeauty)
+                        if (isSanChck || isDolbom || isBeauty)
                             hwaldongNull = false;
 
-                    }catch (Exception e)
-                    {
+                    } catch (Exception e) {
 
                     }
-                    Log.d("데이터 확인",scheduleNull + ":" +  addressNull +":"+hwaldongNull);
+                    Log.d("데이터 확인", scheduleNull + ":" + addressNull + ":" + hwaldongNull);
 
 
                     //storageReference = storage.getReference();
@@ -1271,8 +1285,7 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
                             toggle.setChecked(false);
                             petfriend_delete_iv.setVisibility(View.GONE);
                         }
-                    }catch (Exception e)
-                    {
+                    } catch (Exception e) {
                         Log.d("이미지 로딩 실패", "실패");
                     }
 
@@ -1337,5 +1350,13 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
 
     }
 
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg)
+        {
+            super.handleMessage(msg);
+        }
+
+    };
 
 }
