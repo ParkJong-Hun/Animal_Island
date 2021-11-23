@@ -646,10 +646,12 @@ public class PetfriendUserSelect extends AppCompatActivity {
         return sb.toString();
     }
 
-    private void stopThread()
-    {
-        isThread= false;
+    private void stopThread() {
+        isThread = false;
     }
+
+
+
 
 
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -662,9 +664,10 @@ public class PetfriendUserSelect extends AppCompatActivity {
                 public void run() {
                     while (isThread) {
                         try {
-                            sleep(1000);
+                            sleep(1500);
                             sujungUpdate();
-                            sleep(1000);
+                            sleep(500);
+                            sujungUpdate();
                             stopThread();
                         } catch (InterruptedException e) {
                             e.printStackTrace();
@@ -676,8 +679,6 @@ public class PetfriendUserSelect extends AppCompatActivity {
             };
             thread.start();
             //여기까지
-
-
 
 
             //sujungUpdate();
