@@ -269,7 +269,6 @@ public class MypageInfoEditActivity extends AppCompatActivity {
         if (requestCode == 0) {
             if (resultCode == RESULT_OK) {
                 String result = data.getStringExtra("data");
-                Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
                 address.setText(result);
             }
         }
