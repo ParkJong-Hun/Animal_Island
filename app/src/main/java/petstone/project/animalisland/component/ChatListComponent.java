@@ -209,7 +209,7 @@ public class ChatListComponent extends Fragment {
                                                         public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                                                             for (DocumentSnapshot doc : queryDocumentSnapshots) {
                                                                 doc.getReference().collection("messages")
-                                                                        .whereNotEqualTo("uid", auth.getUid())
+                                                                        .whereNotEqualTo("uid2", auth.getUid())
                                                                         .addSnapshotListener(new EventListener<QuerySnapshot>() {
                                                                             @Override
                                                                             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
