@@ -580,6 +580,13 @@ public class MypagePetfriendApplyActivity extends AppCompatActivity {
                 }
             });
 
+            db.collection("users").document(user.getUid()).update("is_petfriend", true).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void unused) {
+                    Log.d("success", "펫프렌즈 유저 전환 성공");
+                }
+            });
+
         } catch (Exception e) {
             Log.e("error", e.toString());
         }
