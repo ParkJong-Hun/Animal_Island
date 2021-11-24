@@ -20,6 +20,7 @@ import android.widget.PopupMenu;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
@@ -30,6 +31,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -118,7 +124,7 @@ public class ChatListComponent extends Fragment {
                                                     @Override
                                                     public void onSuccess(Void aVoid) {
                                                         Log.d("d", "채팅 삭제 완료");
-                                                        listAdapter.notifyDataSetChanged();
+                                                        dataUpdate();
                                                     }
                                                 });
                                             }
@@ -147,6 +153,11 @@ public class ChatListComponent extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        dataUpdate();
+
+    }
+
+    void dataUpdate() {
         db.collection("chats")
                 .whereEqualTo("uid", auth.getUid())
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
