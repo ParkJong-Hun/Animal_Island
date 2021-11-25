@@ -117,9 +117,6 @@ public class PetFriendComponent extends Fragment {
     String mNickName = "";
     float mRating;
 
-    //검색
-    String mText="";
-
     //파이어베이스 쿼리문
     Query query;
 
@@ -821,6 +818,7 @@ public class PetFriendComponent extends Fragment {
     public void onStop() {
         super.onStop();
         petfriend_search_view.setQuery("",false);
+        fireAdapter.stopListening();
     }
 }
 
