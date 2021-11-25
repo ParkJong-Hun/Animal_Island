@@ -67,7 +67,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
         android:background="@drawable/round_ffe1e1"
-        android:text="2.5점"
+        android:text="..."
         app:layout_constraintEnd_toEndOf="@id/petfriend_user_info_line_1"
         app:layout_constraintTop_toTopOf="@id/user_info" />
 
