@@ -215,5 +215,4 @@ public class PetfriendUserList_CustomAdapter extends RecyclerView.Adapter<Petfri
 
 
 
-
 }

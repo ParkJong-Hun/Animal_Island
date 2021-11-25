@@ -99,6 +99,7 @@ public class PetfriendFireAdapter extends FirestoreRecyclerAdapter<PetfriendFire
 
 
 
+
         // 비용이 0일떄
         String s = model.getPay();
         s = s.replaceAll("\\p{Punct}", "");
