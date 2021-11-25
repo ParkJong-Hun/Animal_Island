@@ -117,6 +117,9 @@ public class PetFriendComponent extends Fragment {
     String mNickName = "";
     float mRating;
 
+    //검색
+    String mText="";
+
     //파이어베이스 쿼리문
     Query query;
 
@@ -278,20 +281,19 @@ public class PetFriendComponent extends Fragment {
             }
         });
 
-
         // 검색 이벤트
         petfriend_search_view.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
             @Override
             public boolean onQueryTextSubmit(String s) {
                 //Search(s);
-                return false;
+                return true;
             }
 
             @Override
             public boolean onQueryTextChange(String s) {
                 Search(s);
-                return true;
+                return false;
             }
         });
 
@@ -678,6 +680,7 @@ public class PetFriendComponent extends Fragment {
     //리스트에서에서 검색
     private void ListSearch(String s) {
 
+
         ArrayList<PetfriendUser> mArrayList = new ArrayList<>();
         firebaseSearch();
 
@@ -814,15 +817,11 @@ public class PetFriendComponent extends Fragment {
         fireAdapter.startListening();
     }
 
-    // 어댑터 멈춤
     @Override
     public void onStop() {
         super.onStop();
-        Log.d("파이어베이스 리스닝", "끝");
-        fireAdapter.stopListening();
+        petfriend_search_view.setQuery("",false);
     }
-
-
 }
 
 
