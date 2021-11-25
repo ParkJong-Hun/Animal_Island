@@ -17,12 +17,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import petstone.project.animalisland.R;
 
@@ -62,6 +67,32 @@ public class PetfriendFireAdapter extends FirestoreRecyclerAdapter<PetfriendFire
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
                 holder.tv_rating.setText(rating+"점");
                 Log.d("점수" , rating + uid);
+
+
+                try {
+                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                    DocumentReference documentReference = db.collection("rating").document(uid);
+
+                    Map<String, Object> updateMap = new HashMap();
+                    updateMap.put("rating", rating);
+
+                    // 문서 이름 = 유저 UID 파이어베이스 업로드
+                    db.collection("rating").document(uid).set(updateMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.d("rating", "UID create post :" + documentReference.getId());
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w("rating", e.toString());
+                        }
+                    });
+
+
+                } catch (Exception e) {
+                    Log.e("error", e.toString());
+                }
             }
         });
 
