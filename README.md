@@ -17,6 +17,11 @@ animal adoption and raising application with Android Platform
 <b>Frameworks(Library)</b>: Firebase, Glide, Daum Address Public Data
 <br>
 <b>Released</b>: We won't release this app
+<br>
+<br>
+<img width="780" alt="스크린샷 2021-09-25 오후 12 44 14" src="https://user-images.githubusercontent.com/81838716/143442178-56b3e62a-7a6a-48c8-b7a4-85810af39208.jpg">
+<br><br><br>
+<strong>Image</strong>
 <div>
 <img width="389" alt="스크린샷 2021-09-25 오후 12 44 14" src="https://user-images.githubusercontent.com/81838716/142714774-63651a78-0139-41b3-8ad2-8e22247a7bbf.png">
 <img width="389" alt="스크린샷 2021-09-25 오후 12 44 14" src="https://user-images.githubusercontent.com/81838716/143158317-1d0fc9e2-9b33-4e75-95cb-0d6edfae8a7c.png">
