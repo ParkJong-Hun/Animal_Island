@@ -199,48 +199,19 @@ public class PetfriendUserList_CustomAdapter extends RecyclerView.Adapter<Petfri
     void getRating(RatingBar rb,String uid)
     {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("users").document(uid)
-                .collection("popularity")
-                .whereNotEqualTo("uid", uid)
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                        //한 사람 추천당 0.3 +
-                        //권한 없으면 80이 최대
-                        rb.setRating(2.5f);
-                        rb.setRating(rb.getRating() + 0.3f * value.getDocuments().size());
-                        db.collection("users").document(uid)
-                                .collection("report")
-                                .whereNotEqualTo("uid", uid)
-                                .get()
-                                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                                    @Override
-                                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                                        //한 사람 신고당 0.3 -
-                                        //권한 없으면 80이 최대
-                                        rb.setRating(rb.getRating() - 0.3f * queryDocumentSnapshots.getDocuments().size());
-                                        db.collection("users").document(uid)
-                                                .get()
-                                                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                                    @Override
-                                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                                        if (rb.getRating() > 4.0f && !((boolean)documentSnapshot.get("sell_permission") || (boolean)documentSnapshot.get("is_petfriend"))) {
-                                                            rb.setRating(4.0f);
-                                                        } else if ((boolean)documentSnapshot.get("sell_permission") || (boolean)documentSnapshot.get("is_petfriend")) {
-                                                            rb.setRating(rb.getRating() + 1.0f);
-                                                        } else if (rb.getRating() > 5.0f) {
-                                                            rb.setRating(5.0f);
-                                                        } else if (rb.getRating() < 0) {
-                                                            rb.setRating(0);
-                                                        }
-                                                    }
-                                                });
-                                    }
-                                });
-                    }
-                });
-    }
 
+        db.collection("rating").document(uid).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                String s = documentSnapshot.getData().get("rating").toString();
+                float f = Float.parseFloat(s);
+
+                rb.setRating(f);
+            }
+        });
+
+    }
 
 
 
