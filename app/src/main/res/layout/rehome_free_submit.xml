@@ -271,6 +271,7 @@
                 android:layout_height="150dp"
                 android:background="@drawable/border"
                 android:inputType="textMultiLine"
+                android:gravity="top"
                 app:layout_constraintTop_toBottomOf="@id/content"
                 app:layout_constraintStart_toStartOf="parent"/>
 

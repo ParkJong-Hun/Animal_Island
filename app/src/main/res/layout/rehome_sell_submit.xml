@@ -300,6 +300,7 @@
                 android:id="@+id/getContent"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
+                android:gravity="top"
                 android:background="@drawable/border"
                 android:inputType="textMultiLine"
                 app:layout_constraintTop_toBottomOf="@id/content"/>
