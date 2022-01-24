@@ -38,3 +38,5 @@ animal adoption and raising application with Android Platform
 <img width="389" alt="스크린샷 2021-09-25 오후 12 44 14" src="https://user-images.githubusercontent.com/81838716/143158306-428e580d-dddf-451c-8d5a-301f2283f290.png">
 <img width="389" alt="스크린샷 2021-09-25 오후 12 44 14" src="https://user-images.githubusercontent.com/81838716/143158313-a8d5830b-4655-4ef5-8865-7aa544dbc8bf.png">
 </div>
+<br>
+https://blog.naver.com/exoci/222588456265
